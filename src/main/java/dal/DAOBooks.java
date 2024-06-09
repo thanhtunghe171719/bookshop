@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import model.Books;
+import model.Book;
 /**
  *
  * @author TDG
  */
 public class DAOBooks extends DBConnect{
-    public ArrayList<Books> getAll(String sql) {
-        ArrayList<Books> list = new ArrayList<>();
+    public ArrayList<Book> getAll(String sql) {
+        ArrayList<Book> list = new ArrayList<>();
         try {
 
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -45,7 +45,7 @@ public class DAOBooks extends DBConnect{
                 String format = rs.getString("format");
                 int pages = rs.getInt("pages");
 
-                 Books b = new Books(bookId, title, author, image, categoryId, publishingHouse, 
+                 Book b = new Book(bookId, title, author, image, categoryId, publishingHouse, 
                          publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
                  list.add(b);
             }
@@ -56,8 +56,8 @@ public class DAOBooks extends DBConnect{
     }
     public static void main(String[] args) {
         DAOBooks dao = new DAOBooks();
-        ArrayList<Books> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");
-        for (Books books : list) {
+        ArrayList<Book> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");
+        for (Book books : list) {
             System.out.println(books);
         }
     }

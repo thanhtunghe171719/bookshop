@@ -47,7 +47,7 @@ public class HomePage extends HttpServlet {
         ArrayList<Posts> listPost = daoPosts.getAll("SELECT * FROM posts WHERE status = 'Show' ORDER BY created_at DESC LIMIT 3;");
         request.setAttribute("listPost", listPost);
         
-        ArrayList<Books> listBook = null;
+        ArrayList<Book> listBook = null;
         String service = (String)request.getParameter("service");
         if(service == null){
             service = "listAll";
@@ -69,7 +69,7 @@ public class HomePage extends HttpServlet {
                                                 "LEFT JOIN order_items oi ON b.book_id = oi.book_id\n" +
                                                 "LEFT JOIN orders o ON oi.order_id = o.order_id\n" +
                                                 "GROUP BY b.book_id\n" +
-                                                "ORDER BY IFNULL(SUM(oi.quantity), 0) DESC;");
+                                                "ORDER BY IFNULL(SUM(oi.quantity), 0) DESC LIMIT 8;");
                     currentOption = "Số Lượng Đã Bán";
                 } else if(selectedOption.equals("new-product")) {
                     listBook = daoBooks.getAll("SELECT * FROM books ORDER BY book_id DESC LIMIT 8;");

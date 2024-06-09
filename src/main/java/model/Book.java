@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  *
  * @author TDG
  */
-public class Books {
+public class Book {
     private int bookId;
     private String title;
     private String author;
@@ -31,10 +31,10 @@ public class Books {
     private String format;
     private int pages;
 
-    public Books() {
+    public Book() {
     }
 
-    public Books(int bookId, String title, String author, String image, int categoryId, String publishingHouse, int publishedYear, String size, String weight, String summary, BigDecimal price, Integer rating, Integer discount, int stock, Timestamp createdAt, Timestamp updatedAt, String format, int pages) {
+    public Book(int bookId, String title, String author, String image, int categoryId, String publishingHouse, int publishedYear, String size, String weight, String summary, BigDecimal price, Integer rating, Integer discount, int stock, Timestamp createdAt, Timestamp updatedAt, String format, int pages) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
