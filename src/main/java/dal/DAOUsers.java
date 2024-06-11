@@ -12,15 +12,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import model.Users;
+import models.User;
 
 /**
  *
  * @author TDG
  */
 public class DAOUsers extends DBConnect{
-    public ArrayList<Users> getAll(String sql) {
-        ArrayList<Users> list = new ArrayList<>();
+    public ArrayList<User> getAll(String sql) {
+        ArrayList<User> list = new ArrayList<>();
         try {
 
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -39,7 +39,7 @@ public class DAOUsers extends DBConnect{
                 Timestamp createAt = rs.getTimestamp("create_At");
                 Timestamp updatedAt = rs.getTimestamp("updated_At");
 
-                 Users c = new Users(userId, email, phone, password, roleId, fullname, gender, image, address, createAt, updatedAt);
+                 User c = new User(userId, email, phone, password, roleId, fullname, gender, image, address, createAt, updatedAt);
                  list.add(c);
             }
         } catch (SQLException ex) {
@@ -48,7 +48,7 @@ public class DAOUsers extends DBConnect{
         return list;
     }
     
-    public int update(Users obj) {
+    public int update(User obj) {
         int n = 0;
 
         String sql = "UPDATE `bookshop`.`users`\n" +
@@ -87,8 +87,8 @@ public class DAOUsers extends DBConnect{
     
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
-        ArrayList<Users> list  = dao.getAll("SELECT * FROM users limit 1;");
-        Users user = list.get(0);
+        ArrayList<User> list  = dao.getAll("SELECT * FROM users limit 1;");
+        User user = list.get(0);
         user.setPassword("123456");
         int n = dao.update(user);
         if(n!=0){

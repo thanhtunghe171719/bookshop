@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import model.Book;
+import models.Book;
 /**
  *
  * @author TDG

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package models;
 
 import java.sql.Timestamp;
 
@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  *
  * @author TDG
  */
-public class Users {
+public class User {
     private int userId;
     private String email;
     private String phone;
@@ -23,10 +23,10 @@ public class Users {
     private Timestamp createAt;
     private Timestamp updatedAt;    
 
-    public Users() {
+    public User() {
     }
 
-    public Users(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt) {
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;

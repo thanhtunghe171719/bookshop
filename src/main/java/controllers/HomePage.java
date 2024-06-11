@@ -3,8 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package controllers;
 
+import models.Slider;
+import models.Book;
+import models.Categorie;
+import models.Posts;
 import dal.*;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -14,7 +18,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.*;
 
 /**
  *
@@ -41,7 +44,7 @@ public class HomePage extends HttpServlet {
         ArrayList<Slider> listSlider = daoSlider.getAll("SELECT * FROM slider WHERE status = 'show' ORDER BY slider_id DESC LIMIT 3;");
         request.setAttribute("listSlider", listSlider);
         
-        ArrayList<Categories> listCategory = daoCategories.getAll("SELECT * FROM categories;");
+        ArrayList<Categorie> listCategory = daoCategories.getAll("SELECT * FROM categories;");
         request.setAttribute("listCategory", listCategory);
         
         ArrayList<Posts> listPost = daoPosts.getAll("SELECT * FROM posts WHERE status = 'Show' ORDER BY created_at DESC LIMIT 3;");

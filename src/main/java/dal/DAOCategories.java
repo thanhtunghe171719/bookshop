@@ -5,7 +5,7 @@
 package dal;
 
 import java.util.ArrayList;
-import model.Categories;
+import models.Categorie;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,8 +18,8 @@ import java.util.logging.Level;
  * @author TDG
  */
 public class DAOCategories extends DBConnect{
-    public ArrayList<Categories> getAll(String sql) {
-        ArrayList<Categories> list = new ArrayList<>();
+    public ArrayList<Categorie> getAll(String sql) {
+        ArrayList<Categorie> list = new ArrayList<>();
         try {
 
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -33,7 +33,7 @@ public class DAOCategories extends DBConnect{
                  Timestamp updatedAt = rs.getTimestamp("updated_at");
 
 
-                 Categories c = new Categories(sliderId, categoryName, image, createdAt, updatedAt);
+                 Categorie c = new Categorie(sliderId, categoryName, image, createdAt, updatedAt);
                  list.add(c);
             }
         } catch (SQLException ex) {
@@ -43,8 +43,8 @@ public class DAOCategories extends DBConnect{
     }
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
-        ArrayList<Categories> list  = dao.getAll("SELECT * FROM categories;");
-        for (Categories categories : list) {
+        ArrayList<Categorie> list  = dao.getAll("SELECT * FROM categories;");
+        for (Categorie categories : list) {
             System.out.println(categories);
         }
     }

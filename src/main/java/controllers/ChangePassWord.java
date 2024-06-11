@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package controllers;
 
 import dal.DAOUsers;
 import jakarta.servlet.RequestDispatcher;
@@ -13,7 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Users;
+import models.User;
 
 /**
  *
@@ -32,7 +32,7 @@ public class ChangePassWord extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Users user = (Users) request.getAttribute("user");
+        User user = (User) request.getAttribute("user");
         
         DAOUsers dao = new DAOUsers();
         

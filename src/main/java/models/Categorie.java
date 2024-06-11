@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package models;
 
 import java.sql.Timestamp;
 
@@ -10,17 +10,17 @@ import java.sql.Timestamp;
  *
  * @author TDG
  */
-public class Categories {
+public class Categorie {
     private int categoryId;
     private String categoryName;
     private String image;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public Categories() {
+    public Categorie() {
     }
 
-    public Categories(int categoryId, String categoryName, String image, Timestamp createdAt, Timestamp updatedAt) {
+    public Categorie(int categoryId, String categoryName, String image, Timestamp createdAt, Timestamp updatedAt) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.image = image;

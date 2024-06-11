@@ -5,7 +5,7 @@
 package dal;
 
 import java.util.ArrayList;
-import model.Slider;
+import models.Slider;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,7 +43,8 @@ public class DAOSlider extends DBConnect{
     
     public static void main(String[] args) {
         DAOSlider dao = new DAOSlider();
-        ArrayList<Slider> list  = dao.getAll("SELECT * FROM slider WHERE status = 'show' ORDER BY slider_id DESC LIMIT 3;");
+        String title = "er 1";
+        ArrayList<Slider> list  = dao.getAll("SELECT * FROM slider where title like '%"+title+"%' limit 1;");
         for (Slider slider : list) {
             System.out.println(slider);
         }

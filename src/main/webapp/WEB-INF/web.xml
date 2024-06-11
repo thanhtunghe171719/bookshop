@@ -2,11 +2,15 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>HomePage</servlet-name>
-        <servlet-class>controller.HomePage</servlet-class>
+        <servlet-class>controllers.HomePage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChangePassWord</servlet-name>
-        <servlet-class>controller.ChangePassWord</servlet-class>
+        <servlet-class>controllers.ChangePassWord</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>slider</servlet-name>
+        <servlet-class>controllers.slider</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ChangePassWord</servlet-name>
         <url-pattern>/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>slider</servlet-name>
+        <url-pattern>/slider</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
