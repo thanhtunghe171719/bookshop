@@ -8,6 +8,22 @@
         <servlet-name>SearchControl</servlet-name>
         <servlet-class>controllers.SearchControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomePage</servlet-name>
+        <servlet-class>controllers.HomePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>slider</servlet-name>
+        <servlet-class>controllers.slider</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomePage</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>slider</servlet-name>
+        <url-pattern>/slider</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewProducts</servlet-name>
         <url-pattern>/products</url-pattern>
