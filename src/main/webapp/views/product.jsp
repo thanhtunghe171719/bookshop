@@ -54,9 +54,9 @@
                             <div class="head">Browse Categories</div>
                             <ul class="main-categories">
                                 <li class="common-filter">
-                                <li class="filter-list">
-                                    <a href="products">Tất cả sản phẩm</a>
-                                </li>
+                                    <li class="filter-list">
+                                        <a href="products">Tất cả sản phẩm</a>
+                                    </li>
                                 <c:forEach items="${category}" var="category">
                                     <li class="filter-list">
                                         <a class="${tag == category.categoryId ? "active-category" : ""}" href="products?categoryid=${category.categoryId}">${category.getCategoryName()}</a>
