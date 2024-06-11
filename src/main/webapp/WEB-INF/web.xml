@@ -8,6 +8,10 @@
         <servlet-name>SearchControl</servlet-name>
         <servlet-class>controllers.SearchControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DetailServlet</servlet-name>
+        <servlet-class>controllers.DetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ViewProducts</servlet-name>
         <url-pattern>/products</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>SearchControl</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailServlet</servlet-name>
+        <url-pattern>/productdetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

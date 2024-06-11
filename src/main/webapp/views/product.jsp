@@ -261,7 +261,7 @@
                                             <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
 
                                             <div class="card-body">
-                                                <h4 class="card-product__title"><a href="#">${book.getTitle()}</a></h4>
+                                                <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
 
                                                 <c:choose>
                                                     <c:when test="${originalPrice eq discountedPrice}">
