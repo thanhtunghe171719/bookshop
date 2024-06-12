@@ -5,7 +5,7 @@
 package controllers;
 
 import models.*;
-import dal.DAOProduct;
+import dal.DAOBooks;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,9 +62,9 @@ public class DetailServlet extends HttpServlet {
         // Chuyển đổi id sản phẩm sang số nguyên
         int pid = Integer.parseInt(pid_raw);
         // Khởi tạo DAOProduct để truy vấn dữ liệu
-        DAOProduct daoProduct = new DAOProduct();
+        DAOBooks daoBooks = new DAOBooks();
         // Lấy thông tin chi tiết sản phẩm
-        Books book = daoProduct.getBookById(pid);
+        Books book = daoBooks.getBookById(pid);
 
         // Thêm sản phẩm vào request
         request.setAttribute("book", book);

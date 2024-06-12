@@ -180,6 +180,4 @@ public class Books {
     public void setUpdate_at(Date update_at) {
         this.update_at = update_at;
     }
-
-    
 }
