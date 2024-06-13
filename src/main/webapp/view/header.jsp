@@ -54,7 +54,7 @@
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
                                 <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
-                                <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
+                                <li class="nav-item"><a class="nav-link" href="cartdetails">Cart Detail</a></li>
                             </ul>
                         </li>
                     </ul>                

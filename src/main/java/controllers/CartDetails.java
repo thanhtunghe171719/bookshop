@@ -1,0 +1,106 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
+package controllers;
+
+import dal.*;
+import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import models.*;
+
+public class CartDetails extends HttpServlet {
+   
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession(true);
+        
+        DAOCart daoCart = new DAOCart();
+        DAOBooks daoBook = new DAOBooks();
+        DAOCartDetails daoCartDetails = new DAOCartDetails();
+        
+        int userId = 1;
+        int cartId = daoCart.getCartId(userId);
+
+        String service = request.getParameter("service");
+        
+        if(service == null){
+            service = "listAll";
+        }
+        Map<CartItems, Book> cartItemBookMap = new HashMap<>();
+        if(service.equals("listAll")){
+            if(cartId != 0){
+                ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
+                request.setAttribute("listItems", listItems);
+                if(listItems != null) {
+                    for (CartItems listItem : listItems) {
+
+                        ArrayList<Book> bookItem = daoBook.getAll("SELECT * FROM books WHERE book_id = " + listItem.getBookId());
+                        if (bookItem != null && !bookItem.isEmpty()) {
+                            cartItemBookMap.put(listItem, bookItem.get(0)); 
+                        }
+                    }
+                }
+                session.setAttribute("cartItemBookMap", cartItemBookMap);
+            }
+        }
+        
+        
+//        PrintWriter out = response.getWriter();
+        if(service.equals("updateQuantity")){
+            String stringCartItemId = request.getParameter("cartItemId");
+            String stringQuantity = request.getParameter("quantity");
+            
+            if(stringCartItemId != null && stringQuantity != null){
+                int cartItemId = Integer.parseInt(stringCartItemId);
+                int quantity = Integer.parseInt(stringQuantity);
+                
+                boolean checkUpdate = daoCartDetails.updateQuantity(cartItemId, quantity);
+                
+                if(checkUpdate){
+                    for (Map.Entry<CartItems, Book> entry : cartItemBookMap.entrySet()) {
+                        CartItems key = entry.getKey();
+                        if(key.getCartItemId() == cartItemId){
+                            key.setQuantity(quantity);
+                        }
+                    }
+                }
+                session.setAttribute("cartItemBookMap", cartItemBookMap);
+                
+            }
+        }
+        
+
+        RequestDispatcher dispth = request.getRequestDispatcher("./view/cartdetails.jsp");
+        dispth.forward(request, response);
+    } 
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+}

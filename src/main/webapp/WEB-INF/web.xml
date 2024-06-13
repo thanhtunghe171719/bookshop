@@ -12,6 +12,14 @@
         <servlet-name>slider</servlet-name>
         <servlet-class>controllers.slider</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartDetails</servlet-name>
+        <servlet-class>controllers.CartDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartContact</servlet-name>
+        <servlet-class>controllers.CartContact</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>slider</servlet-name>
         <url-pattern>/slider</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartDetails</servlet-name>
+        <url-pattern>/cartdetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartContact</servlet-name>
+        <url-pattern>/cartcontact</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
