@@ -49,7 +49,7 @@ public class CartContact extends HttpServlet {
         
         if (cartItemBookMap == null) {
             // If cartItemBookMap is null, redirect to the cartdetails page to ensure it's set
-            response.sendRedirect(request.getContextPath() + "/cartdetails");
+            response.sendRedirect("cartdetails");
             return;
         }
         

@@ -39,11 +39,38 @@ public class CartDetails extends HttpServlet {
         if(service == null){
             service = "listAll";
         }
+       if(service.equals("addCart")){
+            ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
+            String stringBookId = request.getParameter("bookId");
+            String stringQuantity = request.getParameter("quantity");
+            if(stringBookId!=null && stringBookId.isEmpty() && stringQuantity!=null && stringQuantity.isEmpty()){
+                int booId = Integer.parseInt(stringBookId);
+                int quantity = Integer.parseInt(stringQuantity);
+                if(listItems != null) {
+                    boolean check = true;
+                   for (CartItems listItem : listItems) {
+                       if(listItem.getBookId() == booId){
+                           listItem.setQuantity(quantity);
+                           daoCartDetails.updateQuantity(listItem.getCartItemId(), quantity);
+                           check= false;
+                       }
+                   }
+                   if(check){
+                       CartItems cartItems = new CartItems();
+                       cartItems.setCartId(cartId);
+                       cartItems.setBookId(booId);
+                       cartItems.setQuantity(quantity);
+                       daoCartDetails.insertFilm(cartItems);
+                   }
+                }
+            }
+            RequestDispatcher dispth = request.getRequestDispatcher("./view/cartdetails.jsp");
+            dispth.forward(request, response);
+        }
         Map<CartItems, Book> cartItemBookMap = new HashMap<>();
         if(service.equals("listAll")){
             if(cartId != 0){
                 ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
-                request.setAttribute("listItems", listItems);
                 if(listItems != null) {
                     for (CartItems listItem : listItems) {
 
@@ -69,6 +96,8 @@ public class CartDetails extends HttpServlet {
                 
                 boolean checkUpdate = daoCartDetails.updateQuantity(cartItemId, quantity);
                 
+                cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
+                        
                 if(checkUpdate){
                     for (Map.Entry<CartItems, Book> entry : cartItemBookMap.entrySet()) {
                         CartItems key = entry.getKey();
