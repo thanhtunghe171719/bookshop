@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
-        
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
+
 
         <link rel="stylesheet" href="css/style.css">
     </head>
@@ -69,7 +69,7 @@
                     <div class="col-lg-6">
                         <div class="login_form_inner">
                             <h2 style="margin-bottom: 20px">Quên Mật Khẩu?</h2>
-                            
+                            <input type="hidden" name="emailReset" value="${emailReset}">
                             <!--màn hình nhập email-->
                             <c:if test="${indexScreen == 'first'}">
                                 <form class="row login_form" action="resetpassword" id="contactForm" >
@@ -87,7 +87,7 @@
                                     </div>
                                 </form>
                             </c:if>
-                            
+
                             <!--màn hình nhập otp-->
                             <c:if test="${indexScreen == 'second'}">
                                 <form class="row login_form" action="resetpassword" id="contactForm" >
@@ -105,30 +105,41 @@
                                     </div>
                                 </form>        
                             </c:if> 
-                                        
+
                             <!--màn hình nhập new password-->
                             <c:if test="${indexScreen == 'three'}">
-                                <form class="row login_form" action="resetpassword" id="contactForm" >
+                                <form class="row login_form" action="resetpassword" id="contactForm" onsubmit="return validateForm();">
                                     <p style="text-align: left;padding-left: 15px;padding-bottom: 20px">Điền mật khẩu mới</p>
                                     <div class="col-md-12 form-group">
                                         <p style="text-align: left;padding-left: 15px;">New Password</p>
-                                        <input type="text" class="form-control" id="newPassword" name="newPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="New Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'New Password'">
-                                        <br>
-                                        <p style="text-align: left;padding-left: 15px;">Confirm Password</p>
-                                        <input type="text" class="form-control" id="confirmNewPassword" name="confirmNewPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
-
-                                        <input type="hidden" name="service" value="updatePassWord">    
+                                        <div class="password-container" style="display: flex">
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="New Password" onblur="validateNewPassword()">
+                                            <button type="button" onclick="togglePassword('newPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
+                                        </div>
+                                        <p id="newPasswordResult" style="text-align: left;padding-left: 15px;color: red"></p>
                                     </div>
                                     <div class="col-md-12 form-group">
-                                        <p style="float: left;color: red">${messageUpdate}</p>
-                                        <button type="submit" value="submit" class="button button-login w-100">Tiếp Tục</button>
+                                        <p style="text-align: left;padding-left: 15px;">Confirm Password</p>
+                                        <div class="password-container" style="display: flex">
+                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Confirm Password" onblur="validateConfirmPassword()">
+                                            <button type="button" onclick="togglePassword('confirmNewPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
+                                        </div>
+                                        <p id="confirmNewPasswordResult" style="text-align: left;padding-left: 15px;color: red"></p>
                                     </div>
+                                    <div class="col-md-12 form-group">
+                                        <p id="buttonResult" style="text-align: left;padding-left: 15px;color: red"></p>
+                                        <button type="submit" value="submit" class="button button-login w-100" id="submitButton">Tiếp Tục</button>
+                                    </div>
+                                    <input type="hidden" name="service" value="updatePassWord">
                                 </form>
                             </c:if>
-                            <h3 style="margin-top: 150px">${messageUpdate}</h3>     
-                            <form class="row login_form" action="#">
-                                <button class="button button-login w-100">Quay Lại Đăng Nhập</button>
-                            </form>
+
+                            <c:if test="${not empty messageUpdate}">
+                                <h3 style="margin-top: 150px">${messageUpdate}</h3>     
+                                <form class="row login_form" action="#">
+                                    <button class="button button-login w-100">Quay Lại Đăng Nhập</button>
+                                </form>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -142,7 +153,82 @@
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
 
+        <script>
+            function togglePassword(inputId, button) {
+                var input = document.getElementById(inputId);
+                var icon = button.querySelector('i');
 
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                } else {
+                    input.type = "password";
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                }
+            }
+
+            function validateNewPassword() {
+                var newPassword = document.getElementById('newPassword').value.trim();
+                var newPasswordResult = document.getElementById('newPasswordResult');
+                newPasswordResult.textContent = '';
+
+                if (!newPassword) {
+                    newPasswordResult.textContent = 'Please enter your new password.';
+                    return false;
+                } else if (newPassword.length < 8) {
+                    newPasswordResult.textContent = 'Must be at least 8 characters long.';
+                    return false;
+                } else if (/\s/.test(newPassword)) {
+                    newPasswordResult.textContent = 'Must not contain spaces.';
+                    return false;
+                } else if (!/^[A-Z]/.test(newPassword)) {
+                    newPasswordResult.textContent = 'Must start with an uppercase letter.';
+                    return false;
+                }
+
+                newPasswordResult.innerHTML = '<span style="color: green;">&#10004; Password is valid.</span>';
+                return true;
+            }
+
+            function validateConfirmPassword() {
+                var newPassword = document.getElementById('newPassword').value.trim();
+                var confirmNewPassword = document.getElementById('confirmNewPassword').value.trim();
+                var confirmNewPasswordResult = document.getElementById('confirmNewPasswordResult');
+                confirmNewPasswordResult.textContent = '';
+
+                if (!confirmNewPassword) {
+                    confirmNewPasswordResult.textContent = 'Please confirm your new password.';
+                    return false;
+                } else if (newPassword !== confirmNewPassword) {
+                    confirmNewPasswordResult.textContent = 'Passwords do not match.';
+                    return false;
+                }
+
+                confirmNewPasswordResult.innerHTML = '<span style="color: green;">&#10004; Passwords match.</span>';
+                return true;
+            }
+
+function validateForm() {
+    var isNewPasswordValid = validateNewPassword();
+    var isConfirmPasswordValid = validateConfirmPassword();
+
+      if (!isNewPasswordValid || !isConfirmPasswordValid) {
+        document.getElementById('buttonResult').textContent = 'Please correct the errors above and try again.';
+        return false;
+      }
+
+      return true;
+      
+}
+
+
+            document.getElementById('newPassword').addEventListener('blur', validateNewPassword);
+            document.getElementById('confirmNewPassword').addEventListener('blur', validateConfirmPassword);
+
+
+        </script>
 
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>

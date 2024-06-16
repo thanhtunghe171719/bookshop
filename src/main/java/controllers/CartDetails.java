@@ -69,7 +69,7 @@ public class CartDetails extends HttpServlet {
                            cartItems.setCartId(cartId);
                            cartItems.setBookId(booId);
                            cartItems.setQuantity(quantity);
-                           daoCartDetails.insertFilm(cartItems);
+                           daoCartDetails.insert(cartItems);
                        }
                     }
                 }
@@ -114,6 +114,23 @@ public class CartDetails extends HttpServlet {
                                 key.setQuantity(quantity);
                             }
                         }
+                    }
+                    session.setAttribute("cartItemBookMap", cartItemBookMap);
+
+                }
+            }
+            
+            if(service.equals("delete")){
+                String stringCartItemId = request.getParameter("cartItemId");
+
+                if(stringCartItemId != null){
+                    int cartItemId = Integer.parseInt(stringCartItemId);
+                    int checkDelete = daoCartDetails.delete(cartItemId);
+                    
+                    cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
+
+                    if(checkDelete!=0){
+                        cartItemBookMap.entrySet().removeIf(entry -> entry.getKey().getCartItemId() == cartItemId);
                     }
                     session.setAttribute("cartItemBookMap", cartItemBookMap);
 

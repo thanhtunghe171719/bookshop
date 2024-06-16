@@ -104,7 +104,7 @@
                                         <h5 id="total-price-${cartItem.cartItemId}">$${book.price * cartItem.quantity}</h5>
                                     </td>
                                     <td>
-                                        <a href="#">Delete</a>
+                                        <a href="cartdetails?servise=delete&cartItemId=${cartItem.cartItemId}">Delete</a>
                                     </td>
                                 </tr>
                                 
@@ -115,13 +115,13 @@
                               <td colspan="4"> 
                                   <a class="button" href="cartdetails">Update Cart</a>
                               </td>
-                              <td>
+<!--                              <td>
                                   <div class="cupon_text d-flex align-items-center">
                                       <input type="text" placeholder="Coupon Code">
                                       <a class="primary-btn" href="#">Apply</a>
                                       <p style="padding-top: 15px;padding-left: 30px">Mã Giảm Thêm : 20%</p>
                                   </div>
-                              </td>
+                              </td>-->
                           </tr>
                           
                           <tr>

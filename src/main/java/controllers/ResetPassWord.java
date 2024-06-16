@@ -40,7 +40,7 @@ public class ResetPassWord extends HttpServlet {
         
         DAOUsers daoUsers = new DAOUsers();
         String service = request.getParameter("service");
-        String indexScreen = request.getParameter("indexScreen");
+        String indexScreen = (String) sessionS.getAttribute("indexScreen");
         
         if (service == null) {
             service = "listAll";
@@ -122,6 +122,7 @@ public class ResetPassWord extends HttpServlet {
         }
         
         if(service.equals("updatePassWord")){
+            String messageUpdate;
             String newPassWord = (String) request.getParameter("newPassword");
             if(newPassWord!=null && !newPassWord.isEmpty()){
                 String emailReset = (String)sessionS.getAttribute("emailReset");
@@ -131,14 +132,22 @@ public class ResetPassWord extends HttpServlet {
                         User user = listUser.get(0);
                         user.setPassword(newPassWord);
                         daoUsers.update(user);
-                        String messageUpdate = "Đổi mật khẩu thành công";
-                        request.setAttribute("messageUpdate", messageUpdate);
+                        indexScreen = "";
+                        messageUpdate = "Đổi mật khẩu thành công";
+                    }else{
+                        indexScreen = "";
+                        messageUpdate = "Đổi mật khẩu không thành công";
                     }
+                }else{
+                    messageUpdate = "emailReset không thành công";
                 }
+            }else{
+                messageUpdate = "newPassWord không thành công";
             }
+            request.setAttribute("messageUpdate", messageUpdate);
         }
 
-        request.setAttribute("indexScreen", indexScreen);
+        sessionS.setAttribute("indexScreen", indexScreen);
         RequestDispatcher dispth = request.getRequestDispatcher("./view/resetpassword.jsp");
         dispth.forward(request, response);
     } 

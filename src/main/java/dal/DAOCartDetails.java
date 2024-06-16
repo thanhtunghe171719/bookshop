@@ -56,7 +56,7 @@ public class DAOCartDetails extends DBConnect{
     }
     
 
-    public int insertFilm(CartItems obj) {
+    public int insert(CartItems obj) {
         int n = 0;
         String sql = "INSERT INTO `bookshop`.`cart_items`\n" +
                     "(`cart_id`,`book_id`,`quantity`)\n" +
@@ -66,6 +66,24 @@ public class DAOCartDetails extends DBConnect{
         try {
             state = conn.createStatement();
             n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCartDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    
+    public int delete(int cartItemId) {
+        int n = 0;
+        try {
+            String[] deleteQueries = {"DELETE FROM `bookshop`.`cart_items`\n" +
+                                        "WHERE cart_item_id=?;"};
+
+            for (String query : deleteQueries) {
+                PreparedStatement pre = conn.prepareStatement(query);
+                pre.setInt(1, cartItemId);
+                pre.executeUpdate();
+            }
+            n = 1; 
         } catch (SQLException ex) {
             Logger.getLogger(DAOCartDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,9 +118,11 @@ public class DAOCartDetails extends DBConnect{
         item.setBookId(4);
         item.setCartId(1);
         item.setQuantity(2);
-        int n = dao.insertFilm(item);
+        int n = dao.insert(item);
         if (n >0){
-            System.out.println("oke");
+            //System.out.println("oke");
         }
+        int m =  dao.delete(2);
+        if(m!=0)System.out.println("oke");
     }
 }
