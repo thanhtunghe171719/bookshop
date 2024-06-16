@@ -20,6 +20,10 @@
         <servlet-name>CartContact</servlet-name>
         <servlet-class>controllers.CartContact</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPassWord</servlet-name>
+        <servlet-class>controllers.ResetPassWord</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>CartContact</servlet-name>
         <url-pattern>/cartcontact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPassWord</servlet-name>
+        <url-pattern>/resetpassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

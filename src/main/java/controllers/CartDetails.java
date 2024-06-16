@@ -31,89 +31,99 @@ public class CartDetails extends HttpServlet {
         DAOBooks daoBook = new DAOBooks();
         DAOCartDetails daoCartDetails = new DAOCartDetails();
         
-        int userId = 1;
-        int cartId = daoCart.getCartId(userId);
-
-        String service = request.getParameter("service");
         
-        if(service == null){
-            service = "listAll";
-        }
-       if(service.equals("addCart")){
-            ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
-            String stringBookId = request.getParameter("bookId");
-            String stringQuantity = request.getParameter("quantity");
-            if(stringBookId!=null && stringBookId.isEmpty() && stringQuantity!=null && stringQuantity.isEmpty()){
-                int booId = Integer.parseInt(stringBookId);
-                int quantity = Integer.parseInt(stringQuantity);
-                if(listItems != null) {
-                    boolean check = true;
-                   for (CartItems listItem : listItems) {
-                       if(listItem.getBookId() == booId){
-                           listItem.setQuantity(quantity);
-                           daoCartDetails.updateQuantity(listItem.getCartItemId(), quantity);
-                           check= false;
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
+        if(user==null){
+            response.sendRedirect("login");
+        }else{
+            int userId = user.getUserId();
+
+            //int userId = 1;
+
+            int cartId = daoCart.getCartId(userId);
+
+            String service = request.getParameter("service");
+
+            if(service == null){
+                service = "listAll";
+            }
+           if(service.equals("addCart")){
+                ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
+                String stringBookId = request.getParameter("bookId");
+                String stringQuantity = request.getParameter("quantity");
+                if(stringBookId!=null && stringBookId.isEmpty() && stringQuantity!=null && stringQuantity.isEmpty()){
+                    int booId = Integer.parseInt(stringBookId);
+                    int quantity = Integer.parseInt(stringQuantity);
+                    if(listItems != null) {
+                        boolean check = true;
+                       for (CartItems listItem : listItems) {
+                           if(listItem.getBookId() == booId){
+                               listItem.setQuantity(quantity);
+                               daoCartDetails.updateQuantity(listItem.getCartItemId(), quantity);
+                               check= false;
+                           }
                        }
-                   }
-                   if(check){
-                       CartItems cartItems = new CartItems();
-                       cartItems.setCartId(cartId);
-                       cartItems.setBookId(booId);
-                       cartItems.setQuantity(quantity);
-                       daoCartDetails.insertFilm(cartItems);
-                   }
+                       if(check){
+                           CartItems cartItems = new CartItems();
+                           cartItems.setCartId(cartId);
+                           cartItems.setBookId(booId);
+                           cartItems.setQuantity(quantity);
+                           daoCartDetails.insertFilm(cartItems);
+                       }
+                    }
+                }
+                RequestDispatcher dispth = request.getRequestDispatcher("./view/cartdetails.jsp");
+                dispth.forward(request, response);
+            }
+            Map<CartItems, Book> cartItemBookMap = new HashMap<>();
+            if(service.equals("listAll")){
+                if(cartId != 0){
+                    ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
+                    if(listItems != null) {
+                        for (CartItems listItem : listItems) {
+
+                            ArrayList<Book> bookItem = daoBook.getAll("SELECT * FROM books WHERE book_id = " + listItem.getBookId());
+                            if (bookItem != null && !bookItem.isEmpty()) {
+                                cartItemBookMap.put(listItem, bookItem.get(0)); 
+                            }
+                        }
+                    }
+                    session.setAttribute("cartItemBookMap", cartItemBookMap);
                 }
             }
+
+
+    //        PrintWriter out = response.getWriter();
+            if(service.equals("updateQuantity")){
+                String stringCartItemId = request.getParameter("cartItemId");
+                String stringQuantity = request.getParameter("quantity");
+
+                if(stringCartItemId != null && stringQuantity != null){
+                    int cartItemId = Integer.parseInt(stringCartItemId);
+                    int quantity = Integer.parseInt(stringQuantity);
+
+                    boolean checkUpdate = daoCartDetails.updateQuantity(cartItemId, quantity);
+
+                    cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
+
+                    if(checkUpdate){
+                        for (Map.Entry<CartItems, Book> entry : cartItemBookMap.entrySet()) {
+                            CartItems key = entry.getKey();
+                            if(key.getCartItemId() == cartItemId){
+                                key.setQuantity(quantity);
+                            }
+                        }
+                    }
+                    session.setAttribute("cartItemBookMap", cartItemBookMap);
+
+                }
+            }
+
             RequestDispatcher dispth = request.getRequestDispatcher("./view/cartdetails.jsp");
             dispth.forward(request, response);
-        }
-        Map<CartItems, Book> cartItemBookMap = new HashMap<>();
-        if(service.equals("listAll")){
-            if(cartId != 0){
-                ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
-                if(listItems != null) {
-                    for (CartItems listItem : listItems) {
-
-                        ArrayList<Book> bookItem = daoBook.getAll("SELECT * FROM books WHERE book_id = " + listItem.getBookId());
-                        if (bookItem != null && !bookItem.isEmpty()) {
-                            cartItemBookMap.put(listItem, bookItem.get(0)); 
-                        }
-                    }
-                }
-                session.setAttribute("cartItemBookMap", cartItemBookMap);
-            }
-        }
-        
-        
-//        PrintWriter out = response.getWriter();
-        if(service.equals("updateQuantity")){
-            String stringCartItemId = request.getParameter("cartItemId");
-            String stringQuantity = request.getParameter("quantity");
             
-            if(stringCartItemId != null && stringQuantity != null){
-                int cartItemId = Integer.parseInt(stringCartItemId);
-                int quantity = Integer.parseInt(stringQuantity);
-                
-                boolean checkUpdate = daoCartDetails.updateQuantity(cartItemId, quantity);
-                
-                cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
-                        
-                if(checkUpdate){
-                    for (Map.Entry<CartItems, Book> entry : cartItemBookMap.entrySet()) {
-                        CartItems key = entry.getKey();
-                        if(key.getCartItemId() == cartItemId){
-                            key.setQuantity(quantity);
-                        }
-                    }
-                }
-                session.setAttribute("cartItemBookMap", cartItemBookMap);
-                
-            }
-        }
-        
-
-        RequestDispatcher dispth = request.getRequestDispatcher("./view/cartdetails.jsp");
-        dispth.forward(request, response);
+        }        
     } 
 
     @Override

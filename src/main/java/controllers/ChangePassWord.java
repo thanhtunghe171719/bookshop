@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.User;
 
 /**
@@ -32,30 +33,39 @@ public class ChangePassWord extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        User user = (User) request.getAttribute("user");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         
-        DAOUsers dao = new DAOUsers();
+        session.setAttribute("user", user);
         
-        String oldPassword = (String) request.getParameter("oldPassword");
-        String newPassword = (String) request.getParameter("newPassword");
-        
-        String notice = null;
-        
-        if(oldPassword.equals(user.getPassword())){
-            user.setPassword(newPassword);
-            int result = dao.update(user);
-            if(result != 0){
-                notice = "change password successful.";
-            }else{
-                notice = "change password fail.";
-            }
+        if(user==null){
+            response.sendRedirect("login");
         }else{
-            notice = "input wrong old password.";
+            DAOUsers dao = new DAOUsers();
+
+            String oldPassword = (String) request.getParameter("oldPassword");
+            String newPassword = (String) request.getParameter("newPassword");
+
+            String notice = null;
+
+            if(oldPassword.equals(user.getPassword())){
+                user.setPassword(newPassword);
+                int result = dao.update(user);
+                if(result != 0){
+                    notice = "change password successful.";
+                }else{
+                    notice = "change password fail.";
+                }
+            }else{
+                notice = "input wrong old password.";
+            }
+            //select(jsp)   
+            RequestDispatcher dispth = request.getRequestDispatcher("./view/changepassword.jsp");
+            //run(view)
+            dispth.forward(request, response);
+            
         }
-        //select(jsp)   
-        RequestDispatcher dispth = request.getRequestDispatcher("./view/changepassword.jsp");
-        //run(view)
-        dispth.forward(request, response);
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

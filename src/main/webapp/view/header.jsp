@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@page import="models.*"%>
 <header class="header_area">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -61,14 +61,34 @@
                                     
                                     
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false"><i class="bi bi-person-circle"></i>Acount</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-                            </ul>
-                        </li>
+                        <%
+                            User user = (User) session.getAttribute("user");
+                            if(user==null){
+                            
+                            
+                        %>
+                                <!-- Nếu user là null -->
+                                <li class="nav-item submenu dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false"><i class="bi bi-person-circle"></i>Account</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                                    </ul>
+                                </li>
+                            <%}else{%>
+                            
+                                <!-- Nếu user không là null -->
+                                <li class="nav-item submenu dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false"><i class="bi bi-person-circle"></i>Hello, ${user.fullname}</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" href="profile.html">User Profile</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="changepassword.html">Change Password</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="logout.html">Log Out</a></li>
+                                    </ul>
+                                </li>
+                            <%}%>
                     </ul>
                 </div>
             </div>

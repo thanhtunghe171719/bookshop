@@ -17,7 +17,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import models.User;
 
 /**
  *
@@ -35,6 +37,17 @@ public class HomePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        
+        if (user == null) {
+            // User chưa đăng nhập
+            session.setAttribute("user", null);
+        } else {
+            // User đã đăng nhập
+            session.setAttribute("user", user);
+        }
         
         DAOSlider daoSlider = new DAOSlider();
         DAOCategories daoCategories = new DAOCategories();

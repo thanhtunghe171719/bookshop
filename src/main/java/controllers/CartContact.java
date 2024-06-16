@@ -38,23 +38,31 @@ public class CartContact extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         
-        DAOUsers daoUsers = new DAOUsers();
+//        DAOUsers daoUsers = new DAOUsers();
         
-        int userId = 1;
-        User user = daoUsers.getAll("Select * from users where user_id = "+userId).get(0);
-        request.setAttribute("user", user);
-        
-        Map<CartItems, Book> cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
-        
-        
-        if (cartItemBookMap == null) {
-            // If cartItemBookMap is null, redirect to the cartdetails page to ensure it's set
-            response.sendRedirect("cartdetails");
-            return;
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
+        if(user==null){
+            response.sendRedirect("login");
+        }else{
+
+            //int userId = 1;
+            //User user = daoUsers.getAll("Select * from users where user_id = "+userId).get(0);
+
+
+            Map<CartItems, Book> cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
+
+
+            if (cartItemBookMap == null) {
+                // If cartItemBookMap is null, redirect to the cartdetails page to ensure it's set
+                response.sendRedirect("cartdetails");
+                return;
+            }
+
+            RequestDispatcher dispth = request.getRequestDispatcher("./view/cartcontact.jsp");
+            dispth.forward(request, response);
+            
         }
-        
-        RequestDispatcher dispth = request.getRequestDispatcher("./view/cartcontact.jsp");
-        dispth.forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

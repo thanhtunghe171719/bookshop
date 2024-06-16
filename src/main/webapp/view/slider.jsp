@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="vendors/linericon/style.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
