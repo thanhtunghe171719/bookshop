@@ -70,13 +70,13 @@
                               <th scope="col">Delete</th>
                           </tr>
                       </thead>
-                      <tbody>
+                      
                           
                       <c:if test="${not empty cartItemBookMap}">
                           <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                               <c:set var="cartItem" value="${entry.key}" />
                               <c:set var="book" value="${entry.value}" />
-                              <c:set var="lineSubTotal" value="${book.price * cartItem.quantity}" />
+                              <c:set var="lineSubTotal" value="${book.price * cartItem.quantity * (1-book.discount)}" />
                               <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
                               <tr>
                                     <td>
@@ -101,10 +101,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 id="total-price-${cartItem.cartItemId}">$${book.price * cartItem.quantity}</h5>
+                                        <h5 id="total-price-${cartItem.cartItemId}">$${book.price * cartItem.quantity * (1-book.discount)}</h5>
                                     </td>
                                     <td>
-                                        <a href="cartdetails?servise=delete&cartItemId=${cartItem.cartItemId}">Delete</a>
+                                        <a href="cartdetails?service=delete&cartItemId=${cartItem.cartItemId}">Delete</a>
                                     </td>
                                 </tr>
                                 
@@ -145,7 +145,7 @@
                                   </div>
                               </td>
                           </tr>
-                      </tbody>        
+                              
                   </table>
               </div>
               

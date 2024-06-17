@@ -70,6 +70,7 @@
                         <div class="login_form_inner">
                             <h2 style="margin-bottom: 20px">Quên Mật Khẩu?</h2>
                             <input type="hidden" name="emailReset" value="${emailReset}">
+                            
                             <!--màn hình nhập email-->
                             <c:if test="${indexScreen == 'first'}">
                                 <form class="row login_form" action="resetpassword" id="contactForm" >
@@ -154,6 +155,17 @@
         <!--================ End footer Area  =================-->
 
         <script>
+            
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the screen is the second one
+        var indexScreen = '<c:out value="${indexScreen}"/>';
+        if (indexScreen === 'second') {
+            var otp = document.getElementById('otp').value.trim();
+            if (!otp) {
+                window.location.href = 'resetpassword';
+            }
+        }
+    });
             function togglePassword(inputId, button) {
                 var input = document.getElementById(inputId);
                 var icon = button.querySelector('i');

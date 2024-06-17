@@ -75,15 +75,10 @@ public class DAOCartDetails extends DBConnect{
     public int delete(int cartItemId) {
         int n = 0;
         try {
-            String[] deleteQueries = {"DELETE FROM `bookshop`.`cart_items`\n" +
-                                        "WHERE cart_item_id=?;"};
-
-            for (String query : deleteQueries) {
-                PreparedStatement pre = conn.prepareStatement(query);
-                pre.setInt(1, cartItemId);
-                pre.executeUpdate();
-            }
-            n = 1; 
+            String query = "DELETE FROM `bookshop`.`cart_items` WHERE cart_item_id = ?";
+            PreparedStatement pre = conn.prepareStatement(query);
+            pre.setInt(1, cartItemId);
+            n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCartDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,7 +117,10 @@ public class DAOCartDetails extends DBConnect{
         if (n >0){
             //System.out.println("oke");
         }
-        int m =  dao.delete(2);
-        if(m!=0)System.out.println("oke");
+
+        int checkDelete = dao.delete(24);                    
+        if(checkDelete!=0){
+            System.out.println("oke dele");
+        }
     }
 }
