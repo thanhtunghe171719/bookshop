@@ -113,16 +113,14 @@ public class ResetPassWord extends HttpServlet {
         if (service.equals("checkOtp")) {
             String otpInput = request.getParameter("otpInput");
             String otp = (String) sessionS.getAttribute("otp");
-            if(otp==null){
-                indexScreen = "first";
-            }
-            else if (otp.equals(otpInput)) {
+            if (otp.equals(otpInput)) {
                 indexScreen = "three";
-                sessionS.removeAttribute(otp);
             } else {
-                String messageEnrrorOtp = "otp không chính xác";
+                indexScreen = "second";
+                String messageEnrrorOtp = "OTP không chính xác";
                 request.setAttribute("messageEnrrorOtp", messageEnrrorOtp);
             }
+            sessionS.setAttribute("otp", otp);
         }
         
         if(service.equals("updatePassWord")){
