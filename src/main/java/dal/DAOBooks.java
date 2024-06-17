@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import models.Book;
 import models.Books;
 /**
  *
@@ -47,8 +48,8 @@ public class DAOBooks extends DBConnect{
         }
         return book;
     }
-    public ArrayList<Books> getAll(String sql) {
-        ArrayList<Books> list = new ArrayList<>();
+    public ArrayList<Book> getAll(String sql) {
+        ArrayList<Book> list = new ArrayList<>();
         try {
 
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -65,26 +66,28 @@ public class DAOBooks extends DBConnect{
                 String size = rs.getString("size");
                 String weight = rs.getString("weight");
                 String summary = rs.getString("summary");
-                Double price = rs.getDouble("price");
+                BigDecimal price = rs.getBigDecimal("price");
                 Integer rating = rs.getInt("rating");
                 Integer discount = rs.getInt("discount");
                 int stock = rs.getInt("stock");
                 Timestamp createdAt = rs.getTimestamp("create_at");
                 Timestamp updatedAt = rs.getTimestamp("updated_at");
+                String format = rs.getString("format");
+                int pages = rs.getInt("pages");
 
-                 Books b = new Books(bookId, title, author, image, categoryId, publishingHouse, 
-                         publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt);
+                 Book b = new Book(bookId, title, author, image, categoryId, publishingHouse, 
+                         publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
                  list.add(b);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
     public static void main(String[] args) {
         DAOBooks dao = new DAOBooks();
-        ArrayList<Books> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");
-        for (Books books : list) {
+        ArrayList<Book> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");
+        for (Book books : list) {
             System.out.println(books);
         }
     }

@@ -1,12 +1,22 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dal;
 
-import models.*;
-import java.sql.*;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.Level;
+import models.User;
+import models.users;
+
 
 public class DAOUsers extends DBConnect {
     
@@ -188,5 +198,4 @@ public class DAOUsers extends DBConnect {
             System.out.println(user);
         }
     }
-    
 }

@@ -13,7 +13,7 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home">Home</a></li>
                         <li class="nav-item active submenu dropdown">
                             <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Shop</a>
@@ -37,8 +37,8 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Pages</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                                <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
                                 <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li>
                             </ul>
                         </li>
