@@ -20,12 +20,12 @@ import models.users;
 
 public class DAOUsers extends DBConnect {
     
-    public Vector<users> getAll(String sql) {
-        Vector<users> vector = new Vector<>();
+    public Vector<User> getAll(String sql) {
+        Vector<User> vector = new Vector<>();
         try (Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet rs = state.executeQuery(sql)) {
             
             while (rs.next()) {
-                users u = mapResultSetToUser(rs);
+                User u = mapResultSetToUser(rs);
                 vector.add(u);
             }
         } catch (SQLException ex) {
@@ -69,19 +69,48 @@ public class DAOUsers extends DBConnect {
         return n;
     }
     
-    public users getUserByUsername(String email) {
+    public User getUserByUsername(String email) {
         String query = "SELECT * FROM users WHERE email = ?";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUser(rs);
+                    return new User(
+                rs.getInt("user_id"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("password"),
+                rs.getInt("role_id"),
+                rs.getString("fullname"),
+                rs.getString("gender"),
+                rs.getString("image"),
+                rs.getString("address"),
+                rs.getTimestamp("create_at"),
+                rs.getTimestamp("updated_at")
+                
+        );
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+       private User mapResultSetToUser(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getInt("user_id"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("password"),
+                rs.getInt("role_id"),
+                rs.getString("fullname"),
+                rs.getString("gender"),
+                rs.getString("image"),
+                rs.getString("address"),
+                rs.getTimestamp("create_at"),
+                rs.getTimestamp("updated_at")
+                
+        );
     }
     
     public int addUser(users user) {
@@ -147,7 +176,7 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
     
-    public users getUserById(int userId) {
+    public User getUserById(int userId) {
         String sql = "SELECT * FROM users WHERE user_id = ?";
         try (PreparedStatement pre = conn.prepareStatement(sql)) {
             pre.setInt(1, userId);
@@ -162,21 +191,6 @@ public class DAOUsers extends DBConnect {
         return null;
     }
     
-    private users mapResultSetToUser(ResultSet rs) throws SQLException {
-        return new users(
-                rs.getInt("user_id"),
-                rs.getString("email"),
-                rs.getString("phone"),
-                rs.getString("password"),
-                rs.getInt("role_id"),
-                rs.getString("fullname"),
-                rs.getString("gender"),
-                rs.getString("address"),
-                rs.getTimestamp("create_at"),
-                rs.getTimestamp("updated_at"),
-                rs.getInt("status")
-        );
-    }
     
     private void setPreparedStatementForUser(PreparedStatement ps, users user) throws SQLException {
         ps.setString(1, user.getEmail());
@@ -193,8 +207,8 @@ public class DAOUsers extends DBConnect {
     
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
-        Vector<users> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");
-        for (users user : vector) {
+        Vector<User> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");
+        for (User user : vector) {
             System.out.println(user);
         }
     }

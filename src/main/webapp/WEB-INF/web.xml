@@ -28,6 +28,22 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartContact</servlet-name>
+        <servlet-class>controllers.CartContact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartDetail</servlet-name>
+        <servlet-class>controllers.CartDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartDetails</servlet-name>
+        <servlet-class>controllers.CartDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPassWord</servlet-name>
+        <servlet-class>controllers.ResetPassWord</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -55,6 +71,22 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartContact</servlet-name>
+        <url-pattern>/cartcontact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartDetail</servlet-name>
+        <url-pattern>/cartdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartDetails</servlet-name>
+        <url-pattern>/cartdetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPassWord</servlet-name>
+        <url-pattern>/resetpassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

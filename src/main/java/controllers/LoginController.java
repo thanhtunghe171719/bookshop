@@ -5,12 +5,13 @@
 package controllers;
 
 import dal.DAOUsers;
-import models.*;
+import models.User;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.users;
 
 public class LoginController extends HttpServlet {
 
@@ -28,13 +29,13 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         DAOUsers dao = new DAOUsers();
-        users user = dao.getUserByUsername(email);
-        if (user != null && user.getStatus() == 0) {
+        User us = dao.getUserByUsername(email);
+        if (us == null) {
             request.setAttribute("errorMessage", "Your account no confirmed. Please confirm your account");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);
-        } else if (user != null && user.getPassword().equals(password)) {
+        } else if (us != null && us.getPassword().equals(password)) {
             // Authentication successful
-            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("user", us);
             response.sendRedirect("home");
         } else {
             // Authentication failed
