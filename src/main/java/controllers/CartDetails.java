@@ -31,7 +31,7 @@ public class CartDetails extends HttpServlet {
         DAOBooks daoBook = new DAOBooks();
         DAOCartDetails daoCartDetails = new DAOCartDetails();
         
-//        
+        
 //        User user = (User) session.getAttribute("user");
 //        session.setAttribute("user", user);
 //        if(user==null){
@@ -44,39 +44,55 @@ public class CartDetails extends HttpServlet {
             int cartId = daoCart.getCartId(userId);
 
             String service = request.getParameter("service");
-
+            
+            
+            Map<CartItems, Book> cartItemBookMap = new HashMap<>();
+            
             if(service == null){
                 service = "listAll";
             }
            if(service.equals("addCart")){
                 ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
                 String stringBookId = request.getParameter("bookId");
-                String stringQuantity = request.getParameter("quantity");
-                if(stringBookId!=null && stringBookId.isEmpty() && stringQuantity!=null && stringQuantity.isEmpty()){
-                    int booId = Integer.parseInt(stringBookId);
-                    int quantity = Integer.parseInt(stringQuantity);
+                String test="";
+                if(stringBookId!=null && !stringBookId.isEmpty()){
+                    int bookId = Integer.parseInt(stringBookId);
                     if(listItems != null) {
                         boolean check = true;
                        for (CartItems listItem : listItems) {
-                           if(listItem.getBookId() == booId){
-                               listItem.setQuantity(quantity);
-                               daoCartDetails.updateQuantity(listItem.getCartItemId(), quantity);
-                               check= false;
+                           if(listItem.getBookId() == bookId){
+                               int quantity = listItem.getQuantity();
+                               listItem.setQuantity(quantity + 1);
+                               daoCartDetails.updateQuantity(listItem.getCartItemId(), listItem.getQuantity());
+                               test = "có book và tăng quantity";
+                               check = false; 
+                               break;
                            }
                        }
                        if(check){
                            CartItems cartItems = new CartItems();
                            cartItems.setCartId(cartId);
-                           cartItems.setBookId(booId);
-                           cartItems.setQuantity(quantity);
+                           cartItems.setBookId(bookId);
+                           cartItems.setQuantity(1);
                            daoCartDetails.insert(cartItems);
+                           test = "có cart nhưng không có book";
                        }
+                    }else{
+                        CartItems cartItems = new CartItems();
+                        cartItems.setCartId(cartId);
+                        cartItems.setBookId(bookId);
+                        cartItems.setQuantity(1);
+                        daoCartDetails.insert(cartItems);
+                        test = "chưa từng có cart";
                     }
+                }else{
+                    test = "không có stringBookId ";
                 }
-                RequestDispatcher dispth = request.getRequestDispatcher("./views/cartdetails.jsp");
-                dispth.forward(request, response);
+                session.setAttribute("test", test);
+                response.sendRedirect("cartdetails");
+                return;
             }
-            Map<CartItems, Book> cartItemBookMap = new HashMap<>();
+            
             if(service.equals("listAll")){
                 if(cartId != 0){
                     ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
@@ -122,18 +138,16 @@ public class CartDetails extends HttpServlet {
             
             if(service.equals("delete")){
                 String stringCartItemId = request.getParameter("cartItemId");
-
                 if(stringCartItemId != null){
                     int cartItemId = Integer.parseInt(stringCartItemId);
                     int checkDelete = daoCartDetails.delete(cartItemId);
-                    
+
                     cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
 
-                    if(checkDelete!=0){
+                    if(checkDelete != 0){
                         cartItemBookMap.entrySet().removeIf(entry -> entry.getKey().getCartItemId() == cartItemId);
                     }
                     session.setAttribute("cartItemBookMap", cartItemBookMap);
-
                 }
             }
 

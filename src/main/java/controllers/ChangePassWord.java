@@ -14,16 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Map;
-import models.Book;
-import models.CartItems;
 import models.User;
 
 /**
  *
  * @author TDG
  */
-public class CartContact extends HttpServlet {
+public class ChangePassWord extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,34 +33,39 @@ public class CartContact extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         
-        DAOUsers daoUsers = new DAOUsers();
+        session.setAttribute("user", user);
         
-//        User user = (User) session.getAttribute("user");
-//        session.setAttribute("user", user);
-//        if(user==null){
-//            response.sendRedirect("login");
-//        }else{
+        if(user==null){
+            response.sendRedirect("login");
+        }else{
+            DAOUsers dao = new DAOUsers();
 
-            int userId = 1;
-            User user = daoUsers.getAll("Select * from users where user_id = "+userId).get(0);
-            session.setAttribute("user", user);
+            String oldPassword = (String) request.getParameter("oldPassword");
+            String newPassword = (String) request.getParameter("newPassword");
 
+            String notice = null;
 
-            Map<CartItems, Book> cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
-
-
-            if (cartItemBookMap == null) {
-                // If cartItemBookMap is null, redirect to the cartdetails page to ensure it's set
-                response.sendRedirect("cartdetails");
-                return;
+            if(oldPassword.equals(user.getPassword())){
+                user.setPassword(newPassword);
+                int result = dao.update(user);
+                if(result != 0){
+                    notice = "change password successful.";
+                }else{
+                    notice = "change password fail.";
+                }
+            }else{
+                notice = "input wrong old password.";
             }
-
-            RequestDispatcher dispth = request.getRequestDispatcher("./views/cartcontact.jsp");
+            //select(jsp)   
+            RequestDispatcher dispth = request.getRequestDispatcher("./views/changepassword.jsp");
+            //run(view)
             dispth.forward(request, response);
             
-//        }
+        }
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

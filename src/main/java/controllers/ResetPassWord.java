@@ -26,7 +26,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
-import java.util.Vector;
 import models.MailConfig;
 import models.User;
 
@@ -130,7 +129,7 @@ public class ResetPassWord extends HttpServlet {
             if(newPassWord!=null && !newPassWord.isEmpty()){
                 String emailReset = (String)sessionS.getAttribute("emailReset");
                 if(emailReset!=null && !emailReset.isEmpty()){
-                    Vector<User> listUser = daoUsers.getAll("SELECT * FROM users where email = '"+emailReset+"'");
+                    ArrayList<User> listUser = daoUsers.getAll("SELECT * FROM users where email = '"+emailReset+"'");
                     if(listUser!=null){
                         User user = listUser.get(0);
                         user.setPassword(newPassWord);
@@ -151,7 +150,7 @@ public class ResetPassWord extends HttpServlet {
         }
 
         sessionS.setAttribute("indexScreen", indexScreen);
-        RequestDispatcher dispth = request.getRequestDispatcher("./view/resetpassword.jsp");
+        RequestDispatcher dispth = request.getRequestDispatcher("./views/resetpassword.jsp");
         dispth.forward(request, response);
     } 
 

@@ -70,6 +70,7 @@
                         <div class="login_form_inner">
                             <h2 style="margin-bottom: 20px">Quên Mật Khẩu?</h2>
                             <input type="hidden" name="emailReset" value="${emailReset}">
+                            
                             <!--màn hình nhập email-->
                             <c:if test="${indexScreen == 'first'}">
                                 <form class="row login_form" action="resetpassword" id="contactForm" >
@@ -96,11 +97,11 @@
                                         <p style="text-align: left;padding-left: 15px;">OTP</p>
                                         <input type="text" class="form-control" id="otp" name="otpInput" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="OTP" onfocus="this.placeholder = ''" onblur="this.placeholder = 'OTP'">
 
-                                        <input type="hidden" name="service" value="checkOtp">    
+                                        <!--<input type="hidden" name="service" value="checkOtp">-->    
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <p style="float: left;color: red">${messageEnrrorOtp}</p>
-                                        <button type="submit" value="submit" class="button button-login w-100">Tiếp Tục</button>
+                                        <button type="submit" name="service" value="checkOtp" class="button button-login w-100">Tiếp Tục</button>
                                         <a href="resetpassword">Nhập Lại Gmail</a>
                                     </div>
                                 </form>        
@@ -154,6 +155,7 @@
         <!--================ End footer Area  =================-->
 
         <script>
+
             function togglePassword(inputId, button) {
                 var input = document.getElementById(inputId);
                 var icon = button.querySelector('i');

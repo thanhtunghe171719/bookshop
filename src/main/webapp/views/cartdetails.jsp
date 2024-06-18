@@ -56,6 +56,7 @@
   
 
   <!--================Cart Area =================-->
+  
   <section class="cart_area">
       <div class="container">
           <div class="cart_inner">
@@ -76,7 +77,7 @@
                           <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                               <c:set var="cartItem" value="${entry.key}" />
                               <c:set var="book" value="${entry.value}" />
-                              <c:set var="lineSubTotal" value="${book.price * cartItem.quantity * (1-book.discount)}" />
+                              <c:set var="lineSubTotal" value="${book.price * cartItem.quantity * (100-book.discount)/100}" />
                               <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
                               <tr>
                                     <td>
@@ -101,7 +102,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 id="total-price-${cartItem.cartItemId}">$${book.price * cartItem.quantity * (1-book.discount)}</h5>
+                                        <h5 id="total-price-${cartItem.cartItemId}">$${book.price * cartItem.quantity * (100-book.discount)/100}</h5>
                                     </td>
                                     <td>
                                         <a href="cartdetails?service=delete&cartItemId=${cartItem.cartItemId}">Delete</a>
