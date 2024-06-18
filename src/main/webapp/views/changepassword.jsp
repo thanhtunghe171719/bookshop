@@ -71,20 +71,29 @@
 						<h3>Change password</h3>
 						<form class="row login_form" action="changepassword" id="register_form"  onsubmit="return validateForm()">
 							<div class="col-md-12 form-group">
-                                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Old Password'"  onblur="validateOldPassword()">
+                                                            <div class="password-container" style="display: flex">
+                                                                <input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Old Password'"  onblur="validateOldPassword()">
+                                                                <button type="button" onclick="togglePassword('oldPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
+                                                            </div>
                                                             <p  id="oldPasswordError" class="text-danger"></p>
                                                         </div>
                                                         <div class="col-md-12 form-group">
-                                                            <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'New Password'" onblur="validateNewPassword()">
+                                                            <div class="password-container" style="display: flex">
+                                                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'New Password'" onblur="validateNewPassword()">
+                                                                <button type="button" onclick="togglePassword('newPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
+                                                            </div>
                                                             <p  id="newPasswordError" class="text-danger"></p>
                                                         </div>
                                                         <div class="col-md-12 form-group">
-                                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm New Password'" onblur="validateConfirmPassword()">
+                                                            <div class="password-container" style="display: flex">
+                                                                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm New Password'" onblur="validateConfirmPassword()">
+                                                                <button type="button" onclick="togglePassword('confirmNewPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
+                                                            </div>
                                                             <p  id="confirmNewPasswordError" class="text-danger"></p>
                                                         </div>
 							
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="button button-register w-100">Save</button>
+                                                            <button type="submit" name="submit" value="submit" class="button button-register w-100">Save</button>
                                                                 <p  id="formError" class="text-danger"></p>
                                                         </div>
 						</form>
@@ -102,7 +111,20 @@
     <!--================ End footer Area  =================-->
 
     <script>
+            function togglePassword(inputId, button) {
+                var input = document.getElementById(inputId);
+                var icon = button.querySelector('i');
 
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                } else {
+                    input.type = "password";
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                }
+            }
     function validateOldPassword() {
       const oldPassword = document.getElementById('oldPassword').value;
       const oldPasswordError = document.getElementById('oldPasswordError');

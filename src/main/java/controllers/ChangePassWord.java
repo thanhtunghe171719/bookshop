@@ -41,23 +41,26 @@ public class ChangePassWord extends HttpServlet {
         if(user==null){
             response.sendRedirect("login");
         }else{
-            DAOUsers dao = new DAOUsers();
+            String submit = request.getParameter("submit");
+            if(submit != null && submit.equals("submit")){
+                DAOUsers dao = new DAOUsers();
 
-            String oldPassword = (String) request.getParameter("oldPassword");
-            String newPassword = (String) request.getParameter("newPassword");
+                String oldPassword = (String) request.getParameter("oldPassword");
+                String newPassword = (String) request.getParameter("newPassword");
 
-            String notice = null;
+                String notice = null;
 
-            if(oldPassword.equals(user.getPassword())){
-                user.setPassword(newPassword);
-                int result = dao.update(user);
-                if(result != 0){
-                    notice = "change password successful.";
+                if(oldPassword.equals(user.getPassword())){
+                    user.setPassword(newPassword);
+                    int result = dao.update(user);
+                    if(result != 0){
+                        notice = "change password successful.";
+                    }else{
+                        notice = "change password fail.";
+                    }
                 }else{
-                    notice = "change password fail.";
+                    notice = "input wrong old password.";
                 }
-            }else{
-                notice = "input wrong old password.";
             }
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("./views/changepassword.jsp");
