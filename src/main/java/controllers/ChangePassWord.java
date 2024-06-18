@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controllers;
 
 import dal.DAOUsers;
@@ -21,24 +20,26 @@ import models.User;
  * @author TDG
  */
 public class ChangePassWord extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        
+
         session.setAttribute("user", user);
-        
-        if(user==null){
+
+        if (user == null) {
             response.sendRedirect("login");
         }else{
             String submit = request.getParameter("submit");
@@ -55,6 +56,8 @@ public class ChangePassWord extends HttpServlet {
                     int result = dao.update(user);
                     if(result != 0){
                         notice = "change password successful.";
+                        response.sendRedirect("home");
+                        return;
                     }else{
                         notice = "change password fail.";
                     }
@@ -62,25 +65,48 @@ public class ChangePassWord extends HttpServlet {
                     notice = "input wrong old password.";
                 }
             }
-            //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("./views/changepassword.jsp");
             //run(view)
             dispth.forward(request, response);
-            
-        }
-        
-    } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        }
+//            DAOUsers dao = new DAOUsers();
+//
+//            String oldPassword = (String) request.getParameter("oldPassword");
+//            String newPassword = (String) request.getParameter("newPassword");
+//
+//            String notice = null;
+//
+//            if(oldPassword.equals(user.getPassword())){
+//                user.setPassword(newPassword);
+//                int result = dao.update(user);
+//                if(result != 0){
+//                    notice = "change password successful.";
+//                }else{
+//                    notice = "change password fail.";
+//                }
+//            }else{
+//                notice = "input wrong old password.";
+//            }
+//            //select(jsp)   
+//            RequestDispatcher dispth = request.getRequestDispatcher("./views/changepassword.jsp");
+//            //run(view)
+//            dispth.forward(request, response);
+
+    }
+
+
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+/**
+ * Handles the HTTP <code>GET</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     } 
@@ -93,7 +119,7 @@ public class ChangePassWord extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -103,8 +129,10 @@ public class ChangePassWord extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
 }
+
+

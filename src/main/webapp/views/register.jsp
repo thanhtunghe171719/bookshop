@@ -38,22 +38,29 @@
                     <div class="col-lg-6">
                         <div class="login_form_inner register_form_inner">
                             <h3>Create an account</h3>
-                            <form class="row login_form" action="#/" id="register_form" >
+                            <form class="row login_form" action="register" id="post" >
+                                <c:if test="${not empty errorMessage}">
+                                    <div class="alert alert-danger" role="alert">
+                                        ${errorMessage}
+                                    </div>
+                                </c:if>
+                                <div>${error}</div>
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Họ và tên'">
+                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Họ và tên" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Họ và tên'">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <input type="number" class="form-control" id="phone" name="phone" placeholder="Phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Số điện thoại'">
+                                    <input type="number" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Số điện thoại'">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Địa chỉ'">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="confirmPassword" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Xác nhận mật khẩu'">
-                                </div>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
+                                </div>  
+                                
                                 <div class="col-md-12 form-group">
                                     <div class="creat_account">
                                         <input type="checkbox" id="f-option2" name="selector">
@@ -63,6 +70,7 @@
                                 <div class="col-md-12 form-group">
                                     <button type="submit" value="submit" class="button button-register w-100">Register</button>
                                 </div>
+                                
                             </form>
                         </div>
                     </div>

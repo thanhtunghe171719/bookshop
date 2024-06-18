@@ -60,9 +60,9 @@
                     <div class="col-lg-6">
                         <div class="login_box_img">
                             <div class="hover">
-                                <h4>New to our website?</h4>
-                                <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                                <a class="button button-account" href="register.html">Create an Account</a>
+                                <h4>Lần đầu truy cập?</h4>
+                                <p>Đăng ký tài khoản tại đây để có trải nghiệm tốt nhất</p>
+                                <a class="button button-account" href="register">Đăng ký tài khoản</a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 <form class="row login_form" action="resetpassword" id="contactForm" >
                                     <p style="text-align: left;padding-left: 15px;padding-bottom: 20px">Điền email gắn với tài khoản của bạn để nhận đường dẫn thay đổi mật khẩu</p>
                                     <div class="col-md-12 form-group">
-                                        <p style="text-align: left;padding-left: 15px;">Email</p>
+                                        
                                         <input type="text" class="form-control" id="email" name="emailReset" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
 
                                         <input type="hidden" name="service" value="sendEmail">    
@@ -84,7 +84,7 @@
                                     <div class="col-md-12 form-group">
                                         <p style="float: left;color: red">${messageErrorEmail}</p>
                                         <button type="submit" value="submit" class="button button-login w-100">Tiếp Tục</button>
-                                        <a href="#">Quay Lại Đăng Nhập</a>
+                                        <a href="login">Quay Lại Đăng Nhập</a>
                                     </div>
                                 </form>
                             </c:if>
@@ -94,7 +94,6 @@
                                 <form class="row login_form" action="resetpassword" id="contactForm" >
                                     <p style="text-align: left;padding-left: 15px;padding-bottom: 20px">Điền mã otp đã gửi đến email bạn đã nhập</p>
                                     <div class="col-md-12 form-group">
-                                        <p style="text-align: left;padding-left: 15px;">OTP</p>
                                         <input type="text" class="form-control" id="otp" name="otpInput" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="OTP" onfocus="this.placeholder = ''" onblur="this.placeholder = 'OTP'">
 
                                         <!--<input type="hidden" name="service" value="checkOtp">-->    
@@ -112,7 +111,6 @@
                                 <form class="row login_form" action="resetpassword" id="contactForm" onsubmit="return validateForm();">
                                     <p style="text-align: left;padding-left: 15px;padding-bottom: 20px">Điền mật khẩu mới</p>
                                     <div class="col-md-12 form-group">
-                                        <p style="text-align: left;padding-left: 15px;">New Password</p>
                                         <div class="password-container" style="display: flex">
                                             <input type="password" class="form-control" id="newPassword" name="newPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="New Password" onblur="validateNewPassword()">
                                             <button type="button" onclick="togglePassword('newPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
@@ -120,7 +118,6 @@
                                         <p id="newPasswordResult" style="text-align: left;padding-left: 15px;color: red"></p>
                                     </div>
                                     <div class="col-md-12 form-group">
-                                        <p style="text-align: left;padding-left: 15px;">Confirm Password</p>
                                         <div class="password-container" style="display: flex">
                                             <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Confirm Password" onblur="validateConfirmPassword()">
                                             <button type="button" onclick="togglePassword('confirmNewPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
@@ -137,7 +134,7 @@
 
                             <c:if test="${not empty messageUpdate}">
                                 <h3 style="margin-top: 150px">${messageUpdate}</h3>     
-                                <form class="row login_form" action="#">
+                                <form class="row login_form" action="login">
                                     <button class="button button-login w-100">Quay Lại Đăng Nhập</button>
                                 </form>
                             </c:if>
