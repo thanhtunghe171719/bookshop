@@ -64,13 +64,13 @@
         <div class="container">
             <c:if test="${not empty listSlider}">
                 <c:forEach var="slider" items="${listSlider}" varStatus="loop">
-                    <div class="row no-gutters align-items-center pt-60px" id="slide_${loop.index}" <c:if test="${loop.index != 0}">style="display: none;"</c:if>>
+                    <div class="row no-gutters align-items-center" id="slide_${loop.index}" <c:if test="${loop.index != 0}">style="display: none;"</c:if>>
                         <div class="col-5 d-none d-sm-block">
                             <div class="hero-banner__img">
                                 <div>
                                     <button class="bi bi-arrow-left-circle" onclick="prevSlide(${loop.index})"></button>
                                 </div>
-                                <img class="img-fluid" src="${slider.image}" alt="">
+                                <img class="img-fluid" src="${slider.image}" alt="" style="height:300px">
                             </div>
                         </div>
                         <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">

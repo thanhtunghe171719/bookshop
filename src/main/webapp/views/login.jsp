@@ -34,15 +34,15 @@
                     <div class="col-lg-6">
                         <div class="login_box_img">
                             <div class="hover">
-                                <h4>New to our website?</h4>
-                                <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                                <a class="button button-account" href="register">Create an Account</a>
+                                <h4>Lần đầu truy cập?</h4>
+                                <p>Đăng ký tài khoản tại đây để có trải nghiệm tốt nhất</p>
+                                <a class="button button-account" href="register">Đăng ký tài khoản</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="login_form_inner">
-                            <h3>Log in to enter</h3>
+                            <h3>Đăng nhập</h3>
                             <form class="row login_form" action="login" method="post" >
                                     <c:if test="${not empty errorMessage}">
                                     <div class="alert alert-danger" role="alert">
@@ -50,20 +50,20 @@
                                     </div>
                                 </c:if>
                                     <div class="col-md-12 form-group">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
                                     </div>
                                     <div class="col-md-12 form-group">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
                                     </div>
-                                    <div class="col-md-12 form-group">
+<!--                                    <div class="col-md-12 form-group">
                                         <div class="creat_account">
                                             <input type="checkbox" id="f-option2" name="selector">
                                             <label for="f-option2">Keep me logged in</label>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-md-12 form-group">
-                                        <button type="submit" value="submit" class="button button-login w-100">Log In</button>
-                                        <a href="resetpassword">Forgot Password?</a>
+                                        <button type="submit" value="submit" class="button button-login w-100">Đăng nhập</button>
+                                        <a href="resetpassword">Quên mật khẩu</a>
                                     </div>
                                 </form>
 

@@ -84,7 +84,7 @@
                                                         </div>
 							
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="button button-register w-100">Save</button>
+								<button type="submit" name ="submit" value="submit" class="button button-register w-100">Save</button>
                                                                 <p  id="formError" class="text-danger"></p>
                                                         </div>
 						</form>
