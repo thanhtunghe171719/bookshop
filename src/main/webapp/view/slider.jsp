@@ -94,7 +94,7 @@
                                         <div class="media post_item">
                                             <img src="${slider.image}" alt="" style="width: 90px;">
                                             <div class="media-body">
-                                                <a href="slider?service=backlink&">
+                                                <a href="slider?service=backlink&id=${slider.sliderId}">
                                                     <h3>${slider.title}</h3>
                                                 </a>
                                             </div>

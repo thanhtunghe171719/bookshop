@@ -38,16 +38,17 @@ public class CartContact extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         
-//        DAOUsers daoUsers = new DAOUsers();
+        DAOUsers daoUsers = new DAOUsers();
         
-        User user = (User) session.getAttribute("user");
-        session.setAttribute("user", user);
-        if(user==null){
-            response.sendRedirect("login");
-        }else{
+//        User user = (User) session.getAttribute("user");
+//        session.setAttribute("user", user);
+//        if(user==null){
+//            response.sendRedirect("login");
+//        }else{
 
-            //int userId = 1;
-            //User user = daoUsers.getAll("Select * from users where user_id = "+userId).get(0);
+            int userId = 1;
+            User user = daoUsers.getAll("Select * from users where user_id = "+userId).get(0);
+            session.setAttribute("user", user);
 
 
             Map<CartItems, Book> cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
@@ -62,7 +63,7 @@ public class CartContact extends HttpServlet {
             RequestDispatcher dispth = request.getRequestDispatcher("./view/cartcontact.jsp");
             dispth.forward(request, response);
             
-        }
+//        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

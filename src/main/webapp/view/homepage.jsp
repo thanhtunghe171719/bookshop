@@ -140,8 +140,12 @@
                         <div class="card-product__img">
                             <img class="card-img" src="${book.image}" alt="">
                             <ul class="card-product__imgOverlay">
-                                <li><button><i class="bi bi-card-list"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <form action="cartdetails" method="get">                             
+                                    <li><button><i class="bi bi-card-list"></i></button></li>
+                                    <input type="hidden" name="service" value="addCart">
+                                    <input type="hidden" name="bookId" value="${book.bookId}">
+                                    <li><button><i class="ti-shopping-cart"></i></button></li>
+                                </form>
                             </ul>
                         </div>
                         <div class="card-body">
