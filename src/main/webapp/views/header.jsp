@@ -38,7 +38,7 @@
                         <div>
                             <form action="search" method="post">
                                 <div class="input-group filter-bar-search">
-                                    <input value="${search}" name="search" type="text" placeholder="Search">
+                                    <input value="${search}" name="search" type="text" placeholder="Search product">
                                     <div class="input-group-append">
                                         <button type="submit"><i class="ti-search"></i></button>
                                     </div>

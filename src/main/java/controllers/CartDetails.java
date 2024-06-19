@@ -32,14 +32,14 @@ public class CartDetails extends HttpServlet {
         DAOCartDetails daoCartDetails = new DAOCartDetails();
         
         
-//        User user = (User) session.getAttribute("user");
-//        session.setAttribute("user", user);
-//        if(user==null){
-//            response.sendRedirect("login");
-//        }else{
-//            int userId = user.getUserId();
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
+        if(user==null){
+            response.sendRedirect("login");
+        }else{
+            int userId = user.getUserId();
 
-            int userId = 1;
+//            int userId = 1;
 
             int cartId = daoCart.getCartId(userId);
 
@@ -154,7 +154,7 @@ public class CartDetails extends HttpServlet {
             RequestDispatcher dispth = request.getRequestDispatcher("./views/cartdetails.jsp");
             dispth.forward(request, response);
             
-//        }        
+        }        
     } 
 
     @Override

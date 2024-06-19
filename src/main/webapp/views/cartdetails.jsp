@@ -64,11 +64,11 @@
                   <table class="table">
                       <thead>
                           <tr>
-                              <th scope="col">Product</th>
-                              <th scope="col">Price</th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Total</th>
-                              <th scope="col">Delete</th>
+                              <th scope="col">Sản Phẩm</th>
+                              <th scope="col">Giá</th>
+                              <th scope="col">Số Lượng</th>
+                              <th scope="col">Thành Giá</th>
+                              <th scope="col">Xóa Sản Phẩm</th>
                           </tr>
                       </thead>
                       
@@ -77,7 +77,7 @@
                           <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                               <c:set var="cartItem" value="${entry.key}" />
                               <c:set var="book" value="${entry.value}" />
-                              <c:set var="lineSubTotal" value="${book.price * cartItem.quantity * (100-book.discount)/100}" />
+                              <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100) * 1000}" />
                               <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
                               <tr>
                                     <td>
@@ -91,21 +91,23 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5>$${book.price}</h5>
+                                        <h5>${book.price * 1000}</h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="qty-${cartItem.cartItemId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty" 
-                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, this.value)" >
-                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
+                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value)" >
+                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 id="total-price-${cartItem.cartItemId}">$${book.price * cartItem.quantity * (100-book.discount)/100}</h5>
+                                        <h5 id="total-price-${cartItem.cartItemId}">${lineSubTotal}</h5>
                                     </td>
                                     <td>
-                                        <a href="cartdetails?service=delete&cartItemId=${cartItem.cartItemId}">Delete</a>
+                                        <a href="cartdetails?service=delete&cartItemId=${cartItem.cartItemId}" style="font-size: 25px;color: red">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 
@@ -114,7 +116,7 @@
                          
                           <tr class="bottom_button">
                               <td colspan="4"> 
-                                  <a class="button" href="cartdetails">Update Cart</a>
+                                  <a class="button" href="cartdetails">Cập Nhật Giỏ Hàng</a>
                               </td>
 <!--                              <td>
                                   <div class="cupon_text d-flex align-items-center">
@@ -130,7 +132,7 @@
                               <td></td>
                               <td></td>
                               <td>
-                                  <h5>Subtotal</h5>
+                                  <h5>Tổng Giá Trị Giỏ Hàng</h5>
                               </td>
                               <td>
                                   <h5 id="total-all">${subTotal}</h5>
@@ -141,8 +143,13 @@
                               <td colspan="3"></td>
                               <td colspan="2">
                                   <div class="checkout_btn_inner d-flex align-items-center" style="float: right">
-                                      <a class="gray_btn" href="product">Continue Shopping</a>
-                                      <a class="primary-btn ml-2" href="cartcontact">Proceed to checkout</a>
+                                      <a class="gray_btn" href="product">Tiếp Tục Mua Sắm</a>
+                                      <c:if test="${not empty cartItemBookMap}">
+                                          <a class="primary-btn ml-2" href="cartcontact">Mua Hàng</a>
+                                      </c:if>
+                                      <c:if test="${empty cartItemBookMap}">
+                                          <p style="color: red;padding: 10px;margin: 0;">Giỏ hàng hiện tại của bạn đang trống</p>
+                                      </c:if>
                                   </div>
                               </td>
                           </tr>
@@ -165,7 +172,7 @@
 
     <script>
 
-function updateQuantity(cartItemId, bookPrice, action) {
+function updateQuantity(cartItemId, bookPrice, discount, action) {
     // Lấy ra giá trị hiện tại của quantity
     var quantity = parseInt(document.getElementById('qty-' + cartItemId).value);
 
@@ -181,7 +188,9 @@ function updateQuantity(cartItemId, bookPrice, action) {
     // Cập nhật giá trị mới của quantity trên giao diện
     document.getElementById('qty-' + cartItemId).value = quantity;
     // Cập nhật giá trị tổng giá trị cho sản phẩm
-    document.getElementById('total-price-' + cartItemId).innerText = '$' + (quantity * bookPrice).toFixed(2);
+    document.getElementById('total-price-' + cartItemId).innerText =  ((bookPrice * quantity * (100 - discount) / 100) * 1000).toFixed(2);
+    
+    updateSubtotal();
     
     // Gửi yêu cầu cập nhật quantity lên server bằng AJAX
     var xhr = new XMLHttpRequest();
@@ -195,7 +204,7 @@ function updateQuantity(cartItemId, bookPrice, action) {
     xhr.send();
 }
 
-function updateTotalPrice(cartItemId, bookPrice, quantity) {
+function updateTotalPrice(cartItemId, bookPrice, discount, quantity) {
     // Parse quantity to integer
     quantity = parseInt(quantity);
 
@@ -208,8 +217,10 @@ function updateTotalPrice(cartItemId, bookPrice, quantity) {
     document.getElementById('qty-' + cartItemId).value = quantity;
 
     // Update the total price based on the new quantity
-    var totalPrice = quantity * bookPrice;
-    document.getElementById('total-price-' + cartItemId).innerText = '$' + totalPrice.toFixed(2);
+    var totalPrice = (bookPrice * quantity * (100 - discount) / 100) * 1000;
+    document.getElementById('total-price-' + cartItemId).innerText =  totalPrice.toFixed(2);
+
+    updateSubtotal();
 
     // Send AJAX request to update quantity on the server
     var xhr = new XMLHttpRequest();
@@ -223,7 +234,18 @@ function updateTotalPrice(cartItemId, bookPrice, quantity) {
     xhr.send();
 }
 
+function updateSubtotal() {
+    var totalAll = 0;
 
+    var totalPriceElements = document.querySelectorAll('[id^="total-price-"]');
+    totalPriceElements.forEach(function(element) {
+        var priceText = element.innerText;
+        var price = parseFloat(priceText.replace('$', ''));
+        totalAll += price;
+    });
+
+    document.getElementById('total-all').innerText =  totalAll.toFixed(2);
+}
 
 
 
