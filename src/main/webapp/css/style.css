@@ -744,7 +744,7 @@ a{
     bottom:0;
     left:0;
     width:100%;
-    padding:30px 5px;
+    padding:100px 5px;
     transform:translateY(30px);
     opacity:0;
     z-index:-1;

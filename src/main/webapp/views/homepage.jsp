@@ -138,18 +138,18 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                       <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="card-img" src="${book.image}" alt="">
-                            <ul class="card-product__imgOverlay">
+                            <img class="card-img" src="${book.image}" alt="" style="height: 350px">
+                            <ul class="card-product__imgOverlay" style="display: flex">
+                                    <li style="margin-left: 33% ;"><a href=""><button><i class="bi bi-card-list"></i></button></a></li>
                                 <form action="cartdetails" method="get">                             
-                                    <li><button><i class="bi bi-card-list"></i></button></li>
                                     <input type="hidden" name="service" value="addCart">
                                     <input type="hidden" name="bookId" value="${book.bookId}">
-                                    <li><button><i class="ti-shopping-cart"></i></button></li>
+                                    <li ><button><i class="ti-shopping-cart"></i></button></li>
                                 </form>
                             </ul>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-product__title"><a href="single-product.html">${book.title}</a></h4>
+                            <h4 class="card-product__title"><a href="#">${book.title}</a></h4>
                             <p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>
                             <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>
                         </div>
@@ -178,7 +178,7 @@
                     <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                       <div class="card card-blog">
                         <div class="card-blog__img">
-                          <img class="card-img rounded-0" src="${post.image}" alt="">
+                            <img class="card-img rounded-0" src="${post.image}" alt="" style="height: 230px">
                         </div>
                         <div class="card-body">
 

@@ -83,7 +83,7 @@
                                     <td>
                                         <div class="media">
                                             <div class="d-flex">
-                                                <img src="${book.image}" alt="" style="width: 150px;">
+                                                <img src="${book.image}" alt="" style="width: 150px;height: 280px">
                                             </div>
                                             <div class="media-body">
                                                 <p>${book.title}</p>
