@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Oswald:400,500,600");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
-body{
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,500,600");@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");body{
     color:#777;
     font-family:"Roboto",sans-serif;
     font-size:15px;
@@ -744,7 +742,7 @@ a{
     bottom:0;
     left:0;
     width:100%;
-    padding:30px 5px;
+    padding:100px 5px;
     transform:translateY(30px);
     opacity:0;
     z-index:-1;
@@ -776,10 +774,6 @@ a{
 .card-product__price{
     font-size:18px;
     font-weight:500
-}
-.card-product__pricewithsale{
-    font-size:11px;
-    text-decoration: line-through;
 }
 .card-product:hover .card-product__imgOverlay{
     opacity:1;
@@ -3871,7 +3865,7 @@ a{
 }
 @media (min-width: 1000px){
     .footer-area{
-        padding:195px 0px 120px
+        padding:80px 0px 50px
     }
 }
 .single-footer-widget p{

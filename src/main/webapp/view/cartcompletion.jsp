@@ -78,7 +78,7 @@
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center mx-2">
                     <div>
-                        <img src="https://img.vietqr.io/image/VCB-1018334044-compact.png" width="300px" height="300px">
+                        <img src="https://api.vietqr.io/image/970436-1018334044-BZXjBUb.jpg?accountName=NGUYEN%20DINH%20DUC&amount=${amount}&addInfo=2223" width="340px" height="440px">
                     </div>
                     <div class="checkout-guide d-block ml-5">
                         <h6>Thực hiện theo bước sau để thanh toán:</h6>
@@ -107,9 +107,10 @@
                     </div>
                 </div>
 
-                <div class="form-group text-center text-sm-right mt-3">
-                    <a style="color: #FFF" type="submit" class="button button--active button-review">Đã thanh toán</a>
-                </div>
+                    
+                    <div class="form-group text-center text-sm-right mt-3">
+                        <a style="color: #FFF" href="home" class="button button--active button-review">Đã thanh toán</a>
+                    </div>
             </div>
         </div>
 

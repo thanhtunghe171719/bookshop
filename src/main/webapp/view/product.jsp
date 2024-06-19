@@ -54,9 +54,9 @@
                             <div class="head">Browse Categories</div>
                             <ul class="main-categories">
                                 <li class="common-filter">
-                                    <li class="filter-list">
-                                        <a href="products">Tất cả sản phẩm</a>
-                                    </li>
+                                <li class="filter-list">
+                                    <a href="products">Tất cả sản phẩm</a>
+                                </li>
                                 <c:forEach items="${category}" var="category">
                                     <li class="filter-list">
                                         <a class="${tag == category.categoryId ? "active-category" : ""}" href="products?categoryid=${category.categoryId}">${category.getCategoryName()}</a>
@@ -261,7 +261,7 @@
                                             <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
 
                                             <div class="card-body">
-                                                <h4 class="card-product__title"><a href="#">${book.getTitle()}</a></h4>
+                                                <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
 
                                                 <c:choose>
                                                     <c:when test="${originalPrice eq discountedPrice}">

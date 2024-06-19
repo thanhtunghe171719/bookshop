@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
+        <servlet-name>HomePage</servlet-name>
+        <servlet-class>controllers.HomePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePassWord</servlet-name>
+        <servlet-class>controllers.ChangePassWord</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>slider</servlet-name>
+        <servlet-class>controllers.slider</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartDetails</servlet-name>
+        <servlet-class>controllers.CartDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartContact</servlet-name>
+        <servlet-class>controllers.CartContact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPassWord</servlet-name>
+        <servlet-class>controllers.ResetPassWord</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewProducts</servlet-name>
         <servlet-class>controllers.ViewProducts</servlet-class>
     </servlet>
@@ -9,12 +33,36 @@
         <servlet-class>controllers.SearchControl</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>HomePage</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassWord</servlet-name>
+        <url-pattern>/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>slider</servlet-name>
+        <url-pattern>/slider</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewProducts</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchControl</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartDetails</servlet-name>
+        <url-pattern>/cartdetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartContact</servlet-name>
+        <url-pattern>/cartcontact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPassWord</servlet-name>
+        <url-pattern>/resetpassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
