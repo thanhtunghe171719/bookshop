@@ -15,7 +15,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Change PassWord</title>
+  <title>Đổi mật khẩu</title>
 	<link rel="icon" href="./img/Fevicon.png" type="image/png">
   <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./vendors/fontawesome/css/all.min.css">
@@ -40,11 +40,11 @@
 		<div class="container h-100">
 			<div class="blog-banner">
 				<div class="text-center">
-					<h1>Register</h1>
+					<h1>ĐỔI MẬT KHẨU</h1>
 					<nav aria-label="breadcrumb" class="banner-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Register</li>
+              <li class="breadcrumb-item active" aria-current="page">ĐỔI MẬT KHẨU</li>
             </ol>
           </nav>
 				</div>
@@ -68,32 +68,32 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner register_form_inner">
-						<h3>Change password</h3>
+						<h3>Đổi mật khẩu</h3>
 						<form class="row login_form" action="changepassword" id="register_form"  onsubmit="return validateForm()">
 							<div class="col-md-12 form-group">
                                                             <div class="password-container" style="display: flex">
-                                                                <input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Old Password'"  onblur="validateOldPassword()">
+                                                                <input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Mật khẩu cũ" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu cũ'"  onblur="validateOldPassword()">
                                                                 <button type="button" onclick="togglePassword('oldPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
                                                             </div>
                                                             <p  id="oldPasswordError" class="text-danger"></p>
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <div class="password-container" style="display: flex">
-                                                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'New Password'" onblur="validateNewPassword()">
+                                                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="mật khẩu mới" onfocus="this.placeholder = ''" onblur="this.placeholder = 'mật khẩu mới'" onblur="validateNewPassword()">
                                                                 <button type="button" onclick="togglePassword('newPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
                                                             </div>
                                                             <p  id="newPasswordError" class="text-danger"></p>
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <div class="password-container" style="display: flex">
-                                                                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm New Password'" onblur="validateConfirmPassword()">
+                                                                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" placeholder="Xác nhận mật khẩu mới" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Xác nhận mật khẩu mới'" onblur="validateConfirmPassword()">
                                                                 <button type="button" onclick="togglePassword('confirmNewPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
                                                             </div>
                                                             <p  id="confirmNewPasswordError" class="text-danger"></p>
                                                         </div>
 							
 							<div class="col-md-12 form-group">
-								<button type="submit" name ="submit" value="submit" class="button button-register w-100">Save</button>
+								<button type="submit" name ="submit" value="submit" class="button button-register w-100">Lưu</button>
                                                                 <p  id="formError" class="text-danger"></p>
                                                         </div>
 						</form>
@@ -130,16 +130,16 @@
       const oldPasswordError = document.getElementById('oldPasswordError');
       oldPasswordError.textContent = '';
       if (!oldPassword) {
-        oldPasswordError.textContent = 'Please enter your old password.';
+        oldPasswordError.textContent = 'Vui lòng nhập mật khẩu cũ của bạn.';
         return false;
       } else if (/[\s]/.test(oldPassword)) {
-        oldPasswordError.textContent = 'Must not contain spaces.';
+        oldPasswordError.textContent = 'Không được chứa dấu cách.';
         return false;
       } else if (oldPassword.length < 8) {
-        oldPasswordError.textContent = 'Must be at least 8 characters.';
+        oldPasswordError.textContent = 'Phải có ít nhất 8 ký tự.';
         return false;
       } else if (!/^[A-Z]/.test(oldPassword)) {
-        oldPasswordError.textContent = 'Must start with an uppercase letter.';
+        oldPasswordError.textContent = 'Phải bắt đầu bằng chữ in hoa.';
         return false;
       }
       return true;
@@ -151,19 +151,19 @@
       const newPasswordError = document.getElementById('newPasswordError');
       newPasswordError.textContent = '';
       if (!newPassword) {
-        newPasswordError.textContent = 'Please enter your new password.';
+        newPasswordError.textContent = 'Vui lòng nhập mật khẩu mới của bạn.';
         return false;
       } else if (newPassword.length < 8) {
-        newPasswordError.textContent = 'Must be at least 8 characters long.';
+        newPasswordError.textContent = 'Phải có độ dài ít nhất 8 ký tự.';
         return false;
       } else if (/[\s]/.test(newPassword)) {
-        newPasswordError.textContent = 'Must not contain spaces.';
+        newPasswordError.textContent = 'Không được chứa dấu cách.';
         return false;
       } else if (!/^[A-Z]/.test(newPassword)) {
-        newPasswordError.textContent = 'Must start with an uppercase letter.';
+        newPasswordError.textContent = 'Phải bắt đầu bằng chữ in hoa.';
         return false;
       } else if (newPassword === oldPassword) {
-        newPasswordError.textContent = 'New Password must be different from Old Password.';
+        newPasswordError.textContent = 'Mật khẩu mới phải khác với Mật khẩu cũ.';
         return false;
       }
       return true;
@@ -175,19 +175,19 @@
       const confirmNewPasswordError = document.getElementById('confirmNewPasswordError');
       confirmNewPasswordError.textContent = '';
       if (!confirmNewPassword) {
-        confirmNewPasswordError.textContent = 'Please confirm your new password.';
+        confirmNewPasswordError.textContent = 'Vui lòng xác nhận mật khẩu mới của bạn.';
         return false;
       } else if (confirmNewPassword.length < 8) {
-        confirmNewPasswordError.textContent = 'Must be at least 8 characters long.';
+        confirmNewPasswordError.textContent = 'Phải có độ dài ít nhất 8 ký tự.';
         return false;
       } else if (/[\s]/.test(confirmNewPassword)) {
-        confirmNewPasswordError.textContent = 'Must not contain spaces.';
+        confirmNewPasswordError.textContent = 'Không được chứa dấu cách.';
         return false;
       } else if (!/^[A-Z]/.test(confirmNewPassword)) {
-        confirmNewPasswordError.textContent = 'Must start with an uppercase letter.';
+        confirmNewPasswordError.textContent = 'Phải bắt đầu bằng chữ in hoa.';
         return false;
       } else if (newPassword !== confirmNewPassword) {
-        confirmNewPasswordError.textContent = 'New Password and Confirm New Password do not match.';
+        confirmNewPasswordError.textContent = 'Mật khẩu mới và Xác nhận mật khẩu mới không khớp.';
         return false;
       }
       return true;
@@ -199,8 +199,10 @@
       const isConfirmPasswordValid = validateConfirmPassword();
 
       if (!isOldPasswordValid || !isNewPasswordValid || !isConfirmPasswordValid) {
-        document.getElementById('formError').textContent = 'Please correct the errors above and try again.';
+        document.getElementById('formError').textContent = 'Vui lòng sửa các lỗi trên và thử lại.';
         return false;
+      }else{
+          document.getElementById('formError').textContent = 'Đổi mật khẩu thành công.';
       }
 
       return true;

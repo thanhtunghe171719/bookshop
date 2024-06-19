@@ -54,7 +54,7 @@ public class CartContact extends HttpServlet {
             Map<CartItems, Book> cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
 
 
-            if (cartItemBookMap == null) {
+            if (cartItemBookMap == null || cartItemBookMap.isEmpty()) {
                 // If cartItemBookMap is null, redirect to the cartdetails page to ensure it's set
                 response.sendRedirect("cartdetails");
                 return;

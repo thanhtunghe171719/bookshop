@@ -81,7 +81,7 @@
                                 <!-- Nếu user không là null -->
                                 <li class="nav-item submenu dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false"><i class="bi bi-person-circle"></i>Hello, ${user.fullname}</a>
+                                       aria-expanded="false"><i class="bi bi-person-circle"></i>  Hello, ${user.fullname}</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item"><a class="nav-link" href="profile.html">User Profile</a></li>
                                         <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
