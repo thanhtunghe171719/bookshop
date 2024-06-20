@@ -96,9 +96,9 @@
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="qty-${cartItem.cartItemId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty" 
-                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value)" >
-                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
+                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock})" >
+                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
                                         </div>
                                     </td>
                                     <td>
@@ -172,14 +172,19 @@
 
     <script>
 
-function updateQuantity(cartItemId, bookPrice, discount, action) {
+function updateQuantity(cartItemId, bookPrice, discount, stock, action) {
     // Lấy ra giá trị hiện tại của quantity
     var quantity = parseInt(document.getElementById('qty-' + cartItemId).value);
 
     // Nếu hành động là tăng quantity
     if (action === 'increase') {
-        quantity++;
+        if(quantity<stock){
+            quantity++;
+        }else{
+            quantity=stock;
+        }
     } 
+    
     // Nếu hành động là giảm quantity và quantity hiện tại lớn hơn 1
     else if (action === 'decrease' && quantity > 1) {
         quantity--;
@@ -204,7 +209,7 @@ function updateQuantity(cartItemId, bookPrice, discount, action) {
     xhr.send();
 }
 
-function updateTotalPrice(cartItemId, bookPrice, discount, quantity) {
+function updateTotalPrice(cartItemId, bookPrice, discount, quantity, stock) {
     // Parse quantity to integer
     quantity = parseInt(quantity);
 
@@ -212,7 +217,9 @@ function updateTotalPrice(cartItemId, bookPrice, discount, quantity) {
     if (isNaN(quantity) || quantity < 1) {
         quantity = 1; // Set quantity to 1 if it's NaN or less than 1
     }
-
+    if (quantity > stock) {
+        quantity = stock; // Set quantity to stock if it's more than stock
+    }
     // Update the input value to display the corrected quantity
     document.getElementById('qty-' + cartItemId).value = quantity;
 

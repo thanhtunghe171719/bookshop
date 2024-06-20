@@ -101,7 +101,9 @@ public class CartDetails extends HttpServlet {
 
                             ArrayList<Book> bookItem = daoBook.getAll("SELECT * FROM books WHERE book_id = " + listItem.getBookId());
                             if (bookItem != null && !bookItem.isEmpty()) {
-                                cartItemBookMap.put(listItem, bookItem.get(0)); 
+                                if(bookItem.get(0).getStock()>0){
+                                    cartItemBookMap.put(listItem, bookItem.get(0));
+                                } 
                             }
                         }
                     }
