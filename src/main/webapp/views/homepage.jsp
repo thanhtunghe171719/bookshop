@@ -93,7 +93,7 @@
     <section class="section-margin calc-60px">
       <div class="container">
         <div class="section-intro pb-60px">
-          <h2><span class="section-intro__style">Product Category </span></h2>
+          <h2><span class="section-intro__style">Danh Mục Sản Phẩm</span></h2>
         </div>
         <div class="owl-carousel owl-theme" id="bestSellerCarousel">
             <c:if test="${not empty listCategory}">
@@ -119,7 +119,7 @@
     <section class="section-margin calc-60px">
       <div class="container">
         <div class="section-intro pb-60px">
-          <h2><span class="section-intro__style">Trending Product</span></h2>
+          <h2><span class="section-intro__style">Sản phẩm Thịnh Hành</span></h2>
           
             <div class="nice-select" tabindex="0" style="float : right;top: -30px;">
                 <span class="current">${currentOption}</span>
@@ -150,8 +150,14 @@
                         </div>
                         <div class="card-body">
                             <h4 class="card-product__title"><a href="#">${book.title}</a></h4>
-                            <p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>
-                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>
+                            <!--<p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>-->
+                            <p class="card-product__price">
+                                <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                            </p>
+<!--                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>-->
+                            <p class="card-product__price">
+                                <fmt:formatNumber value="${book.price*(100-book.discount)/100}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                            </p>
                         </div>
                       </div>
                     </div>
@@ -168,7 +174,7 @@
     <section class="blog">
       <div class="container">
         <div class="section-intro pb-60px">
-          <h2><span class="section-intro__style">Hot Post</span></h2>
+          <h2><span class="section-intro__style">Bài Viết Mới</span></h2>
         </div>
 
         <div class="row">

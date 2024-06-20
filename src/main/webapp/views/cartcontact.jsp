@@ -36,23 +36,7 @@
         <jsp:include page="header.jsp"/>
         <!--================ End Header Menu Area =================-->
 
-        <!-- ================ start banner area ================= -->	
-        <section class="blog-banner-area" id="category">
-            <div class="container h-100">
-                <div class="blog-banner">
-                    <div class="text-center">
-                        <h1>Cart Contact</h1>
-                        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Cart Contact</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ================ end banner area ================= -->
+
 
 
         <!--================Checkout Area =================-->
@@ -104,13 +88,15 @@
                                         <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                                             <c:set var="cartItem" value="${entry.key}" />
                                             <c:set var="book" value="${entry.value}" />
-                                            <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100) * 1000}" />
+                                            <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100)}" />
                                             <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
                                             
                                             <tr>
                                                 <td>${book.title}</td>
                                                 <td>x${cartItem.quantity}</td>
-                                                <td style="float: right">${lineSubTotal}</td>
+                                                <td style="float: right">
+                                                    <fmt:formatNumber value="${lineSubTotal}" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                </td>
                                             </tr>
                                             
                                         </c:forEach>    
@@ -119,7 +105,9 @@
                                     
                                     <tr  style="border-bottom: 1px #dee2e6 solid;">
                                         <td colspan="2" style="color: black">Tổng Tiền Đơn Hàng</td>
-                                        <td style="float: right;color: black">${subTotal}</td>
+                                        <td style="float: right;color: black">
+                                            <fmt:formatNumber value="${subTotal}" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                        </td>
                                     </tr>
                                 </table>
                                 <br>

@@ -29,7 +29,11 @@
   
 
   <link rel="stylesheet" href="./css/style.css">
+      <script>
+          
+      </script>
 </head>
+
 <body>
     <!--================ Start Header Menu Area =================-->
     <jsp:include page="header.jsp"/>
@@ -57,7 +61,7 @@
                           <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                               <c:set var="cartItem" value="${entry.key}" />
                               <c:set var="book" value="${entry.value}" />
-                              <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100) * 1000}" />
+                              <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100* 1000)}" />
                               <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
                               <tr>
                                     <td>
@@ -71,18 +75,23 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5>${book.price * 1000}</h5>
+                                        <h5>
+                                            <!--${book.price * 1000}-->
+                                            <p class="card-product__price">${(book.price * (100 - book.discount) / 100 * 1000)} đ</p>
+                                        </h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="qty-${cartItem.cartItemId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty" 
-                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock})" >
-                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
+                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock}); updateSubtotal();" >
+                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase'); updateSubtotal();"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease'); updateSubtotal();"><i class="lnr lnr-chevron-down"></i></button>
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 id="total-price-${cartItem.cartItemId}">${lineSubTotal}</h5>
+                                        <h5 id="total-price-${cartItem.cartItemId}">
+                                            <p class="card-product__price">${lineSubTotal} đ</p>
+                                        </h5>
                                     </td>
                                     <td>
                                         <a href="cartdetails?service=delete&cartItemId=${cartItem.cartItemId}" style="font-size: 25px;color: red">
@@ -115,7 +124,7 @@
                                   <h5>Tổng Giá Trị Giỏ Hàng</h5>
                               </td>
                               <td>
-                                  <h5 id="total-all">${subTotal}</h5>
+                                  <h5 id="total-all">${subTotal} đ</h5>
                               </td>
                           </tr>
                           
@@ -152,7 +161,7 @@
 
     <script>
 
-function updateQuantity(cartItemId, bookPrice, discount, stock, action) {
+function updateQuantity(cartItemId, bookPrice, discount, stock, action) {    
     // Lấy ra giá trị hiện tại của quantity
     var quantity = parseInt(document.getElementById('qty-' + cartItemId).value);
 
@@ -173,7 +182,7 @@ function updateQuantity(cartItemId, bookPrice, discount, stock, action) {
     // Cập nhật giá trị mới của quantity trên giao diện
     document.getElementById('qty-' + cartItemId).value = quantity;
     // Cập nhật giá trị tổng giá trị cho sản phẩm
-    document.getElementById('total-price-' + cartItemId).innerText =  ((bookPrice * quantity * (100 - discount) / 100) * 1000).toFixed(2);
+    document.getElementById('total-price-' + cartItemId).innerText =  formatCurrency(bookPrice * quantity * (100 - discount) / 100);
     
     updateSubtotal();
     
@@ -204,8 +213,8 @@ function updateTotalPrice(cartItemId, bookPrice, discount, quantity, stock) {
     document.getElementById('qty-' + cartItemId).value = quantity;
 
     // Update the total price based on the new quantity
-    var totalPrice = (bookPrice * quantity * (100 - discount) / 100) * 1000;
-    document.getElementById('total-price-' + cartItemId).innerText =  totalPrice.toFixed(2);
+    var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
+    document.getElementById('total-price-' + cartItemId).innerText =  formatCurrency(totalPrice);
 
     updateSubtotal();
 
@@ -231,14 +240,28 @@ function updateSubtotal() {
         totalAll += price;
     });
 
-    document.getElementById('total-all').innerText =  totalAll.toFixed(2);
+    document.getElementById('total-all').innerText =  formatCurrency(totalAll/1000);
+}
+
+
+function formatCurrency(amount) {
+    // Làm tròn số và chuyển đổi thành chuỗi
+    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
+
+    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
+    var stringFormattedAmount = formattedAmount.toFixed(2);
+
+    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
+    stringFormattedAmount = stringFormattedAmount + " đ";
+
+    return stringFormattedAmount;
 }
 
 
 
-    </script>
+</script>
     
-    
+        
 
 
   <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
