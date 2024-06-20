@@ -84,6 +84,8 @@ public class DAOBooks extends DBConnect{
         }
         return list;
     }
+     
+ 
     public static void main(String[] args) {
         DAOBooks dao = new DAOBooks();
         ArrayList<Book> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");

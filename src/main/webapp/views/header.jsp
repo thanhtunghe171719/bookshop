@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="models.*"%>
 <header class="header_area">
@@ -12,14 +13,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="home">Home</a></li>
+                    <ul class="nav navbar-nav menu_nav ml-auto mr-auto">                
+                        <li class="nav-item"><a class="nav-link" href="home">Home</a></li>                 
                         <li class="nav-item submenu dropdown">
                             <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="products">Shop Category</a></li>
-                                <li class="nav-item"><a class="nav-link" href="cartdetails">Shopping Cart</a></li>
                             </ul>
                         </li>
                         <li class="nav-item submenu dropdown">
@@ -29,9 +29,42 @@
                                 <li class="nav-item"><a class="nav-link" href="#">Blog List</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>
                             </ul>
-                        </li>
-                        
-                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                        </li>    
+                        <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3}">
+                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>          
+                            </c:if>
+                            <c:if test="${sessionScope.user.roleId ==1}">
+                            <li class="nav-item submenu dropdown">
+                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Manage</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="#">User</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Categories</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.user.roleId ==2}">
+                            <li class="nav-item submenu dropdown">
+                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Manage</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="#">Product</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Slider</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Post</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Customer</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>
+                                </ul>
+                            </li> 
+                        </c:if>
+                        <c:if test="${sessionScope.user.roleId ==3}">
+                            <li class="nav-item submenu dropdown">
+                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Manage</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="#">Order</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
                     </ul>
 
                     <ul class="nav-shop"> 
@@ -46,7 +79,7 @@
                             </form>
                         </div>
                     </ul>
-                    
+
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <li class="nav-item  submenu dropdown">
                             <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -56,8 +89,8 @@
                             </ul>
                         </li>
                     </ul>                
-                                    
-                                    
+
+
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <%
                             User user = (User) session.getAttribute("user");
@@ -65,28 +98,28 @@
                             
                             
                         %>
-                                <!-- Nếu user là null -->
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false"><i class="bi bi-person-circle"></i>Account</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
-                                    </ul>
-                                </li>
-                            <%}else{%>
-                            
-                                <!-- Nếu user không là null -->
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false"><i class="bi bi-person-circle"></i>  Hello, ${user.fullname}</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="profile.html">User Profile</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
-                                    </ul>
-                                </li>
-                            <%}%>
+                        <!-- Nếu user là null -->
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><i class="bi bi-person-circle"></i>Account</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                                <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                            </ul>
+                        </li>
+                        <%}else{%>
+
+                        <!-- Nếu user không là null -->
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"><i class="bi bi-person-circle"></i>  Hello, ${user.fullname}</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" href="profile.html">User Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                            </ul>
+                        </li>
+                        <%}%>
                     </ul>
                 </div>
             </div>

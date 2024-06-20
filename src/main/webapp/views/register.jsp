@@ -61,14 +61,14 @@
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
                                 </div>  
                                 
-                                <div class="col-md-12 form-group">
+<!--                                <div class="col-md-12 form-group">
                                     <div class="creat_account">
                                         <input type="checkbox" id="f-option2" name="selector">
                                         <label for="f-option2">Keep me logged in</label>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="col-md-12 form-group">
-                                    <button type="submit" value="submit" class="button button-register w-100">Register</button>
+                                    <button type="submit" value="submit" class="button button-register w-100">Đăng ký</button>
                                 </div>
                                 
                             </form>
