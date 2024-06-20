@@ -79,7 +79,7 @@ public class MarketingProductController extends HttpServlet {
                     Categorie category = categoryDao.getById(book.getCategoryId());
                     request.setAttribute("category", category);
                     request.setAttribute("book", book);
-                    request.getRequestDispatcher("./marketing/book/view.jsp").forward(request, response);
+                    request.getRequestDispatcher("./views/view.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("marketing-product?error=Book can not found");
                 }
@@ -91,7 +91,7 @@ public class MarketingProductController extends HttpServlet {
             case "add":
                 List<Categorie> categoriesAllAdd = categoryDao.getAll();
                 request.setAttribute("categories", categoriesAllAdd);
-                request.getRequestDispatcher("./marketing/book/add.jsp").forward(request, response);
+                request.getRequestDispatcher("./views/add.jsp").forward(request, response);
                 break;
             case "edit":
                 try {
@@ -101,7 +101,7 @@ public class MarketingProductController extends HttpServlet {
 
                 request.setAttribute("book", existingBook);
                 request.setAttribute("categories", categoriesAllEdit);
-                request.getRequestDispatcher("./marketing/book/edit.jsp").forward(request, response);
+                request.getRequestDispatcher("./views/edit.jsp").forward(request, response);
             } catch (Exception e) {
                 response.sendRedirect("marketing-product?error=Book can not found");
             }
@@ -146,7 +146,7 @@ public class MarketingProductController extends HttpServlet {
                 request.setAttribute("books", books);
                 request.setAttribute("currentPage", page);
                 request.setAttribute("totalPages", totalPages);
-                request.getRequestDispatcher("./marketing/book/list.jsp").forward(request, response);
+                request.getRequestDispatcher("./views/list.jsp").forward(request, response);
         }
     }
 
@@ -186,7 +186,7 @@ public class MarketingProductController extends HttpServlet {
                 request.setAttribute("categories", categoriesAllAdd);
                 request.setAttribute("errors", errors);
                 request.setAttribute("formData", request.getParameterMap());
-                request.getRequestDispatcher("./marketing/book/add.jsp").forward(request, response);
+                request.getRequestDispatcher("./views/add.jsp").forward(request, response);
                 return;
             }
             String title = request.getParameter("title");
@@ -230,7 +230,7 @@ public class MarketingProductController extends HttpServlet {
                 request.setAttribute("categories", categoriesAllEdit);
                 request.setAttribute("errors", errors);
                 request.setAttribute("formData", request.getParameterMap());
-                request.getRequestDispatcher("./marketing/book/edit.jsp").forward(request, response);
+                request.getRequestDispatcher("./views/edit.jsp").forward(request, response);
                 return;
             }
 
