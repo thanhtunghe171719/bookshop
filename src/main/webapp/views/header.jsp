@@ -19,19 +19,19 @@
                                aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="products">Shop Category</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
+                                <li class="nav-item"><a class="nav-link" href="cartdetails">Shopping Cart</a></li>
                             </ul>
                         </li>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Blog</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Blog List</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>
                             </ul>
                         </li>
                         
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                     </ul>
 
                     <ul class="nav-shop"> 
@@ -52,8 +52,6 @@
                             <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false"><i class="ti-shopping-cart"></i></a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-                                <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
                                 <li class="nav-item"><a class="nav-link" href="cartdetails">Cart Detail</a></li>
                             </ul>
                         </li>
@@ -72,8 +70,8 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                        aria-expanded="false"><i class="bi bi-person-circle"></i>Account</a>
                                     <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
                                     </ul>
                                 </li>
                             <%}else{%>
@@ -85,7 +83,7 @@
                                     <ul class="dropdown-menu">
                                         <li class="nav-item"><a class="nav-link" href="profile.html">User Profile</a></li>
                                         <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="logout.html">Log Out</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
                                     </ul>
                                 </li>
                             <%}%>

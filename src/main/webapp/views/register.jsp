@@ -29,15 +29,15 @@
                     <div class="col-lg-6">
                         <div class="login_box_img">
                             <div class="hover">
-                                <h4>Already have an account?</h4>
-                                <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                                <a class="button button-account" href="login">Login Now</a>
+                                <h4>Bạn đã có tài khoản?</h4>
+                                <p>Hãy nhấn vào đây để đăng nhập</p>
+                                <a class="button button-account" href="login">Đăng nhập</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="login_form_inner register_form_inner">
-                            <h3>Create an account</h3>
+                            <h3>Tạo tài khoản</h3>
                             <form class="row login_form" action="register" id="post" >
                                 <c:if test="${not empty errorMessage}">
                                     <div class="alert alert-danger" role="alert">

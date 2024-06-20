@@ -86,7 +86,7 @@ public class HomePage extends HttpServlet {
                                                 "LEFT JOIN orders o ON oi.order_id = o.order_id\n" +
                                                 "GROUP BY b.book_id\n" +
                                                 "ORDER BY IFNULL(SUM(oi.quantity), 0) DESC LIMIT 8;");
-                    currentOption = "Số Lượng Đã Bán";
+                    currentOption = "Sản Phẩm Bán Chạy";
                 } else if(selectedOption.equals("new-product")) {
                     listBook = daoBooks.getAll("SELECT * FROM books ORDER BY book_id DESC LIMIT 8;");
                     currentOption = "Sản Phẩm Mới";

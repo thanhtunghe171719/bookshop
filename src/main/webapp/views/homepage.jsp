@@ -101,11 +101,11 @@
                     <div class="card text-center card-product">
                         <div class="card-product__img">
                             <img class="img-fluid" src="${category.image}" alt="">
-                            <a href="single-product.html"><ul class="card-product__imgOverlay">
+                            <a href="#"><ul class="card-product__imgOverlay">
                             </ul></a>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-product__title"><a href="single-product.html">${category.categoryName}</a></h4>
+                            <h4 class="card-product__title"><a href="#">${category.categoryName}</a></h4>
                         </div>
                     </div>
                 </c:forEach>
