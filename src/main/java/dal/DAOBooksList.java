@@ -199,10 +199,11 @@ public class DAOBooksList extends DBConnect {
             while (rs.next()) {
                 int categoryId = rs.getInt(1);
                 String categoryName = rs.getString(2);
-                Date create_at = rs.getDate(3);
-                Date updated_at = rs.getDate(4);
+                String image = rs.getString(3);
+                Date create_at = rs.getDate(4);
+                Date updated_at = rs.getDate(5);
 
-                Categories c = new Categories(categoryId, categoryName, create_at, updated_at);
+                Categories c = new Categories(categoryId, categoryName, image, create_at, updated_at);
 
                 ListCategories.add(c);
 

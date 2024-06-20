@@ -52,6 +52,14 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controllers.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MarketingProductController</servlet-name>
+        <servlet-class>controllers.MarketingProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartCompletion</servlet-name>
+        <servlet-class>controllers.CartCompletion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarketingProductController</servlet-name>
+        <url-pattern>/manageproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartCompletion</servlet-name>
+        <url-pattern>/cart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
