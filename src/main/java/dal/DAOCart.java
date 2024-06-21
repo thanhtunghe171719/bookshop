@@ -40,7 +40,7 @@ public class DAOCart extends DBConnect{
         }
         return list;
     }
-public int insert(Cart obj) {
+        public int insert(Cart obj) {
             int n = 0;
             String sql = "INSERT INTO cart (user_id, promotion_id, note) VALUES \n" +
                         "("+obj.getUserId()+", null, 'Đã Insert.')";

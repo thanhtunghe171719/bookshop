@@ -132,7 +132,7 @@
                               <td colspan="3"></td>
                               <td colspan="2">
                                   <div class="checkout_btn_inner d-flex align-items-center" style="float: right">
-                                      <a class="gray_btn" href="product">Tiếp Tục Mua Sắm</a>
+                                      <a class="gray_btn" href="products">Tiếp Tục Mua Sắm</a>
                                       <c:if test="${not empty cartItemBookMap}">
                                           <a class="primary-btn ml-2" href="cartcontact">Mua Hàng</a>
                                       </c:if>

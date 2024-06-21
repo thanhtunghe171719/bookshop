@@ -60,7 +60,7 @@ public class CartCompletion extends HttpServlet {
         if (paymentMethod == null || paymentMethod.isEmpty()) {
             // Nếu chưa chọn, hiển thị thông báo lỗi và không điều hướng
             request.setAttribute("errorMessage", "Please select a payment method.");
-            request.getRequestDispatcher("view/cartcontact.jsp").forward(request, response);
+            request.getRequestDispatcher("views/cartcontact.jsp").forward(request, response);
             return;
         }
 
@@ -80,12 +80,12 @@ public class CartCompletion extends HttpServlet {
         // Xử lý phương thức thanh toán
         if ("Direct Payment".equals(paymentMethod)) {
             // Xử lý thanh toán trực tiếp
-            request.getRequestDispatcher("view/homepage.jsp").forward(request, response);
+            request.getRequestDispatcher("views/homepage.jsp").forward(request, response);
         } else if ("Pay with Banking App".equals(paymentMethod)) {
             // Xử lý thanh toán qua ứng dụng ngân hàng
             request.setAttribute("amount", amount);
 
-            request.getRequestDispatcher("view/cartcompletion.jsp").forward(request, response);
+            request.getRequestDispatcher("views/cartcompletion.jsp").forward(request, response);
         }
     }
 

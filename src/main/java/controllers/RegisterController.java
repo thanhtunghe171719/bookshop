@@ -70,7 +70,7 @@ public class RegisterController extends HttpServlet {
             cart.setUserId(user.getUserId());
             dao.insert(cart); 
             request.setAttribute("error", "Register Success!"); 
-            request.getRequestDispatcher("./views/register.jsp").forward(request, response);
+            request.getRequestDispatcher("./views/login.jsp").forward(request, response);
             //response.sendRedirect("login");
         } else {
             // Registration failed
