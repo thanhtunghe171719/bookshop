@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="vendors/linericon/style.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -91,7 +94,7 @@
                                         <div class="media post_item">
                                             <img src="${slider.image}" alt="" style="width: 90px;">
                                             <div class="media-body">
-                                                <a href="slider?service=backlink&">
+                                                <a href="slider?service=backlink&id=${slider.sliderId}">
                                                     <h3>${slider.title}</h3>
                                                 </a>
                                             </div>

@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+
     <servlet>
-        <servlet-name>ViewProducts</servlet-name>
-        <servlet-class>controllers.ViewProducts</servlet-class>
+        <servlet-name>BlogServlet</servlet-name>
+        <servlet-class>controllers.BlogServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchControl</servlet-name>
-        <servlet-class>controllers.SearchControl</servlet-class>
+        <servlet-name>CreaterPostServlet</servlet-name>
+        <servlet-class>controllers.CreaterPostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <servlet-class>controllers.EditProfileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomePage</servlet-name>
         <servlet-class>controllers.HomePage</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>PostDetailServlet</servlet-name>
+        <servlet-class>controllers.PostDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>controllers.PostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchControl</servlet-name>
+        <servlet-class>controllers.SearchControl</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>slider</servlet-name>
         <servlet-class>controllers.slider</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewProducts</servlet-name>
+        <servlet-class>controllers.ViewProducts</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BlogServlet</servlet-name>
+        <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreaterPostServlet</servlet-name>
+        <url-pattern>/createrpost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <url-pattern>/editprofile</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostDetailServlet</servlet-name>
+        <url-pattern>/postdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostServlet</servlet-name>
+        <url-pattern>/managerpost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchControl</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>slider</servlet-name>
@@ -28,13 +74,11 @@
         <servlet-name>ViewProducts</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchControl</servlet-name>
-        <url-pattern>/search</url-pattern>
-    </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    
 </web-app>

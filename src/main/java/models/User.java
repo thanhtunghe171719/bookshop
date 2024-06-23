@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -18,15 +19,14 @@ public class User {
     private int roleId;
     private String fullname;
     private String gender;
-    private String image;
     private String address;
-    private Timestamp createAt;
-    private Timestamp updatedAt;    
-
+     private Date createAt;
+    private Date updatedAt; 
+    private String image;
     public User() {
     }
 
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt) {
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Date createAt, Date updatedAt, String image) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -34,11 +34,15 @@ public class User {
         this.roleId = roleId;
         this.fullname = fullname;
         this.gender = gender;
-        this.image = image;
         this.address = address;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
+        this.image = image;
     }
+
+
+    
+    
 
     public int getUserId() {
         return userId;
@@ -112,21 +116,23 @@ public class User {
         this.address = address;
     }
 
-    public Timestamp getCreateAt() {
+    public Date getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Timestamp createAt) {
+    public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
 
-    public Timestamp getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    
 
     @Override
     public String toString() {

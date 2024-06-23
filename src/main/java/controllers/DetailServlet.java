@@ -4,22 +4,21 @@
  */
 package controllers;
 
-import dal.DAOBooksList;
-import models.Books;
+import models.*;
+import dal.DAOBooks;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import models.Categories;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author skyfc
+ * @author ADMIN
  */
-public class SearchControl extends HttpServlet {
+public class DetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class SearchControl extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchControl</title>");
+            out.println("<title>Servlet DetailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchControl at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DetailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +58,19 @@ public class SearchControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        String pid_raw = request.getParameter("pid");
+        // Chuyển đổi id sản phẩm sang số nguyên
+        int pid = Integer.parseInt(pid_raw);
+        // Khởi tạo DAOProduct để truy vấn dữ liệu
+        DAOBooks daoBooks = new DAOBooks();
+        // Lấy thông tin chi tiết sản phẩm
+        Books book = daoBooks.getBookById(pid);
+
+        // Thêm sản phẩm vào request
+        request.setAttribute("book", book);
+
+        // Chuyển tiếp request tới trang JSP để hiển thị chi tiết
+        request.getRequestDispatcher("views/productdetail.jsp").forward(request, response);
     }
 
     /**
@@ -73,53 +84,7 @@ public class SearchControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOBooksList daoBooksList = new DAOBooksList();
-
-        String searchText = request.getParameter("search");
-        String indexPage = request.getParameter("index");
-        int index = (indexPage == null) ? 1 : Integer.parseInt(indexPage);
-
-        String sort = request.getParameter("sort");
-        if (sort == null) {
-            sort = "default";
-        }
-
-        String grid = request.getParameter("grid");
-        if (grid == null) {
-            grid = "6";
-        }
-
-        String categoryidParam = request.getParameter("categoryid");
-        int categoryid = (categoryidParam == null) ? 0 : Integer.parseInt(categoryidParam);
-
-        ArrayList<Books> lst_books;
-        int totalBooks = 0;
-
-        if (searchText != null && !searchText.isEmpty()) {
-            lst_books = daoBooksList.getBookBySearch(searchText, grid, index, sort);
-            totalBooks = lst_books.size();
-        } else {
-            if (categoryid == 0) {
-                lst_books = daoBooksList.getListBooks(grid, index, sort);
-                totalBooks = daoBooksList.getTotalBooks();
-            } else {
-                lst_books = daoBooksList.getListBooksByCategory(categoryid, grid, index, sort);
-                totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
-            }
-        }
-
-        int page = (totalBooks + 2) / Integer.parseInt(grid); // Round up for pagination
-
-        ArrayList<Categories> lst_categories = daoBooksList.getListCategories();
-
-        request.setAttribute("book", lst_books);
-        request.setAttribute("page", page);
-        request.setAttribute("pagetag", index);
-        request.setAttribute("search", searchText);
-        request.setAttribute("category", lst_categories);
-        request.setAttribute("sort", sort);
-
-        request.getRequestDispatcher("views/product.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
