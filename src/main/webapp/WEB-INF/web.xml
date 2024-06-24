@@ -64,6 +64,26 @@
         <servlet-name>MarketingProductController</servlet-name>
         <servlet-class>controllers.MarketingProductController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BlogServlet</servlet-name>
+        <servlet-class>controllers.BlogServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreaterPostServlet</servlet-name>
+        <servlet-class>controllers.CreaterPostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <servlet-class>controllers.EditProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostDetailServlet</servlet-name>
+        <servlet-class>controllers.PostDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>controllers.PostServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -119,6 +139,26 @@
     <servlet-mapping>
         <servlet-name>MarketingProductController</servlet-name>
         <url-pattern>/marketing-product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogServlet</servlet-name>
+        <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreaterPostServlet</servlet-name>
+        <url-pattern>/createrpost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <url-pattern>/editprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostDetailServlet</servlet-name>
+        <url-pattern>/postdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostServlet</servlet-name>
+        <url-pattern>/managerpost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

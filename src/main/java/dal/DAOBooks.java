@@ -86,6 +86,96 @@ public class DAOBooks extends DBConnect{
         return list;
     }
     
+     public List<Book> getBooks(String title, String category, String sortTitle, String sortListPrice, String sortPriceSale, int page, int pageSize) {
+        List<Book> books = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
+        String query = "SELECT b.book_id, b.title, b.author, b.image, c.category_id, b.publishing_house, "
+                + "b.published_year, b.size, b.weight, b.summary, b.price, b.rating, b.discount, b.stock, "
+                + "b.create_at, b.updated_at, b.format, b.pages "
+                + "FROM books b JOIN categories c ON b.category_id = c.category_id where 1=1";
+        if (title != null) {
+            query += " AND b.title LIKE ?";
+        }
+        if (category != null && category.length() != 0) {
+            query += " AND b.category_id = ?";
+        }
+        if (sortTitle != null && sortTitle.length() != 0) {
+            query += " ORDER BY b.title " + sortTitle;
+        }
+        if (sortListPrice != null && sortListPrice.length() != 0) {
+            query += (sortTitle.length() == 0 ? " ORDER BY" : ",") + " b.price " + sortListPrice;
+        }
+        if (sortPriceSale != null && !sortPriceSale.isEmpty()) {
+            query += ((sortTitle.length() == 0 && sortListPrice.length() == 0) ? " ORDER BY" : ",") + " b.discount " + sortPriceSale;
+        }
+        query += " LIMIT ? OFFSET ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            int index = 1;
+            if (title != null) {
+                stmt.setString(index++, "%" + title + "%");
+            }
+            if (category != null && !category.isEmpty()) {
+                stmt.setString(index++, category);
+            }
+            stmt.setInt(index++, pageSize);
+            stmt.setInt(index, (page - 1) * pageSize);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Book book = new Book();
+                book.setBookId(rs.getInt("book_id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setImage(rs.getString("image"));
+                book.setCategoryId(rs.getInt("category_id"));
+                book.setPublishingHouse(rs.getString("publishing_house"));
+                book.setPublishedYear(rs.getInt("published_year"));
+                book.setSize(rs.getString("size"));
+                book.setWeight(rs.getString("weight"));
+                book.setSummary(rs.getString("summary"));
+                book.setPrice(rs.getBigDecimal("price"));
+                book.setRating(rs.getInt("rating"));
+                book.setDiscount(rs.getInt("discount"));
+                book.setStock(rs.getInt("stock"));
+                book.setCreatedAt(rs.getTimestamp("create_at"));
+                book.setUpdatedAt(rs.getTimestamp("updated_at"));
+                book.setFormat(rs.getString("format"));
+                book.setPages(rs.getInt("pages"));
+                books.add(book);
+            }
+} catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+
+    public int getBookCount(String title, String category) {
+        String query = "SELECT COUNT(*) FROM books where 1 = 1 ";
+        if (title != null) {
+            query += " AND title LIKE ?";
+        }
+        if (category != null && !category.isEmpty()) {
+            query += " AND category_id = ?";
+        }
+        try {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            int index = 1;
+            if (title != null) {
+                stmt.setString(index++, "%" + title + "%");
+            }
+            if (category != null && !category.isEmpty()) {
+                stmt.setString(index++, category);
+            }
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Count: " + e);
+        }
+        return 0;
+    }
+
     public Book getBookById(String sql) {
         try {
 

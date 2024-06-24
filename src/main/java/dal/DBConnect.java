@@ -23,7 +23,9 @@ public class DBConnect {
             ex.printStackTrace();
         }        
     }
-    
+    public Connection getConnection() {
+        return conn;
+    }
     public DBConnect(){
         this("jdbc:mysql://localhost:3306/bookshop","root","123456");
     }

@@ -131,7 +131,7 @@ public class DAOUsers extends DBConnect {
         }
     }
 
-    public void updateUser(users user) throws SQLException {
+    public void updateUser(User user) throws SQLException {
         String sql = "UPDATE users SET fullname = ?, gender = ?, address = ?, phone = ?, updated_at = ? WHERE user_id = ?";
         try (PreparedStatement ptm = conn.prepareStatement(sql)) {
             ptm.setString(1, user.getFullname());

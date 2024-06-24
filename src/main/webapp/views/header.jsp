@@ -26,8 +26,7 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Blog</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="#">Blog List</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>
+                                <li class="nav-item"><a class="nav-link" href="blog">Blog List</a></li>
                             </ul>
                         </li>    
                         <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3}">
@@ -50,7 +49,7 @@
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="marketing-product">Product</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Slider</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Post</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="managerpost">Post</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Customer</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>
                                 </ul>
@@ -114,7 +113,7 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false"><i class="bi bi-person-circle"></i>  Hello, ${user.fullname}</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="profile.html">User Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="editprofile">User Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
                             </ul>

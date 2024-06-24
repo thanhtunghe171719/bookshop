@@ -47,7 +47,18 @@
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
             <version>3.0.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>top.jfunc.json</groupId>
+            <artifactId>json-jsonsmart</artifactId>
+            <version>1.8.3</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
     <build>

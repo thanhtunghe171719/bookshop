@@ -118,6 +118,9 @@ public class AuthorizationFilter implements Filter {
                 res.sendRedirect("home");
             }
         }
+        if(session.getAttribute("user")!= null){
+            
+        }
 
 	Throwable problem = null;
 	try {
