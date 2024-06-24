@@ -242,6 +242,7 @@
 
                                     <div class="text-center">
                                         <input type="submit" class="button button-paypal" value="Tiếp tục">
+                                        <p id="submitError" style="color: red"></p>
                                     </div>
                                 </form>
                             </div>

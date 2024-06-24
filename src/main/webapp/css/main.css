@@ -623,7 +623,7 @@ a{
     display:block;
     width:5%;
     height:100%;
-    background:#384aeb;
+    background:#F1F6F7;
     position:absolute;
     top:0;
     left:0
@@ -3871,7 +3871,7 @@ a{
 }
 @media (min-width: 1000px){
     .footer-area{
-        padding:195px 0px 120px
+        padding:90px 0px 90px
     }
 }
 .single-footer-widget p{

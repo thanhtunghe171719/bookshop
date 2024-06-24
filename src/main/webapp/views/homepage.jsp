@@ -32,7 +32,7 @@
 
 .bi.bi-arrow-left-circle {
     position: absolute;
-    left: -15%; /* Adjust this to move it left or right */
+    left: 105%;  /*Adjust this to move it left or right */
     top: 50%;
     transform: translateX(-50%); /* Centers it horizontally */
     font-size: 50px;
@@ -42,7 +42,7 @@
 }   
 .bi.bi-arrow-right-circle {
     position: absolute;
-    right: -15%; /* Adjust this to move it left or right */
+    right: 66%; /* Adjust this to move it left or right */
     top : 50%;
     transform: translateX(-50%); /* Centers it horizontally */
     font-size: 50px;
@@ -60,33 +60,24 @@
   <main class="site-main">
     
     <!--================ Hero banner start =================-->
-    <section class="hero-banner">
-        <div class="container">
-            <c:if test="${not empty listSlider}">
-                <c:forEach var="slider" items="${listSlider}" varStatus="loop">
-                    <div class="row no-gutters align-items-center" id="slide_${loop.index}" <c:if test="${loop.index != 0}">style="display: none;"</c:if>>
-                        <div class="col-5 d-none d-sm-block">
-                            <div class="hero-banner__img">
-                                <div>
-                                    <button class="bi bi-arrow-left-circle" onclick="prevSlide(${loop.index})"></button>
-                                </div>
-                                <img class="img-fluid" src="${slider.image}" alt="" style="height:300px">
-                            </div>
-                        </div>
-                        <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
-                            <div class="hero-banner__content">
-                                <h3>${slider.title}</h3>
-                                <a class="button button-hero" href="slider?service=backlink&id=${slider.sliderId}">Read It</a>
-                            </div>
-                            <div>
-                                <button class="bi bi-arrow-right-circle" onclick="nextSlide(${loop.index})"></button>
-                            </div>
-                        </div>
+    <c:if test="${not empty listSlider}">
+        <c:forEach var="slider" items="${listSlider}" varStatus="loop">
+            <div class="row" id="slide_${loop.index}" <c:if test="${loop.index != 0}">style="display: none;"</c:if>>
+                <div class="col-1">
+                    <button class="bi bi-arrow-left-circle" onclick="prevSlide(${loop.index})"></button>
+                </div>
+                <div class="col-10 d-none d-sm-block">
+                    <div class="hero-banner__img" style="text-align: center">
+                        <a href="slider?service=backlink&id=${slider.sliderId}"><img class="img-fluid" src="${slider.image}" alt="" style="height:400px;width: 1100px"></a>
                     </div>
-                </c:forEach>
-            </c:if>
-        </div>
-    </section>
+                </div>
+                <div class="col-1">
+                    <button class="bi bi-arrow-right-circle" onclick="nextSlide(${loop.index})"></button>
+                </div>
+            </div>
+        </c:forEach>
+    </c:if>
+
     <!--================ Hero banner start =================-->
 
         <!-- ================ Best Selling item  carousel ================= --> 

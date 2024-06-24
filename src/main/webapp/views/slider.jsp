@@ -24,23 +24,7 @@
         <jsp:include page="header.jsp"/>
         <!--================ End Header Menu Area =================-->
 
-        <!-- ================ start banner area ================= -->    
-        <section class="blog-banner-area" id="blog">
-            <div class="container h-100">
-                <div class="blog-banner">
-                    <div class="text-center">
-                        <h1>Slider Details</h1>
-                        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ================ end banner area ================= -->
+
 
         <!--================Blog Area =================-->
         <section class="blog_area single-post-area py-80px section-margin--small">
