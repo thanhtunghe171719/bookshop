@@ -61,7 +61,7 @@
                           <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                               <c:set var="cartItem" value="${entry.key}" />
                               <c:set var="book" value="${entry.value}" />
-                              <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100* 1000)}" />
+                              <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100)}" />
                               <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
                               <tr>
                                     <td>
@@ -77,20 +77,22 @@
                                     <td>
                                         <h5>
                                             <!--${book.price * 1000}-->
-                                            <p class="card-product__price">${(book.price * (100 - book.discount) / 100 * 1000)} đ</p>
+                                            <!--<p class="card-product__price">${(book.price * (100 - book.discount) / 100 * 1000)} đ</p>-->
+                                            <fmt:formatNumber value="${book.price * (100 - book.discount) / 100}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                         </h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="qty-${cartItem.cartItemId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty" 
-                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock}); updateSubtotal();" >
-                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase'); updateSubtotal();"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease'); updateSubtotal();"><i class="lnr lnr-chevron-down"></i></button>
+                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock})" >
+                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
                                         </div>
                                     </td>
                                     <td>
                                         <h5 id="total-price-${cartItem.cartItemId}">
-                                            <p class="card-product__price">${lineSubTotal} đ</p>
+                                            <!--<p class="card-product__price">${lineSubTotal} đ</p>-->
+                                            <fmt:formatNumber value="${lineSubTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                         </h5>
                                     </td>
                                     <td>
@@ -124,7 +126,10 @@
                                   <h5>Tổng Giá Trị Giỏ Hàng</h5>
                               </td>
                               <td>
-                                  <h5 id="total-all">${subTotal} đ</h5>
+                                  <!--<h5 id="total-all">${subTotal} đ</h5>-->
+                                  <h5 id="total-all">
+                                      <fmt:formatNumber value="${subTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                  </h5>
                               </td>
                           </tr>
                           
@@ -181,8 +186,10 @@ function updateQuantity(cartItemId, bookPrice, discount, stock, action) {
 
     // Cập nhật giá trị mới của quantity trên giao diện
     document.getElementById('qty-' + cartItemId).value = quantity;
+    // Update the total price based on the new quantity
+    var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
     // Cập nhật giá trị tổng giá trị cho sản phẩm
-    document.getElementById('total-price-' + cartItemId).innerText =  formatCurrency(bookPrice * quantity * (100 - discount) / 100);
+    document.getElementById('total-price-' + cartItemId).innerText =  formatNumber(totalPrice, 3, 3) + " đ";
     
     updateSubtotal();
     
@@ -214,7 +221,7 @@ function updateTotalPrice(cartItemId, bookPrice, discount, quantity, stock) {
 
     // Update the total price based on the new quantity
     var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
-    document.getElementById('total-price-' + cartItemId).innerText =  formatCurrency(totalPrice);
+    document.getElementById('total-price-' + cartItemId).innerText =  formatNumber(totalPrice, 3, 3) + " đ";
 
     updateSubtotal();
 
@@ -232,30 +239,32 @@ function updateTotalPrice(cartItemId, bookPrice, discount, quantity, stock) {
 
 function updateSubtotal() {
     var totalAll = 0;
-
     var totalPriceElements = document.querySelectorAll('[id^="total-price-"]');
     totalPriceElements.forEach(function(element) {
-        var priceText = element.innerText;
-        var price = parseFloat(priceText.replace('$', ''));
+        var priceText = element.innerText.replace(" đ", "").replace(/\./g, '').replace(',', '.');
+        var price = parseFloat(priceText);
         totalAll += price;
     });
-
-    document.getElementById('total-all').innerText =  formatCurrency(totalAll/1000);
+    document.getElementById('total-all').innerText = formatNumber(totalAll, 0, 3) + " đ";
 }
 
-
-function formatCurrency(amount) {
-    // Làm tròn số và chuyển đổi thành chuỗi
-    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
-
-    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
-    var stringFormattedAmount = formattedAmount.toFixed(2);
-
-    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
-    stringFormattedAmount = stringFormattedAmount + " đ";
-
-    return stringFormattedAmount;
-}
+    function formatNumber(value, minFractionDigits, maxFractionDigits) {
+        return parseFloat(value).toFixed(Math.max(minFractionDigits, maxFractionDigits))
+            .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+            .replace('.', ',');
+    }
+//function formatCurrency(amount) {
+//    // Làm tròn số và chuyển đổi thành chuỗi
+//    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
+//
+//    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
+//    var stringFormattedAmount = formattedAmount.toFixed(2);
+//
+//    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
+//    stringFormattedAmount = stringFormattedAmount + " đ";
+//
+//    return stringFormattedAmount;
+//}
 
 
 

@@ -40,111 +40,6 @@
 
 
         <!--================Checkout Area =================-->
-<!--        <section class="checkout_area section-margin--small">
-            <div class="container">
-
-
-                <div class="billing_details">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <h3>Chi Tiết Liên Hệ</h3>
-                            <form class="row contact_form" action="cartcontact" method="post" novalidate="novalidate">
-                                <div class="col-md-12 form-group p_star">
-                                    <p>Họ và Tên:</p>
-                                    <input type="text" class="form-control" id="first" name="name" placeholder="Họ và Tên" value="${user.fullname}" style="color: black">
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <p>Địa Chỉ:</p>
-                                    <input type="text" class="form-control" id="company" name="address" placeholder="Địa Chỉ" value="${user.address}" style="color: black">
-                                </div>
-                                <div class="col-md-12 form-group p_star">
-                                    <p>Số Điện Thoại:</p>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Số Điện Thoại" value="${user.phone}" style="color: black">
-                                </div>
-
-                                <div class="col-md-12 form-group mb-0">
-                                    <div class="creat_account">
-                                        <h3>Lưu ý cho bên giao hàng</h3>
-                                    </div>
-                                    <textarea class="form-control" name="message" id="message" rows="1" placeholder="Lời nhắn"></textarea>
-                                </div>
-                            </form>
-                                
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="order_box">
-                                <form action="cart" method="post">
-                                    <div style="display: flex">
-                                        <h2 style="flex: 1;border: none">Đơn hàng của bạn</h2>
-                                        <a href="cartdetails"><i class="ti-shopping-cart" style="font-size: 20px;"></i></a>
-                                    </div>
-
-                                    <table class="table">
-                                        <tr>
-                                            <td>Sản Phẩm</td>
-                                            <td></td>
-                                            <td style="float: right">Thành Giá</td>
-                                        </tr>
-                                        <c:if test="${not empty cartItemBookMap}">
-                                            <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
-                                                <c:set var="cartItem" value="${entry.key}" />
-                                                <c:set var="book" value="${entry.value}" />
-                                                <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100)}" />
-                                                <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
-
-                                                <tr>
-                                                    <td>${book.title}</td>
-                                                    <td>x${cartItem.quantity}</td>
-                                                    <td style="float: right">
-                                                        <fmt:formatNumber value="${lineSubTotal}" minFractionDigits="3" maxFractionDigits="3" /> đ
-                                                    </td>
-                                                </tr>
-
-                                            </c:forEach>    
-                                        </c:if>        
-
-
-                                        <tr  style="border-bottom: 1px #dee2e6 solid;">
-                                            <td colspan="2" style="color: black">Tổng Tiền Đơn Hàng</td>
-                                            <td style="float: right;color: black">
-                                                <fmt:formatNumber value="${subTotal}" minFractionDigits="3" maxFractionDigits="3" /> đ
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    <h3>Chọn Phương Thức Thanh Toán</h3>
-                                    <div class="payment_item">
-                                        <div class="radion_btn">
-                                            <input type="radio" id="f-option5" name="paymentMethod" value="Direct Payment">
-                                            <label for="f-option5">Thanh toán khi nhận hàng</label>
-                                            <div class="check"></div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="payment_item active">
-                                        <div class="radion_btn">
-                                            <input type="radio" id="f-option6" name="paymentMethod" value="Pay with Banking App">
-                                            <label for="f-option6">Thanh toán bằng thẻ</label>
-                                            <div><img src="img/product/card.jpg" alt="" style="left: 66px; top: 30px;width: 105px"></div>
-                                            <div class="check"></div>
-                                        </div>                                    
-                                    </div>
-                                    <br>
-                                    <div class="creat_account">
-                                        <input type="checkbox" id="f-option4" name="selector">Tôi đã đọc và xác nhận mọi thông tin đều chính xác
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="button button-paypal" href="#">Tiếp Tục</a>
-                                        <button type="button" class="button button-paypal">Tiếp Tục</button>    
-                                        <p id="submitError" class="text-danger"></p>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>-->
                                                 
         <section class="checkout_area section-margin--small">
             <div class="container">
@@ -207,7 +102,9 @@
                                                 <tr>
                                                     <td>${book.title}</td>
                                                     <td>x${cartItem.quantity}</td>
-                                                    <td style="float: right">$${lineSubTotal}</td>
+                                                    <td style="float: right">
+                                                        <fmt:formatNumber value="${lineSubTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                    </td>
                                                 </tr>
 
                                             </c:forEach>    
@@ -216,7 +113,9 @@
 
                                         <tr  style="border-bottom: 1px #dee2e6 solid;">
                                             <td colspan="2">Tổng Tiền Đơn Hàng</td>
-                                            <td style="float: right">$${subTotal}</td>
+                                            <td style="float: right">
+                                                <fmt:formatNumber value="${subTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                            </td>
                                         </tr>
                                     </table>
                                     <br>
