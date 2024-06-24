@@ -66,17 +66,17 @@ public class DAOBooks extends DBConnect {
         if (title != null) {
             query += " AND b.title LIKE ?";
         }
-        if (category != null && !category.isEmpty()) {
+        if (category != null && category.length() != 0) {
             query += " AND b.category_id = ?";
         }
-        if (sortTitle != null && !sortTitle.isEmpty()) {
+        if (sortTitle != null && sortTitle.length() != 0) {
             query += " ORDER BY b.title " + sortTitle;
         }
-        if (sortListPrice != null && !sortListPrice.isEmpty()) {
-            query += (sortTitle.isEmpty() ? " ORDER BY" : ",") + " b.price " + sortListPrice;
+        if (sortListPrice != null && sortListPrice.length() != 0) {
+            query += (sortTitle.length() == 0 ? " ORDER BY" : ",") + " b.price " + sortListPrice;
         }
         if (sortPriceSale != null && !sortPriceSale.isEmpty()) {
-            query += ((sortTitle.isEmpty() && sortListPrice.isEmpty()) ? " ORDER BY" : ",") + " b.discount " + sortPriceSale;
+            query += ((sortTitle.length() == 0 && sortListPrice.length() == 0) ? " ORDER BY" : ",") + " b.discount " + sortPriceSale;
         }
         query += " LIMIT ? OFFSET ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -87,6 +87,7 @@ public class DAOBooks extends DBConnect {
             if (category != null && !category.isEmpty()) {
                 stmt.setString(index++, category);
             }
+            // alo alo demo lỗi anh xem voi
             stmt.setInt(index++, pageSize);
             stmt.setInt(index, (page - 1) * pageSize);
             ResultSet rs = stmt.executeQuery();

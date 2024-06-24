@@ -124,8 +124,11 @@ public class MarketingProductController extends HttpServlet {
                 title = title != null ? title.trim() : "";
                 String category = request.getParameter("category");
                 String sortTitle = request.getParameter("sortTitle");
+                sortTitle = sortTitle != null ? sortTitle.trim() : "";
                 String sortListPrice = request.getParameter("sortListPrice");
+                sortListPrice = sortListPrice != null ? sortListPrice.trim() : "";
                 String sortPriceSale = request.getParameter("sortPriceSale");
+                sortPriceSale = sortPriceSale != null ? sortPriceSale.trim() : "";
                 List<Book> books = bookDao.getBooks(title, category, sortTitle, sortListPrice, sortPriceSale, page, pageSize);
                 int totalBooks = bookDao.getBookCount(title, category);
                 int totalPages = (int) Math.ceil(totalBooks / (double) pageSize);
