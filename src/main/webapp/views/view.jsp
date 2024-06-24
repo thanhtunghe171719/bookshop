@@ -60,7 +60,7 @@
         </tr>
         <tr>
             <th>Rating</th>
-            <td><fmt:formatNumber value="${book.price}" type="currency" currencySymbol="" pattern="#,##0"/> vnd</td>
+            <td><fmt:formatNumber value="${book.price}" type="currency" currencySymbol="" pattern="#,##"/> vnd</td>
 
         </tr>
         <tr>

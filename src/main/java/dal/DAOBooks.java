@@ -87,7 +87,6 @@ public class DAOBooks extends DBConnect {
             if (category != null && !category.isEmpty()) {
                 stmt.setString(index++, category);
             }
-            // alo alo demo lỗi anh xem voi
             stmt.setInt(index++, pageSize);
             stmt.setInt(index, (page - 1) * pageSize);
             ResultSet rs = stmt.executeQuery();
