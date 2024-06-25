@@ -131,7 +131,7 @@
                         <div class="card-product__img">
                             <img class="card-img" src="${book.image}" alt="" style="height: 350px; width: 255px">
                             <ul class="card-product__imgOverlay" style="display: flex">
-                                    <li style="margin-left: 33% ;"><a href=""><button><i class="bi bi-card-list"></i></button></a></li>
+                                    <li style="margin-left: 33% ;"><a href="productdetail?pid=${book.bookId}"><button><i class="bi bi-card-list"></i></button></a></li>
                                 <form action="cartdetails" method="get">                             
                                     <input type="hidden" name="service" value="addCart">
                                     <input type="hidden" name="bookId" value="${book.bookId}">
@@ -140,7 +140,7 @@
                             </ul>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-product__title"><a href="#">${book.title}</a></h4>
+                            <h4 class="card-product__title"><a href="productdetail?pid=${book.bookId}">${book.title}</a></h4>
 <!--                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>-->
                             <p class="card-product__price">
                                 <fmt:formatNumber value="${book.price*(100-book.discount)/100}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
