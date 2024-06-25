@@ -4,57 +4,44 @@
     <div class="footer-area">
         <div class="container">
             <div class="row section_gap">
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="col-lg-5 col-md-6 col-sm-6">
                     <div class="single-footer-widget tp_widgets">
-                        <h4 class="footer_title large_title">Our Mission</h4>
+                        <h4 class="footer_title large_title">Nhiệm Vụ Của Chúng tôi</h4>
                         <p>
-                            So seed seed green that winged cattle in. Gathering thing made fly you're no 
-                            divided deep moved us lan Gathering thing us land years living.
+                            Sứ mệnh của chúng tôi tại là thúc đẩy tình yêu đọc sách bằng cách cung cấp một bộ sưu 
+                            tập sách phong phú và được chọn lọc cẩn thận cho mọi lứa tuổi và sở thích.
                         </p>
                         <p>
-                            So seed seed green that winged cattle in. Gathering thing made fly you're no divided deep moved 
+                            Mục tiêu của chúng tôi là trở thành điểm đến hàng đầu cho những người yêu sách trên 
+                            toàn thế giới, mang đến trải nghiệm mua sắm trực tuyến độc đáo và thân thiện.
                         </p>
                     </div>
                 </div>
                 <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
                     <div class="single-footer-widget tp_widgets">
-                        <h4 class="footer_title">Quick Links</h4>
+                        <h4 class="footer_title">Truy Cập Nhanh</h4>
                         <ul class="list">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Shop</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Product</a></li>
-                            <li><a href="#">Brand</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="home">Home</a></li>
+                            <li><a href="products">Shop Category</a></li>
+                            <li><a href="#">Blog List</a></li>
+                            <li><a href="#"></a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="single-footer-widget instafeed">
-                        <h4 class="footer_title">Gallery</h4>
-                        <ul class="list instafeed d-flex flex-wrap">
-                            <li><img src="img/gallery/r1.jpg" alt=""></li>
-                            <li><img src="img/gallery/r2.jpg" alt=""></li>
-                            <li><img src="img/gallery/r3.jpg" alt=""></li>
-                            <li><img src="img/gallery/r5.jpg" alt=""></li>
-                            <li><img src="img/gallery/r7.jpg" alt=""></li>
-                            <li><img src="img/gallery/r8.jpg" alt=""></li>
-                        </ul>
-                    </div>
-                </div>
+                
                 <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
                     <div class="single-footer-widget tp_widgets">
-                        <h4 class="footer_title">Contact Us</h4>
+                        <h4 class="footer_title">Liên Hệ</h4>
                         <div class="ml-40">
                             <p class="sm-head">
                                 <span class="fa fa-location-arrow"></span>
-                                Head Office
+                                Trụ sở chính
                             </p>
-                            <p>123, Main Street, Your City</p>
+                            <p>Thạch Thất, Hòa Lạc, Hà Nội</p>
 
                             <p class="sm-head">
                                 <span class="fa fa-phone"></span>
-                                Phone Number
+                                Số Điện Thoại
                             </p>
                             <p>
                                 +123 456 7890 <br>
@@ -66,8 +53,8 @@
                                 Email
                             </p>
                             <p>
-                                free@infoexample.com <br>
-                                www.infoexample.com
+                                abc@gmail.com <br>
+                                abc123@gmail.com
                             </p>
                         </div>
                     </div>
@@ -76,14 +63,4 @@
         </div>
     </div>
 
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="row d-flex">
-                <p class="col-lg-12 footer-text text-center">
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-            </div>
-        </div>
-    </div>
 </footer>

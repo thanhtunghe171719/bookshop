@@ -49,7 +49,7 @@
                       <thead>
                           <tr>
                               <th scope="col">Sản Phẩm</th>
-                              <th scope="col">Giá</th>
+                              <th scope="col">Giá   </th>
                               <th scope="col">Số Lượng</th>
                               <th scope="col">Thành Giá</th>
                               <th scope="col">Xóa Sản Phẩm</th>
@@ -70,7 +70,7 @@
                                                 <img src="${book.image}" alt="" style="width: 150px;height: 280px">
                                             </div>
                                             <div class="media-body">
-                                                <p>${book.title}</p>
+                                                <p style="width: 200px;">${book.title}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -128,7 +128,9 @@
                               <td>
                                   <!--<h5 id="total-all">${subTotal} đ</h5>-->
                                   <h5 id="total-all">
-                                      <fmt:formatNumber value="${subTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                      <c:if test="${not empty cartItemBookMap}">
+                                          <fmt:formatNumber value="${subTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                      </c:if>
                                   </h5>
                               </td>
                           </tr>
@@ -175,7 +177,7 @@ function updateQuantity(cartItemId, bookPrice, discount, stock, action) {
         if(quantity<stock){
             quantity++;
         }else{
-            quantity=stock;
+            quantity = stock;
         }
     } 
     
@@ -245,7 +247,7 @@ function updateSubtotal() {
         var price = parseFloat(priceText);
         totalAll += price;
     });
-    document.getElementById('total-all').innerText = formatNumber(totalAll, 0, 3) + " đ";
+    document.getElementById('total-all').innerText = formatNumber(totalAll, 3, 3) + " đ";
 }
 
     function formatNumber(value, minFractionDigits, maxFractionDigits) {

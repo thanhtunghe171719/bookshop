@@ -91,7 +91,7 @@
                 <c:forEach var="category" items="${listCategory}">
                     <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="img-fluid" src="${category.image}" alt="">
+                            <img class="img-fluid" src="${category.image}" alt="" style="width: 300px;height: 300px">
                             <a href="#"><ul class="card-product__imgOverlay">
                             </ul></a>
                         </div>
@@ -129,7 +129,7 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                       <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="card-img" src="${book.image}" alt="" style="height: 350px">
+                            <img class="card-img" src="${book.image}" alt="" style="height: 350px; width: 255px">
                             <ul class="card-product__imgOverlay" style="display: flex">
                                     <li style="margin-left: 33% ;"><a href=""><button><i class="bi bi-card-list"></i></button></a></li>
                                 <form action="cartdetails" method="get">                             
@@ -141,13 +141,13 @@
                         </div>
                         <div class="card-body">
                             <h4 class="card-product__title"><a href="#">${book.title}</a></h4>
-                            <!--<p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>-->
-                            <p class="card-product__price">
-                                <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                            </p>
 <!--                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>-->
                             <p class="card-product__price">
                                 <fmt:formatNumber value="${book.price*(100-book.discount)/100}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                            </p>
+                            <!--<p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>-->
+                            <p class="card-product__price" style="text-decoration: line-through;font-size: 15px">
+                                <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                             </p>
                         </div>
                       </div>
@@ -175,13 +175,13 @@
                     <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                       <div class="card card-blog">
                         <div class="card-blog__img">
-                            <img class="card-img rounded-0" src="${post.image}" alt="" style="height: 230px">
+                            <img class="card-img rounded-0" src="${post.image}" alt="" style="height: 230px; width: 350px">
                         </div>
                         <div class="card-body">
 
-                          <h4 class="card-blog__title"><a href="single-blog.html">${post.title}</a></h4>
-                          <p>${post.description}...</p>
-                          <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+                          <h4 class="card-blog__title"><a href="#">${post.title}</a></h4>
+<!--                          <p>${post.description}...</p>
+                          <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>-->
                         </div>
                       </div>
                     </div>

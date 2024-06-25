@@ -69,7 +69,8 @@ public class ResetPassWord extends HttpServlet {
 
                 Random rndm_method = new Random();
                 StringBuilder otp = new StringBuilder();
-                for (int i = 0; i < 5; i++) {
+                otp.append(Capital_chars.charAt(rndm_method.nextInt(values.length())));
+                for (int i = 0; i < 7; i++) {
                     otp.append(values.charAt(rndm_method.nextInt(values.length())));
                 }
                 

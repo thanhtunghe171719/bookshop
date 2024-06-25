@@ -83,7 +83,7 @@ public class HomePage extends HttpServlet {
                 } else if (selectedOption.equals("sold")) {
                     List<Integer> listBookId = daoOrderItems.getBookId("SELECT oi.book_id FROM order_items oi  GROUP BY oi.book_id  ORDER BY SUM(oi.quantity) DESC limit 8;");
                     for (int i = 0; i < listBookId.size(); i++) {
-                        Book bookItem = daoBooks.getBookById("SELECT * FROM books WHERE book_id = " + listBookId.get(i));
+                        Book bookItem = daoBooks.getBookById("SELECT * FROM books WHERE stock > 0 and book_id = " + listBookId.get(i));
                         if (bookItem != null) {
                             listBook.add(bookItem);  // Now listBook is initialized, so this will work fine
                         }

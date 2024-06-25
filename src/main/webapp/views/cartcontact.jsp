@@ -88,7 +88,7 @@
 
                                     <table class="table">
                                         <tr>
-                                            <td>Sản Phẩm</td>
+                                            <td >Sản Phẩm</td>
                                             <td></td>
                                             <td style="float: right">Thành Giá</td>
                                         </tr>
@@ -96,11 +96,11 @@
                                             <c:forEach var="entry" items="${cartItemBookMap.entrySet()}">
                                                 <c:set var="cartItem" value="${entry.key}" />
                                                 <c:set var="book" value="${entry.value}" />
-                                                <c:set var="lineSubTotal" value="${book.price * cartItem.quantity}" />
+                                                <c:set var="lineSubTotal" value="${(book.price * cartItem.quantity * (100 - book.discount) / 100)}" />
                                                 <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
 
                                                 <tr>
-                                                    <td>${book.title}</td>
+                                                    <td><p style="width: 100px;">${book.title}</p></td>
                                                     <td>x${cartItem.quantity}</td>
                                                     <td style="float: right">
                                                         <fmt:formatNumber value="${lineSubTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
