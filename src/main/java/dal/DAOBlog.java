@@ -4,6 +4,7 @@ import models.Post;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import models.User;
 
 public class DAOBlog {
 
@@ -214,16 +215,12 @@ public class DAOBlog {
     }
 
     public void toggleStatus(int postId) throws SQLException {
-        String query = "UPDATE posts SET status = CASE WHEN status = 'Show' THEN 'Hide' ELSE 'Show' END, updated_at = NOW() WHERE post_id = ?";
-        try ( PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, postId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            // Log and rethrow the exception for higher-level handling
-            System.err.println("Error toggling status: " + e.getMessage());
-            throw e;
-        }
+    String sql = "UPDATE posts SET status = CASE WHEN status = 'Show' THEN 'Hide' ELSE 'Show' END WHERE post_id = ?";
+    try (   PreparedStatement statement = conn.prepareStatement(sql)) {
+        statement.setInt(1, postId);
+        statement.executeUpdate();
     }
+}
 
     public boolean postIdExists(int postId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM posts WHERE post_id = ?";
@@ -282,4 +279,45 @@ public class DAOBlog {
 
         return success;
     }
+    public User authenticateUser(String username, String password) throws SQLException {
+        User user = null;
+        String query = "SELECT id, username, password FROM users WHERE username = ? AND password = ?";
+        try (             PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setUserId(resultSet.getInt("user_id"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setPassword(resultSet.getString("password"));
+            }
+        }
+        return user;
+    }
+    public List<Post> getVisiblePosts() throws SQLException {
+    List<Post> posts = new ArrayList<>();
+    String sql = "SELECT * FROM posts WHERE status = 'Show'";
+    try (
+         PreparedStatement statement = conn.prepareStatement(sql);
+         ResultSet rs = statement.executeQuery()) {
+
+        while (rs.next()) {
+            Post post = new Post();
+            post.setPostId(rs.getInt("post_id"));
+            post.setTitle(rs.getString("title"));
+            post.setDescription(rs.getString("description"));
+            post.setPostType(rs.getString("post_type"));
+            post.setStatus(rs.getString("status"));
+            post.setImage(rs.getString("image"));
+            post.setUserId(rs.getInt("user_id"));
+            post.setCreatedAt(rs.getDate("created_at"));
+            post.setUpdateAt(rs.getDate("updated_at"));
+            posts.add(post);
+        }
+    }
+    return posts;
+}
+
 }

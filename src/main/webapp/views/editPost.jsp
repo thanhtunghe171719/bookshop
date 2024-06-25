@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" name="description" rows="5" readonly><%= post != null ? post.getDescription() : ""%></textarea>
+                    <textarea class="form-control" name="description" rows="5" readonly><%= post != null ? post.getDescription().replace("\n", "<br>") : "" %></textarea>
                 </div>
                 <div class="form-group">
                     <label for="post_type">Type</label>

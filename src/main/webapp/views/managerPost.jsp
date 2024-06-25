@@ -46,14 +46,14 @@
                         if (posts != null && !posts.isEmpty()) {
                             for (Post post : posts) {
                     %>
-                    <tr>
+                    <tr id="post-row-<%= post.getPostId() %>">
                         <td><%= post.getPostId() %></td>
                         <td><img src="<%= post.getImage() %>" alt="Post Image" class="img-thumbnail" style="width: 50px;"></td>
                         <td><%= post.getTitle() %></td>
                         <td><%= post.getUserId() %></td>
                         <td><%= post.getPostType() %></td>
                         <td>
-                            <button onclick="toggleStatus(<%= post.getPostId() %>, '<%= post.getStatus() %>')" class="btn btn-secondary btn-sm">
+                            <button id="status-btn-<%= post.getPostId() %>" onclick="toggleStatus(<%= post.getPostId() %>, '<%= post.getStatus() %>')" class="btn btn-secondary btn-sm">
                                 <%= post.getStatus().equals("Show") ? "Hide" : "Show" %>
                             </button>
                         </td>
@@ -73,53 +73,61 @@
                     </tr>
                     <% } %>
                 </tbody>
+
+
             </table>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
-                                function toggleStatus(postId) {
-                                    if (confirm("Are you sure you want to toggle the status of this post?")) {
-                                        $.ajax({
-                                            url: 'managerpost',
-                                            type: 'GET',
-                                            data: {
-                                                action: 'toggleStatus',
-                                                post_id: postId
-                                            },
-                                            success: function (response) {
-                                                if (response.status === 'success') {
-                                                    alert(response.message);
-                                                    location.reload();
-                                                } else {
-                                                    alert('Error toggling post status!');
-                                                }
-                                            }
-                                        });
+                function toggleStatus(postId, currentStatus) {
+                    if (confirm("Are you sure you want to toggle the status of this post?")) {
+                        $.ajax({
+                            url: 'managerpost',
+                            type: 'GET',
+                            data: {
+                                action: 'toggleStatus',
+                                post_id: postId
+                            },
+                            success: function (response) {
+                                if (response.status === 'success') {
+                                    alert(response.message);
+                                    var row = $('#post-row-' + postId);
+                                    if (response.newStatus === 'Hide') {
+                                        row.hide(); // Hide the post row if the new status is "Hide"
+                                    } else {
+                                        var button = $('#status-btn-' + postId);
+                                        button.text('Hide');
                                     }
+                                } else {
+                                    alert('Error toggling post status!');
                                 }
+                            }
+                        });
+                    }
+                }
 
-                                function deletePost(postId) {
-                                    if (confirm("Are you sure you want to delete this post?")) {
-                                        $.ajax({
-                                            url: 'managerpost',
-                                            type: 'GET',
-                                            data: {
-                                                action: 'delete',
-                                                post_id: postId
-                                            },
-                                            success: function (response) {
-                                                if (response.status === 'success') {
-                                                    alert(response.message);
-                                                    location.reload();
-                                                } else {
-                                                    alert('Error deleting post!');
-                                                }
-                                            }
-                                        });
-                                    }
+                function deletePost(postId) {
+                    if (confirm("Are you sure you want to delete this post?")) {
+                        $.ajax({
+                            url: 'managerpost',
+                            type: 'GET',
+                            data: {
+                                action: 'delete',
+                                post_id: postId
+                            },
+                            success: function (response) {
+                                if (response.status === 'success') {
+                                    alert(response.message);
+                                    location.reload();
+                                } else {
+                                    alert('Error deleting post!');
                                 }
+                            }
+                        });
+                    }
+                }
         </script>
         <jsp:include page="footer.jsp"/>
     </body>

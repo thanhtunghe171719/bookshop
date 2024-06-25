@@ -9,11 +9,13 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import models.Post;
+import models.User;
 import net.minidev.json.JSONObject;
 
 @MultipartConfig
@@ -39,8 +41,13 @@ public class CreaterPostServlet extends HttpServlet {
         JSONObject jsonResponse = new JSONObject();
 
         try {
-            // Temporary user_id for testing purposes
-            int userId = 1; // Replace with a valid user_id from your database
+            HttpSession session = request.getSession(false);
+            if (session == null || session.getAttribute("user") == null) {
+                throw new IllegalStateException("User is not logged in.");
+            }
+
+            User loggedInUser = (User) session.getAttribute("user");
+            int userId = loggedInUser.getUserId();
 
             String title = request.getParameter("title");
             String description = request.getParameter("description");

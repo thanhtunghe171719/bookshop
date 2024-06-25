@@ -34,7 +34,7 @@ public class PostServlet extends HttpServlet {
     }
 
     @Override
-   
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -111,16 +111,16 @@ public class PostServlet extends HttpServlet {
         try {
             int postId = Integer.parseInt(postIdStr);
             dao.toggleStatus(postId);
-            response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\"}");
+            Post updatedPost = dao.getPostById(postId);
+            String newStatus = updatedPost.getStatus();
+            response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\", \"newStatus\":\"" + newStatus + "\", \"postId\":\"" + postId + "\"}");
         } catch (NumberFormatException | SQLException ex) {
             Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
             response.getWriter().write("{\"status\":\"error\",\"message\":\"Error toggling post status!\"}");
         }
     }
 
-    
-
-private void handleAjaxRequest(String action, HttpServletRequest request, HttpServletResponse response)
+    private void handleAjaxRequest(String action, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -142,17 +142,16 @@ private void handleAjaxRequest(String action, HttpServletRequest request, HttpSe
                 String newStatus = updatedPost.getStatus();
                 response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\", \"newStatus\":\"" + newStatus + "\"}");
 
-}
+            }
         } catch (NumberFormatException | SQLException ex) {
-            Logger.getLogger(PostServlet.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PostServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
             response.getWriter().write("{\"status\":\"error\",\"message\":\"Error processing request!\"}");
         }
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("toggleStatus".equals(action)) {
@@ -257,45 +256,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         return postId;
     }
 
-    private void handleNewPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String postType = request.getParameter("post_type");
-        String status = request.getParameter("status");
-
-        Post post = new Post();
-        post.setTitle(title);
-        post.setDescription(description);
-        post.setPostType(postType);
-        post.setStatus(status);
-
-        Part filePart = request.getPart("image");
-        String fileName = filePart.getSubmittedFileName();
-
-        if (fileName != null && !fileName.isEmpty()) {
-            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            String filePath = uploadPath + File.separator + fileName;
-            filePart.write(filePath);
-            post.setImage("uploads/" + fileName);
-        }
-
-        try {
-            int newPostId = dao.insertPost(post);
-            response.getWriter().write("{\"status\":\"success\",\"message\":\"Post created successfully!\",\"postId\":" + newPostId + "}");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.getWriter().write("{\"status\":\"error\",\"message\":\"Error creating post!\"}");
-        }
-    }
-
     @Override
-protected void doPut(HttpServletRequest request, HttpServletResponse response)
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int postId = Integer.parseInt(request.getParameter("post_id"));
 
@@ -313,7 +275,7 @@ protected void doPut(HttpServletRequest request, HttpServletResponse response)
     }
 
     @Override
-protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int postId = Integer.parseInt(request.getParameter("post_id"));
 

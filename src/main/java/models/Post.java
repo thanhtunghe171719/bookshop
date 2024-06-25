@@ -25,6 +25,9 @@ public class Post {
 
     public Post() {
     }
+    public boolean isHidden() {
+    return "Hide".equals(this.status);
+}
 
     public Post(int postId, String image, String title, int userId, String description, String postType, String status, Date createdAt, Date updateAt, String authorName) {
         this.postId = postId;

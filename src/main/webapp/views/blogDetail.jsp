@@ -1,9 +1,3 @@
-<%-- 
-    Document   : blogDetail
-    Created on : Jun 17, 2024, 4:07:47 PM
-    Author     : kobietkolam
---%>
-
 <%@page import="models.Post"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
@@ -46,17 +40,13 @@
                     <div class="row">
                         <div class="col-lg-8 posts-list">
                             <div class="single-post row">
-
-
                                 <%
                                     Post post = (Post) request.getAttribute("post");
                                     if (post != null) {
-
                                 %>
                                 <article class="row blog_item">
-                                    <div class="col-lg-3  col-md-3">
+                                    <div class="col-lg-3 col-md-3">
                                         <div class="blog_info text-right">
-
                                             <ul class="blog_meta list">
                                                 <li>
                                                     <a href="#"><%= post.getAuthorName()%>
@@ -77,7 +67,7 @@
                                             <img src="<%= post.getImage()%>" alt="<%= post.getTitle()%>">
                                             <div class="blog_details">
                                                 <h2 class="post-title" data-postId="<%= post.getPostId()%>"><%= post.getTitle()%></h2>
-                                                <p><%= post.getDescription()%></p>
+                                                <p><%= post.getDescription().replace("\n", "<br>") %></p>
                                             </div>
                                         </div>
                                     </div>
@@ -85,43 +75,28 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="blog_right_sidebar">
-
                                 <aside class="single_sidebar_widget post_category_widget">
                                     <h4 class="widget_title">Post Types</h4>
                                     <ul class="list cat-list">
-
                                         <li>
                                             <a href="blog?type=<%= post.getPostType()%>" class="d-flex justify-content-between">
                                                 <p><%= post.getPostType()%></p>
                                             </a>
                                         </li>
-
                                     </ul>
                                 </aside>
                             </div>
                         </div>
                         </article>
-
-                        <%
-
-                        } else {
-                        %>
+                        <% } else { %>
                         <p>No posts found.</p>
-                        <%
-                            }
-                        %>
+                        <% } %>
                     </div>
-
-
             </section>
-
         </div>
         <!--================ Start footer Area  =================-->	
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
-
-
-
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="vendors/skrollr.min.js"></script>
