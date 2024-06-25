@@ -35,39 +35,14 @@
         <jsp:include page="header.jsp"/>
         <!--================ End Header Menu Area =================-->
 
-        <!-- ================ start banner area ================= -->	
-        <section class="blog-banner-area" id="category">
-            <div class="container h-100">
-                <div class="blog-banner">
-                    <div class="text-center">
-                        <h1>Login / Register</h1>
-                        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Login/Register</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ================ end banner area ================= -->
 
         <!--================Login Box Area =================-->
         <section class="login_box_area section-margin">
             <div class="container">
-                <div class="row">
+                <div class="row" style="justify-content: center">
+                    
                     <div class="col-lg-6">
-                        <div class="login_box_img">
-                            <div class="hover">
-                                <h4>Lần đầu truy cập?</h4>
-                                <p>Đăng ký tài khoản tại đây để có trải nghiệm tốt nhất</p>
-                                <a class="button button-account" href="register">Đăng ký tài khoản</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="login_form_inner">
+                        <div class="login_form_inner" style="padding: 50px 0;">
                             <h2 style="margin-bottom: 20px">Quên Mật Khẩu?</h2>
                             <input type="hidden" name="emailReset" value="${emailReset}">
                             

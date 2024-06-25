@@ -40,16 +40,8 @@
         <!--================Login Box Area =================-->
         <section class="login_box_area section-margin">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="login_box_img">
-                            <div class="hover">
-                                <h4>Bạn đã có tài khoản?</h4>
-                                <p>Hãy nhấn vào đây để đăng nhập</p>
-                                <a class="button button-account" href="login">Đăng nhập</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" style="justify-content: center">
+                    
                     <div class="col-lg-6">
                         <div class="login_form_inner register_form_inner">
                             <h3>Đổi mật khẩu</h3>
@@ -79,6 +71,9 @@
                                 <div class="col-md-12 form-group">
                                     <button type="submit" name ="submit" value="submit" class="button button-register w-100">Lưu</button>
                                     <p  id="formError" class="text-danger"></p>
+                                    <c:if test="not empty notice">
+                                        <p class="text-danger">${notice}</p>
+                                    </c:if>
                                 </div>
                             </form>
                         </div>
