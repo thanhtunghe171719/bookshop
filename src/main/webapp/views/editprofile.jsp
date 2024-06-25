@@ -1,124 +1,220 @@
 <%-- 
-    Document   : editprofile
-    Created on : Jun 10, 2024, 11:08:54 PM
+    Document   : editProfile
+    Created on : May 27, 2024, 2:06:51 PM
     Author     : kobietkolam
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Aroma Shop - Category</title>
-        <link rel="icon" href="img/Fevicon.png" type="image/png">
-        <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
-        <link rel="stylesheet" href="vendors/themify-icons/themify-icons.css">
-        <link rel="stylesheet" href="vendors/linericon/style.css">
-        <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
-        <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
-        <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
-        <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
+        <title>User Profile</title>
 
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="./vendors/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="./vendors/themify-icons/themify-icons.css">
+        <link rel="stylesheet" href="./vendors/nice-select/nice-select.css">
+        <link rel="stylesheet" href="./vendors/owl-carousel/owl.theme.default.min.css">
+        <link rel="stylesheet" href="./vendors/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+        <link rel="stylesheet" href="./css/style.css">
+
+        <style>
+            .tab-pane {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f9f9f9; /* Light grey background for contrast */
+            }
+
+            .login {
+                width: 100%;
+                max-width: 500px;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+                border-radius: 8px;
+            }
+
+            .login_form_container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-row {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .form-row label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .input_type {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .save_button {
+                display: flex;
+                align-items: center;
+            }
+
+            .save_button .status_message {
+                margin-left: 10px; /* Adjust as needed for spacing */
+                min-width: 200px;  /* Adjust as needed to reserve space */
+                text-align: left;  /* Align the text to the left */
+            }
+
+            .save_button .status_message h6 {
+                margin: 0;
+            }
+
+            .primary_btn {
+                background-color: #007bff; /* Blue color for the button */
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .primary_btn:hover {
+                background-color: #0056b3; /* Darker blue on hover */
+            }
+
+            .edit {
+                background-color: transparent; /* Transparent background */
+                color: #007bff; /* Blue text color */
+                padding: 10px 20px;
+                border: 2px solid #007bff; /* Blue border */
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            .edit:hover {
+                background-color: #007bff; /* Blue background on hover */
+                color: #fff; /* White text color on hover */
+
+            }
+            .profile-image {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .profile-image img {
+                border-radius: 50%;
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+            }
+
+        </style>
     </head>
     <body>
-        <!--================ Start Header Menu Area =================-->
+        <!--header-->
+
         <jsp:include page="header.jsp"/>
 
-        <!--================ End Header Menu Area =================-->
-        <div class="col-xl-8 col-lg-8 col-md-7 mt-4 pt-2 mt-sm-0 pt-sm-0">
-            <h5 class="mb-0 pb-2">Schedule Timing</h5>
-            <div class="rounded shadow mt-4">
-                <div class="p-4 border-bottom">
-                    <h5 class="mb-0">Personal Information :</h5>
-                </div>
-
-                <div class="p-4 border-bottom">
-                    <div class="row align-items-center">
-                        <div class="col-lg-2 col-md-4">
-                            <img src="../assets/images/doctors/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                        </div><!--end col-->
-
-                        <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                            <h5 class="">Upload your picture</h5>
-                            <p class="text-muted mb-0">For best results, use an image at least 256px by 256px in either .jpg or .png format</p>
-                        </div><!--end col-->
-
-                        <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">                                        
-                            <a href="#" class="btn btn-primary">Upload</a>
-                            <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div>
-
-                <div class="p-4">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">First Name</label>
-                                    <input name="name" id="name" type="text" class="form-control" placeholder="First Name :">
-                                </div>
-                            </div><!--end col-->
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Last Name</label>
-                                    <input name="name" id="name2" type="text" class="form-control" placeholder="Last Name :">
-                                </div>
-                            </div><!--end col-->
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Your Email</label>
-                                    <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
-                                </div> 
-                            </div><!--end col-->
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Phone no.</label>
-                                    <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
-                                </div>                                                                               
-                            </div><!--end col-->
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Your Bio Here</label>
-                                    <textarea name="comments" id="comments" rows="4" class="form-control" placeholder="Bio :"></textarea>
-                                </div>
+        <!-- Profile popup -->
+        <div class="tab-pane fade show active" id="account-details">
+            <div class="login">
+                <div class="login_form_container">
+                    <!-- Profile Image -->
+                    <div class="profile-image">
+                        <c:if test="${not empty user.image}">
+                            <img src="${user.image}" alt="Profile Image">
+                        </c:if>
+                    </div>
+                    <form id="form-1" action="editprofile" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="user_id" value="${user.userId}">
+                        <div class="form-row">
+                            <label for="fullname">Full Name</label>
+                            <input class="input_type" type="text" name="fullname" value="${user.fullname}" readonly>
+                        </div>
+                        <div class="form-row">
+                            <label for="email">Email</label>
+                            <input class="input_type" type="text" name="email" value="${user.email}" readonly>
+                        </div>
+                        <div class="form-row">
+                            <label for="gender">Gender</label>
+                            <select class="select_type" name="gender" id="gender" disabled>
+                                <option value="Male" ${user.gender == 'Male' ? 'selected' : ''}>Male</option>
+                                <option value="Female" ${user.gender == 'Female' ? 'selected' : ''}>Female</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="address">Address</label>
+                            <input class="input_type" type="text" name="address" value="${user.address}" readonly>
+                        </div>
+                        <div class="form-row">
+                            <label for="phone">Phone</label>
+                            <input class="input_type" type="text" name="phone" value="${user.phone}" readonly>
+                        </div>
+                        <div class="form-row">
+                            <label for="image">Profile Image</label>
+                            <input type="file" name="image" accept=".png, .jpg, .jpeg" class="input_type" readonly>
+                        </div>
+                        <div class="save_button">
+                            <button onclick="changeType(this)" id="edit" type="button" class="edit">Edit</button>
+                            <div class="status_message">
+                                <c:if test="${requestScope.STATUS != null}">
+                                    <h6 style="color: green">${requestScope.STATUS}</h6>
+                                </c:if>
                             </div>
-                        </div><!--end row-->
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input type="submit" id="submit" name="send" class="btn btn-primary" value="Save changes">
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </form><!--end form--> 
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
 
 
-            <!--================ Start footer Area  =================-->	
-            <jsp:include page="footer.jsp"/>
-            <!--================ End footer Area  =================-->
+        <!--footer-->
+        <jsp:include page="footer.jsp"/>
 
+        <script type="text/javascript">
+           function changeType(button) {
+                var inputElements = document.querySelectorAll(".input_type, .select_type");
+                if (button.id === "edit") {
+                    button.id = "save";
+                    button.textContent = "Save";
+                    inputElements.forEach(x => {
+                        if (x.name !== "email") {
+                            x.readOnly = false;
+                            x.disabled = false;
+                            x.classList.add("default_input");
+                        }
+                    });
+                } else {
+                    document.getElementById("form-1").submit();
+                }
+            }
 
+            window.addEventListener('load', function () {
+                var statusMessage = document.getElementById('statusMessage');
+                var status = '<%= request.getAttribute("STATUS") %>';
 
-            <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
-            <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
-            <script src="vendors/skrollr.min.js"></script>
-            <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-            <script src="vendors/nice-select/jquery.nice-select.min.js"></script>
-            <script src="vendors/nouislider/nouislider.min.js"></script>
-            <script src="vendors/jquery.ajaxchimp.min.js"></script>
-            <script src="vendors/mail-script.js"></script>
-            <script src="js/main.js"></script>
-    </body>
+                if (status) {
+                    statusMessage.textContent = status;
+                    statusMessage.classList.add(status.includes('Error') ? 'error' : '');
+                    statusMessage.style.display = 'block';
+                }
+            });
+        </script>
+    </div>
+</body>
 </html>
+

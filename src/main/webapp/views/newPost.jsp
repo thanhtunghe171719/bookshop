@@ -1,5 +1,7 @@
 <%@ page import="models.Post" %>
 <%@ page import="dal.*" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,6 +16,12 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="css/style.css">
+        <style>
+            .margin-bottom-40 {
+                margin-bottom: 40px; /* Thay đổi giá trị này tùy theo khoảng cách mong muốn */
+            }
+
+        </style>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -48,7 +56,7 @@
                     <label for="image">Image</label>
                     <input type="file" name="image" accept=".png, .jpg, .jpeg" class="form-control-file" required>
                 </div>
-                <div class="text-center mt-4">
+                <div class="text-center mt-4 margin-bottom-40">
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>

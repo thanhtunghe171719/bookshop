@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controllers;
 
 import models.User;
@@ -18,10 +13,6 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.Arrays;
 
-/**
- *
- * @author kobietkolam
- */
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -29,20 +20,11 @@ import java.util.Arrays;
 )
 public class EditProfileServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -55,15 +37,6 @@ public class EditProfileServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userIdStr = request.getParameter("user_id");
@@ -79,6 +52,9 @@ public class EditProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
         int userId = Integer.parseInt(request.getParameter("user_id"));
         String fullname = request.getParameter("fullname");
         String gender = request.getParameter("gender");
@@ -88,7 +64,6 @@ public class EditProfileServlet extends HttpServlet {
         DAOUsers dao = new DAOUsers();
         User user = dao.getUserById(userId);
 
-        // Handle file upload
         Part filePart = request.getPart("image");
         String fileName = filePart.getSubmittedFileName();
 
@@ -108,7 +83,6 @@ public class EditProfileServlet extends HttpServlet {
                 return;
             }
 
-            // Define the upload path
             String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -117,12 +91,11 @@ public class EditProfileServlet extends HttpServlet {
 
             String filePath = uploadPath + File.separator + fileName;
             filePart.write(filePath);
-            user.setImage("uploads/" + fileName); // Set the new image path
+            user.setImage("uploads/" + fileName);
         }
 
-        // Validation
-        String namePattern = "^[a-zA-Z\\s]+$";
-        String phonePattern = "^\\d{10}$";
+        String namePattern = "^[\\p{L} \\s]+$";
+        String phonePattern = "^\\d{10}$";  // Ensure phone starts with 0 and has exactly 10 digits
 
         if (!fullname.matches(namePattern)) {
             request.setAttribute("STATUS", "Full name must contain only letters and spaces.");
@@ -131,12 +104,11 @@ public class EditProfileServlet extends HttpServlet {
         }
 
         if (!phone.matches(phonePattern)) {
-            request.setAttribute("STATUS", "Phone number must be exactly 10 digits.");
+            request.setAttribute("STATUS", "Phone number must start with 0 and be exactly 10 digits.");
             forwardToEditProfile(request, response, userId);
             return;
         }
 
-        // Update user profile
         user.setFullname(fullname);
         user.setGender(gender);
         user.setAddress(address);
@@ -154,7 +126,6 @@ public class EditProfileServlet extends HttpServlet {
         request.getRequestDispatcher("views/editprofile.jsp").forward(request, response);
     }
 
-    
     private void forwardToEditProfile(HttpServletRequest request, HttpServletResponse response, int userId) throws ServletException, IOException {
         DAOUsers dao = new DAOUsers();
         User user = dao.getUserById(userId);
@@ -162,14 +133,8 @@ public class EditProfileServlet extends HttpServlet {
         request.getRequestDispatcher("views/editprofile.jsp").forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
