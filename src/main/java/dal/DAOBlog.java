@@ -43,7 +43,8 @@ public class DAOBlog {
     // Method to search posts with a query, sorting, and pagination
     public List<Post> searchPosts(String query, int page, int pageSize, String sortOrder) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.title LIKE ? ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
+        String sql = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.title LIKE ? AND p.status = 'Show' ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
+
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + query + "%");
             ps.setInt(2, pageSize);
@@ -70,7 +71,7 @@ public class DAOBlog {
     // Method to get the total number of posts
     public int getTotalPosts() {
         int totalPosts = 0;
-        String sql = "SELECT COUNT(*) FROM posts";
+        String sql = "SELECT COUNT(*) FROM posts WHERE status = 'show'";
         try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 totalPosts = rs.getInt(1);
