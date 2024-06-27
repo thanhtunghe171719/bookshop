@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.Arrays;
@@ -144,7 +145,8 @@ public class EditProfileServlet extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("STATUS", "Error updating profile!");
         }
-
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", user);
         request.setAttribute("user", user);
         request.getRequestDispatcher("views/editprofile.jsp").forward(request, response);
     }

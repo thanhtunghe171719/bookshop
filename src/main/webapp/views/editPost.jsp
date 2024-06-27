@@ -69,47 +69,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
-                        function toggleStatus(postId) {
-                            if (confirm("Are you sure you want to toggle the status of this post?")) {
-                                $.ajax({
-                                    url: 'managerpost',
-                                    type: 'GET',
-                                    data: {
-                                        action: 'toggleStatus',
-                                        post_id: postId
-                                    },
-                                    success: function (response) {
-                                        if (response.status === 'success') {
-                                            alert('Post status toggled successfully!');
-                                            location.reload();
-                                        } else {
-                                            alert('Error toggling post status!');
-                                        }
-                                    }
-                                });
-                            }
-                        }
-
-                        function deletePost(postId) {
-                            if (confirm("Are you sure you want to delete this post?")) {
-                                $.ajax({
-                                    url: 'managerpost',
-                                    type: 'GET',
-                                    data: {
-                                        action: 'delete',
-                                        post_id: postId
-                                    },
-                                    success: function (response) {
-                                        if (response.status === 'success') {
-                                            alert('Post deleted successfully!');
-                                            window.location.href = 'posts';
-                                        } else {
-                                            alert('Error deleting post!');
-                                        }
-                                    }
-                                });
-                            }
-                        }
+                       
 
                         function editPost() {
                             document.querySelectorAll('input, textarea, select').forEach((el) => {

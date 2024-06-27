@@ -35,16 +35,13 @@ public class PostServlet extends HttpServlet {
     }
 
     @Override
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
 
         try {
             if (action == null || action.isEmpty()) {
-                List<Post> posts = dao.getAllPosts(action);
-                request.setAttribute("posts", posts);
-                request.getRequestDispatcher("views/managerPost.jsp").forward(request, response);
+                listPosts(request, response);
             } else {
                 switch (action) {
                     case "new":
@@ -69,11 +66,11 @@ public class PostServlet extends HttpServlet {
                         handleToggleStatusRequest(request, response);
                         break;
                     default:
-                        response.sendRedirect("managerpost");
+                        listPosts(request, response);
                         break;
                 }
             }
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException | SQLException ex) {
             Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServletException(ex);
         }
@@ -121,34 +118,17 @@ public class PostServlet extends HttpServlet {
         }
     }
 
-    private void handleAjaxRequest(String action, HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+    private void listPosts(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        String title = request.getParameter("title");
+        String category = request.getParameter("category");
+        String status = request.getParameter("status");
+        String sortOrder = request.getParameter("sortOrder");
 
-        String postIdStr = request.getParameter("post_id");
-        if (postIdStr == null || postIdStr.isEmpty()) {
-            response.getWriter().write("{\"status\":\"error\",\"message\":\"Post ID is missing!\"}");
-            return;
-        }
-
-        try {
-            int postId = Integer.parseInt(postIdStr);
-            if ("delete".equals(action)) {
-                dao.deletePost(postId);
-                response.getWriter().write("{\"status\":\"success\",\"message\":\"Post deleted successfully!\"}");
-            } else if ("toggleStatus".equals(action)) {
-                dao.toggleStatus(postId);
-                Post updatedPost = dao.getPostById(postId);
-                String newStatus = updatedPost.getStatus();
-                response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\", \"newStatus\":\"" + newStatus + "\"}");
-
-            }
-        } catch (NumberFormatException | SQLException ex) {
-            Logger.getLogger(PostServlet.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            response.getWriter().write("{\"status\":\"error\",\"message\":\"Error processing request!\"}");
-        }
+        // Truyền tham số sortOrder cho DAO method
+        List<Post> posts = dao.searchAndSortPosts(title, category, status, sortOrder);
+        request.setAttribute("posts", posts);
+        request.getRequestDispatcher("views/managerPost.jsp").forward(request, response);
     }
 
     @Override
@@ -301,5 +281,5 @@ public class PostServlet extends HttpServlet {
         }
         return nextPostId;
     }
-    
+
 }
