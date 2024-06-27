@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.google.gson.Gson;
+import jakarta.mail.Session;
 
 @MultipartConfig
 public class PostServlet extends HttpServlet {
@@ -300,4 +301,5 @@ public class PostServlet extends HttpServlet {
         }
         return nextPostId;
     }
+    
 }

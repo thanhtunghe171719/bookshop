@@ -97,25 +97,25 @@ public class DAOUsers extends DBConnect {
         return null;
     }
 
-    private User mapResultSetToUser(ResultSet rs) throws SQLException {
+   private User mapResultSetToUser(ResultSet rs) throws SQLException {
         return new User(
-               rs.getInt("user_id"),
-                            rs.getString("email"),
-                            rs.getString("phone"),
-                            rs.getString("password"),
-                            rs.getInt("role_id"),
-                            rs.getString("fullname"),
-                            rs.getString("gender"),
-                            rs.getString("address"),
-                            rs.getDate("create_at"),
-                            rs.getDate("updated_at"),
-                            rs.getString("image")
+                rs.getInt("user_id"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("password"),
+                rs.getInt("role_id"),
+                rs.getString("fullname"),
+                rs.getString("gender"),
+                rs.getString("address"),
+                rs.getDate("create_at"),
+                rs.getDate("updated_at"),
+                rs.getString("image")
         );
     }
 
     public boolean addUser(User user) {
 
-        String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPhone());
@@ -126,6 +126,7 @@ public class DAOUsers extends DBConnect {
             ps.setString(7, user.getAddress());
             ps.setDate(8, new Date(System.currentTimeMillis()));
             ps.setDate(9, new Date(System.currentTimeMillis()));
+            ps.setString(10, user.getImage());
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException ex) {
@@ -135,14 +136,15 @@ public class DAOUsers extends DBConnect {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE users SET fullname = ?, gender = ?, address = ?, phone = ?, updated_at = ? WHERE user_id = ?";
+        String sql = "UPDATE users SET fullname = ?, gender = ?, address = ?, phone = ?, image = ?, updated_at = ? WHERE user_id = ?";
         try ( PreparedStatement ptm = conn.prepareStatement(sql)) {
             ptm.setString(1, user.getFullname());
             ptm.setString(2, user.getGender());
             ptm.setString(3, user.getAddress());
             ptm.setString(4, user.getPhone());
-            ptm.setDate(5, new Date(System.currentTimeMillis()));
-            ptm.setInt(6, user.getUserId());
+            ptm.setString(5, user.getImage());
+            ptm.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+            ptm.setInt(7, user.getUserId());
             ptm.executeUpdate();
         }
     }
@@ -187,19 +189,6 @@ public class DAOUsers extends DBConnect {
         return null;
     }
 
-    private void setPreparedStatementForUser(PreparedStatement ps, User user) throws SQLException {
-        ps.setString(1, user.getEmail());
-        ps.setString(2, user.getPhone());
-        ps.setString(3, user.getPassword());
-        ps.setInt(4, user.getRoleId());
-        ps.setString(5, user.getFullname());
-        ps.setString(6, user.getGender());
-        ps.setString(7, user.getAddress());
-        ps.setDate(8, user.getCreateAt());
-        ps.setDate(9, user.getUpdatedAt());
-        ps.setInt(10, user.getUserId());
-    }
-
     //////////////////
     public ArrayList<User> getAll(String sql) {
         ArrayList<User> list = new ArrayList<>();
@@ -241,10 +230,10 @@ public class DAOUsers extends DBConnect {
                 + "`role_id` = ?,\n"
                 + "`fullname` = ?,\n"
                 + "`gender` = ?,\n"
-                + "`image` = ?,\n"
                 + "`address` = ?,\n"
                 + "`create_at` = ?,\n"
                 + "`updated_at` = ?\n"
+                + "`image` = ?,\n"
                 + "WHERE `user_id` = ?;";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -255,10 +244,10 @@ public class DAOUsers extends DBConnect {
             pre.setInt(4, obj.getRoleId());
             pre.setString(5, obj.getFullname());
             pre.setString(6, obj.getGender());
-            pre.setString(7, obj.getImage());
-            pre.setString(8, obj.getAddress());
-            pre.setDate(9, obj.getCreateAt());
-            pre.setDate(0, obj.getUpdatedAt());
+            pre.setString(7, obj.getAddress());
+            pre.setDate(8, obj.getCreateAt());
+            pre.setDate(9, obj.getUpdatedAt());
+            pre.setString(10, obj.getImage());
             pre.setInt(11, obj.getUserId());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
@@ -275,5 +264,4 @@ public class DAOUsers extends DBConnect {
 //        }
     }
 
-    
 }
