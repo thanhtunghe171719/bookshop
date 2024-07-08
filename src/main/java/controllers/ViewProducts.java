@@ -6,7 +6,7 @@
 package controllers;
 
 import dal.DAOBooksList;
-import models.users;
+import models.User;
 import models.Books;
 import models.Categories;
 import java.io.IOException;
@@ -60,7 +60,7 @@ public class ViewProducts extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        users user = (users) session.getAttribute("user");
+       User user = (User) session.getAttribute("user");
         request.setAttribute("user", user);
 
         DAOBooksList daoBooksList = new DAOBooksList();

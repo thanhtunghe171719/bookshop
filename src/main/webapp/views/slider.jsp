@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="vendors/linericon/style.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -21,23 +24,7 @@
         <jsp:include page="header.jsp"/>
         <!--================ End Header Menu Area =================-->
 
-        <!-- ================ start banner area ================= -->    
-        <section class="blog-banner-area" id="blog">
-            <div class="container h-100">
-                <div class="blog-banner">
-                    <div class="text-center">
-                        <h1>Slider Details</h1>
-                        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ================ end banner area ================= -->
+
 
         <!--================Blog Area =================-->
         <section class="blog_area single-post-area py-80px section-margin--small">
@@ -91,7 +78,7 @@
                                         <div class="media post_item">
                                             <img src="${slider.image}" alt="" style="width: 90px;">
                                             <div class="media-body">
-                                                <a href="slider?service=backlink&">
+                                                <a href="slider?service=backlink&id=${slider.sliderId}">
                                                     <h3>${slider.title}</h3>
                                                 </a>
                                             </div>

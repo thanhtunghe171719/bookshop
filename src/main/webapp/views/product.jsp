@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Aroma Shop - Category</title>
+        <title></title>
         <link rel="icon" href="img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
         <link rel="stylesheet" href="css/style.css">
     </head>
@@ -25,24 +26,6 @@
         <jsp:include page="header.jsp"/>
 
         <!--================ End Header Menu Area =================-->
-
-        <!-- ================ start banner area ================= -->	
-        <section class="blog-banner-area" id="category">
-            <div class="container h-100">
-                <div class="blog-banner">
-                    <div class="text-center">
-                        <h1>Shop Category</h1>
-                        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ================ end banner area ================= -->
 
 
         <!-- ================ category section start ================= -->		  
@@ -249,10 +232,15 @@
                                         <div class="card text-center card-product">
                                             <div class="card-product__img">
                                                 <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
-                                                <ul class="card-product__imgOverlay">
-                                                    <li><button><i class="ti-search"></i></button></li>
-                                                    <li><button><i class="ti-shopping-cart"></i></button></li>
-                                                    <li><button><i class="ti-heart"></i></button></li>
+                                                <ul class="card-product__imgOverlay" style="display: flex">
+                                                    <li style="margin-left: 28%"><button><i class="ti-search"></i></button></li>
+<!--                                                    <li><button><i class="ti-shopping-cart"></i></button></li>-->
+                                                    <form action="cartdetails" method="get">                             
+                                                        <input type="hidden" name="service" value="addCart">
+                                                        <input type="hidden" name="bookId" value="${book.getBook_id()}">
+                                                        <li ><button><i class="ti-shopping-cart"></i></button></li>
+                                                    </form>    
+                                                    <li style="margin-left: 5px"><button><i class="ti-heart"></i></button></li>
                                                 </ul>
                                             </div>
 
@@ -261,7 +249,7 @@
                                             <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
 
                                             <div class="card-body">
-                                                <h4 class="card-product__title"><a href="#">${book.getTitle()}</a></h4>
+                                                <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
 
                                                 <c:choose>
                                                     <c:when test="${originalPrice eq discountedPrice}">

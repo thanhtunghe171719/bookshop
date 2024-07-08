@@ -623,7 +623,7 @@ a{
     display:block;
     width:5%;
     height:100%;
-    background:#384aeb;
+    background:#F1F6F7;
     position:absolute;
     top:0;
     left:0
@@ -744,7 +744,7 @@ a{
     bottom:0;
     left:0;
     width:100%;
-    padding:30px 5px;
+    padding:100px 5px;
     transform:translateY(30px);
     opacity:0;
     z-index:-1;
@@ -3245,7 +3245,7 @@ a{
     margin-bottom:0px
 }
 .cart_inner .table tbody tr td h5{
-    font-size:15px;
+    font-size:18px;
     color:#222;
     font-family:"Roboto",sans-serif;
     margin-bottom:0px
@@ -3814,7 +3814,7 @@ a{
     position:absolute;
     right:0px;
     top:14px;
-    @icnlude transition
+    @include transition
 }
 .review_item .media .media-body .reply_btn:hover{
     background:#384aeb;
@@ -3874,7 +3874,7 @@ a{
 }
 @media (min-width: 1000px){
     .footer-area{
-        padding:195px 0px 120px
+        padding:90px 0px 90px
     }
 }
 .single-footer-widget p{

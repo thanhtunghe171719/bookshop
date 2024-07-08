@@ -5,7 +5,11 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="models.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +32,7 @@
 
 .bi.bi-arrow-left-circle {
     position: absolute;
-    left: -15%; /* Adjust this to move it left or right */
+    left: 105%;  /*Adjust this to move it left or right */
     top: 50%;
     transform: translateX(-50%); /* Centers it horizontally */
     font-size: 50px;
@@ -38,7 +42,7 @@
 }   
 .bi.bi-arrow-right-circle {
     position: absolute;
-    right: -15%; /* Adjust this to move it left or right */
+    right: 66%; /* Adjust this to move it left or right */
     top : 50%;
     transform: translateX(-50%); /* Centers it horizontally */
     font-size: 50px;
@@ -56,52 +60,43 @@
   <main class="site-main">
     
     <!--================ Hero banner start =================-->
-    <section class="hero-banner">
-        <div class="container">
-            <c:if test="${not empty listSlider}">
-                <c:forEach var="slider" items="${listSlider}" varStatus="loop">
-                    <div class="row no-gutters align-items-center pt-60px" id="slide_${loop.index}" <c:if test="${loop.index != 0}">style="display: none;"</c:if>>
-                        <div class="col-5 d-none d-sm-block">
-                            <div class="hero-banner__img">
-                                <div>
-                                    <button class="bi bi-arrow-left-circle" onclick="prevSlide(${loop.index})"></button>
-                                </div>
-                                <img class="img-fluid" src="${slider.image}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
-                            <div class="hero-banner__content">
-                                <h3>${slider.title}</h3>
-                                <a class="button button-hero" href="slider?service=backlink&id=${slider.sliderId}">Read It</a>
-                            </div>
-                            <div>
-                                <button class="bi bi-arrow-right-circle" onclick="nextSlide(${loop.index})"></button>
-                            </div>
-                        </div>
+    <c:if test="${not empty listSlider}">
+        <c:forEach var="slider" items="${listSlider}" varStatus="loop">
+            <div class="row" id="slide_${loop.index}" <c:if test="${loop.index != 0}">style="display: none;"</c:if>>
+                <div class="col-1">
+                    <button class="bi bi-arrow-left-circle" onclick="prevSlide(${loop.index})"></button>
+                </div>
+                <div class="col-10 d-none d-sm-block">
+                    <div class="hero-banner__img" style="text-align: center">
+                        <a href="slider?service=backlink&id=${slider.sliderId}"><img class="img-fluid" src="${slider.image}" alt="" style="height:400px;width: 1100px"></a>
                     </div>
-                </c:forEach>
-            </c:if>
-        </div>
-    </section>
+                </div>
+                <div class="col-1">
+                    <button class="bi bi-arrow-right-circle" onclick="nextSlide(${loop.index})"></button>
+                </div>
+            </div>
+        </c:forEach>
+    </c:if>
+
     <!--================ Hero banner start =================-->
 
         <!-- ================ Best Selling item  carousel ================= --> 
     <section class="section-margin calc-60px">
       <div class="container">
         <div class="section-intro pb-60px">
-          <h2><span class="section-intro__style">Product Category </span></h2>
+          <h2><span class="section-intro__style">Danh Mục Sản Phẩm</span></h2>
         </div>
         <div class="owl-carousel owl-theme" id="bestSellerCarousel">
             <c:if test="${not empty listCategory}">
                 <c:forEach var="category" items="${listCategory}">
                     <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="img-fluid" src="${category.image}" alt="">
-                            <a href="single-product.html"><ul class="card-product__imgOverlay">
+                            <img class="img-fluid" src="${category.image}" alt="" style="width: 300px;height: 300px">
+                            <a href="#"><ul class="card-product__imgOverlay">
                             </ul></a>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-product__title"><a href="single-product.html">${category.categoryName}</a></h4>
+                            <h4 class="card-product__title"><a href="#">${category.categoryName}</a></h4>
                         </div>
                     </div>
                 </c:forEach>
@@ -115,7 +110,7 @@
     <section class="section-margin calc-60px">
       <div class="container">
         <div class="section-intro pb-60px">
-          <h2><span class="section-intro__style">Trending Product</span></h2>
+          <h2><span class="section-intro__style">Sản phẩm Thịnh Hành</span></h2>
           
             <div class="nice-select" tabindex="0" style="float : right;top: -30px;">
                 <span class="current">${currentOption}</span>
@@ -134,16 +129,26 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                       <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="card-img" src="${book.image}" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="bi bi-card-list"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <img class="card-img" src="${book.image}" alt="" style="height: 350px; width: 255px">
+                            <ul class="card-product__imgOverlay" style="display: flex">
+                                    <li style="margin-left: 33% ;"><a href="productdetail?pid=${book.bookId}"><button><i class="bi bi-card-list"></i></button></a></li>
+                                <form action="cartdetails" method="get">                             
+                                    <input type="hidden" name="service" value="addCart">
+                                    <input type="hidden" name="bookId" value="${book.bookId}">
+                                    <li ><button><i class="ti-shopping-cart"></i></button></li>
+                                </form>
                             </ul>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-product__title"><a href="single-product.html">${book.title}</a></h4>
-                            <p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>
-                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>
+                            <h4 class="card-product__title"><a href="productdetail?pid=${book.bookId}">${book.title}</a></h4>
+<!--                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>-->
+                            <p class="card-product__price">
+                                <fmt:formatNumber value="${book.price*(100-book.discount)/100}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                            </p>
+                            <!--<p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>-->
+                            <p class="card-product__price" style="text-decoration: line-through;font-size: 15px">
+                                <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                            </p>
                         </div>
                       </div>
                     </div>
@@ -160,7 +165,7 @@
     <section class="blog">
       <div class="container">
         <div class="section-intro pb-60px">
-          <h2><span class="section-intro__style">Hot Post</span></h2>
+          <h2><span class="section-intro__style">Bài Viết Mới</span></h2>
         </div>
 
         <div class="row">
@@ -170,13 +175,13 @@
                     <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                       <div class="card card-blog">
                         <div class="card-blog__img">
-                          <img class="card-img rounded-0" src="${post.image}" alt="">
+                            <img class="card-img rounded-0" src="${post.image}" alt="" style="height: 230px; width: 350px">
                         </div>
                         <div class="card-body">
 
-                          <h4 class="card-blog__title"><a href="single-blog.html">${post.title}</a></h4>
-                          <p>${post.description}...</p>
-                          <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+                          <h4 class="card-blog__title"><a href="#">${post.title}</a></h4>
+<!--                          <p>${post.description}...</p>
+                          <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>-->
                         </div>
                       </div>
                     </div>
