@@ -12,11 +12,13 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 import models.Book;
 import models.Books;
+
 /**
  *
  * @author TDG
  */
-public class DAOBooks extends DBConnect{
+public class DAOBooks extends DBConnect {
+
     public Books getBookById(int pid) {
         Books book = null;
         try {
@@ -49,6 +51,7 @@ public class DAOBooks extends DBConnect{
         }
         return book;
     }
+
     public ArrayList<Book> getAll(String sql) {
         ArrayList<Book> list = new ArrayList<>();
         try {
@@ -56,7 +59,7 @@ public class DAOBooks extends DBConnect{
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-                
+
                 int bookId = rs.getInt("book_id");
                 String title = rs.getString("title");
                 String author = rs.getString("author");
@@ -76,17 +79,121 @@ public class DAOBooks extends DBConnect{
                 String format = rs.getString("format");
                 int pages = rs.getInt("pages");
 
-                 Book b = new Book(bookId, title, author, image, categoryId, publishingHouse, 
-                         publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
-                 list.add(b);
+                Book b = new Book(bookId, title, author, image, categoryId, publishingHouse,
+                        publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
+                list.add(b);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOBooks.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
-     public List<Book> getBooks(String title, String category, String sortTitle, String sortListPrice, String sortPriceSale, int page, int pageSize) {
+
+    public Book getById(int id) {
+        String sql = "select * from books where book_id =?";
+        try {
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setInt(1, id);
+            ResultSet rs = state.executeQuery();
+            if (rs.next()) {
+                int bookId = rs.getInt("book_id");
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String image = rs.getString("image");
+                int categoryId = rs.getInt("category_id");
+                String publishingHouse = rs.getString("publishing_house");
+                int publishedYear = rs.getInt("published_year");
+                String size = rs.getString("size");
+                String weight = rs.getString("weight");
+                String summary = rs.getString("summary");
+                BigDecimal price = rs.getBigDecimal("price");
+                Integer rating = rs.getInt("rating");
+                Integer discount = rs.getInt("discount");
+                int stock = rs.getInt("stock");
+                Timestamp createdAt = rs.getTimestamp("create_at");
+                Timestamp updatedAt = rs.getTimestamp("updated_at");
+                String format = rs.getString("format");
+                int pages = rs.getInt("pages");
+                Book b = new Book(bookId, title, author, image, categoryId, publishingHouse,
+                        publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
+                return b;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Get by id: " + ex);
+        }
+        return null;
+    }
+
+    public int addBook(Book book) throws SQLException {
+        String sql = "INSERT INTO books (title, author, image, category_id, publishing_house, "
+                + "published_year, size, weight, summary, price, rating, discount, stock,"
+                + " create_at, format, pages) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            int i = 1;
+            stmt.setString(i++, book.getTitle());
+            stmt.setString(i++, book.getAuthor());
+            stmt.setString(i++, book.getImage());
+            stmt.setInt(i++, book.getCategoryId());
+            stmt.setString(i++, book.getPublishingHouse());
+            stmt.setInt(i++, book.getPublishedYear());
+            stmt.setString(i++, book.getSize());
+            stmt.setString(i++, book.getWeight());
+            stmt.setString(i++, book.getSummary());
+            stmt.setBigDecimal(i++, book.getPrice());
+            stmt.setInt(i++, book.getRating());
+            stmt.setInt(i++, book.getDiscount());
+            stmt.setInt(i++, book.getStock());
+            stmt.setTimestamp(i++, book.getCreatedAt());
+            stmt.setString(i++, book.getFormat());
+            stmt.setInt(i++, book.getPages());
+            return stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Add new error: " + e);
+        }
+        return 0;
+    }
+
+    public int updateBook(Book book) {
+        String sql = "UPDATE books SET title = ?, author = ?, image = ?, category_id = ?, publishing_house = ?, published_year = ?, size = ?, weight = ?, summary = ?, price = ?, rating = ?, discount = ?, stock = ?, updated_at = ?, format = ?, pages = ? WHERE book_id = ?";
+        try (PreparedStatement state = conn.prepareStatement(sql)) {
+            state.setString(1, book.getTitle());
+            state.setString(2, book.getAuthor());
+            state.setString(3, book.getImage());
+            state.setInt(4, book.getCategoryId());
+            state.setString(5, book.getPublishingHouse());
+            state.setInt(6, book.getPublishedYear());
+            state.setString(7, book.getSize());
+            state.setString(8, book.getWeight());
+            state.setString(9, book.getSummary());
+            state.setBigDecimal(10, book.getPrice());
+            state.setInt(11, book.getRating());
+            state.setInt(12, book.getDiscount());
+            state.setInt(13, book.getStock());
+            state.setTimestamp(14, book.getUpdatedAt());
+            state.setString(15, book.getFormat());
+            state.setInt(16, book.getPages());
+            state.setInt(17, book.getBookId());
+
+            return state.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Update book error: " + ex);
+        }
+        return 0;
+    }
+
+    public int deleteBook(int bookId) {
+        String sql = "DELETE FROM books WHERE book_id = ?";
+        try (PreparedStatement state = conn.prepareStatement(sql)) {
+            state.setInt(1, bookId);
+            return state.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Delete book error: " + ex);
+        }
+        return 0;
+    }
+
+    public List<Book> getBooks(String title, String category, String sortTitle, String sortListPrice, String sortPriceSale, int page, int pageSize) {
         List<Book> books = new ArrayList<>();
         int offset = (page - 1) * pageSize;
         String query = "SELECT b.book_id, b.title, b.author, b.image, c.category_id, b.publishing_house, "
@@ -142,12 +249,11 @@ public class DAOBooks extends DBConnect{
                 book.setPages(rs.getInt("pages"));
                 books.add(book);
             }
-} catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return books;
     }
-
 
     public int getBookCount(String title, String category) {
         String query = "SELECT COUNT(*) FROM books where 1 = 1 ";
@@ -182,7 +288,7 @@ public class DAOBooks extends DBConnect{
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-                
+
                 int bookId = rs.getInt("book_id");
                 String title = rs.getString("title");
                 String author = rs.getString("author");
@@ -202,16 +308,16 @@ public class DAOBooks extends DBConnect{
                 String format = rs.getString("format");
                 int pages = rs.getInt("pages");
 
-                 Book b = new Book(bookId, title, author, image, categoryId, publishingHouse, 
-                         publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
-                 return b;
+                Book b = new Book(bookId, title, author, image, categoryId, publishingHouse,
+                        publishedYear, size, weight, summary, price, rating, discount, stock, createdAt, updatedAt, format, pages);
+                return b;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOBooks.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         DAOBooks dao = new DAOBooks();
         ArrayList<Book> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");
@@ -219,6 +325,5 @@ public class DAOBooks extends DBConnect{
             System.out.println(books);
         }
     }
-    
-    
+
 }

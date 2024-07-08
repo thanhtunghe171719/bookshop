@@ -11,15 +11,18 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import models.Book;
 
 /**
  *
  * @author TDG
  */
-public class DAOCategories extends DBConnect{
-     public ArrayList<Categorie> getAll(String sql) {
+public class DAOCategories extends DBConnect {
+
+    public ArrayList<Categorie> getAll(String sql) {
         ArrayList<Categorie> list = new ArrayList<>();
         try {
 
@@ -40,6 +43,115 @@ public class DAOCategories extends DBConnect{
             Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public int addCategory(Categorie category) throws SQLException {
+        String sql = "INSERT INTO categories (category_name, image, created_at, updated_at) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, category.getCategoryName());
+            stmt.setString(2, category.getImage());
+            stmt.setTimestamp(3, category.getCreatedAt());
+            stmt.setTimestamp(4, category.getUpdatedAt());
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Add category error: " + e);
+            return 0;
+        }
+    }
+
+    public int updateCategory(Categorie category) {
+        String sql = "UPDATE categories SET category_name = ?, image = ?, updated_at = ? WHERE category_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, category.getCategoryName());
+            stmt.setString(2, category.getImage());
+            stmt.setTimestamp(3, category.getUpdatedAt());
+            stmt.setInt(4, category.getCategoryId());
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Update category error: " + e);
+            return 0;
+        }
+    }
+
+    public int deleteCategory(int categoryId) {
+        String sql = "DELETE FROM categories WHERE category_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, categoryId);
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Delete category error: " + e);
+            return 0;
+        }
+    }
+
+    public List<Categorie> getCategories(String categoryName, int page, int pageSize) {
+        List<Categorie> categories = new ArrayList<>();
+        String query = "SELECT category_id, category_name, image, created_at, updated_at FROM categories WHERE 1=1";
+        if (categoryName != null && !categoryName.isEmpty()) {
+            query += " AND category_name LIKE ?";
+        }
+        query += " LIMIT ? OFFSET ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            int index = 1;
+            if (categoryName != null && !categoryName.isEmpty()) {
+                stmt.setString(index++, "%" + categoryName + "%");
+            }
+            stmt.setInt(index++, pageSize);
+            stmt.setInt(index, (page - 1) * pageSize);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Categorie category = new Categorie();
+                category.setCategoryId(rs.getInt("category_id"));
+                category.setCategoryName(rs.getString("category_name"));
+                category.setImage(rs.getString("image"));
+                category.setCreatedAt(rs.getTimestamp("created_at"));
+                category.setUpdatedAt(rs.getTimestamp("updated_at"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            System.out.println("Get categories error: " + e);
+        }
+        return categories;
+    }
+
+    public int getCategoryCount(String categoryName) {
+        String query = "SELECT COUNT(*) FROM categories WHERE 1=1";
+        if (categoryName != null && !categoryName.isEmpty()) {
+            query += " AND category_name LIKE ?";
+        }
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            int index = 1;
+            if (categoryName != null && !categoryName.isEmpty()) {
+                stmt.setString(index++, "%" + categoryName + "%");
+            }
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Get category count error: " + e);
+        }
+        return 0;
+    }
+
+    public Categorie getCategoryById(int categoryId) {
+        String query = "SELECT category_id, category_name, image, created_at, updated_at FROM categories WHERE category_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, categoryId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Categorie category = new Categorie();
+                category.setCategoryId(rs.getInt("category_id"));
+                category.setCategoryName(rs.getString("category_name"));
+                category.setImage(rs.getString("image"));
+                category.setCreatedAt(rs.getTimestamp("created_at"));
+                category.setUpdatedAt(rs.getTimestamp("updated_at"));
+                return category;
+            }
+        } catch (SQLException e) {
+            System.out.println("Get category by id error: " + e);
+        }
+        return null;
     }
 
     public ArrayList<Categorie> getAll() {
@@ -65,8 +177,7 @@ public class DAOCategories extends DBConnect{
         return list;
     }
 
-   
-      public Categorie getById(int category) {
+    public Categorie getById(int category) {
         String sql = "select * from categories where category_id =?";
         try {
             PreparedStatement state = conn.prepareStatement(sql);
@@ -86,9 +197,33 @@ public class DAOCategories extends DBConnect{
         }
         return null;
     }
+
+    public List<Categorie> getCategories() {
+        List<Categorie> categories = new ArrayList<>();
+        String query = "SELECT c.category_id, c.category_name, c.image, c.create_at, c.updated_at "
+                + "FROM categories c";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Categorie categorie = new Categorie();
+                categorie.setCategoryId(rs.getInt("category_id"));
+                categorie.setCategoryName(rs.getString("category_name"));
+                categorie.setImage(rs.getString("image"));
+                categorie.setCreatedAt(rs.getTimestamp("create_at"));
+                categorie.setUpdatedAt(rs.getTimestamp("updated_at"));
+                categories.add(categorie);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categories;
+    }
+
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
-        ArrayList<Categorie> list  = dao.getAll("SELECT * FROM categories;");
+        ArrayList<Categorie> list = dao.getAll("SELECT * FROM categories;");
         for (Categorie categories : list) {
             System.out.println(categories);
         }

@@ -62,39 +62,41 @@ public class CartCompletion extends HttpServlet {
 //            session.setAttribute("user", user);
             int cartId = daoCart.getCartId(userId);
 
-        // Kiểm tra xem người dùng đã chọn phương thức thanh toán hay chưa
-        if (paymentMethod == null || paymentMethod.isEmpty()) {
-            // Nếu chưa chọn, hiển thị thông báo lỗi và không điều hướng
-            request.setAttribute("errorMessage", "Please select a payment method.");
-            request.getRequestDispatcher("views/cartcontact.jsp").forward(request, response);
-            return;
-        }
-
-        // Tạo đơn hàng mới và lấy order_id
-        int newOrderID = cartCompletion.newOrder(cartId, Double.parseDouble(amount), 1);
-        if (newOrderID != -1) {
-            cartCompletion.addOrderItems(newOrderID); // Gọi phương thức với order_id cụ thể
-            cartCompletion.removeOrderedBooks(newOrderID); // Gọi phương thức với order_id cụ thể
-
-            ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
-
-            for (CartItems listItem : listItems) {
-                daoCartDetails.delete(listItem.getCartItemId());
+            // Kiểm tra xem người dùng đã chọn phương thức thanh toán hay chưa
+            if (paymentMethod == null || paymentMethod.isEmpty()) {
+                // Nếu chưa chọn, hiển thị thông báo lỗi và không điều hướng
+                request.setAttribute("errorMessage", "Please select a payment method.");
+                request.getRequestDispatcher("views/cartcontact.jsp").forward(request, response);
+                return;
             }
 
-        // Xử lý phương thức thanh toán
-        if ("Direct Payment".equals(paymentMethod)) {
-            // Xử lý thanh toán trực tiếp
-            request.getRequestDispatcher("views/homepage.jsp").forward(request, response);
-        } else if ("Pay with Banking App".equals(paymentMethod)) {
-            // Xử lý thanh toán qua ứng dụng ngân hàng
-            request.setAttribute("amount", amount);
+            // Tạo đơn hàng mới và lấy order_id
+            int newOrderID = cartCompletion.newOrder(cartId, Double.parseDouble(amount), 1);
+            if (newOrderID != -1) {
+                cartCompletion.addOrderItems(newOrderID); // Gọi phương thức với order_id cụ thể
+                cartCompletion.removeOrderedBooks(newOrderID); // Gọi phương thức với order_id cụ thể
 
-            request.getRequestDispatcher("views/cartcompletion.jsp").forward(request, response);
+                ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
+
+                for (CartItems listItem : listItems) {
+                    daoCartDetails.delete(listItem.getCartItemId());
+                }
+
+                // Xử lý phương thức thanh toán
+                if ("Direct Payment".equals(paymentMethod)) {
+                    // Xử lý thanh toán trực tiếp
+                    request.getRequestDispatcher("views/homepage.jsp").forward(request, response);
+                } else if ("Pay with Banking App".equals(paymentMethod)) {
+                    // Xử lý thanh toán qua ứng dụng ngân hàng
+                    request.setAttribute("amount", amount);
+
+                    request.getRequestDispatcher("views/cartcompletion.jsp").forward(request, response);
+                }
+            }
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -104,10 +106,8 @@ public class CartCompletion extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
