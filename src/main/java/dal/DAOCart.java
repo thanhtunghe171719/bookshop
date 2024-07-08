@@ -69,7 +69,7 @@ public class DAOCart extends DBConnect{
     }
     public static void main(String[] args) {
         DAOCart dao = new DAOCart();
-        int userId = 4;
+        int userId = 9;
         int cartId = dao.getCartId(userId);
         if(cartId != 0){
             System.out.println(cartId);

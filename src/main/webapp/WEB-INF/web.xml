@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>filter.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/marketing-product</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>DetailServlet</servlet-name>
         <servlet-class>controllers.DetailServlet</servlet-class>
@@ -56,10 +64,6 @@
         <servlet-name>MarketingProductController</servlet-name>
         <servlet-class>controllers.MarketingProductController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CartCompletion</servlet-name>
-        <servlet-class>controllers.CartCompletion</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -114,11 +118,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MarketingProductController</servlet-name>
-        <url-pattern>/manageproduct</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CartCompletion</servlet-name>
-        <url-pattern>/cart</url-pattern>
+        <url-pattern>/marketing-product</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

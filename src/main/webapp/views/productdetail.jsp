@@ -44,12 +44,12 @@
 						<h3>${book.getTitle()}</h3>
 						<h2>${book.getPrice()}</h2>
 						<ul class="list">
-							<li><a class="active" href="#"><span>Category</span>${book.getCategory_id()}</a></li>
-							<li><a href="#"><span>Availibility</span>${book.getStock()}</a></li>
+							<li><a class="active" href="#"><span>Thể loại</span>${book.getCategory_id()}</a></li>
+							<li><a href="#"><span>Kho:</span>${book.getStock()}</a></li>
 						</ul>
 						
 						<div class="product_count">
-              <label for="qty">Quantity:</label>
+              <label for="qty">Số lượng:</label>
               <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
 							 class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
 							<input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">

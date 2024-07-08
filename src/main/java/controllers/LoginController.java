@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
         DAOUsers dao = new DAOUsers();
         User us = dao.getUserByUsername(email);
         if (us == null) {
-            request.setAttribute("errorMessage", "Your account no confirmed. Please confirm your account");
+            request.setAttribute("errorMessage", "Tài khoản không tồn tại. Vui lòng thử lại.");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);
         } else if (us != null && us.getPassword().equals(password)) {
             // Authentication successful
@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("home");
         } else {
             // Authentication failed
-            request.setAttribute("errorMessage", "Invalid username or password");
+            request.setAttribute("errorMessage", "Email hoặc mật khẩu không chính xác");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);
         }
     }

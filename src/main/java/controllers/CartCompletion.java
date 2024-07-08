@@ -50,11 +50,17 @@ public class CartCompletion extends HttpServlet {
         String amount = request.getParameter("subTotal");
         String paymentMethod = request.getParameter("paymentMethod"); // Lấy giá trị của phương thức thanh toán
 
-        int userId = 1;
-        User user = daoUsers.getAll("Select * from users where user_id = " + userId).get(0);
+        User user = (User) session.getAttribute("user");
         session.setAttribute("user", user);
+        if (user == null) {
+            response.sendRedirect("login");
+        } else {
+            int userId = user.getUserId();
 
-        int cartId = daoCart.getCartId(userId);
+//            int userId = 1;
+//            User user = daoUsers.getAll("Select * from users where user_id = " + userId).get(0);
+//            session.setAttribute("user", user);
+            int cartId = daoCart.getCartId(userId);
 
         // Kiểm tra xem người dùng đã chọn phương thức thanh toán hay chưa
         if (paymentMethod == null || paymentMethod.isEmpty()) {
@@ -75,7 +81,6 @@ public class CartCompletion extends HttpServlet {
             for (CartItems listItem : listItems) {
                 daoCartDetails.delete(listItem.getCartItemId());
             }
-        }
 
         // Xử lý phương thức thanh toán
         if ("Direct Payment".equals(paymentMethod)) {

@@ -45,7 +45,7 @@ public class RegisterController extends HttpServlet {
         // Check if username already exists
         User existingUser = userDAO.getUserByUsername(email);
         if (existingUser != null) {
-            request.setAttribute("errorMessage", "Username already exists");
+            request.setAttribute("errorMessage", "Tài khoản đã tồn tại");
             request.getRequestDispatcher("./views/register.jsp").forward(request, response);
             return;
         }

@@ -72,8 +72,10 @@
                                             <div class="media-body">
                                                 <p style="width: 200px;">${book.title}</p>
                                             </div>
+                                            
                                         </div>
                                     </td>
+                                    <td></td>
                                     <td>
                                         <h5>
                                             <!--${book.price * 1000}-->
@@ -84,9 +86,9 @@
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="qty-${cartItem.cartItemId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty" 
-                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock})" >
-                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
+                                                   oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock}); updateSubtotal();" >
+                                            <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase'); updateSubtotal();"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease'); updateSubtotal();"><i class="lnr lnr-chevron-down"></i></button>
                                         </div>
                                     </td>
                                     <td>

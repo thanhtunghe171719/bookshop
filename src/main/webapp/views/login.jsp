@@ -22,7 +22,8 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -47,6 +48,11 @@
                                     <c:if test="${not empty errorMessage}">
                                     <div class="alert alert-danger" role="alert">
                                         ${errorMessage}
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty errorMessage1}">
+                                    <div class="alert alert-danger" role="alert">
+                                        ${errorMessage1}
                                     </div>
                                 </c:if>
                                     <div class="col-md-12 form-group">

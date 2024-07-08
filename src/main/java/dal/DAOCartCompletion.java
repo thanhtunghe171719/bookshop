@@ -79,4 +79,14 @@ public class DAOCartCompletion extends DBConnect {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static void main(String[] args) {
+        DAOCartCompletion cart = new DAOCartCompletion();
+        int cart_id = 1;
+        int re= cart.newOrder(cart_id, 2000, 1);
+        if(re>0)System.out.println("ok");
+        else{
+            System.out.println("no");
+        }
+    }
 }
