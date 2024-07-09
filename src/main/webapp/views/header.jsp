@@ -38,7 +38,8 @@
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="#">User</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="admin-category">Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="admin-dashboard">Dashboard</a></li>
                                 </ul>
                             </li>
                         </c:if>

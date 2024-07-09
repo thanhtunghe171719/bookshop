@@ -1,16 +1,15 @@
 <%-- 
-    Document   : admindashboard
-    Created on : Jul 9, 2024, 9:21:05 AM
+    Document   : dashboard
+    Created on : Jun 10, 2024, 4:39:13 PM
     Author     : ADMIN
 --%>
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Dashboard</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <jsp:include page="header.jsp"/>

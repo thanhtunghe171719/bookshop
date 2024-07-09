@@ -1,8 +1,3 @@
-<%-- 
-    Document   : homepage
-    Created on : Jun 8, 2024, 5:34:34 AM
-    Author     : TDG
---%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
