@@ -27,7 +27,7 @@
                                aria-expanded="false">Blog</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="blog">Blog List</a></li>
-                                <li class="nav-item"><a class="nav-link" href="managerpost">Blog Details</a></li>
+                             
                             </ul>
                         </li>    
                         <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3}">
@@ -50,8 +50,8 @@
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="#">Product</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Slider</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Post</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Customer</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="managerpost">Post</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="customers">Customer</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>
                                 </ul>
                             </li> 

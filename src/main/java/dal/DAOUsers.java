@@ -87,7 +87,8 @@ public class DAOUsers extends DBConnect {
                             rs.getString("address"),
                             rs.getDate("create_at"),
                             rs.getDate("updated_at"),
-                            rs.getString("image")
+                            rs.getString("image"),
+                            rs.getString("status")
                     );
                 }
             }
@@ -109,7 +110,8 @@ public class DAOUsers extends DBConnect {
                 rs.getString("address"),
                 rs.getDate("create_at"),
                 rs.getDate("updated_at"),
-                rs.getString("image")
+                rs.getString("image"),
+                rs.getString("status")
         );
     }
 
@@ -136,7 +138,7 @@ public class DAOUsers extends DBConnect {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE users SET fullname = ?, gender = ?, address = ?, phone = ?, image = ?, updated_at = ? WHERE user_id = ?";
+        String sql = "UPDATE users SET fullname = ?, gender = ?, address = ?, phone = ?, image = ?, updated_at = ?, status = ?, WHERE user_id = ?";
         try ( PreparedStatement ptm = conn.prepareStatement(sql)) {
             ptm.setString(1, user.getFullname());
             ptm.setString(2, user.getGender());
@@ -209,8 +211,8 @@ public class DAOUsers extends DBConnect {
                 String address = rs.getString("address");
                 java.sql.Date createdAt = new java.sql.Date(System.currentTimeMillis());
                 java.sql.Date updatedAt = new java.sql.Date(System.currentTimeMillis());
-
-                User c = new User(userId, email, phone, password, roleId, fullname, gender, address, createdAt, updatedAt, image);
+                String status = rs.getString("status");
+                User c = new User(userId, email, phone, password, roleId, fullname, gender, address, createdAt, updatedAt, image, status);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -233,7 +235,8 @@ public class DAOUsers extends DBConnect {
                 + "`address` = ?,\n"
                 + "`create_at` = ?,\n"
                 + "`updated_at` = ?\n"
-                + "`image` = ?,\n"
+                + "`image` = ?\n"
+                + "`status` = ?,\n"
                 + "WHERE `user_id` = ?;";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -248,13 +251,26 @@ public class DAOUsers extends DBConnect {
             pre.setDate(8, obj.getCreateAt());
             pre.setDate(9, obj.getUpdatedAt());
             pre.setString(10, obj.getImage());
-            pre.setInt(11, obj.getUserId());
+            pre.setString(11, obj.getStatus());
+            pre.setInt(12, obj.getUserId());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsers.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
+    public boolean deleteUser(int userId) {
+    String query = "DELETE FROM users WHERE user_id = ?";
+    try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, userId);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
+    }
+}
+
 
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();

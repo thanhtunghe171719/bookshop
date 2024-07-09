@@ -49,7 +49,7 @@ public class PostServlet extends HttpServlet {
                         request.getRequestDispatcher("views/editPost.jsp").forward(request, response);
                         break;
                     case "edit":
-                        String postIdStr = request.getParameter("post_id");
+                       String postIdStr = request.getParameter("post_id");
                         if (postIdStr != null && !postIdStr.isEmpty()) {
                             int postId = Integer.parseInt(postIdStr);
                             Post post = dao.getPostById(postId);

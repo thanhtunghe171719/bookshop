@@ -22,7 +22,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        <div class="container mt-5">
+       <div class="container mt-5">
             <h2>Edit Post</h2>
             <form id="form-1" action="managerpost?action=edit" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="post_id" value="<%= post != null ? post.getPostId() : 0%>">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" name="description" rows="5" readonly><%= post != null ? post.getDescription().replace("\n", "<br>") : "" %></textarea>
+                    <textarea class="form-control" name="description" rows="5" readonly><%= post != null ? post.getDescription() : ""%></textarea>
                 </div>
                 <div class="form-group">
                     <label for="post_type">Type</label>

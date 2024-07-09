@@ -71,7 +71,7 @@ public class DAOBlog {
     // Method to get the total number of posts
     public int getTotalPosts() {
         int totalPosts = 0;
-        String sql = "SELECT COUNT(*) FROM posts WHERE status = 'show'";
+        String sql = "SELECT COUNT(*) FROM posts ";
         try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 totalPosts = rs.getInt(1);
@@ -99,7 +99,7 @@ public class DAOBlog {
     // Method to get a post by its ID
     public Post getPostById(int postId) {
         Post post = null;
-        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id ORDER BY p.created_at WHERE p.post_id = ?";
+        String sql = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.post_id = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, postId);
             try ( ResultSet rs = ps.executeQuery()) {
@@ -114,7 +114,7 @@ public class DAOBlog {
                     post.setStatus(rs.getString("status"));
                     post.setCreatedAt(rs.getDate("created_at"));
                     post.setUpdateAt(rs.getDate("updated_at"));
-                    post.setAuthorName(rs.getString("author_name"));
+                    post.setAuthorName(rs.getString("fullname"));
                 }
             }
         } catch (SQLException e) {
@@ -322,7 +322,7 @@ public class DAOBlog {
         return posts;
     }
 
-  public List<Post> searchAndSortPosts(String title, String category, String status, String sortOrder) throws SQLException {
+    public List<Post> searchAndSortPosts(String title, String category, String status, String sortOrder) throws SQLException {
         List<Post> posts = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT p.*, u.fullname as authorName FROM posts p JOIN users u ON p.user_id = u.user_id WHERE 1=1");
 
@@ -338,8 +338,7 @@ public class DAOBlog {
 
         // Sắp xếp theo post_id
         //query.append(" ORDER BY p.post_id ").append(sortOrder);
-
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query.toString())) {
+        try ( PreparedStatement preparedStatement = conn.prepareStatement(query.toString())) {
             int paramIndex = 1;
 
             if (title != null && !title.isEmpty()) {
@@ -373,6 +372,5 @@ public class DAOBlog {
 
         return posts;
     }
-
 
 }

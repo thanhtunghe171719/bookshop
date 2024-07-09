@@ -23,10 +23,11 @@ public class User {
      private Date createAt;
     private Date updatedAt; 
     private String image;
+    private String status;
     public User() {
     }
 
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Date createAt, Date updatedAt, String image) {
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Date createAt, Date updatedAt, String image, String status) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -38,11 +39,8 @@ public class User {
         this.createAt = createAt;
         this.updatedAt = updatedAt;
         this.image = image;
+        this.status = status;
     }
-
-
-    
-    
 
     public int getUserId() {
         return userId;
@@ -100,14 +98,6 @@ public class User {
         this.gender = gender;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -132,12 +122,28 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
-        return "Users{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", image=" + image + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + '}';
+        return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + ", image=" + image + ", status=" + status + '}';
     }
+
+    
     
     
 }
