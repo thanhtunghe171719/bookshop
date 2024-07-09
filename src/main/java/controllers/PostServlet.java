@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.google.gson.Gson;
+import jakarta.mail.Session;
 
 @MultipartConfig
 public class PostServlet extends HttpServlet {
@@ -34,16 +35,13 @@ public class PostServlet extends HttpServlet {
     }
 
     @Override
-   
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
 
         try {
             if (action == null || action.isEmpty()) {
-                List<Post> posts = dao.getAllPosts(action);
-                request.setAttribute("posts", posts);
-                request.getRequestDispatcher("views/managerPost.jsp").forward(request, response);
+                listPosts(request, response);
             } else {
                 switch (action) {
                     case "new":
@@ -68,11 +66,11 @@ public class PostServlet extends HttpServlet {
                         handleToggleStatusRequest(request, response);
                         break;
                     default:
-                        response.sendRedirect("managerpost");
+                        listPosts(request, response);
                         break;
                 }
             }
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException | SQLException ex) {
             Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServletException(ex);
         }
@@ -111,48 +109,30 @@ public class PostServlet extends HttpServlet {
         try {
             int postId = Integer.parseInt(postIdStr);
             dao.toggleStatus(postId);
-            response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\"}");
+            Post updatedPost = dao.getPostById(postId);
+            String newStatus = updatedPost.getStatus();
+            response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\", \"newStatus\":\"" + newStatus + "\", \"postId\":\"" + postId + "\"}");
         } catch (NumberFormatException | SQLException ex) {
             Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
             response.getWriter().write("{\"status\":\"error\",\"message\":\"Error toggling post status!\"}");
         }
     }
 
-    
+    private void listPosts(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        String title = request.getParameter("title");
+        String category = request.getParameter("category");
+        String status = request.getParameter("status");
+        String sortOrder = request.getParameter("sortOrder");
 
-private void handleAjaxRequest(String action, HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        String postIdStr = request.getParameter("post_id");
-        if (postIdStr == null || postIdStr.isEmpty()) {
-            response.getWriter().write("{\"status\":\"error\",\"message\":\"Post ID is missing!\"}");
-            return;
-        }
-
-        try {
-            int postId = Integer.parseInt(postIdStr);
-            if ("delete".equals(action)) {
-                dao.deletePost(postId);
-                response.getWriter().write("{\"status\":\"success\",\"message\":\"Post deleted successfully!\"}");
-            } else if ("toggleStatus".equals(action)) {
-                dao.toggleStatus(postId);
-                Post updatedPost = dao.getPostById(postId);
-                String newStatus = updatedPost.getStatus();
-                response.getWriter().write("{\"status\":\"success\",\"message\":\"Post status updated successfully!\", \"newStatus\":\"" + newStatus + "\"}");
-
-}
-        } catch (NumberFormatException | SQLException ex) {
-            Logger.getLogger(PostServlet.class  
-
-.getName()).log(Level.SEVERE, null, ex);
-            response.getWriter().write("{\"status\":\"error\",\"message\":\"Error processing request!\"}");
-        }
+        // Truyền tham số sortOrder cho DAO method
+        List<Post> posts = dao.searchAndSortPosts(title, category, status, sortOrder);
+        request.setAttribute("posts", posts);
+        request.getRequestDispatcher("views/managerPost.jsp").forward(request, response);
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("toggleStatus".equals(action)) {
@@ -257,45 +237,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         return postId;
     }
 
-    private void handleNewPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String postType = request.getParameter("post_type");
-        String status = request.getParameter("status");
-
-        Post post = new Post();
-        post.setTitle(title);
-        post.setDescription(description);
-        post.setPostType(postType);
-        post.setStatus(status);
-
-        Part filePart = request.getPart("image");
-        String fileName = filePart.getSubmittedFileName();
-
-        if (fileName != null && !fileName.isEmpty()) {
-            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            String filePath = uploadPath + File.separator + fileName;
-            filePart.write(filePath);
-            post.setImage("uploads/" + fileName);
-        }
-
-        try {
-            int newPostId = dao.insertPost(post);
-            response.getWriter().write("{\"status\":\"success\",\"message\":\"Post created successfully!\",\"postId\":" + newPostId + "}");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.getWriter().write("{\"status\":\"error\",\"message\":\"Error creating post!\"}");
-        }
-    }
-
     @Override
-protected void doPut(HttpServletRequest request, HttpServletResponse response)
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int postId = Integer.parseInt(request.getParameter("post_id"));
 
@@ -313,7 +256,7 @@ protected void doPut(HttpServletRequest request, HttpServletResponse response)
     }
 
     @Override
-protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int postId = Integer.parseInt(request.getParameter("post_id"));
 
@@ -338,4 +281,5 @@ protected void doDelete(HttpServletRequest request, HttpServletResponse response
         }
         return nextPostId;
     }
+
 }

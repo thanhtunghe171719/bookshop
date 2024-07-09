@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controllers;
 
 import models.User;
@@ -14,6 +9,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.Arrays;
@@ -121,7 +117,7 @@ public class EditProfileServlet extends HttpServlet {
         }
 
         // Validation
-        String namePattern = "^[a-zA-Z\\s]+$";
+         String namePattern = "^[\\p{L} \\s]+$";
         String phonePattern = "^\\d{10}$";
 
         if (!fullname.matches(namePattern)) {
@@ -149,7 +145,8 @@ public class EditProfileServlet extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("STATUS", "Error updating profile!");
         }
-
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", user);
         request.setAttribute("user", user);
         request.getRequestDispatcher("views/editprofile.jsp").forward(request, response);
     }

@@ -7,6 +7,8 @@
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
         <url-pattern>/marketing-product</url-pattern>
+        <url-pattern>/admin-category</url-pattern>
+        <url-pattern>/managerpost</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>DetailServlet</servlet-name>

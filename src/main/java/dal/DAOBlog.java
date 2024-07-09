@@ -1,10 +1,10 @@
-
 package dal;
 
 import models.Post;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import models.User;
 
 public class DAOBlog {
 
@@ -43,7 +43,8 @@ public class DAOBlog {
     // Method to search posts with a query, sorting, and pagination
     public List<Post> searchPosts(String query, int page, int pageSize, String sortOrder) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.title LIKE ? ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
+        String sql = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.title LIKE ? AND p.status = 'Show' ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
+
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + query + "%");
             ps.setInt(2, pageSize);
@@ -70,7 +71,7 @@ public class DAOBlog {
     // Method to get the total number of posts
     public int getTotalPosts() {
         int totalPosts = 0;
-        String sql = "SELECT COUNT(*) FROM posts";
+        String sql = "SELECT COUNT(*) FROM posts WHERE status = 'show'";
         try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 totalPosts = rs.getInt(1);
@@ -98,7 +99,7 @@ public class DAOBlog {
     // Method to get a post by its ID
     public Post getPostById(int postId) {
         Post post = null;
-        String sql = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.post_id = ?";
+        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id ORDER BY p.created_at WHERE p.post_id = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, postId);
             try ( ResultSet rs = ps.executeQuery()) {
@@ -113,7 +114,7 @@ public class DAOBlog {
                     post.setStatus(rs.getString("status"));
                     post.setCreatedAt(rs.getDate("created_at"));
                     post.setUpdateAt(rs.getDate("updated_at"));
-                    post.setAuthorName(rs.getString("fullname"));
+                    post.setAuthorName(rs.getString("author_name"));
                 }
             }
         } catch (SQLException e) {
@@ -215,14 +216,10 @@ public class DAOBlog {
     }
 
     public void toggleStatus(int postId) throws SQLException {
-        String query = "UPDATE posts SET status = CASE WHEN status = 'Show' THEN 'Hide' ELSE 'Show' END, updated_at = NOW() WHERE post_id = ?";
-        try ( PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, postId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            // Log and rethrow the exception for higher-level handling
-            System.err.println("Error toggling status: " + e.getMessage());
-            throw e;
+        String sql = "UPDATE posts SET status = CASE WHEN status = 'Show' THEN 'Hide' ELSE 'Show' END WHERE post_id = ?";
+        try ( PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, postId);
+            statement.executeUpdate();
         }
     }
 
@@ -283,4 +280,99 @@ public class DAOBlog {
 
         return success;
     }
+
+    public User authenticateUser(String username, String password) throws SQLException {
+        User user = null;
+        String query = "SELECT id, username, password FROM users WHERE username = ? AND password = ?";
+        try ( PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setUserId(resultSet.getInt("user_id"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setPassword(resultSet.getString("password"));
+            }
+        }
+        return user;
+    }
+
+    public List<Post> getVisiblePosts() throws SQLException {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM posts WHERE status = 'Show'";
+        try (
+                 PreparedStatement statement = conn.prepareStatement(sql);  ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("post_id"));
+                post.setTitle(rs.getString("title"));
+                post.setDescription(rs.getString("description"));
+                post.setPostType(rs.getString("post_type"));
+                post.setStatus(rs.getString("status"));
+                post.setImage(rs.getString("image"));
+                post.setUserId(rs.getInt("user_id"));
+                post.setCreatedAt(rs.getDate("created_at"));
+                post.setUpdateAt(rs.getDate("updated_at"));
+                posts.add(post);
+            }
+        }
+        return posts;
+    }
+
+  public List<Post> searchAndSortPosts(String title, String category, String status, String sortOrder) throws SQLException {
+        List<Post> posts = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT p.*, u.fullname as authorName FROM posts p JOIN users u ON p.user_id = u.user_id WHERE 1=1");
+
+        if (title != null && !title.isEmpty()) {
+            query.append(" AND LOWER(p.title) LIKE ?");
+        }
+        if (category != null && !category.isEmpty()) {
+            query.append(" AND p.post_type = ?");
+        }
+        if (status != null && !status.isEmpty()) {
+            query.append(" AND p.status = ?");
+        }
+
+        // Sắp xếp theo post_id
+        //query.append(" ORDER BY p.post_id ").append(sortOrder);
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query.toString())) {
+            int paramIndex = 1;
+
+            if (title != null && !title.isEmpty()) {
+                preparedStatement.setString(paramIndex++, "%" + title.toLowerCase() + "%");
+            }
+            if (category != null && !category.isEmpty()) {
+                preparedStatement.setString(paramIndex++, category);
+            }
+            if (status != null && !status.isEmpty()) {
+                preparedStatement.setString(paramIndex++, status);
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Post post = new Post();
+                post.setPostId(resultSet.getInt("post_id"));
+                post.setImage(resultSet.getString("image"));
+                post.setTitle(resultSet.getString("title"));
+                post.setUserId(resultSet.getInt("user_id"));
+                post.setPostType(resultSet.getString("post_type"));
+                post.setStatus(resultSet.getString("status"));
+                post.setCreatedAt(resultSet.getDate("created_at"));
+                post.setUpdateAt(resultSet.getDate("updated_at"));
+                post.setAuthorName(resultSet.getString("authorName"));
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return posts;
+    }
+
+
 }
