@@ -23,7 +23,7 @@
                         <ul class="list">
                             <li><a href="home">Home</a></li>
                             <li><a href="products">Shop Category</a></li>
-                            <li><a href="#">Blog List</a></li>
+                            <li><a href="blog">Blog List</a></li>
                             <li><a href="#"></a></li>
                         </ul>
                     </div>

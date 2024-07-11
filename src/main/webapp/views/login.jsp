@@ -44,22 +44,19 @@
                     <div class="col-lg-6">
                         <div class="login_form_inner">
                             <h3>Đăng nhập</h3>
-                            <form class="row login_form" action="login" method="post" >
+                            <form class="row login_form" action="login" method="post" onsubmit="return validateForm()">
                                     <c:if test="${not empty errorMessage}">
                                     <div class="alert alert-danger" role="alert">
                                         ${errorMessage}
                                     </div>
-                                </c:if>
-                                <c:if test="${not empty errorMessage1}">
-                                    <div class="alert alert-danger" role="alert">
-                                        ${errorMessage1}
-                                    </div>
-                                </c:if>
+                                </c:if>         
                                     <div class="col-md-12 form-group">
                                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                                    <div id="emailError" class="error-message2"></div>
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
+                                    <div id="passwordError" class="error-message2"></div>
                                     </div>
 <!--                                    <div class="col-md-12 form-group">
                                         <div class="creat_account">
@@ -83,6 +80,13 @@
 
 
         <jsp:include page="footer.jsp"/>
+<style>
+            .error-message2 {
+                color: red;
+                font-size: 12px;
+                margin-top: 5px;
+            }
+        </style>
 
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
@@ -92,5 +96,35 @@
         <script src="vendors/jquery.ajaxchimp.min.js"></script>
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
+        <script>
+                                    function validateForm() {
+                                        let isValid = true;
+                                        
+                                        let email = document.getElementById('email').value;
+                                        let password = document.getElementById('password').value;
+
+                                        document.getElementById('emailError').innerText = '';
+                                        document.getElementById('passwordError').innerText = '';
+
+                                        
+                                        if (!email) {
+                                            document.getElementById('emailError').innerText = 'Email không được để trống';
+                                            isValid = false;
+                                        } else
+                                        if (!/\S+@\S+\.\S+/.test(email)) {
+                                            document.getElementById('emailError').innerText = 'Email không đúng định dạng';
+                                            isValid = false;
+                                        }
+                                        if (!password) {
+                                            document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
+                                            isValid = false;
+                                        } else
+                                        if (password.length < 8) {
+                                            document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
+                                            isValid = false;
+                                        }
+                                        return isValid;
+                                    }
+        </script>
     </body>
 </html>

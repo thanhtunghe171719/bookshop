@@ -34,17 +34,18 @@
                             </c:if>
                             <c:if test="${sessionScope.user.roleId ==1}">
                             <li class="nav-item submenu dropdown">
-                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="#">User</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="admin-category">Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="admin-dashboard">Dashboard</a></li>
                                 </ul>
                             </li>
                         </c:if>
                         <c:if test="${sessionScope.user.roleId ==2}">
                             <li class="nav-item submenu dropdown">
-                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="marketing-product">Product</a></li>
@@ -57,7 +58,7 @@
                         </c:if>
                         <c:if test="${sessionScope.user.roleId ==3}">
                             <li class="nav-item submenu dropdown">
-                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="#">Order</a></li>
