@@ -55,7 +55,7 @@
 							<input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
 							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-							<a class="button primary-btn" href="cartdetails?service=addCart&bookId=${book.getBook_id()}">Add to Cart</a>               
+               <a class="button primary-btn" href="cartdetails?service=addCart&bookId=${book.getBook_id()}">Add to Cart</a>
 						</div>
 						<div class="card_area d-flex align-items-center">
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
@@ -488,7 +488,7 @@
 	</section>
 	<!--================ end related Product area =================-->  	
   <jsp:include page="footer.jsp"/>
-  
+
   <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
   <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
   <script src="vendors/skrollr.min.js"></script>
