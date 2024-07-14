@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  * @author TDG
  */
 public class User {
+
     private int userId;
     private String email;
     private String phone;
@@ -21,9 +22,11 @@ public class User {
     private String image;
     private String address;
     private Timestamp createAt;
-    private Timestamp updatedAt;    
+    private Timestamp updatedAt;
+    private int status;
 
     public User() {
+
     }
 
     public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt) {
@@ -128,10 +131,16 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Users{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", image=" + image + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + '}';
+        return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + '}';
     }
-    
-    
 }
