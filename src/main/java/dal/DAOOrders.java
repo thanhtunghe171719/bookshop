@@ -23,7 +23,7 @@ import models.Orders;
  */
 public class DAOOrders extends DBConnect {
 
-    public ArrayList<Orders> getOrders() {
+    public ArrayList<Orders> getOrders(int cartID) {
         ArrayList<Orders> list = new ArrayList<>();
         try {
             String sql = "WITH OrderDetails AS (\n"
@@ -39,7 +39,7 @@ public class DAOOrders extends DBConnect {
                     + "    JOIN order_items oi on oi.order_id = o.order_id\n"
                     + "    JOIN books b on oi.book_id = b.book_id\n"
                     + "    JOIN order_status ot on o.order_status_id = ot.order_status_id\n"
-                    + "    WHERE o.cart_id = 1\n"
+                    + "    WHERE o.cart_id = ?\n"
                     + ")\n"
                     + "SELECT\n"
                     + "    CASE WHEN rn = 1 THEN order_id ELSE '' END as order_id,\n"
@@ -51,6 +51,7 @@ public class DAOOrders extends DBConnect {
                     + "FROM OrderDetails\n"
                     + "ORDER BY order_date DESC;";
             PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, cartID);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
 
@@ -70,10 +71,10 @@ public class DAOOrders extends DBConnect {
         return list;
     }
 
-    public List<Items> getOrderItemsForOrder(int orderId) {
-        List<Items> orderItems = new ArrayList<>();
+    public ArrayList<Items> getOrderItemsForOrder(int orderId) {
+        ArrayList<Items> orderItems = new ArrayList<>();
 
-        String sql = "SELECT oi.order_item_id, b.title, oi.quantity\n"
+        String sql = "SELECT oi.order_item_id, b.title, oi.quantity, b.price, b.discount\n"
                 + "FROM order_items oi\n"
                 + "JOIN books b ON oi.book_id = b.book_id\n"
                 + "WHERE oi.order_id = ?";
@@ -86,6 +87,8 @@ public class DAOOrders extends DBConnect {
                     item.setItemId(resultSet.getInt("order_item_id"));
                     item.setTitle(resultSet.getString("title"));
                     item.setQuantity(resultSet.getInt("quantity"));
+                    item.setPrice(resultSet.getDouble("price"));
+                    item.setDiscount(resultSet.getInt("discount"));
                     orderItems.add(item);
                 }
             }
@@ -125,7 +128,7 @@ public class DAOOrders extends DBConnect {
 
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
-        ArrayList<Orders> re = order.getOrdersByID("1");
+        ArrayList<Items> re = order.getOrderItemsForOrder(1);
         System.out.println(re);
     }
 }

@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,13 +13,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Cart;
+import models.Orders;
 
 /**
  *
  * @author TDG
  */
-public class DAOCart extends DBConnect{
-        public ArrayList<Cart> getAll(String sql) {
+public class DAOCart extends DBConnect {
+
+    public ArrayList<Cart> getAll(String sql) {
         ArrayList<Cart> list = new ArrayList<>();
         try {
 
@@ -32,33 +35,35 @@ public class DAOCart extends DBConnect{
                 Timestamp updatedAt = rs.getTimestamp("updated_at");
                 String note = rs.getString("note");
 
-                 Cart p = new Cart(cartId, userId, promotionId, createdAt, updatedAt, note);
-                 list.add(p);
+                Cart p = new Cart(cartId, userId, promotionId, createdAt, updatedAt, note);
+                list.add(p);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-        public int insert(Cart obj) {
-            int n = 0;
-            String sql = "INSERT INTO cart (user_id, promotion_id, note) VALUES \n" +
-                        "("+obj.getUserId()+", null, 'Đã Insert.')";
-            System.out.println(sql);
-            Statement state;
-            try {
-                state = conn.createStatement();
-                n = state.executeUpdate(sql);
-            } catch (SQLException ex) {
-                Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return n;
+
+    public int insert(Cart obj) {
+        int n = 0;
+        String sql = "INSERT INTO cart (user_id, promotion_id, note) VALUES \n"
+                + "(" + obj.getUserId() + ", null, 'Đã Insert.')";
+        System.out.println(sql);
+        Statement state;
+        try {
+            state = conn.createStatement();
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return n;
+    }
+
     public int getCartId(int userId) {
         try {
 
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = state.executeQuery("Select cart_id from cart where user_id = "+userId);
+            ResultSet rs = state.executeQuery("Select cart_id from cart where user_id = " + userId);
             while (rs.next()) {
                 return rs.getInt(1);
             }
@@ -67,13 +72,14 @@ public class DAOCart extends DBConnect{
         }
         return 0;
     }
+    
     public static void main(String[] args) {
         DAOCart dao = new DAOCart();
         int userId = 9;
         int cartId = dao.getCartId(userId);
-        if(cartId != 0){
+        if (cartId != 0) {
             System.out.println(cartId);
-        }else{
+        } else {
             System.out.println("no output");
         }
     }

@@ -9,17 +9,22 @@ package models;
  * @author skyfc
  */
 public class Items {
+
     private int itemId;
     private String title;
     private int quantity;
+    private double price;
+    private int discount;
 
     public Items() {
     }
 
-    public Items(int itemId, String title, int quantity) {
+    public Items(int itemId, String title, int quantity, double price, int discount) {
         this.itemId = itemId;
         this.title = title;
         this.quantity = quantity;
+        this.price = price;
+        this.discount = discount;
     }
 
     public int getItemId() {
@@ -44,6 +49,22 @@ public class Items {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 
 }

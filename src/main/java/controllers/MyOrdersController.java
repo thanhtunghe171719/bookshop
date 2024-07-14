@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import dal.DAOCart;
 import dal.DAOOrders;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,10 +12,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import models.Items;
 import models.Orders;
+import models.User;
 
 /**
  *
@@ -60,17 +63,33 @@ public class MyOrdersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession(true);
+
         DAOOrders orders = new DAOOrders();
+        DAOCart daoCart = new DAOCart();
 
-        List<Orders> list_orders = orders.getOrders(); // Giả định bạn có phương thức này
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
+        
+        if (user == null) {
+            response.sendRedirect("login");
+        } else {
+            int userId = user.getUserId();
 
-        for (Orders list_order : list_orders) {
-            List<Items> orderItems = orders.getOrderItemsForOrder(list_order.getOrderID());
-            list_order.setOrderItems(orderItems);
+            int cartId = daoCart.getCartId(userId);
+
+            List<Orders> list_orders = orders.getOrders(cartId); // Giả định bạn có phương thức này
+
+            for (Orders list_order : list_orders) {
+                List<Items> orderItems = orders.getOrderItemsForOrder(list_order.getOrderID());
+                list_order.setOrderItems(orderItems);
+            }
+            request.setAttribute("orders", list_orders);
+
+            request.getRequestDispatcher("views/myorders.jsp").forward(request, response);
         }
-        request.setAttribute("orders", list_orders);
-
-        request.getRequestDispatcher("views/myorders.jsp").forward(request, response);
     }
 
     /**

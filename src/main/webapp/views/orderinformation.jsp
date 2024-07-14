@@ -4,7 +4,9 @@
     Author     : skyfc
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,15 +50,15 @@
                                     </tr>
                                     <tr>
                                         <td>Date</td>
-                                        <td>: Oct 03, 2017</td>
+                                        <td>: ${order.getOrderDate()}</td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td>: USD 2210</td>
+                                        <td>: <fmt:formatNumber value="${order.getTotal()}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</td>
                                     </tr>
                                     <tr>
-                                        <td>Payment method</td>
-                                        <td>: Check payments</td>
+                                        <td>Status</td>
+                                        <td>: ${order.getStatus()}</td>
                                     </tr>
                                 </c:forEach>
                             </table>
@@ -64,23 +66,19 @@
                     </div>
                     <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
                         <div class="confirmation-card">
-                            <h3 class="billing-title">Billing Address</h3>
+                            <h3 class="billing-title">Receiver</h3>
                             <table class="order-rable">
                                 <tr>
-                                    <td>Street</td>
+                                    <td>Name</td>
                                     <td>: 56/8 panthapath</td>
                                 </tr>
                                 <tr>
-                                    <td>City</td>
+                                    <td>Phone</td>
                                     <td>: Dhaka</td>
                                 </tr>
                                 <tr>
-                                    <td>Country</td>
+                                    <td>Address</td>
                                     <td>: Bangladesh</td>
-                                </tr>
-                                <tr>
-                                    <td>Postcode</td>
-                                    <td>: 1205</td>
                                 </tr>
                             </table>
                         </div>
@@ -121,72 +119,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <p>Pixelstore fresh Blackberry</p>
-                                    </td>
-                                    <td>
-                                        <h5>x 02</h5>
-                                    </td>
-                                    <td>
-                                        <p>$720.00</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>Pixelstore fresh Blackberry</p>
-                                    </td>
-                                    <td>
-                                        <h5>x 02</h5>
-                                    </td>
-                                    <td>
-                                        <p>$720.00</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>Pixelstore fresh Blackberry</p>
-                                    </td>
-                                    <td>
-                                        <h5>x 02</h5>
-                                    </td>
-                                    <td>
-                                        <p>$720.00</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4>Subtotal</h4>
-                                    </td>
-                                    <td>
-                                        <h5></h5>
-                                    </td>
-                                    <td>
-                                        <p>$2160.00</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4>Shipping</h4>
-                                    </td>
-                                    <td>
-                                        <h5></h5>
-                                    </td>
-                                    <td>
-                                        <p>Flat rate: $50.00</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4>Total</h4>
-                                    </td>
-                                    <td>
-                                        <h5></h5>
-                                    </td>
-                                    <td>
-                                        <h4>$2210.00</h4>
-                                    </td>
-                                </tr>
+                                <c:forEach var="items" items="${items}">
+                                    <tr>
+                                        <td>
+                                            <p>${items.getTitle()}</p>
+                                        </td>
+                                        <td>
+                                            <h5>x ${items.getQuantity()}</h5>
+                                        </td>
+                                        <td>
+                                            <p><fmt:formatNumber value="${(items.getPrice() - (items.getPrice() * items.getDiscount() / 100)) * items.getQuantity()}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</p>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <td>
+                                            <h4>Total</h4>
+                                        </td>
+                                        <td>
+                                            <h5></h5>
+                                        </td>
+                                        <td>
+                                            <h4><fmt:formatNumber value="${order.getTotal()}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</h4>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

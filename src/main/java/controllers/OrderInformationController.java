@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import dal.DAOCart;
 import dal.DAOOrders;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,8 +12,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
+import models.Items;
 import models.Orders;
+import models.User;
 
 /**
  *
@@ -58,15 +63,33 @@ public class OrderInformationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOOrders orderDAO = new DAOOrders();
-        
-        String id = request.getParameter("oid");
+        response.setContentType("text/html;charset=UTF-8");
 
-        ArrayList<Orders> listOrders = orderDAO.getOrdersByID(id);
+        HttpSession session = request.getSession(true);
 
-        request.setAttribute("orders", listOrders);
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
 
-        request.getRequestDispatcher("views/orderinformation.jsp").forward(request, response);
+        if (user == null) {
+            response.sendRedirect("login");
+        } else {
+            DAOOrders orderDAO = new DAOOrders();
+            DAOCart daoCart = new DAOCart();
+
+            int userId = user.getUserId();
+
+            int cartId = daoCart.getCartId(userId);
+
+            String id = request.getParameter("oid");
+
+            ArrayList<Orders> listOrders = orderDAO.getOrdersByID(id);
+            ArrayList<Items> listItems = orderDAO.getOrderItemsForOrder(Integer.parseInt(id));
+
+            request.setAttribute("orders", listOrders);
+            request.setAttribute("items", listItems);
+
+            request.getRequestDispatcher("views/orderinformation.jsp").forward(request, response);
+        }
     }
 
     /**
