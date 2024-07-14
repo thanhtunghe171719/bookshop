@@ -40,10 +40,10 @@
     <!--================ End Header Menu Area =================-->
 
   <!--================Cart Area =================-->
-  
   <section class="cart_area">
       <div class="container">
           <div class="cart_inner">
+            <h2>Chi Tiết Giỏ Hàng</h2>
               <div class="table-responsive">
                   <table class="table">
                       <thead>
@@ -106,8 +106,11 @@
                       </c:if>
                          
                           <tr class="bottom_button">
-                              <td colspan="4"> 
-                                  <a class="button" href="cartdetails">Cập Nhật Giỏ Hàng</a>
+                              <td colspan="3"> 
+                                  <a class="button" href="cartdetails?service=reloadCart&action=reload"">Cập Nhật Giỏ Hàng</a>
+                              </td>
+                              <td colspan="2">
+                                  <h5 class="text-danger">${errorMessage}</h5>
                               </td>
 <!--                              <td>
                                   <div class="cupon_text d-flex align-items-center">
@@ -141,7 +144,7 @@
                                   <div class="checkout_btn_inner d-flex align-items-center" style="float: right">
                                       <a class="gray_btn" href="products">Tiếp Tục Mua Sắm</a>
                                       <c:if test="${not empty cartItemBookMap}">
-                                          <a class="primary-btn ml-2" href="cartcontact">Mua Hàng</a>
+                                          <a class="primary-btn ml-2" href="cartdetails?service=reloadCart&action=checkOut">Mua Hàng</a>
                                       </c:if>
                                       <c:if test="${empty cartItemBookMap}">
                                           <p style="color: red;padding: 10px;margin: 0;">Giỏ hàng hiện tại của bạn đang trống</p>

@@ -52,17 +52,33 @@ public class CartDetails extends HttpServlet {
                 service = "listAll";
             }
            if(service.equals("addCart")){
+                int quantity;
+                String stringQuantity = request.getParameter("quantity");
+                if(stringQuantity == null || stringQuantity.isEmpty()){
+                    quantity = 1;
+                }else{
+                    quantity = Integer.parseInt(stringQuantity);
+                }
+                    
                 ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
                 String stringBookId = request.getParameter("bookId");
                 String test="";
                 if(stringBookId!=null && !stringBookId.isEmpty()){
                     int bookId = Integer.parseInt(stringBookId);
+                    Book book = daoBook.getById(bookId);
+                    if(quantity >= book.getStock()) {
+                        quantity = book.getStock();
+                    }
                     if(listItems != null) {
                         boolean check = true;
                        for (CartItems listItem : listItems) {
                            if(listItem.getBookId() == bookId){
-                               int quantity = listItem.getQuantity();
-                               listItem.setQuantity(quantity + 1);
+                               int quantityBook = listItem.getQuantity();
+                               if(quantityBook + quantity >= book.getStock()){
+                                   listItem.setQuantity(book.getStock());
+                               }else{
+                                   listItem.setQuantity(quantityBook + quantity);
+                               }
                                daoCartDetails.updateQuantity(listItem.getCartItemId(), listItem.getQuantity());
                                test = "có book và tăng quantity";
                                check = false; 
@@ -73,7 +89,7 @@ public class CartDetails extends HttpServlet {
                            CartItems cartItems = new CartItems();
                            cartItems.setCartId(cartId);
                            cartItems.setBookId(bookId);
-                           cartItems.setQuantity(1);
+                           cartItems.setQuantity(quantity);
                            daoCartDetails.insert(cartItems);
                            test = "có cart nhưng không có book";
                        }
@@ -81,7 +97,7 @@ public class CartDetails extends HttpServlet {
                         CartItems cartItems = new CartItems();
                         cartItems.setCartId(cartId);
                         cartItems.setBookId(bookId);
-                        cartItems.setQuantity(1);
+                        cartItems.setQuantity(quantity);
                         daoCartDetails.insert(cartItems);
                         test = "chưa từng có cart";
                     }
@@ -91,7 +107,7 @@ public class CartDetails extends HttpServlet {
                 session.setAttribute("test", test);
                 response.sendRedirect("cartdetails");
                 return;
-            }
+           }
             
             if(service.equals("listAll")){
                 if(cartId != 0){
@@ -150,6 +166,36 @@ public class CartDetails extends HttpServlet {
                         cartItemBookMap.entrySet().removeIf(entry -> entry.getKey().getCartItemId() == cartItemId);
                     }
                     session.setAttribute("cartItemBookMap", cartItemBookMap);
+                }
+            }
+            if(service.equals("reloadCart")){
+                cartItemBookMap = (Map<CartItems, Book>) session.getAttribute("cartItemBookMap");
+                boolean check = true;
+                for (Map.Entry<CartItems, Book> entry : cartItemBookMap.entrySet()) {
+                    CartItems cartItems = entry.getKey();
+                    Book book = entry.getValue();
+                    Book bookCheck = daoBook.getById(book.getBookId());
+                    if(cartItems.getQuantity() > bookCheck.getStock()){
+                        cartItems.setQuantity(bookCheck.getStock());
+                        daoCartDetails.updateQuantity(cartItems.getCartItemId(), cartItems.getQuantity());
+                        book.setStock(bookCheck.getStock());
+                        check = false;
+                    }
+                }
+                session.setAttribute("cartItemBookMap", cartItemBookMap);
+                if(!check){
+                    String errorMessage = "Giỏ hàng đã thay đổi. Do số lượng hàng trong kho không đủ.";
+                    request.setAttribute("errorMessage", errorMessage);
+                }else{
+                    String action = request.getParameter("action");
+                    if(action.equals("checkOut")){
+                        response.sendRedirect("cartcontact");
+                        return;
+                    }
+                    if(action.equals("reload")){
+                        response.sendRedirect("cartdetails");
+                        return;
+                    }
                 }
             }
 
