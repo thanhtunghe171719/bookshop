@@ -60,7 +60,12 @@ public class MarketingSlider extends HttpServlet {
             service = "listAll";
         }
         if (service.equals("listAll")) {
-            ArrayList<Slider> listAllSlider = daoSlider.getAll("SELECT * FROM slider");
+            String title = request.getParameter("title");
+            String status = request.getParameter("status");
+            
+            ArrayList<Slider> listAllSlider;
+            ArrayList<Slider> listSlider;
+            
             int pageSize = 4;
             String stringPage = request.getParameter("page");
             int page = 1;
@@ -68,8 +73,22 @@ public class MarketingSlider extends HttpServlet {
                 page = Integer.parseInt(stringPage);
             }
             int offset = (page - 1) * pageSize;
-            ArrayList<Slider> listSlider = daoSlider.getAll("SELECT * FROM slider ORDER BY slider_id DESC LIMIT " + offset + "," + pageSize);
             
+            if ((title == null || title.isEmpty()) && (status == null || status.isEmpty())) {
+                listAllSlider = daoSlider.getAll("SELECT * FROM slider");
+                listSlider = daoSlider.getAll("SELECT * FROM slider ORDER BY slider_id DESC LIMIT " + offset + "," + pageSize);
+            } else {
+                if (status == null || status.isEmpty()) {
+                    listAllSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%';");
+                    listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%' ORDER BY slider_id DESC LIMIT " + offset + "," + pageSize);
+                } else {
+                    listAllSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%' and status like '" + status + "' ;");
+                    listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%' and status like '" + status + "' ORDER BY slider_id DESC LIMIT " + offset + "," + pageSize);
+                }
+            }
+
+            session.setAttribute("title", title);
+            session.setAttribute("status", status);
             session.setAttribute("pageSize", pageSize);
             session.setAttribute("page", page);
             session.setAttribute("listSlider", listSlider);
@@ -83,23 +102,23 @@ public class MarketingSlider extends HttpServlet {
 
             session.setAttribute("totalPage", totalPage);
         }
-        if (service.equals("searchTitle")) {
-            String title = request.getParameter("title");
-            String status = request.getParameter("status");
-            ArrayList<Slider> listSlider;
-            if ((title == null || title.isEmpty()) && (status == null || status.isEmpty())) {
-                listSlider = daoSlider.getAll("SELECT * FROM slider");
-            } else {
-                if (status == null || status.isEmpty()) {
-                    listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%';");
-                } else {
-                    listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%' and status like '" + status + "' ;");
-                }
-            }
-            request.setAttribute("title", title);
-            request.setAttribute("status", status);
-            session.setAttribute("listSlider", listSlider);
-        }
+//        if (service.equals("searchTitle")) {
+//            String title = request.getParameter("title");
+//            String status = request.getParameter("status");
+//            ArrayList<Slider> listSlider;
+//            if ((title == null || title.isEmpty()) && (status == null || status.isEmpty())) {
+//                listSlider = daoSlider.getAll("SELECT * FROM slider");
+//            } else {
+//                if (status == null || status.isEmpty()) {
+//                    listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%';");
+//                } else {
+//                    listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%" + title + "%' and status like '" + status + "' ;");
+//                }
+//            }
+//            request.setAttribute("title", title);
+//            request.setAttribute("status", status);
+//            session.setAttribute("listSlider", listSlider);
+//        }
 
         if (service.equals("updateStatus")) {
             String stringSliderId = request.getParameter("sliderId");

@@ -224,19 +224,19 @@
                     <ul class="pagination justify-content-center">
 
                         <c:if test="${page > 1}">
-                            <li class="page-item"><a class="page-link" href="marketingslider?page=1">Đầu</a></li>
-                            <li class="page-item"><a class="page-link" href="marketingslider?page=${page - 1}">Trước</a></li>
+                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=1&title=${title}&status=${status}" >Đầu</a></li>
+                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${page - 1}&title=${title}&status=${status}">Trước</a></li>
                             </c:if>
 
                         <c:forEach begin="1" end="${totalPage}" var="pageNumber">
                             <li class="page-item ${pageNumber == page ? 'active' : ''}">
-                                <a class="page-link" href="marketingslider?page=${pageNumber}">${pageNumber}</a>
+                                <a class="page-link" href="marketingslider?service=listAll&page=${pageNumber}&title=${title}&status=${status}">${pageNumber}</a>
                             </li>
                         </c:forEach>
 
                         <c:if test="${page < totalPage}">
-                            <li class="page-item"><a class="page-link" href="marketingslider?page=${page + 1}">Tiếp</a></li>
-                            <li class="page-item"><a class="page-link" href="marketingslider?page=${totalPage}">Cuối</a></li>
+                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${page + 1}&title=${title}&status=${status}">Tiếp</a></li>
+                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${totalPage}&title=${title}&status=${status}">Cuối</a></li>
                             </c:if>
 
                     </ul>
@@ -258,7 +258,7 @@
         function search() {
             var title = document.getElementById('titleSearch').value;
             var status = document.getElementById('statusFilter').value;
-            var url = 'marketingslider?service=searchTitle&title=' + title + '&status=' + status;
+            var url = 'marketingslider?service=listAll&title=' + title + '&status=' + status;
             window.location.href = url;
         }
         function checkEnter(event) {

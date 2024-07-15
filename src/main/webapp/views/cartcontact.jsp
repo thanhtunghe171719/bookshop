@@ -63,11 +63,29 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <p>Địa Chỉ:</p>
-                                    <input type="text" class="form-control" id="company" name="address" placeholder="Address" value="${user.address}" style="color: black" readonly>
+                                    <!--<input type="text" class="form-control" id="company" name="address" placeholder="Address" value="${user.address}" style="color: black" readonly>-->
+                                    <div class="nice-select" tabindex="0" style="color: black;width: 445px;background-color: #e9ecef;">
+                                        <span class="current">${user.address}</span>
+                                        <ul class="list">
+                                            <li data-value="${user.address}" class="option selected focus">${user.address}</li>
+                                            <c:forEach var="shipInfo" items="${listShipInfor}">
+                                                <li data-value="${shipInfo.address}" class="option">${shipInfo.address}</li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 form-group p_star">
                                     <p>Số Điện Thoại:</p>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value="${user.phone}" style="color: black" readonly>
+                                    <!--<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value="${user.phone}" style="color: black" readonly>-->
+                                    <div class="nice-select" tabindex="0" style="color: black;width: 445px;background-color: #e9ecef;">
+                                        <span class="current">${user.phone}</span>
+                                        <ul class="list">
+                                            <li data-value="${user.phone}" class="option selected focus">${user.phone}</li>
+                                            <c:forEach var="shipInfo" items="${listShipInfor}">
+                                                <li data-value="${shipInfo.address}" class="option">${shipInfo.phone}</li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-12 form-group mb-0">

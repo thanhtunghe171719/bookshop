@@ -91,7 +91,7 @@
                                             </ul></a>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-product__title"><a href="#">${category.categoryName}</a></h4>
+                                        <h4 class="card-product__title"><a href="products?categoryid=${category.categoryId}">${category.categoryName}</a></h4>
                                     </div>
                                 </div>
                             </c:forEach>

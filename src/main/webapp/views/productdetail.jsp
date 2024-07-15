@@ -70,7 +70,8 @@
                                 <button onclick="var result = document.getElementById('sst'); var sst = result.value; if (!isNaN(sst) & amp; & amp; sst > 0) result.value--; return false;"
                                         class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
                                                                                  <!--<a class="button primary-btn" href="cartdetails?service=addCart&bookId=${book.getBook_id()}">Add to Cart</a>--> 
-                                <a class="button primary-btn" id="addToCartBtn" onclick="addToCart(${book.getBook_id()})">Thêm vào giỏ hàng</a>
+                                <c:set var="userId" value="${user.userId}"></c:set>
+                                <a class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}',${book.getBook_id()})">Thêm vào giỏ hàng</a>
                             </div>
                             
                         </div>
@@ -217,9 +218,22 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
 <script>
-            function addToCart(bookId) {
+            function addToCart(userId, bookId) {
+                if (userId === "") {
+                    alert("Vui lòng đăng nhập.");
+                    window.location.href = 'login';
+                    return;
+                }
                 var quantity = document.getElementById('sst').value;
-                window.location.href = 'cartdetails?service=addCart&bookId=' + bookId + '&quantity=' + quantity;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // Handle response from the server if needed
+                        alert("Thêm sách vào giỏ hàng thành công.");
+                    }
+                };
+                xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId + '&quantity=' + quantity, true);
+                xhr.send();
             }
         </script>
     </body>

@@ -252,31 +252,49 @@
             function updateSubtotal() {
                 var totalAll = 0;
                 var totalPriceElements = document.querySelectorAll('[id^="total-price-"]');
+
                 totalPriceElements.forEach(function (element) {
                     var priceText = element.innerText.replace(" đ", "").replace(/\./g, '').replace(',', '.');
                     var price = parseFloat(priceText);
                     totalAll += price;
                 });
+                if (!Number.isInteger(totalAll)) {
+                    totalAll *= 1000;
+                }
                 document.getElementById('total-all').innerText = formatNumber(totalAll, 3, 3) + " đ";
             }
 
             function formatNumber(value, minFractionDigits, maxFractionDigits) {
-                return parseFloat(value).toFixed(Math.max(minFractionDigits, maxFractionDigits))
-                        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
-                        .replace('.', ',');
+                // Chuyển đổi giá trị thành chuỗi số và làm tròn số
+                var numString = (parseFloat(value)).toFixed(Math.max(minFractionDigits, maxFractionDigits)).toString();
+
+                // Đảo ngược chuỗi để dễ dàng thêm dấu phẩy
+                numString = numString.split('').reverse().join('');
+
+                // Thêm dấu phẩy sau mỗi 3 chữ số
+                var formatted = numString.match(/\d{1,3}/g).join(',').split('').reverse().join('');
+
+                return formatted;
             }
-    //function formatCurrency(amount) {
-    //    // Làm tròn số và chuyển đổi thành chuỗi
-    //    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
-    //
-    //    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
-    //    var stringFormattedAmount = formattedAmount.toFixed(2);
-    //
-    //    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
-    //    stringFormattedAmount = stringFormattedAmount + " đ";
-    //
-    //    return stringFormattedAmount;
-    //}
+
+
+//            function formatNumber(value, minFractionDigits, maxFractionDigits) {
+//                return parseFloat(value).toFixed(Math.max(minFractionDigits, maxFractionDigits))
+//                        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+//                        .replace('.', ',');
+//            }
+            //function formatCurrency(amount) {
+            //    // Làm tròn số và chuyển đổi thành chuỗi
+            //    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
+            //
+            //    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
+            //    var stringFormattedAmount = formattedAmount.toFixed(2);
+            //
+            //    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
+            //    stringFormattedAmount = stringFormattedAmount + " đ";
+            //
+            //    return stringFormattedAmount;
+            //}
 
 
 
