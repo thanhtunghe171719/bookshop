@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Aroma Shop - Login</title>
+        <title>Login</title>
         <link rel="icon" href="img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
@@ -22,8 +22,8 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -45,35 +45,35 @@
                         <div class="login_form_inner">
                             <h3>Đăng nhập</h3>
                             <form class="row login_form" action="login" method="post" onsubmit="return validateForm()">
-                                
-                                    <c:if test="${not empty errorMessage}">
+
+                                <c:if test="${not empty errorMessage}">
                                     <div class="alert alert-danger" role="alert">
                                         ${errorMessage}
                                     </div>
                                 </c:if>         
-                                    <div class="col-md-12 form-group">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                                <div class="col-md-12 form-group">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
                                     <div id="emailError" class="error-message2"></div>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
                                     <div id="passwordError" class="error-message2"></div>
-                                    </div>
-<!--                                    <div class="col-md-12 form-group">
-                                        <div class="creat_account">
-                                            <input type="checkbox" id="f-option2" name="selector">
-                                            <label for="f-option2">Keep me logged in</label>
-                                        </div>
-                                    </div>-->
-                                    <div class="col-md-12 form-group">
-                                        <button type="submit" value="submit" class="button button-login w-100">Đăng nhập</button>
-                                        <a href="resetpassword">Quên mật khẩu</a>
-                                    </div>
-                                </form>
+                                </div>
+                                <!--                                    <div class="col-md-12 form-group">
+                                                                        <div class="creat_account">
+                                                                            <input type="checkbox" id="f-option2" name="selector">
+                                                                            <label for="f-option2">Keep me logged in</label>
+                                                                        </div>
+                                                                    </div>-->
+                                <div class="col-md-12 form-group">
+                                    <button type="submit" value="submit" class="button button-login w-100">Đăng nhập</button>
+                                    <a href="resetpassword">Quên mật khẩu</a>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
@@ -81,7 +81,7 @@
 
 
         <jsp:include page="footer.jsp"/>
-<style>
+        <style>
             .error-message2 {
                 color: red;
                 font-size: 12px;
@@ -98,34 +98,38 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
         <script>
-                                    function validateForm() {
-                                        let isValid = true;
-                                        
-                                        let email = document.getElementById('email').value;
-                                        let password = document.getElementById('password').value;
+                                            function validateForm() {
+                                                let isValid = true;
 
-                                        document.getElementById('emailError').innerText = '';
-                                        document.getElementById('passwordError').innerText = '';
+                                                let email = document.getElementById('email').value;
+                                                let password = document.getElementById('password').value;
 
-                                        
-                                        if (!email) {
-                                            document.getElementById('emailError').innerText = 'Email không được để trống';
-                                            isValid = false;
-                                        } else
-                                        if (!/\S+@\S+\.\S+/.test(email)) {
-                                            document.getElementById('emailError').innerText = 'Email không đúng định dạng';
-                                            isValid = false;
-                                        }
-                                        if (!password) {
-                                            document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
-                                            isValid = false;
-                                        } else
-                                        if (password.length < 8) {
-                                            document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
-                                            isValid = false;
-                                        }
-                                        return isValid;
-                                    }
+                                                document.getElementById('emailError').innerText = '';
+                                                document.getElementById('passwordError').innerText = '';
+
+                                                if (!email) {
+                                                    document.getElementById('emailError').innerText = 'Email không được để trống';
+                                                    isValid = false;
+                                                } else
+                                                if (!/\S+@\S+\.\S+/.test(email)) {
+                                                    document.getElementById('emailError').innerText = 'Email không đúng định dạng';
+                                                    isValid = false;
+                                                }
+                                                if (!password) {
+                                                    document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
+                                                    isValid = false;
+                                                } else if (password.length < 8) {
+                                                    document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
+                                                    isValid = false;
+                                                } else if (!/[A-Za-z]/.test(password)) {
+                                                    document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
+                                                    isValid = false;
+                                                } else if (!/\d/.test(password)) {
+                                                    document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
+                                                    isValid = false;
+                                                }
+                                                return isValid;
+                                            }
         </script>
     </body>
 </html>
