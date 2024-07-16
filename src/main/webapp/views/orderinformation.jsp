@@ -39,69 +39,51 @@
         <section class="order_details section-margin--small">
             <div class="container">
                 <div class="row mb-5">
-                    <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                    <div class="col-md-6 col-xl-6 mb-4 mb-xl-0">
                         <div class="confirmation-card">
-                            <h3 class="billing-title">Order Info</h3>
+                            <h3 class="billing-title">Thông Tin Đơn Hàng</h3>
                             <table class="order-rable">
                                 <c:forEach var="order" items="${orders}">
                                     <tr>
-                                        <td>Order number</td>
+                                        <td>Mã đơn</td>
                                         <td>: ${order.getOrderID()} </td>
                                     </tr>
                                     <tr>
-                                        <td>Date</td>
+                                        <td>Ngày đặt</td>
                                         <td>: ${order.getOrderDate()}</td>
                                     </tr>
                                     <tr>
-                                        <td>Total</td>
+                                        <td>Tổng tiền</td>
                                         <td>: <fmt:formatNumber value="${order.getTotal()}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</td>
                                     </tr>
                                     <tr>
-                                        <td>Status</td>
+                                        <td>Trạng thái</td>
                                         <td>: ${order.getStatus()}</td>
                                     </tr>
                                 </c:forEach>
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                    <div class="col-md-6 col-xl-6 mb-4 mb-xl-0">
                         <div class="confirmation-card">
-                            <h3 class="billing-title">Receiver</h3>
+                            <h3 class="billing-title">Người Nhận</h3>
                             <table class="order-rable">
+                                <jsp:useBean id="users" scope="request" type="models.User" />
                                 <tr>
-                                    <td>Name</td>
-                                    <td>: 56/8 panthapath</td>
+                                    <td>Tên</td>
+                                    <td>: ${users.fullname}</td>
                                 </tr>
                                 <tr>
-                                    <td>Phone</td>
-                                    <td>: Dhaka</td>
+                                    <td>Số điện thoại</td>
+                                    <td>: ${users.phone}</td>
                                 </tr>
                                 <tr>
-                                    <td>Address</td>
-                                    <td>: Bangladesh</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-                        <div class="confirmation-card">
-                            <h3 class="billing-title">Shipping Address</h3>
-                            <table class="order-rable">
-                                <tr>
-                                    <td>Street</td>
-                                    <td>: 56/8 panthapath</td>
+                                    <td>Email</td>
+                                    <td>: ${users.email}</td>
                                 </tr>
                                 <tr>
-                                    <td>City</td>
-                                    <td>: Dhaka</td>
-                                </tr>
-                                <tr>
-                                    <td>Country</td>
-                                    <td>: Bangladesh</td>
-                                </tr>
-                                <tr>
-                                    <td>Postcode</td>
-                                    <td>: 1205</td>
+                                    <td>Địa chỉ</td>
+                                    <td>: ${users.address}</td>
                                 </tr>
                             </table>
                         </div>

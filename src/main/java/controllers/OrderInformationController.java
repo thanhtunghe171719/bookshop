@@ -6,6 +6,7 @@ package controllers;
 
 import dal.DAOCart;
 import dal.DAOOrders;
+import dal.DAOUsers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -75,6 +76,7 @@ public class OrderInformationController extends HttpServlet {
         } else {
             DAOOrders orderDAO = new DAOOrders();
             DAOCart daoCart = new DAOCart();
+            DAOUsers userDAO = new DAOUsers();
 
             int userId = user.getUserId();
 
@@ -84,9 +86,12 @@ public class OrderInformationController extends HttpServlet {
 
             ArrayList<Orders> listOrders = orderDAO.getOrdersByID(id);
             ArrayList<Items> listItems = orderDAO.getOrderItemsForOrder(Integer.parseInt(id));
+            
+            User listUser = userDAO.getUserById(userId);
 
             request.setAttribute("orders", listOrders);
             request.setAttribute("items", listItems);
+            request.setAttribute("users", listUser);
 
             request.getRequestDispatcher("views/orderinformation.jsp").forward(request, response);
         }
