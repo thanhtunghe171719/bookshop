@@ -25,9 +25,9 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
-        
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
+
 
         <link rel="stylesheet" href="css/style.css">
     </head>
@@ -37,11 +37,33 @@
         <!--================ End Header Menu Area =================-->
 
 
+        <!--================ Start Progress Bar ================-->
 
+        <div class="d-flex justify-content-center align-items-center mt-4 mb-4">
+            <div class="progresses">
+                <div class="steps">
+                    <span><i class="fa fa-check"></i></span>
+                </div>
+                <div class="progress-bar-text ml-2 mr-2">Giỏ hàng</div>
+                <span class="line mr-2"></span>
+
+                <div class="steps">
+                    <span class="font-weight-bold">2</span>
+                </div>
+                <div class="progress-bar-text ml-2 mr-2">Xác nhận</div>
+                <span class="line mr-2"></span>
+
+                <div class="steps">
+                    <span class="font-weight-bold">3</span>
+                </div>
+                <div class="progress-bar-text ml-2 mr-2">Thanh Toán</div>
+            </div>    
+        </div>
+        <!--================ End Progress Bar ================-->
 
 
         <!--================Checkout Area =================-->
-                                                
+
         <section class="checkout_area section-margin--small">
             <div class="container">
 
@@ -121,14 +143,6 @@
                                     </table>
                                     <br>
                                     <h3>Chọn Phương Thức Thanh Toán</h3>
-                                    <div class="payment_item">
-                                        <div class="radion_btn">
-                                            <input type="radio" id="f-option5" name="paymentMethod" value="Direct Payment">
-                                            <label for="f-option5">Thanh toán khi nhận hàng</label>
-                                            <div class="check"></div>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <div class="payment_item active">
                                         <div class="radion_btn">
                                             <input type="radio" id="f-option6" name="paymentMethod" value="Pay with Banking App">
@@ -159,39 +173,39 @@
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
 
-<script>
-    document.querySelector('.button-paypal').addEventListener('click', function(event) {
-        var fullname = document.getElementById('first').value.trim();
-        var address = document.getElementById('company').value.trim();
-        var phone = document.getElementById('phone').value.trim();
-        var checkbox = document.getElementById('f-option4');
-        var paymentMethod1 = document.getElementById('f-option5');
-        var paymentMethod2 = document.getElementById('f-option6');
+        <script>
+            document.querySelector('.button-paypal').addEventListener('click', function (event) {
+                var fullname = document.getElementById('first').value.trim();
+                var address = document.getElementById('company').value.trim();
+                var phone = document.getElementById('phone').value.trim();
+                var checkbox = document.getElementById('f-option4');
+                var paymentMethod1 = document.getElementById('f-option5');
+                var paymentMethod2 = document.getElementById('f-option6');
 
-        var errorMessages = '';
+                var errorMessages = '';
 
-        if (fullname === '') {
-            errorMessages = 'Vui lòng nhập Họ và Tên.';
-        } else if (address === '') {
-            errorMessages = 'Vui lòng nhập Địa Chỉ.';
-        } else if (phone === '') {
-            errorMessages = 'Vui lòng nhập Số Điện Thoại.';
-        } else if (!paymentMethod1.checked && !paymentMethod2.checked) {
-            errorMessages = 'Vui lòng chọn ít nhất một phương thức thanh toán.';
-        } else if (!checkbox.checked) {
-            errorMessages = 'Vui lòng đánh dấu vào ô "Tôi đã đọc và xác nhận mọi thông tin đều chính xác".';
-        }
+                if (fullname === '') {
+                    errorMessages = 'Vui lòng nhập Họ và Tên.';
+                } else if (address === '') {
+                    errorMessages = 'Vui lòng nhập Địa Chỉ.';
+                } else if (phone === '') {
+                    errorMessages = 'Vui lòng nhập Số Điện Thoại.';
+                } else if (!paymentMethod1.checked && !paymentMethod2.checked) {
+                    errorMessages = 'Vui lòng chọn ít nhất một phương thức thanh toán.';
+                } else if (!checkbox.checked) {
+                    errorMessages = 'Vui lòng đánh dấu vào ô "Tôi đã đọc và xác nhận mọi thông tin đều chính xác".';
+                }
 
-        if (errorMessages !== '') {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của nút "Tiếp Tục"
-            document.getElementById('submitError').innerHTML = errorMessages; // Hiển thị thông báo lỗi
-        } else {
-            document.getElementById('submitError').innerHTML = ''; // Xóa thông báo lỗi nếu không có lỗi
-            // Chuyển hướng người dùng về trang "Home"
-            window.location.href = 'home';
-        }
-    });
-</script>
+                if (errorMessages !== '') {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của nút "Tiếp Tục"
+                    document.getElementById('submitError').innerHTML = errorMessages; // Hiển thị thông báo lỗi
+                } else {
+                    document.getElementById('submitError').innerHTML = ''; // Xóa thông báo lỗi nếu không có lỗi
+                    // Chuyển hướng người dùng về trang "Home"
+                    window.location.href = 'home';
+                }
+            });
+        </script>
 
 
 
