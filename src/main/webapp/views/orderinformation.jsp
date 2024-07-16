@@ -131,6 +131,21 @@
                         </table>
                     </div>
                 </div>
+                <div class="row justify-content-around">
+                    <div class="col-lg-4 mt-3">
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="button button-login w-100">Thay đổi thông tin</button>
+                        </div>
+                    </div>
+
+                    <c:forEach var="order" items="${orders}">
+                        <div class="col-lg-4 mt-3">
+                            <div class="col-md-12 form-group">
+                                <a href="cancel?oid=${order.getOrderID()}" class="button button-login w-100 text-center">Huỷ đơn hàng</a>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </section>
         <!--================End Order Details Area =================-->

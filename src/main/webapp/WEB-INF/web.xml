@@ -94,6 +94,10 @@
         <servlet-name>OrderInformationController</servlet-name>
         <servlet-class>controllers.OrderInformationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelOrder</servlet-name>
+        <servlet-class>controllers.CancelOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -177,6 +181,10 @@
     <servlet-mapping>
         <servlet-name>OrderInformationController</servlet-name>
         <url-pattern>/orderinformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelOrder</servlet-name>
+        <url-pattern>/cancel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -66,7 +66,7 @@ public class DAOOrders extends DBConnect {
                 list.add(o);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOBooks.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -121,14 +121,27 @@ public class DAOOrders extends DBConnect {
                 list.add(o);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOBooks.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
 
+    public int cancelOrder(int orderID) {
+        String sql = "UPDATE orders SET order_status_id = 5\n"
+                + "WHERE order_id = ?";
+        try (PreparedStatement ptm = conn.prepareStatement(sql)) {
+            ptm.setInt(1, orderID);
+            return ptm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
-        ArrayList<Items> re = order.getOrderItemsForOrder(1);
-        System.out.println(re);
+//        ArrayList<Items> re = order.getOrderItemsForOrder(1);
+        int cancel = order.cancelOrder(2);
+        System.out.println(cancel);
     }
 }
