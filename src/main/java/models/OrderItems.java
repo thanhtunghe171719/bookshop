@@ -13,6 +13,7 @@ public class OrderItems {
     private int orderId;     
     private int bookId;      
     private int quantity;
+    private Book book;
 
     public OrderItems() {
     }
@@ -60,5 +61,12 @@ public class OrderItems {
     public String toString() {
         return "OrderItems{" + "orderItemId=" + orderItemId + ", orderId=" + orderId + ", bookId=" + bookId + ", quantity=" + quantity + '}';
     }
-    
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 }

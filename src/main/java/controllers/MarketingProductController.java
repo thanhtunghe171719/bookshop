@@ -21,7 +21,6 @@ import java.util.Map;
 import models.Book;
 import models.Categorie;
 
-
 @WebServlet(name = "MarketingProductController", urlPatterns = {"/marketing-product"})
 public class MarketingProductController extends HttpServlet {
 

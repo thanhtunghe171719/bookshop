@@ -9,29 +9,32 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnect {
-    Connection conn=null;
-    public DBConnect(String url,String userName,String password){
+
+    Connection conn = null;
+
+    public DBConnect(String url, String userName, String password) {
         try {
             //drive
             Class.forName("com.mysql.cj.jdbc.Driver");
             //connection
-            conn=DriverManager.getConnection(url,userName, password);
+            conn = DriverManager.getConnection(url, userName, password);
             System.out.println("connected");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }        
+        }
     }
+
     public Connection getConnection() {
         return conn;
     }
-    public DBConnect(){
-        this("jdbc:mysql://localhost:3306/bookshop","root","1234");
+
+    public DBConnect() {
+        this("jdbc:mysql://localhost:3306/book3", "root", "12345");
     }
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         new DBConnect();
     }
-
-
 }

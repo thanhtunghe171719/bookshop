@@ -6,6 +6,7 @@ package controllers;
 
 import models.*;
 import dal.DAOBooks;
+import dal.FeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -68,6 +70,9 @@ public class DetailServlet extends HttpServlet {
 
         // Thêm sản phẩm vào request
         request.setAttribute("book", book);
+        FeedbackDAO feedbackDao = new FeedbackDAO();
+        List<Feedback> feedbacks = feedbackDao.getFeedbackByProductId(pid);
+        request.setAttribute("feedbacks", feedbacks);
 
         // Chuyển tiếp request tới trang JSP để hiển thị chi tiết
         request.getRequestDispatcher("views/productdetail.jsp").forward(request, response);
