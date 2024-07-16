@@ -86,6 +86,10 @@
         <servlet-name>PostServlet</servlet-name>
         <servlet-class>controllers.PostServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MarketingSlider</servlet-name>
+        <servlet-class>controllers.MarketingSlider</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -161,6 +165,10 @@
     <servlet-mapping>
         <servlet-name>PostServlet</servlet-name>
         <url-pattern>/managerpost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarketingSlider</servlet-name>
+        <url-pattern>/marketingslider</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
