@@ -90,6 +90,18 @@
         <servlet-name>MarketingSlider</servlet-name>
         <servlet-class>controllers.MarketingSlider</servlet-class>
     </servlet>
+    <servlet>
+      <servlet-name>MyOrdersController</servlet-name>
+        <servlet-class>controllers.MyOrdersController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderInformationController</servlet-name>
+        <servlet-class>controllers.OrderInformationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelOrder</servlet-name>
+        <servlet-class>controllers.CancelOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -170,9 +182,21 @@
         <servlet-name>MarketingSlider</servlet-name>
         <url-pattern>/marketingslider</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyOrdersController</servlet-name>
+        <url-pattern>/myorders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderInformationController</servlet-name>
+        <url-pattern>/orderinformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelOrder</servlet-name>
+        <url-pattern>/cancel</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            1500
         </session-timeout>
     </session-config>
 </web-app>

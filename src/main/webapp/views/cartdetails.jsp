@@ -39,6 +39,30 @@
         <jsp:include page="header.jsp"/>
         <!--================ End Header Menu Area =================-->
 
+        <!--================ Start Progress Bar ================-->
+
+        <div class="d-flex justify-content-center align-items-center mt-4 mb-4">
+            <div class="progresses">
+                <div class="steps">
+                    <span class="font-weight-bold">1</span>
+                </div>
+                <div class="progress-bar-text ml-2 mr-2">Giỏ hàng</div>
+                <span class="line mr-2"></span>
+
+                <div class="steps">
+                    <span class="font-weight-bold">2</span>
+                </div>
+                <div class="progress-bar-text ml-2 mr-2">Xác nhận</div>
+                <span class="line mr-2"></span>
+
+                <div class="steps">
+                    <span class="font-weight-bold">3</span>
+                </div>
+                <div class="progress-bar-text ml-2 mr-2">Thanh Toán</div>
+            </div>    
+        </div>
+        <!--================ End Progress Bar ================-->
+
         <!--================Cart Area =================-->
         <section class="cart_area">
             <div class="container">
@@ -155,7 +179,6 @@
                                         <c:if test="${not empty cartItemBookMap}">
                                             <a class="primary-btn ml-2" href="cartdetails?service=reloadCart&action=checkOut">Mua Hàng</a>
                                         </c:if>
-
                                     </div>
                                 </td>
                             </tr>
@@ -252,7 +275,7 @@
             function updateSubtotal() {
                 var totalAll = 0;
                 var totalPriceElements = document.querySelectorAll('[id^="total-price-"]');
-
+                                                                                       
                 totalPriceElements.forEach(function (element) {
                     var priceText = element.innerText.replace(" đ", "").replace(/\./g, '').replace(',', '.');
                     var price = parseFloat(priceText);

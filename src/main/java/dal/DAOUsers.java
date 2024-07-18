@@ -271,5 +271,7 @@ public class DAOUsers extends DBConnect {
 //        for (User user : vector) {
 //            System.out.println(user);
 //        }
+        User user = dao.getUserById(9);
+        System.out.println(user);
     }
 }
