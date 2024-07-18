@@ -23,7 +23,7 @@ import models.Orders;
  */
 public class DAOOrders extends DBConnect {
 
-    public ArrayList<Orders> getOrders(int cartID) {
+    public ArrayList<Orders> getOrders(int cartID, int index) {
         ArrayList<Orders> list = new ArrayList<>();
         try {
             String sql = "WITH OrderDetails AS (\n"
@@ -49,9 +49,11 @@ public class DAOOrders extends DBConnect {
                     + "    CASE WHEN rn = 1 THEN total ELSE '' END as total,\n"
                     + "    CASE WHEN rn = 1 THEN order_status ELSE '' END as order_status\n"
                     + "FROM OrderDetails\n"
-                    + "ORDER BY order_date DESC;";
+                    + "ORDER BY order_date DESC\n"
+                    + "LIMIT 2 OFFSET ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, cartID);
+            statement.setInt(2, (index - 1) * 2);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
 
@@ -69,6 +71,20 @@ public class DAOOrders extends DBConnect {
             Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public int getOrderCount() {
+        String query = "SELECT COUNT(*) FROM orders";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Count: " + e);
+        }
+        return 0;
     }
 
     public ArrayList<Items> getOrderItemsForOrder(int orderId) {
@@ -141,7 +157,8 @@ public class DAOOrders extends DBConnect {
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);
-        int cancel = order.cancelOrder(2);
-        System.out.println(cancel);
+//        int cancel = order.cancelOrder(2);
+          int count = order.getOrderCount();
+        System.out.println(count);
     }
 }

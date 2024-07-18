@@ -4,8 +4,6 @@
  */
 package controllers;
 
-import dal.DAOCart;
-import dal.DAOOrders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,17 +11,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import models.Items;
-import models.Orders;
 import models.User;
 
 /**
  *
  * @author skyfc
  */
-public class MyOrdersController extends HttpServlet {
+public class ThankYou extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,17 +31,16 @@ public class MyOrdersController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MyOrdersController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MyOrdersController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        HttpSession session = request.getSession(true);
+
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
+
+        if (user == null) {
+            response.sendRedirect("login");
+        } else {
+            request.getRequestDispatcher("views/thankyou.jsp").forward(request, response);
         }
     }
 
@@ -63,47 +56,7 @@ public class MyOrdersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        HttpSession session = request.getSession(true);
-
-        DAOOrders orders = new DAOOrders();
-        DAOCart daoCart = new DAOCart();
-
-        User user = (User) session.getAttribute("user");
-        session.setAttribute("user", user);
-
-        if (user == null) {
-            response.sendRedirect("login");
-        } else {
-            String indexPage = request.getParameter("index");
-            if (indexPage == null) {
-                indexPage = "1";
-            }
-            int index = Integer.parseInt(indexPage);
-
-            int userId = user.getUserId();
-
-            int cartId = daoCart.getCartId(userId);
-
-            int totalOrders = orders.getOrderCount();
-            int endPage = totalOrders / 2;
-            if (totalOrders % 2 != 0) {
-                endPage++;
-            }
-
-            List<Orders> list_orders = orders.getOrders(cartId, index); // Giả định bạn có phương thức này
-
-            for (Orders list_order : list_orders) {
-                List<Items> orderItems = orders.getOrderItemsForOrder(list_order.getOrderID());
-                list_order.setOrderItems(orderItems);
-            }
-            request.setAttribute("orders", list_orders);
-            request.setAttribute("page", endPage);
-            request.setAttribute("pagetag", index);
-
-            request.getRequestDispatcher("views/myorders.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

@@ -57,7 +57,7 @@ public class CancelOrder extends HttpServlet {
             // You might want to set an error message in the request and forward it to an error page or back to the homepage
         }
 
-        response.sendRedirect("home");
+        response.sendRedirect("myorders");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

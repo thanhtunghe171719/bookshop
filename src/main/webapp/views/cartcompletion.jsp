@@ -109,7 +109,7 @@
 
                     
                     <div class="form-group text-center text-sm-right mt-3">
-                        <a style="color: #FFF" href="home" class="button button--active button-review">Đã thanh toán</a>
+                        <a style="color: #FFF" href="thankyou" class="button button--active button-review">Đã thanh toán</a>
                     </div>
             </div>
         </div>
