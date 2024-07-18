@@ -80,6 +80,10 @@
         <servlet-name>CustomerServlet</servlet-name>
         <servlet-class>controllers.CustomerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UsersListServlet</servlet-name>
+        <servlet-class>controllers.UsersListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>CustomerServlet</servlet-name>
         <url-pattern>/customers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersListServlet</servlet-name>
+        <url-pattern>/userList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

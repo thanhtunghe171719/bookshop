@@ -326,7 +326,7 @@ public class DAOUsers extends DBConnect {
         }
     }
 
-    public List<User> getActiveUsers() {
+  /*  public List<User> getActiveUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE deleted = 'no' AND role_id = 2";
         try ( PreparedStatement pstmt = conn.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
@@ -352,7 +352,7 @@ public class DAOUsers extends DBConnect {
             e.printStackTrace();
         }
         return users;
-    }
+    }*/
 
     public List<User> searchUsersByName(String name) {
 
@@ -445,7 +445,95 @@ public class DAOUsers extends DBConnect {
         return users;
     }
 
-    //Paging
+    //Customer
+    private User extractCustomerFromResultSet(ResultSet rs) throws SQLException {
+        int userId = rs.getInt("user_id");
+        String fullname = rs.getString("fullname");
+        String gender = rs.getString("gender");
+        String email = rs.getString("email");
+        String phone = rs.getString("phone");
+        String password = rs.getString("password");
+        String address = rs.getString("address");
+        String image = rs.getString("image");
+        String status = rs.getString("status");
+        Timestamp createdAt = rs.getTimestamp("create_at");
+        Timestamp updatedAt = rs.getTimestamp("updated_at");
+        //String roleName = rs.getString("role_name"); 
+
+        User user = new User(userId, fullname, gender, email, phone, status);
+        user.setPassword(password);
+        user.setAddress(address);
+        user.setImage(image);
+        user.setCreateAt(createdAt);
+        user.setUpdatedAt(updatedAt);
+        // user.setRoleName(roleName);
+        return user;
+    }
+
+    public List<User> getCustomersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder) {
+        String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '2' ORDER BY "
+                + (sortField != null ? sortField : "fullname") + " "
+                + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
+        List<User> users = new ArrayList<>();
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, pageSize);
+            ps.setInt(2, (pageIndex - 1) * pageSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(extractCustomerFromResultSet(rs));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
+    }
+
+    public List<User> searchCustomerWithPagination(String searchQuery, int pageIndex, int pageSize, String sortField, String sortOrder) {
+        String query = "SELECT * FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2' ORDER BY "
+                + (sortField != null ? sortField : "fullname") + " "
+                + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
+        List<User> users = new ArrayList<>();
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + searchQuery + "%");
+            ps.setInt(2, pageSize);
+            ps.setInt(3, (pageIndex - 1) * pageSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(extractCustomerFromResultSet(rs));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
+    }
+
+    public int getCustomerCount() {
+        String query = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '2'";
+        try ( PreparedStatement ps = conn.prepareStatement(query);  ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getCustomerCountWithSearch(String searchQuery) {
+        String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2'";
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + searchQuery + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+//User
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         int userId = rs.getInt("user_id");
         String fullname = rs.getString("fullname");
@@ -458,6 +546,8 @@ public class DAOUsers extends DBConnect {
         String status = rs.getString("status");
         Timestamp createdAt = rs.getTimestamp("create_at");
         Timestamp updatedAt = rs.getTimestamp("updated_at");
+        int roleId = rs.getInt("role_id"); // Get role_id
+        String roleName = rs.getString("role_name"); // Get role_name
 
         User user = new User(userId, fullname, gender, email, phone, status);
         user.setPassword(password);
@@ -465,17 +555,33 @@ public class DAOUsers extends DBConnect {
         user.setImage(image);
         user.setCreateAt(createdAt);
         user.setUpdatedAt(updatedAt);
+        user.setRoleId(roleId); // Set role_id
+        user.setRoleName(roleName); // Set role_name
         return user;
     }
 
-    public List<User> getUsersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder) {
-        String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '2' ORDER BY "
-                + (sortField != null ? sortField : "fullname") + " "
+    public List<User> getUsersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder, String gender, String role, String status) {
+        String query = "SELECT u.*, r.role_name FROM users u JOIN roles r ON u.role_id = r.role_id "
+                + "WHERE u.deleted = 'no' "
+                + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
+                + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
+                + (status != null && !status.isEmpty() ? "AND u.status = ? " : "")
+                + "ORDER BY " + (sortField != null ? sortField : "u.fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
         try ( PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, pageSize);
-            ps.setInt(2, (pageIndex - 1) * pageSize);
+            int paramIndex = 1;
+            if (gender != null && !gender.isEmpty()) {
+                ps.setString(paramIndex++, gender);
+            }
+            if (role != null && !role.isEmpty()) {
+                ps.setString(paramIndex++, role);
+            }
+            if (status != null && !status.isEmpty()) {
+                ps.setString(paramIndex++, status);
+            }
+            ps.setInt(paramIndex++, pageSize);
+            ps.setInt(paramIndex, (pageIndex - 1) * pageSize);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 users.add(extractUserFromResultSet(rs));
@@ -486,15 +592,29 @@ public class DAOUsers extends DBConnect {
         return users;
     }
 
-    public List<User> searchUsersWithPagination(String searchQuery, int pageIndex, int pageSize, String sortField, String sortOrder) {
-        String query = "SELECT * FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2' ORDER BY "
-                + (sortField != null ? sortField : "fullname") + " "
+    public List<User> searchUsersWithPagination(String searchQuery, int pageIndex, int pageSize, String sortField, String sortOrder, String gender, String role, String status) {
+        String query = "SELECT u.*, r.role_name FROM users u JOIN roles r ON u.role_id = r.role_id "
+                + "WHERE u.fullname LIKE ? AND u.deleted = 'no' "
+                + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
+                + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
+                + (status != null && !status.isEmpty() ? "AND u.status = ? " : "")
+                + "ORDER BY " + (sortField != null ? sortField : "u.fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
         try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
-            ps.setInt(2, pageSize);
-            ps.setInt(3, (pageIndex - 1) * pageSize);
+            int paramIndex = 2;
+            if (gender != null && !gender.isEmpty()) {
+                ps.setString(paramIndex++, gender);
+            }
+            if (role != null && !role.isEmpty()) {
+                ps.setString(paramIndex++, role);
+            }
+            if (status != null && !status.isEmpty()) {
+                ps.setString(paramIndex++, status);
+            }
+            ps.setInt(paramIndex++, pageSize);
+            ps.setInt(paramIndex, (pageIndex - 1) * pageSize);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 users.add(extractUserFromResultSet(rs));
@@ -505,9 +625,23 @@ public class DAOUsers extends DBConnect {
         return users;
     }
 
-    public int getUserCount() {
-        String query = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '2'";
-        try ( PreparedStatement ps = conn.prepareStatement(query);  ResultSet rs = ps.executeQuery()) {
+    public int getUserCount(String gender, String role, String status) {
+        String query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.deleted = 'no' "
+                + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
+                + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
+                + (status != null && !status.isEmpty() ? "AND u.status = ? " : "");
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            int paramIndex = 1;
+            if (gender != null && !gender.isEmpty()) {
+                ps.setString(paramIndex++, gender);
+            }
+            if (role != null && !role.isEmpty()) {
+                ps.setString(paramIndex++, role);
+            }
+            if (status != null && !status.isEmpty()) {
+                ps.setString(paramIndex++, status);
+            }
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -517,10 +651,23 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
-    public int getUserCountWithSearch(String searchQuery) {
-        String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2'";
+    public int getUserCountWithSearch(String searchQuery, String gender, String role, String status) {
+        String query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.fullname LIKE ? AND u.deleted = 'no' "
+                + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
+                + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
+                + (status != null && !status.isEmpty() ? "AND u.status = ? " : "");
         try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
+            int paramIndex = 2;
+            if (gender != null && !gender.isEmpty()) {
+                ps.setString(paramIndex++, gender);
+            }
+            if (role != null && !role.isEmpty()) {
+                ps.setString(paramIndex++, role);
+            }
+            if (status != null && !status.isEmpty()) {
+                ps.setString(paramIndex++, status);
+            }
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -547,12 +694,11 @@ public class DAOUsers extends DBConnect {
         //  System.out.println(user);
         // }
         // Test getUserCount method
-        int userCount = dao.getUserCount();
-        System.out.println("Total Users: " + userCount);
-
+        // int userCount = dao.getUserCount();
+        //System.out.println("Total Users: " + userCount);
         // Test getUserCountWithSearch method
-        int searchUserCount = dao.getUserCountWithSearch("Nguyễn");
-        System.out.println("Total Users with 'Nguyễn': " + searchUserCount);
+        //int searchUserCount = dao.getUserCountWithSearch("Nguyễn");
+        //System.out.println("Total Users with 'Nguyễn': " + searchUserCount);
 //        Vector<User> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");
 //        for (User user : vector) {
 //            System.out.println(user);
