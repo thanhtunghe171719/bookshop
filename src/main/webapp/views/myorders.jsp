@@ -70,10 +70,10 @@
                                             <table>
                                                 <c:forEach var="item" items="${orders.getOrderItems()}">
                                                     <tr>
-                                                        <td>
+                                                        <td style="border-top: none">
                                                             <p>${item.getTitle()}</p>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-top: none">
                                                             <p>x${item.getQuantity()}</p>
                                                         </td>
                                                     </tr>
