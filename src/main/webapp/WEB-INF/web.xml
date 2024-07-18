@@ -91,7 +91,7 @@
         <servlet-class>controllers.MarketingSlider</servlet-class>
     </servlet>
     <servlet>
-      <servlet-name>MyOrdersController</servlet-name>
+        <servlet-name>MyOrdersController</servlet-name>
         <servlet-class>controllers.MyOrdersController</servlet-class>
     </servlet>
     <servlet>
@@ -101,6 +101,10 @@
     <servlet>
         <servlet-name>CancelOrder</servlet-name>
         <servlet-class>controllers.CancelOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ThankYou</servlet-name>
+        <servlet-class>controllers.ThankYou</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
@@ -193,6 +197,10 @@
     <servlet-mapping>
         <servlet-name>CancelOrder</servlet-name>
         <url-pattern>/cancel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ThankYou</servlet-name>
+        <url-pattern>/thankyou</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

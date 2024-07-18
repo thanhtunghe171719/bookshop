@@ -14,7 +14,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Aroma Shop - Cart</title>
+        <title>My Orders</title>
         <link rel="icon" href="./img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="./vendors/fontawesome/css/all.min.css">
@@ -29,9 +29,6 @@
 
 
         <link rel="stylesheet" href="./css/style.css">
-        <script>
-
-        </script>
     </head>
 
     <body>
@@ -97,6 +94,25 @@
                         </table>
                     </div>
                 </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a>
+                        </li>
+
+                        <c:forEach begin="1" end="${page}" var="page">
+                            <li class="page-item">
+                                <a class="page-link" href="myorders?index=${page}">${page}</a>
+                            </li>
+                        </c:forEach>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next" ><span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </section>
         <!--================End Cart Area =================-->
