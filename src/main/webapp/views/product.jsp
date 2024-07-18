@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-xl-9 col-lg-8 col-md-7">
                         <%
-                                String searchText = (String) request.getAttribute("search");
+                            String searchText = (String) request.getAttribute("search");
                         %>
                         <!-- Start Filter Bar -->
                         <div class="filter-bar d-flex flex-wrap align-items-center">
@@ -107,7 +107,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=newest"
@@ -118,8 +118,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ 
+                                        <%
+                                            if ((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -128,7 +128,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=price_asc"
@@ -139,8 +139,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ 
+                                        <%
+                                            if ((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -148,7 +148,7 @@
                                     <option 
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=price_desc"
@@ -159,8 +159,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ 
+                                        <%
+                                            if ((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -172,7 +172,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=newest"
@@ -183,8 +183,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(6)){ 
+                                        <%
+                                            if ((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(6)) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -193,7 +193,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=price_asc"
@@ -204,8 +204,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(12)){ 
+                                        <%
+                                            if ((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(12)) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -234,11 +234,12 @@
                                                 <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
                                                 <ul class="card-product__imgOverlay" style="display: flex">
                                                     <li style="margin-left: 28%"><button><i class="ti-search"></i></button></li>
-<!--                                                    <li><button><i class="ti-shopping-cart"></i></button></li>-->
+                                                    <!--                                                    <li><button><i class="ti-shopping-cart"></i></button></li>-->
                                                     <form action="cartdetails" method="get">                             
                                                         <input type="hidden" name="service" value="addCart">
                                                         <input type="hidden" name="bookId" value="${book.getBook_id()}">
-                                                        <li ><button><i class="ti-shopping-cart"></i></button></li>
+                                                        <c:set var="userId" value="${user.userId}"></c:set>
+                                                        <li ><button type="button" onclick="addToCart('${userId}', ${book.getBook_id()})"><i class="ti-shopping-cart"></i></button></li>
                                                     </form>    
                                                     <li style="margin-left: 5px"><button><i class="ti-heart"></i></button></li>
                                                 </ul>
@@ -281,9 +282,9 @@
                                     <c:if test="${pagetag > 1}">
                                         <a class="page-link"
                                            <%
-                                    
-                                                if(searchText != null && searchText != ""){
-                                   
+
+                                               if (searchText != null && searchText != "") {
+
                                            %>
 
                                            href="search?search=${search}&index=${pagetag - 1}&sort=${param.sort}" aria-label="Previous"
@@ -299,9 +300,9 @@
                                 </li>
 
                                 <%
-                                    
-                                        if(searchText != null && searchText != ""){
-                                   
+
+                                    if (searchText != null && searchText != "") {
+
                                 %>
                                 <c:forEach begin="1" end="${page}" var="page">
                                     <li class="page-item">
@@ -321,9 +322,9 @@
                                         <a class="page-link" 
 
                                            <%
-                                    
-                                                if(searchText != null && searchText != ""){
-                                   
+
+                                               if (searchText != null && searchText != "") {
+
                                            %>
 
                                            href="search?search=${search}&index=${pagetag + 1}&sort=${param.sort}" aria-label="Next"
@@ -332,7 +333,7 @@
 
                                            href="products?categoryid=${param.categoryid}&index=${pagetag + 1}&sort=${param.sort}" aria-label="Next"
 
-                                           <% } %>
+                                           <% }%>
                                            ><span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </c:if>
@@ -491,7 +492,24 @@
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
 
-
+        <script>
+            function addToCart(userId, bookId) {
+                if (userId === "") {
+                    alert("Vui lòng đăng nhập.");
+                    window.location.href = 'login';
+                    return;
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // Handle response from the server if needed
+                        alert("Thêm sáng vào giỏ hàng thành công.");
+                    }
+                };
+                xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId, true);
+                xhr.send();
+            }
+        </script>
 
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>

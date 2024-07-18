@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import models.Slider;
 import java.sql.Statement;
@@ -39,6 +40,51 @@ public class DAOSlider extends DBConnect{
             Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    
+    public int updateSlider(Slider slider) {
+        String sql = "UPDATE `slider` SET `user_id` = ?,`title` = ?,\n"
+                + "`image` = ?,`status` = ?,`description` = ?WHERE `slider_id` = ?;";
+        try (PreparedStatement state = conn.prepareStatement(sql)) {
+            state.setInt(1, slider.getUserId());
+            state.setString(2, slider.getTitle());
+            state.setString(3, slider.getImage());
+            state.setString(4, slider.getStatus());
+            state.setString(5, slider.getDescription());
+            state.setInt(6, slider.getSliderId());
+
+            return state.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Update book error: " + ex);
+        }
+        return 0;
+    }
+
+    public int deleteSlider(int sliderId) {
+        String sql = "DELETE FROM slider WHERE slider_id = ?";
+        try (PreparedStatement state = conn.prepareStatement(sql)) {
+            state.setInt(1, sliderId);
+            return state.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Delete book error: " + ex);
+        }
+        return 0;
+    }
+
+    public int insert(Slider obj) {
+        int n = 0;
+        String sql = "INSERT INTO `slider`\n"
+                + "(`user_id`,`title`,`image`,`status`,`description`)\n"
+                + "VALUES ("+obj.getUserId()+",'"+obj.getTitle()+"','"+obj.getImage()+"','"+obj.getStatus()+"','"+obj.getDescription()+"');";
+        System.out.println(sql);
+        Statement state;
+        try {
+            state = conn.createStatement();
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
     }
     
     public static void main(String[] args) {

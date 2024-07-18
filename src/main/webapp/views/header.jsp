@@ -49,7 +49,7 @@
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="marketing-product">Product</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Slider</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="marketingslider">Slider</a></li>
                                     <li class="nav-item"><a class="nav-link" href="managerpost">Post</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Customer</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>

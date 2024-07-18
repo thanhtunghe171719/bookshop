@@ -14,7 +14,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Aroma Shop - Cart</title>
+        <title>Cart</title>
         <link rel="icon" href="./img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="./vendors/fontawesome/css/all.min.css">
@@ -64,10 +64,10 @@
         <!--================ End Progress Bar ================-->
 
         <!--================Cart Area =================-->
-
         <section class="cart_area">
             <div class="container">
                 <div class="cart_inner">
+                    <h2>Chi Tiết Giỏ Hàng</h2>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -129,9 +129,21 @@
                                 </c:forEach>
                             </c:if>
 
+                            <c:if test="${empty cartItemBookMap}">
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="3">
+                                        <h4 class="text-danger">Giỏ hàng hiện tại của bạn đang trống</h4>
+                                    </td>
+                                </tr>
+                            </c:if>
+
                             <tr class="bottom_button">
-                                <td colspan="4"> 
-                                    <a class="button" href="cartdetails">Cập Nhật Giỏ Hàng</a>
+                                <td colspan="3"> 
+                                    <a class="button" href="cartdetails?service=reloadCart&action=reload"">Cập Nhật Giỏ Hàng</a>
+                                </td>
+                                <td colspan="2">
+                                    <h5 class="text-danger">${errorMessage}</h5>
                                 </td>
                                 <!--                              <td>
                                                                   <div class="cupon_text d-flex align-items-center">
@@ -165,10 +177,7 @@
                                     <div class="checkout_btn_inner d-flex align-items-center" style="float: right">
                                         <a class="gray_btn" href="products">Tiếp Tục Mua Sắm</a>
                                         <c:if test="${not empty cartItemBookMap}">
-                                            <a class="primary-btn ml-2" href="cartcontact">Mua Hàng</a>
-                                        </c:if>
-                                        <c:if test="${empty cartItemBookMap}">
-                                            <p style="color: red;padding: 10px;margin: 0;">Giỏ hàng hiện tại của bạn đang trống</p>
+                                            <a class="primary-btn ml-2" href="cartdetails?service=reloadCart&action=checkOut">Mua Hàng</a>
                                         </c:if>
                                     </div>
                                 </td>
@@ -266,31 +275,49 @@
             function updateSubtotal() {
                 var totalAll = 0;
                 var totalPriceElements = document.querySelectorAll('[id^="total-price-"]');
+                                                                                       
                 totalPriceElements.forEach(function (element) {
                     var priceText = element.innerText.replace(" đ", "").replace(/\./g, '').replace(',', '.');
                     var price = parseFloat(priceText);
                     totalAll += price;
                 });
+                if (!Number.isInteger(totalAll)) {
+                    totalAll *= 1000;
+                }
                 document.getElementById('total-all').innerText = formatNumber(totalAll, 3, 3) + " đ";
             }
 
             function formatNumber(value, minFractionDigits, maxFractionDigits) {
-                return parseFloat(value).toFixed(Math.max(minFractionDigits, maxFractionDigits))
-                        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
-                        .replace('.', ',');
+                // Chuyển đổi giá trị thành chuỗi số và làm tròn số
+                var numString = (parseFloat(value)).toFixed(Math.max(minFractionDigits, maxFractionDigits)).toString();
+
+                // Đảo ngược chuỗi để dễ dàng thêm dấu phẩy
+                numString = numString.split('').reverse().join('');
+
+                // Thêm dấu phẩy sau mỗi 3 chữ số
+                var formatted = numString.match(/\d{1,3}/g).join(',').split('').reverse().join('');
+
+                return formatted;
             }
-    //function formatCurrency(amount) {
-    //    // Làm tròn số và chuyển đổi thành chuỗi
-    //    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
-    //
-    //    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
-    //    var stringFormattedAmount = formattedAmount.toFixed(2);
-    //
-    //    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
-    //    stringFormattedAmount = stringFormattedAmount + " đ";
-    //
-    //    return stringFormattedAmount;
-    //}
+
+
+//            function formatNumber(value, minFractionDigits, maxFractionDigits) {
+//                return parseFloat(value).toFixed(Math.max(minFractionDigits, maxFractionDigits))
+//                        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+//                        .replace('.', ',');
+//            }
+            //function formatCurrency(amount) {
+            //    // Làm tròn số và chuyển đổi thành chuỗi
+            //    var formattedAmount = Math.round(amount * 1000); // Làm tròn số
+            //
+            //    // Sử dụng toFixed(2) để làm tròn số đến 2 chữ số thập phân và chuyển đổi thành chuỗi
+            //    var stringFormattedAmount = formattedAmount.toFixed(2);
+            //
+            //    // Sử dụng regex để thêm dấu phân cách hàng nghìn và đơn vị tiền tệ " đ"
+            //    stringFormattedAmount = stringFormattedAmount + " đ";
+            //
+            //    return stringFormattedAmount;
+            //}
 
 
 

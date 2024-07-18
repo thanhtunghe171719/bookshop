@@ -85,6 +85,7 @@ public class DAOUsers extends DBConnect {
                             rs.getString("address"),
                             rs.getTimestamp("create_at"),
                             rs.getTimestamp("updated_at")
+
                     );
                 }
             }
@@ -217,7 +218,7 @@ public class DAOUsers extends DBConnect {
                 String address = rs.getString("address");
                 Timestamp createAt = rs.getTimestamp("create_At");
                 Timestamp updatedAt = rs.getTimestamp("updated_At");
-
+                
                 User c = new User(userId, email, phone, password, roleId, fullname, gender, image, address, createAt, updatedAt);
                 list.add(c);
             }

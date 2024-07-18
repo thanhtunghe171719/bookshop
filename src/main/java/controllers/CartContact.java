@@ -5,6 +5,7 @@
 
 package controllers;
 
+import dal.DAOShipInfor;
 import dal.DAOUsers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -14,9 +15,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Map;
 import models.Book;
 import models.CartItems;
+import models.ShippingInformations;
 import models.User;
 
 /**
@@ -38,6 +41,7 @@ public class CartContact extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         
+        DAOShipInfor daoShipInfor = new DAOShipInfor();
 //        DAOUsers daoUsers = new DAOUsers();
         
         User user = (User) session.getAttribute("user");
@@ -58,6 +62,18 @@ public class CartContact extends HttpServlet {
                 // If cartItemBookMap is null, redirect to the cartdetails page to ensure it's set
                 response.sendRedirect("cartdetails");
                 return;
+            }
+            
+            //
+            ArrayList<ShippingInformations> listShipInfor = new ArrayList<>();
+            
+            String service = request.getParameter("service");
+            if(service == null){
+                service = "listAll";
+            }
+            if(service.equals("listAll")){
+                listShipInfor = daoShipInfor.getAll("select * from shipping_info where user_id ="+user.getUserId());
+                session.setAttribute("listShipInfor", listShipInfor);
             }
 
             RequestDispatcher dispth = request.getRequestDispatcher("./views/cartcontact.jsp");

@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import models.Cart;
+import models.users;
 
 /**
  *
@@ -40,6 +41,7 @@ public class RegisterController extends HttpServlet {
         String password = request.getParameter("password");
         String phone = request.getParameter("phone");
         String fullname = request.getParameter("fullname");
+        String gender = request.getParameter("gender");
         String address = request.getParameter("address");
         
         // Check if username already exists
@@ -57,6 +59,7 @@ public class RegisterController extends HttpServlet {
         newUser.setPhone(phone);
         newUser.setRoleId(4); 
         newUser.setFullname(fullname);
+        newUser.setGender(gender);
         newUser.setAddress(address);
        
         // Add the new user to the database
@@ -69,12 +72,12 @@ public class RegisterController extends HttpServlet {
             User user = userDAO.getUserByUsername(email);
             cart.setUserId(user.getUserId());
             dao.insert(cart); 
-            request.setAttribute("error", "Register Success!"); 
+            request.setAttribute("errorMessage", "Đăng ký thành công. Vui lòng đăng nhập."); 
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);
             //response.sendRedirect("login");
         } else {
             // Registration failed
-            request.setAttribute("errorMessage", "Registration failed. Please try again later.");
+            request.setAttribute("errorMessage", "Đăng ký thất bại. Vui lòng thử lại.");
             request.getRequestDispatcher("./views/register.jsp").forward(request, response);
         }
     }
