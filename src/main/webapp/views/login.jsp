@@ -98,38 +98,47 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
         <script>
-                                            function validateForm() {
-                                                let isValid = true;
+                                        function validateForm() {
+                                            let isValid = true;
 
-                                                let email = document.getElementById('email').value;
-                                                let password = document.getElementById('password').value;
+                                            let email = document.getElementById('email').value;
+                                            let password = document.getElementById('password').value;
 
-                                                document.getElementById('emailError').innerText = '';
-                                                document.getElementById('passwordError').innerText = '';
+                                            document.getElementById('emailError').innerText = '';
+                                            document.getElementById('passwordError').innerText = '';
 
-                                                if (!email) {
-                                                    document.getElementById('emailError').innerText = 'Email không được để trống';
-                                                    isValid = false;
-                                                } else
-                                                if (!/\S+@\S+\.\S+/.test(email)) {
-                                                    document.getElementById('emailError').innerText = 'Email không đúng định dạng';
-                                                    isValid = false;
-                                                }
-                                                if (!password) {
-                                                    document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
-                                                    isValid = false;
-                                                } else if (password.length < 8) {
-                                                    document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
-                                                    isValid = false;
-                                                } else if (!/[A-Za-z]/.test(password)) {
-                                                    document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
-                                                    isValid = false;
-                                                } else if (!/\d/.test(password)) {
-                                                    document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
-                                                    isValid = false;
-                                                }
-                                                return isValid;
+                                            if (!email) {
+                                                document.getElementById('emailError').innerText = 'Email không được để trống';
+                                                isValid = false;
+                                            } else
+                                            if (!/\S+@\S+\.\S+/.test(email)) {
+                                                document.getElementById('emailError').innerText = 'Email không đúng định dạng';
+                                                isValid = false;
                                             }
+                                            if (!password) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
+                                                isValid = false;
+                                            } else if (password.length < 8) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
+                                                isValid = false;
+                                            } else if (password.length > 20) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu không được quá 20 ký tự';
+                                                isValid = false;
+                                            } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt';
+                                                isValid = false;
+                                            } else if (!/[A-Za-z]/.test(password)) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
+                                                isValid = false;
+                                            } else if (!/\d/.test(password)) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
+                                                isValid = false;
+                                            } else if (/\s/.test(password)) {
+                                                document.getElementById('passwordError').innerText = 'Mật khẩu không được chứa khoảng trắng';
+                                                isValid = false;
+                                            }
+                                            return isValid;
+                                        }
         </script>
     </body>
 </html>
