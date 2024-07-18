@@ -4,6 +4,8 @@
  */
 package dal;
 
+import static com.mysql.cj.conf.PropertyKey.logger;
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.Statement;
@@ -15,7 +17,6 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import models.User;
-import models.users;
 
 public class DAOUsers extends DBConnect {
 
@@ -32,7 +33,7 @@ public class DAOUsers extends DBConnect {
 //        }
 //        return vector;
 //    }
-    public int changePassWord(users obj) {
+    public int changePassWord(User obj) {
         int n = 0;
 
         String sql = "UPDATE `checksql`.`users`\n"
@@ -85,7 +86,8 @@ public class DAOUsers extends DBConnect {
                             rs.getString("address"),
                             rs.getTimestamp("create_at"),
                             rs.getTimestamp("updated_at"),
-                            rs.getString("status")
+                            rs.getString("status"),
+                            rs.getString("deleted")
                     );
                 }
             }
@@ -108,7 +110,8 @@ public class DAOUsers extends DBConnect {
                 rs.getString("address"),
                 rs.getTimestamp("create_at"),
                 rs.getTimestamp("updated_at"),
-                rs.getString("status")
+                rs.getString("status"),
+                rs.getString("deleted")
         );
     }
 
@@ -147,6 +150,30 @@ public class DAOUsers extends DBConnect {
             ptm.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             ptm.setInt(6, user.getUserId());
             ptm.executeUpdate();
+        }
+    }
+
+    public void updateCustomer(User user) {
+        String sql = "UPDATE users SET fullname=?, gender=?, email=?, phone=?, status=?, updated_at=?, address =? WHERE user_id=?";
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getFullname());
+            preparedStatement.setString(2, user.getGender());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPhone());
+            preparedStatement.setString(5, user.getStatus());
+            preparedStatement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(7, user.getAddress() != null ? user.getAddress() : "");
+            preparedStatement.setInt(8, user.getUserId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Update successful.");
+            } else {
+                System.out.println("Update failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -190,7 +217,7 @@ public class DAOUsers extends DBConnect {
         return null;
     }
 
-    private void setPreparedStatementForUser(PreparedStatement ps, users user) throws SQLException {
+    private void setPreparedStatementForUser(PreparedStatement ps, User user) throws SQLException {
         ps.setString(1, user.getEmail());
         ps.setString(2, user.getPhone());
         ps.setString(3, user.getPassword());
@@ -224,8 +251,8 @@ public class DAOUsers extends DBConnect {
                 Timestamp createAt = rs.getTimestamp("create_At");
                 Timestamp updatedAt = rs.getTimestamp("updated_At");
                 String status = rs.getString("status");
-
-                User c = new User(userId, email, phone, password, roleId, fullname, gender, image, address, createAt, updatedAt, status);
+                String deleted = rs.getString("deleted");
+                User c = new User(userId, email, phone, password, roleId, fullname, gender, address, createAt, updatedAt, image,status, deleted);
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -271,13 +298,251 @@ public class DAOUsers extends DBConnect {
         return n;
     }
 
+    public boolean deleteUser(int userId) {
+        String query = "DELETE FROM users WHERE user_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public void softDeleteUser(int userId) {
+        String sql = "UPDATE users SET deleted = 'yes' WHERE user_id = ?";
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Soft delete successful.");
+            } else {
+                System.out.println("Soft delete failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<User> getActiveUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE deleted = 'no' AND role_id = 2";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("password"),
+                        rs.getInt("role_id"),
+                        rs.getString("fullname"),
+                        rs.getString("gender"),
+                        rs.getString("address"),
+                        rs.getTimestamp("create_at"),
+                        rs.getTimestamp("updated_at"),
+                        rs.getString("image"),
+                        rs.getString("status"),
+                        rs.getString("deleted")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public List<User> searchUsersByName(String name) {
+
+        String sql = "SELECT * FROM Users WHERE fullname LIKE ? LIMIT ?, ?";
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + name + "%");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(new User(rs.getInt("user_id"), rs.getString("fullname"), rs.getString("gender"),
+                        rs.getString("email"), rs.getString("phone"), rs.getString("status")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public List<User> getUsers(int currentPage, int usersPerPage) {
+        int start = (currentPage - 1) * usersPerPage;
+        String sql = "SELECT * FROM Users LIMIT ?, ?";
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, start);
+            ps.setInt(2, usersPerPage);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(new User(rs.getInt("user_id"), rs.getString("fullname"), rs.getString("gender"),
+                        rs.getString("email"), rs.getString("phone"), rs.getString("status")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public int countUsersByName(String name) {
+        String sql = "SELECT COUNT(*) FROM Users WHERE fullname LIKE ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + name + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int countAllUsers() {
+        String sql = "SELECT COUNT(*) FROM Users";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE deleted = 'no'";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int userId = rs.getInt("user_id");
+                String fullname = rs.getString("fullname");
+                String gender = rs.getString("gender");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String status = rs.getString("status");
+                String deleted = rs.getString("deleted");
+
+                if ("no".equals(deleted)) {
+                    User user = new User(userId, fullname, gender, email, phone, status);
+                    users.add(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    //Paging
+    private User extractUserFromResultSet(ResultSet rs) throws SQLException {
+        int userId = rs.getInt("user_id");
+        String fullname = rs.getString("fullname");
+        String gender = rs.getString("gender");
+        String email = rs.getString("email");
+        String phone = rs.getString("phone");
+        String password = rs.getString("password");
+        String address = rs.getString("address");
+        String image = rs.getString("image");
+        String status = rs.getString("status");
+        Timestamp createdAt = rs.getTimestamp("create_at");
+        Timestamp updatedAt = rs.getTimestamp("updated_at");
+
+        User user = new User(userId, fullname, gender, email, phone, status);
+        user.setPassword(password);
+        user.setAddress(address);
+        user.setImage(image);
+        user.setCreateAt(createdAt);
+        user.setUpdatedAt(updatedAt);
+        return user;
+    }
+
+    public List<User> getUsersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder) {
+        String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '2' ORDER BY "
+                + (sortField != null ? sortField : "fullname") + " "
+                + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, pageSize);
+            ps.setInt(2, (pageIndex - 1) * pageSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(extractUserFromResultSet(rs));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
+    }
+
+    public List<User> searchUsersWithPagination(String searchQuery, int pageIndex, int pageSize, String sortField, String sortOrder) {
+        String query = "SELECT * FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2' ORDER BY "
+                + (sortField != null ? sortField : "fullname") + " "
+                + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + searchQuery + "%");
+            ps.setInt(2, pageSize);
+            ps.setInt(3, (pageIndex - 1) * pageSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                users.add(extractUserFromResultSet(rs));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
+    }
+
+    public int getUserCount() {
+        String query = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '2'";
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getUserCountWithSearch(String searchQuery) {
+        String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2'";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + searchQuery + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
 //        Vector<User> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");
 //        for (User user : vector) {
 //            System.out.println(user);
 //        }
-        User user = dao.getUserById(9);
-        System.out.println(user);
+        int userCount = dao.getUserCount();
+        System.out.println("Total Users: " + userCount);
+
+        // Test getUserCountWithSearch method
+        int searchUserCount = dao.getUserCountWithSearch("Nguyễn");
+        System.out.println("Total Users with 'Nguyễn': " + searchUserCount);
     }
 }
