@@ -4,23 +4,26 @@
  */
 package controllers;
 
-import models.*;
-import dal.DAOBooks;
-import dal.FeedbackDAO;
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import models.Order;
+import models.OrderItems;
+import models.User;
 
 /**
  *
- * @author ADMIN
+ * @author HP
  */
-public class DetailServlet extends HttpServlet {
+@WebServlet(name = "HistoryOrderController", urlPatterns = {"/history-order"})
+public class HistoryOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +42,10 @@ public class DetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DetailServlet</title>");
+            out.println("<title>Servlet HistoryOrderController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet HistoryOrderController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,22 +63,45 @@ public class DetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid_raw = request.getParameter("pid");
-        // Chuyển đổi id sản phẩm sang số nguyên
-        int pid = Integer.parseInt(pid_raw);
-        // Khởi tạo DAOProduct để truy vấn dữ liệu
-        DAOBooks daoBooks = new DAOBooks();
-        // Lấy thông tin chi tiết sản phẩm
-        Books book = daoBooks.getBookById(pid);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            String action = request.getParameter("action");
+            if (action == null) {
+                action = "list";
+            }
+            switch (action) {
+                case "view":
+                    viewOrderDetail(request, response, user);
+                    break;
+                default:
+                    listOrders(request, response, user);
+                    break;
+            }
+        } else {
+            response.sendRedirect("login");
+        }
+    }
 
-        // Thêm sản phẩm vào request
-        request.setAttribute("book", book);
-        FeedbackDAO feedbackDao = new FeedbackDAO();
-        List<Feedback> feedbacks = feedbackDao.getFeedbackByProductId(pid);
-        request.setAttribute("feedbacks", feedbacks);
+    private void listOrders(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+        try {
+            OrderDAO orderDao = new OrderDAO();
+            List<Order> orders = orderDao.getAllOrdersByUser(user.getUserId());
+            request.setAttribute("orders", orders);
+            request.getRequestDispatcher("./views/history-order.jsp").forward(request, response);
+        } catch (Exception e) {
+            response.sendRedirect("home");
+        }
+    }
 
-        // Chuyển tiếp request tới trang JSP để hiển thị chi tiết
-        request.getRequestDispatcher("views/productdetail.jsp").forward(request, response);
+    private void viewOrderDetail(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
+        OrderDAO orderDao = new OrderDAO();
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        Order order = orderDao.getOrderById(orderId);
+        List<OrderItems> orderitems = orderDao.getOrderItemsByOrderIdAndUser(orderId);
+        request.setAttribute("orderItems", orderitems);
+        request.setAttribute("order", order);
+        request.getRequestDispatcher("./views/historyOrderDetail.jsp").forward(request, response);
     }
 
     /**

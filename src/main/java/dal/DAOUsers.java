@@ -84,8 +84,8 @@ public class DAOUsers extends DBConnect {
                             rs.getString("image"),
                             rs.getString("address"),
                             rs.getTimestamp("create_at"),
-                            rs.getTimestamp("updated_at")
-
+                            rs.getTimestamp("updated_at"),
+                            rs.getString("status")
                     );
                 }
             }
@@ -107,8 +107,13 @@ public class DAOUsers extends DBConnect {
                 rs.getString("image"),
                 rs.getString("address"),
                 rs.getTimestamp("create_at"),
-                rs.getTimestamp("updated_at")
+                rs.getTimestamp("updated_at"),
+                rs.getString("status")
         );
+    }
+
+    public boolean isAccountActive(User user) {
+        return "active".equalsIgnoreCase(user.getStatus());
     }
 
     public boolean addUser(User user) {
@@ -218,8 +223,9 @@ public class DAOUsers extends DBConnect {
                 String address = rs.getString("address");
                 Timestamp createAt = rs.getTimestamp("create_At");
                 Timestamp updatedAt = rs.getTimestamp("updated_At");
-                
-                User c = new User(userId, email, phone, password, roleId, fullname, gender, image, address, createAt, updatedAt);
+                String status = rs.getString("status");
+
+                User c = new User(userId, email, phone, password, roleId, fullname, gender, image, address, createAt, updatedAt, status);
                 list.add(c);
             }
         } catch (SQLException ex) {

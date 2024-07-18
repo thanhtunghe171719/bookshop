@@ -23,13 +23,9 @@ public class User {
     private String address;
     private Timestamp createAt;
     private Timestamp updatedAt;
-    private int status;
+    private String status;
 
-    public User() {
-
-    }
-
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt) {
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt, String status) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -41,6 +37,11 @@ public class User {
         this.address = address;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
+        this.status = status;
+    }
+
+    public User() {
+
     }
 
     public int getUserId() {
@@ -131,11 +132,11 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
