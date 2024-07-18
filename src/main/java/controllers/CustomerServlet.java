@@ -1,54 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controllers;
 
 import dal.DAOUsers;
-import dal.DBConnect;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
 
-/**
- *
- * @author kobietkolam
- */
 public class CustomerServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private DAOUsers daoUsers;
-    
-      @Override
+    Logger logger = Logger.getLogger(CustomerServlet.class.getName());
+
+    @Override
     public void init() throws ServletException {
         super.init();
         daoUsers = new DAOUsers();
     }
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -61,68 +42,91 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-          List<User> users = daoUsers.getAll("SELECT * FROM users WHERE role_id = 2");
+        String searchQuery = request.getParameter("search");
+        String pageIndexParam = request.getParameter("index");
+        String sortField = request.getParameter("sortField");
+        String sortOrder = request.getParameter("sortOrder");
+
+        // Đặt giá trị mặc định nếu sortField hoặc sortOrder bị bỏ trống
+        if (sortField == null || sortField.isEmpty()) {
+            sortField = "fullname";
+        }
+        if (sortOrder == null || sortOrder.isEmpty()) {
+            sortOrder = "asc";
+        }
+
+        int pageIndex = (pageIndexParam == null || pageIndexParam.isEmpty()) ? 1 : Integer.parseInt(pageIndexParam);
+        int pageSize = 5;
+
+        List<User> users;
+        int totalUsers;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            users = daoUsers.searchUsersWithPagination(searchQuery.trim(), pageIndex, pageSize, sortField, sortOrder);
+            totalUsers = daoUsers.getUserCountWithSearch(searchQuery.trim());
+        } else {
+            users = daoUsers.getUsersWithPagination(pageIndex, pageSize, sortField, sortOrder);
+            totalUsers = daoUsers.getUserCount();
+        }
+
+        int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+
         request.setAttribute("users", users);
-        
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", pageIndex);
+        request.setAttribute("searchQuery", searchQuery);
+        request.setAttribute("sortField", sortField);
+        request.setAttribute("sortOrder", sortOrder);
+
         request.getRequestDispatcher("views/customerList.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       String action = request.getParameter("action");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        String action = request.getParameter("action");
 
-        if ("add".equals(action)) {
-            // Handle add customer
-            String fullname = request.getParameter("fullname");
-            String gender = request.getParameter("gender");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            int status = 2; // Assuming role_id 2 is for customers
-
-            User newUser = new User();
-            newUser.setFullname(fullname);
-            newUser.setGender(gender);
-            newUser.setEmail(email);
-            newUser.setPhone(phone);
-            newUser.setRoleId(status);
-
-            daoUsers.addUser(newUser);
-        } else if ("delete".equals(action)) {
-            // Handle delete customer
-            int userId = Integer.parseInt(request.getParameter("user_id"));
-            daoUsers.deleteUser(userId);
+        try {
+            if ("add".equals(action)) {
+                String fullname = request.getParameter("fullname");
+                String gender = request.getParameter("gender");
+                String email = request.getParameter("email");
+                String phone = request.getParameter("phone");
+                String password = request.getParameter("password");
+                User user = new User(fullname, gender, email, password, phone, "Active");
+                user.setRoleId(2);
+                daoUsers.addUser(user);
+                out.print("{\"status\":\"success\"}");
+            } else if ("edit".equals(action)) {
+                int userId = Integer.parseInt(request.getParameter("user_id"));
+                String fullname = request.getParameter("fullname");
+                String gender = request.getParameter("gender");
+                String email = request.getParameter("email");
+                String phone = request.getParameter("phone");
+                String status = request.getParameter("status");
+                User user = new User(userId, fullname, gender, email, phone, status);
+                user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+                daoUsers.updateCustomer(user);
+                out.print("{\"status\":\"success\"}");
+            } else if ("delete".equals(action)) {
+                int userId = Integer.parseInt(request.getParameter("user_id"));
+                daoUsers.softDeleteUser(userId);
+                out.print("{\"status\":\"success\"}");
+            } else {
+                out.print("{\"status\":\"error\",\"message\":\"Invalid action\"}");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.print("{\"status\":\"error\",\"message\":\"" + e.getMessage() + "\"}");
+        } finally {
+            out.flush();
         }
+    }
 
-        response.sendRedirect("customers");
-        }
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    @Override
+    public String getServletInfo() {
+        return "Customer management servlet";
+    }
 }

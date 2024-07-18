@@ -20,14 +20,15 @@ public class User {
     private String fullname;
     private String gender;
     private String address;
-     private Date createAt;
-    private Date updatedAt; 
+    private Timestamp createAt;
+    private Timestamp updatedAt;
     private String image;
     private String status;
+     private String deleted;
     public User() {
     }
 
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Date createAt, Date updatedAt, String image, String status) {
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -39,6 +40,34 @@ public class User {
         this.createAt = createAt;
         this.updatedAt = updatedAt;
         this.image = image;
+        this.status = status;
+        this.deleted = deleted;
+    }
+
+   
+  
+    public User(String fullname, String gender, String email, String phone, String status) {
+       this.fullname = fullname;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+    }
+    public User(int userId, String fullname, String gender, String email, String phone, String status) {
+        this.userId = userId;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+    }
+
+    public User(String fullname, String gender, String email, String password, String phone, String status) {
+       this.fullname = fullname;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
         this.status = status;
     }
 
@@ -106,21 +135,23 @@ public class User {
         this.address = address;
     }
 
-    public Date getCreateAt() {
+    public Timestamp getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
 
-    public Date getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    
 
     public String getImage() {
         return image;
@@ -138,11 +169,20 @@ public class User {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + ", image=" + image + ", status=" + status + '}';
+    public String getDeleted() {
+        return deleted;
     }
 
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + ", image=" + image + ", status=" + status + ", deleted=" + deleted + '}';
+    }
+
+   
     
     
     
