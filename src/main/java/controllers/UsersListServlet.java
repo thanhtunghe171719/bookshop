@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controllers;
 
 import dal.DAOUsers;
@@ -7,18 +11,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
 
-public class CustomerServlet extends HttpServlet {
+public class UsersListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private DAOUsers daoUsers;
-    Logger logger = Logger.getLogger(CustomerServlet.class.getName());
+    Logger logger = Logger.getLogger(UsersListServlet.class.getName());
 
     @Override
     public void init() throws ServletException {
@@ -26,29 +28,15 @@ public class CustomerServlet extends HttpServlet {
         daoUsers = new DAOUsers();
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CustomerServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CustomerServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchQuery = request.getParameter("search");
         String pageIndexParam = request.getParameter("index");
         String sortField = request.getParameter("sortField");
         String sortOrder = request.getParameter("sortOrder");
+        String gender = request.getParameter("gender");
+        String role = request.getParameter("role");
+        String status = request.getParameter("status");
 
-        // Đặt giá trị mặc định nếu sortField hoặc sortOrder bị bỏ trống
         if (sortField == null || sortField.isEmpty()) {
             sortField = "fullname";
         }
@@ -63,11 +51,11 @@ public class CustomerServlet extends HttpServlet {
         int totalUsers;
 
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            users = daoUsers.searchCustomerWithPagination(searchQuery.trim(), pageIndex, pageSize, sortField, sortOrder);
-            totalUsers = daoUsers.getCustomerCountWithSearch(searchQuery.trim());
+            users = daoUsers.searchUsersWithPagination(searchQuery.trim(), pageIndex, pageSize, sortField, sortOrder, gender, role, status);
+            totalUsers = daoUsers.getUserCountWithSearch(searchQuery.trim(), gender, role, status);
         } else {
-            users = daoUsers.getCustomersWithPagination(pageIndex, pageSize, sortField, sortOrder);
-            totalUsers = daoUsers.getCustomerCount();
+            users = daoUsers.getUsersWithPagination(pageIndex, pageSize, sortField, sortOrder, gender, role, status);
+            totalUsers = daoUsers.getUserCount(gender, role, status);
         }
 
         int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
@@ -78,8 +66,11 @@ public class CustomerServlet extends HttpServlet {
         request.setAttribute("searchQuery", searchQuery);
         request.setAttribute("sortField", sortField);
         request.setAttribute("sortOrder", sortOrder);
+        request.setAttribute("gender", gender);
+        request.setAttribute("role", role);
+        request.setAttribute("status", status);
 
-        request.getRequestDispatcher("views/customerList.jsp").forward(request, response);
+        request.getRequestDispatcher("views/userList.jsp").forward(request, response);
     }
 
     @Override
@@ -89,17 +80,7 @@ public class CustomerServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
-            if ("add".equals(action)) {
-                String fullname = request.getParameter("fullname");
-                String gender = request.getParameter("gender");
-                String email = request.getParameter("email");
-                String phone = request.getParameter("phone");
-                String password = request.getParameter("password");
-                User user = new User(fullname, gender, email, password, phone, "Active");
-                user.setRoleId(2);
-                daoUsers.addUser(user);
-                out.print("{\"status\":\"success\"}");
-            } else if ("edit".equals(action)) {
+            if ("edit".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("user_id"));
                 String fullname = request.getParameter("fullname");
                 String gender = request.getParameter("gender");
@@ -127,6 +108,6 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Customer management servlet";
+        return "User management servlet";
     }
 }
