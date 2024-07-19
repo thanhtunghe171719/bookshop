@@ -110,6 +110,18 @@
         <servlet-name>AdminDashboardServlet</servlet-name>
         <servlet-class>controllers.AdminDashboardServlet</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>CustomerServlet</servlet-name>
+        <servlet-class>controllers.CustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsersListServlet</servlet-name>
+        <servlet-class>controllers.UsersListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <servlet-class>controllers.UserDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -209,6 +221,18 @@
     <servlet-mapping>
         <servlet-name>AdminDashboardServlet</servlet-name>
         <url-pattern>/admin_dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerServlet</servlet-name>
+        <url-pattern>/customers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersListServlet</servlet-name>
+        <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <url-pattern>/userDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

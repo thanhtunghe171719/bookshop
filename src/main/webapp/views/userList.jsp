@@ -6,7 +6,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Customer List</title>
+        <title>User List</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/newcss.css">
         <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
@@ -20,30 +20,101 @@
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
-
-
         <style>
+            .body{
+                margin-bottom: 50px;
+            }
             .table{
-                font-size: 12px;
+                font-size: 11px;
+            }
+            .inner-form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                font-size: 15px;
+            }
+            .input-field {
+                position: relative;
+                width: calc(20% - 1rem);
+            }
+            .input-field input, .input-field select, .input-field button {
+                width: 100%;
+                padding: 0.75rem;
+                border: 1px solid #ccc;
+                border-radius: 0.25rem;
+            }
+            .input-field .icon-wrap {
+                position: absolute;
+                top: 50%;
+                left: 0.75rem;
+                transform: translateY(-50%);
+            }
+            .input-field .icon-wrap svg {
+                fill: #888;
+            }
+            .btn-search {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                padding: 0.75rem 1.5rem;
+            }
+            .btn-search:hover {
+                background-color: #0056b3;
+            }
+            fieldset {
+                border: 1px solid #ccc;
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+            legend {
+                padding: 0 0.75rem;
+                font-weight: bold;
             }
         </style>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
         <div class="container">
-            <h2 class="text-center">Customer List</h2>
-            <form action="customers" method="get" class="mb-5">
-                <div class="row">
-                    <div class="col-md-4">
-                        <input type="text" name="search" placeholder="Search by name" class="form-control" value="${param.search}">
+            <h2 class="text-center">User List</h2>
+            <form action="userList" method="get" class="mb-5">
+                <fieldset>
+                    <div class="inner-form">
+                        <div class="input-field first-wrap">
+                           
+                            <input id="search" name="search" type="text" placeholder="Search by name" value="${searchQuery}">
+                        </div>
+                        <div class="input-field second-wrap">
+                           
+                            <select name="gender">
+                                <option value="">All Genders</option>
+                                <option value="Male" <c:if test="${param.gender == 'Male'}">Male</option>
+                                <option value="Female" <c:if test="${param.gender == 'Female'}">Female</option>
+                            </select>
+                        </div>
+                        <div class="input-field third-wrap">
+                           
+                            <select name="role">
+                                <option value="">All Roles</option>
+                                <option value="sale" <c:if test="${param.role == 'sale'}">Sale</option>
+                                <option value="customer" <c:if test="${param.role == 'customer'}">Customer</option>
+                                <option value="Marketing" <c:if test="${param.role == 'Marketing'}">Marketing</option>
+                            </select>
+                        </div>
+                        <div class="input-field fouth-wrap">
+                            
+                            <select name="status">
+                                <option value="">All Statuses</option>
+                                <option value="Active" <c:if test="${param.status == 'Active'}">Active</option>
+                                <option value="Inactive" <c:if test="${param.status == 'Inactive'}">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="input-field fifth-wrap">
+                            <button class="btn-search" type="submit">SEARCH</button>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addUserModal">Add User</button>
-                    </div>
-                </div>
+                </fieldset>
+
             </form>
 
             <div class="table-responsive-md-4">
@@ -61,7 +132,7 @@
                             %>
                             <th>Order</th>
                             <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>"
-                                onclick="window.location.href = 'customers?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                                onclick="window.location.href = 'userList?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
                                 Full Name 
                                 <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter" %>"></i>
                             </th>
@@ -69,15 +140,16 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>" 
-                                onclick="window.location.href = 'customers?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                                onclick="window.location.href = 'userList?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
                                 Create At 
                                 <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter" %>"></i>
                             </th>
                             <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>" 
-                                onclick="window.location.href = 'customers?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                                onclick="window.location.href = 'userList?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
                                 Update At 
                                 <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter" %>"></i>
                             </th>
+                            <th>Role</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -98,6 +170,7 @@
                             <td><%= user.getPhone() %></td>
                             <td><%= user.getCreateAt() %></td> 
                             <td><%= user.getUpdatedAt() %></td> 
+                            <td><%= user.getRoleName() %></td> 
                             <td><%= user.getStatus() %></td> 
                             <td>
                                 <!-- Edit Button -->
@@ -130,7 +203,7 @@
                         } else { 
                         %>
                         <tr>
-                            <td colspan="9" class="text-center">No users available</td>
+                            <td colspan="10" class="text-center">No users available</td>
                         </tr>
                         <% } %>
                     </tbody>
@@ -151,7 +224,7 @@
                         if (currentPage > 1) {
                     %>
                     <li class="page-item">
-                        <a href="customers?index=<%= currentPage - 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Previous">
+                        <a href="userList?index=<%= currentPage - 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Previous">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-left"></span>
                             </span>
@@ -160,12 +233,12 @@
                     <% } %>
                     <% for (int i = 1; i <= totalPages; i++) { %>
                     <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-                        <a href="customers?index=<%= i %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link"><%= i %></a>
+                        <a href="userList?index=<%= i %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link"><%= i %></a>
                     </li>
                     <% } %>
                     <% if (currentPage < totalPages) { %>
                     <li class="page-item">
-                        <a href="customers?index=<%= currentPage + 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Next">
+                        <a href="userList?index=<%= currentPage + 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Next">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-right"></span>
                             </span>
@@ -189,7 +262,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addUserForm" action="customers" method="post">
+                        <form id="addUserForm" action="userList" method="post">
                             <input type="hidden" name="action" value="add">
                             <div class="form-group">
                                 <label for="fullname">Full Name</label>
@@ -291,7 +364,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        <form id="deleteUserForm" action="customers" method="post">
+                        <form id="deleteUserForm" action="userList" method="post">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="user_id" id="deleteUserId">
                             <button type="submit" class="btn btn-danger">Xóa</button>
@@ -313,7 +386,7 @@
                                             e.preventDefault();
 
                                             $.ajax({
-                                                url: 'customers',
+                                                url: 'userList',
                                                 type: 'POST',
                                                 data: $(this).serialize(),
                                                 success: function (response) {

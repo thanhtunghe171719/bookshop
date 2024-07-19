@@ -12,6 +12,7 @@ import java.sql.Timestamp;
  * @author TDG
  */
 public class User {
+
     private int userId;
     private String email;
     private String phone;
@@ -24,8 +25,27 @@ public class User {
     private Timestamp updatedAt;
     private String image;
     private String status;
-     private String deleted;
+    private String deleted;
+    private String roleName;
+
     public User() {
+    }
+
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted, String roleName) {
+        this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.roleId = roleId;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.createAt = createAt;
+        this.updatedAt = updatedAt;
+        this.image = image;
+        this.status = status;
+        this.deleted = deleted;
+        this.roleName = roleName;
     }
 
     public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
@@ -44,15 +64,14 @@ public class User {
         this.deleted = deleted;
     }
 
-   
-  
     public User(String fullname, String gender, String email, String phone, String status) {
-       this.fullname = fullname;
+        this.fullname = fullname;
         this.gender = gender;
         this.email = email;
         this.phone = phone;
         this.status = status;
     }
+
     public User(int userId, String fullname, String gender, String email, String phone, String status) {
         this.userId = userId;
         this.fullname = fullname;
@@ -62,8 +81,18 @@ public class User {
         this.status = status;
     }
 
+    public User(int userId,String fullname,String gender, String email,  String phone, String address, String status,Timestamp updatedAt) {
+        this.userId = userId;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.updatedAt = updatedAt;
+        this.status = status;
+    }
+    
     public User(String fullname, String gender, String email, String password, String phone, String status) {
-       this.fullname = fullname;
+        this.fullname = fullname;
         this.gender = gender;
         this.email = email;
         this.password = password;
@@ -150,6 +179,7 @@ public class User {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
     public String getImage() {
         return image;
     }
@@ -174,13 +204,19 @@ public class User {
         this.deleted = deleted;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + ", image=" + image + ", status=" + status + ", deleted=" + deleted + '}';
+    public String getRoleName() {
+        return roleName;
     }
 
-   
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + ", image=" + image + ", status=" + status + ", deleted=" + deleted + ", roleName=" + roleName + '}';
+    }
+
     
-    
-    
+
 }

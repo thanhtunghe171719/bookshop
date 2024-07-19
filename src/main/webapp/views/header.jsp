@@ -51,7 +51,8 @@
                                     <li class="nav-item"><a class="nav-link" href="marketing-product">Product</a></li>
                                     <li class="nav-item"><a class="nav-link" href="marketingslider">Slider</a></li>
                                     <li class="nav-item"><a class="nav-link" href="managerpost">Post</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Customer</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="customers">Customer</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="userList">User List</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>
                                 </ul>
                             </li> 
@@ -94,9 +95,8 @@
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <%
                             User user = (User) session.getAttribute("user");
-                            if(user==null){
-                            
-                            
+                            if (user == null) {
+
                         %>
                         <!-- Nếu user là null -->
                         <li class="nav-item submenu dropdown">
@@ -107,7 +107,7 @@
                                 <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
                             </ul>
                         </li>
-                        <%}else{%>
+                        <%} else {%>
 
                         <!-- Nếu user không là null -->
                         <li class="nav-item submenu dropdown">
