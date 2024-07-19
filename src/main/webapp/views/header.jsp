@@ -37,9 +37,10 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="#">User</a></li>
                                     <li class="nav-item"><a class="nav-link" href="admin-category">Categories</a></li>
                                     <li class="nav-item"><a class="nav-link" href="admin_dashboard">Dashboard</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="customers">Customer</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="userList">User List</a></li>
                                 </ul>
                             </li>
                         </c:if>
@@ -51,8 +52,7 @@
                                     <li class="nav-item"><a class="nav-link" href="marketing-product">Product</a></li>
                                     <li class="nav-item"><a class="nav-link" href="marketingslider">Slider</a></li>
                                     <li class="nav-item"><a class="nav-link" href="managerpost">Post</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="customers">Customer</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="userList">User List</a></li>
+                                    
                                     <li class="nav-item"><a class="nav-link" href="#">Feedback</a></li>
                                 </ul>
                             </li> 

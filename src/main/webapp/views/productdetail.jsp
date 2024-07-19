@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -73,7 +73,7 @@
                                 <button onclick="var result = document.getElementById('sst'); var sst = result.value; if (!isNaN(sst) & amp; & amp; sst > 0) result.value--; return false;"
                                         class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
                                                                                  <!--<a class="button primary-btn" href="cartdetails?service=addCart&bookId=${book.getBook_id()}">Add to Cart</a>--> 
-                                <a class="button primary-btn" id="addToCartBtn" onclick="addToCart(${book.getBook_id()})">Thêm vào giỏ hàng</a>
+                                <a class="button button--active" id="addToCartBtn" onclick="addToCart(${book.getBook_id()})">Thêm vào giỏ hàng</a>
                             </div>
                             
                         </div>

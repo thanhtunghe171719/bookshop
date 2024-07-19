@@ -21,6 +21,51 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
         <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" href="../error-404.html" type="image/x-icon" />
+        <link
+            rel="shortcut icon"
+            type="image/x-icon"
+            href="assets/images/favicon.png"
+            />
+
+        <!-- PAGE TITLE HERE ============================================= -->
+        <title>EduChamp : Education HTML Template</title>
+
+        <!-- MOBILE SPECIFIC ============================================= -->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!--[if lt IE 9]>
+          <script src="assets/js/html5shiv.min.js"></script>
+          <script src="assets/js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- All PLUGINS CSS ============================================= -->
+        <link rel="stylesheet" type="text/css" href="assets/css/assets.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="assets/vendors/calendar/fullcalendar.css"
+            />
+
+        <!-- TYPOGRAPHY ============================================= -->
+        <link rel="stylesheet" type="text/css" href="assets/css/typography.css" />
+
+        <!-- SHORTCODES ============================================= -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="assets/css/shortcodes/shortcodes.css"
+            />
+
+        <!-- STYLESHEETS ============================================= -->
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/dashboard.css" />
+        <link
+            class="skin"
+            rel="stylesheet"
+            type="text/css"
+            href="assets/css/color/color-1.css"
+            />
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -32,6 +77,7 @@
                     
                 </div>	
                 <!-- Card -->
+                <form action="admin_dashboard" method="post">
                 <c:set var="totalProfit" value="${totalProfit}"/>
                 <c:set var="totalOrders" value="${totalOrders}"/>
                 <c:set var="totalCustomers" value="${totalCustomers}"/>
@@ -40,7 +86,7 @@
                         <div class="widget-card widget-bg1">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Total Frofit
+                                    Total Profit
                                 </h4>
                                 <span class="wc-des">
                                     All Customs Value
@@ -48,16 +94,9 @@
                                 <span class="wc-stats">
                                    <span class="counter">${totalProfit}</span>VND 
                                 </span>		
-                                <div class="progress wc-progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 78%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                
                                 <span class="wc-progress-bx">
-                                    <span class="wc-change">
-                                        Change
-                                    </span>
-                                    <span class="wc-number ml-auto">
-                                        78%
-                                    </span>
+                                   
                                 </span>
                             </div>				      
                         </div>
@@ -74,16 +113,7 @@
                                 <span class="wc-stats counter">
                                     120 
                                 </span>		
-                                <div class="progress wc-progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 88%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span class="wc-progress-bx">
-                                    <span class="wc-change">
-                                        Change
-                                    </span>
-                                    <span class="wc-number ml-auto">
-                                        88%
-                                    </span>
+                                
                                 </span>
                             </div>				      
                         </div>
@@ -100,17 +130,7 @@
                                 <span class="wc-stats counter">
                                      ${totalOrders} 
                                 </span>		
-                                <div class="progress wc-progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span class="wc-progress-bx">
-                                    <span class="wc-change">
-                                        Change
-                                    </span>
-                                    <span class="wc-number ml-auto">
-                                        65%
-                                    </span>
-                                </span>
+                               
                             </div>				      
                         </div>
                     </div>
@@ -126,108 +146,14 @@
                                 <span class="wc-stats counter">
                                     ${totalCustomers}
                                 </span>		
-                                <div class="progress wc-progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span class="wc-progress-bx">
-                                    <span class="wc-change">
-                                        Change
-                                    </span>
-                                    <span class="wc-number ml-auto">
-                                        90%
-                                    </span>
-                                </span>
+                                
                             </div>				      
                         </div>
                     </div>
                 </div>
-                <!-- Card END -->
-                <div class="row">
-                    <!-- Your Profile Views Chart -->
-                    <div class="col-lg-8 m-b30">
-                        <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Your Profile Views</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Your Profile Views Chart END-->
-                    <div class="col-lg-4 m-b30">
-                        <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Notifications</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <div class="noti-box-list">
-                                    <ul>
-                                        <li>
-                                            <span class="notification-icon dashbg-gray">
-                                                <i class="fa fa-check"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <span>Sneha Jogi</span> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 02:14</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-yellow">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <a href="#">Your order is placed</a> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 7 Min</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-red">
-                                                <i class="fa fa-bullhorn"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <span>Your item is shipped</span> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 2 May</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-green">
-                                                <i class="fa fa-comments-o"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <a href="#">Sneha Jogi</a> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 14 July</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-primary">
-                                                <i class="fa fa-file-word-o"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <span>Sneha Jogi</span> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 15 Min</span>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </form>
+                <div class="row">             
+                    <c:forEach var="user" items="${user}">
                     <div class="col-lg-6 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
@@ -238,69 +164,23 @@
                                     <ul>
                                         <li>
                                             <span class="new-users-pic">
-                                                <img src="assets/images/testimonials/pic1.jpg" alt=""/>
+                                                <img src="${user.getImage()}" alt=""/>
                                             </span>
                                             <span class="new-users-text">
-                                                <a href="#" class="new-users-name">Anna Strong </a>
-                                                <span class="new-users-info">Visual Designer,Google Inc </span>
+                                                <a href="#" class="new-users-name">${user.getFullName()} </a>
+                                                <span class="new-users-info">${user.getAddress()} </span>
                                             </span>
                                             <span class="new-users-btn">
-                                                <a href="#" class="btn button-sm outline">Follow</a>
+                                                <a href="#" class="btn button-sm outline">${user.getStatus()}</a>
                                             </span>
-                                        </li>
-                                        <li>
-                                            <span class="new-users-pic">
-                                                <img src="assets/images/testimonials/pic2.jpg" alt=""/>
-                                            </span>
-                                            <span class="new-users-text">
-                                                <a href="#" class="new-users-name"> Milano Esco </a>
-                                                <span class="new-users-info">Product Designer, Apple Inc </span>
-                                            </span>
-                                            <span class="new-users-btn">
-                                                <a href="#" class="btn button-sm outline">Follow</a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="new-users-pic">
-                                                <img src="assets/images/testimonials/pic1.jpg" alt=""/>
-                                            </span>
-                                            <span class="new-users-text">
-                                                <a href="#" class="new-users-name">Nick Bold  </a>
-                                                <span class="new-users-info">Web Developer, Facebook Inc </span>
-                                            </span>
-                                            <span class="new-users-btn">
-                                                <a href="#" class="btn button-sm outline">Follow</a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="new-users-pic">
-                                                <img src="assets/images/testimonials/pic2.jpg" alt=""/>
-                                            </span>
-                                            <span class="new-users-text">
-                                                <a href="#" class="new-users-name">Wiltor Delton </a>
-                                                <span class="new-users-info">Project Manager, Amazon Inc </span>
-                                            </span>
-                                            <span class="new-users-btn">
-                                                <a href="#" class="btn button-sm outline">Follow</a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="new-users-pic">
-                                                <img src="assets/images/testimonials/pic3.jpg" alt=""/>
-                                            </span>
-                                            <span class="new-users-text">
-                                                <a href="#" class="new-users-name">Nick Stone </a>
-                                                <span class="new-users-info">Project Manager, Amazon Inc  </span>
-                                            </span>
-                                            <span class="new-users-btn">
-                                                <a href="#" class="btn button-sm outline">Follow</a>
-                                            </span>
-                                        </li>
+                                        </li>                                       
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </c:forEach>
+                     <c:forEach var="orders" items="${orders}">
                     <div class="col-lg-6 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
@@ -311,66 +191,23 @@
                                     <ul>
                                         <li>
                                             <span class="orders-title">
-                                                <a href="#" class="orders-title-name">Anna Strong </a>
-                                                <span class="orders-info">Order #02357 | Date 12/08/2019</span>
+                                                <a href="#" class="orders-title-name"></a>
+                                                <span class="orders-info">Order ${orders.getOrderStatus()} | Date ${orders.getOrderDate()}</span>
                                             </span>
                                             <span class="orders-btn">
-                                                <a href="#" class="btn button-sm red">Unpaid</a>
+                                                <a href="#" class="btn button-sm red">${orders.getOrderStatus()}</a>
                                             </span>
                                         </li>
-                                        <li>
-                                            <span class="orders-title">
-                                                <a href="#" class="orders-title-name">Revenue</a>
-                                                <span class="orders-info">Order #02357 | Date 12/08/2019</span>
-                                            </span>
-                                            <span class="orders-btn">
-                                                <a href="#" class="btn button-sm red">Unpaid</a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="orders-title">
-                                                <a href="#" class="orders-title-name">Anna Strong </a>
-                                                <span class="orders-info">Order #02357 | Date 12/08/2019</span>
-                                            </span>
-                                            <span class="orders-btn">
-                                                <a href="#" class="btn button-sm green">Paid</a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="orders-title">
-                                                <a href="#" class="orders-title-name">Revenue</a>
-                                                <span class="orders-info">Order #02357 | Date 12/08/2019</span>
-                                            </span>
-                                            <span class="orders-btn">
-                                                <a href="#" class="btn button-sm green">Paid</a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="orders-title">
-                                                <a href="#" class="orders-title-name">Anna Strong </a>
-                                                <span class="orders-info">Order #02357 | Date 12/08/2019</span>
-                                            </span>
-                                            <span class="orders-btn">
-                                                <a href="#" class="btn button-sm green">Paid</a>
-                                            </span>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 m-b30">
-                        <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Basic Calendar</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                            </c:forEach>
+                                    </div>
             </div>
+        
         </main>
         <div class="ttr-overlay"></div>
 
@@ -394,85 +231,7 @@
         <script src='assets/vendors/calendar/moment.min.js'></script>
         <script src='assets/vendors/calendar/fullcalendar.js'></script>
         <script src='assets/vendors/switcher/switcher.js'></script>
-        <script>
-            $(document).ready(function () {
-
-                $('#calendar').fullCalendar({
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay,listWeek'
-                    },
-                    defaultDate: '2019-03-12',
-                    navLinks: true, // can click day/week names to navigate views
-
-                    weekNumbers: true,
-                    weekNumbersWithinDays: true,
-                    weekNumberCalculation: 'ISO',
-
-                    editable: true,
-                    eventLimit: true, // allow "more" link when too many events
-                    events: [
-                        {
-                            title: 'All Day Event',
-                            start: '2019-03-01'
-                        },
-                        {
-                            title: 'Long Event',
-                            start: '2019-03-07',
-                            end: '2019-03-10'
-                        },
-                        {
-                            id: 999,
-                            title: 'Repeating Event',
-                            start: '2019-03-09T16:00:00'
-                        },
-                        {
-                            id: 999,
-                            title: 'Repeating Event',
-                            start: '2019-03-16T16:00:00'
-                        },
-                        {
-                            title: 'Conference',
-                            start: '2019-03-11',
-                            end: '2019-03-13'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2019-03-12T10:30:00',
-                            end: '2019-03-12T12:30:00'
-                        },
-                        {
-                            title: 'Lunch',
-                            start: '2019-03-12T12:00:00'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2019-03-12T14:30:00'
-                        },
-                        {
-                            title: 'Happy Hour',
-                            start: '2019-03-12T17:30:00'
-                        },
-                        {
-                            title: 'Dinner',
-                            start: '2019-03-12T20:00:00'
-                        },
-                        {
-                            title: 'Birthday Party',
-                            start: '2019-03-13T07:00:00'
-                        },
-                        {
-                            title: 'Click for Google',
-                            url: 'http://google.com/',
-                            start: '2019-03-28'
-                        }
-                    ]
-                });
-
-            });
-
-        </script>
+        
         <jsp:include page="footer.jsp"/>
     </body>
 </html>

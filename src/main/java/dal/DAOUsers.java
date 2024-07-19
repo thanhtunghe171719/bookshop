@@ -515,7 +515,7 @@ public class DAOUsers extends DBConnect {
     }
 
     public List<User> getCustomersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder) {
-        String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '2' ORDER BY "
+        String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '4' ORDER BY "
                 + (sortField != null ? sortField : "fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
@@ -533,7 +533,7 @@ public class DAOUsers extends DBConnect {
     }
 
     public List<User> searchCustomerWithPagination(String searchQuery, int pageIndex, int pageSize, String sortField, String sortOrder) {
-        String query = "SELECT * FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2' ORDER BY "
+        String query = "SELECT * FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '4' ORDER BY "
                 + (sortField != null ? sortField : "fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
@@ -552,7 +552,7 @@ public class DAOUsers extends DBConnect {
     }
 
     public int getCustomerCount() {
-        String query = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '2'";
+        String query = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '4'";
         try ( PreparedStatement ps = conn.prepareStatement(query);  ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);
@@ -564,7 +564,7 @@ public class DAOUsers extends DBConnect {
     }
 
     public int getCustomerCountWithSearch(String searchQuery) {
-        String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '2'";
+        String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '4'";
         try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
             ResultSet rs = ps.executeQuery();

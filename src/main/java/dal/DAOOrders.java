@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Items;
+import models.Order;
 import models.Orders;
 
 /**
@@ -181,7 +182,24 @@ public class DAOOrders extends DBConnect {
         }
         return 0;
     }
-
+// public List<Order> selectNewOrders() {
+//        List<Order> orders = new ArrayList<>();
+//        String sql = "SELECT * FROM orders where create_at = ?";
+//        try (
+//             PreparedStatement preparedStatement = conn.prepareStatement(sql);) {
+//            ResultSet rs = preparedStatement.executeQuery();
+//
+//            while (rs.next()) {
+//                int id = rs.getInt("id");
+//                String orderStatus = rs.getString("order_status");
+//                TimeStamp orderDate = rs.getDate("order_date");
+//                orders.add(new Order(id, orderStatus, orderDate));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return orders;
+//    }
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);

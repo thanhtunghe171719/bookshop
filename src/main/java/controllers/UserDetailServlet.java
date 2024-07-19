@@ -78,9 +78,9 @@ public class UserDetailServlet extends HttpServlet {
 
         User user = new User(userId, fullname, gender, email, phone, address);
 
-        String jdbcURL = "jdbc:mysql://localhost:3306/checksql";
+        String jdbcURL = "jdbc:mysql://localhost:3306/bookshop";
         String dbUser = "root";
-        String dbPassword = "12345";
+        String dbPassword = "1234";
 
         String query = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE user_Id = ?";
 
