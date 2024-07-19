@@ -106,6 +106,10 @@
         <servlet-name>ThankYou</servlet-name>
         <servlet-class>controllers.ThankYou</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>controllers.AdminDashboardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -201,6 +205,10 @@
     <servlet-mapping>
         <servlet-name>ThankYou</servlet-name>
         <url-pattern>/thankyou</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin_dashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

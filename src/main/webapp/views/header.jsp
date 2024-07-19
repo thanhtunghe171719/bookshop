@@ -39,7 +39,7 @@
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="#">User</a></li>
                                     <li class="nav-item"><a class="nav-link" href="admin-category">Categories</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="admin-dashboard">Dashboard</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="admin_dashboard">Dashboard</a></li>
                                 </ul>
                             </li>
                         </c:if>

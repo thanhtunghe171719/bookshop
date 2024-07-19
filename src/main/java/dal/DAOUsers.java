@@ -81,12 +81,13 @@ public class DAOUsers extends DBConnect {
                             rs.getString("password"),
                             rs.getInt("role_id"),
                             rs.getString("fullname"),
-                            rs.getString("gender"),
-                            rs.getString("image"),
+                            rs.getString("gender"),                          
                             rs.getString("address"),
                             rs.getTimestamp("create_at"),
                             rs.getTimestamp("updated_at"),
+                            rs.getString("image"),
                             rs.getString("status"),
+                            
                             rs.getString("deleted")
                     );
                 }
@@ -97,28 +98,12 @@ public class DAOUsers extends DBConnect {
         return null;
     }
 
-    private User mapResultSetToUser(ResultSet rs) throws SQLException {
-        return new User(
-                rs.getInt("user_id"),
-                rs.getString("email"),
-                rs.getString("phone"),
-                rs.getString("password"),
-                rs.getInt("role_id"),
-                rs.getString("fullname"),
-                rs.getString("gender"),
-                rs.getString("image"),
-                rs.getString("address"),
-                rs.getTimestamp("create_at"),
-                rs.getTimestamp("updated_at"),
-                rs.getString("status"),
-                rs.getString("deleted")
-        );
-    }
+    
 
     public boolean isAccountActive(User user) {
         return "active".equalsIgnoreCase(user.getStatus());
     }
-
+    
     public boolean addUser(User user) {
 
         String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -208,7 +193,23 @@ public class DAOUsers extends DBConnect {
             pre.setInt(1, userId);
             try (ResultSet rs = pre.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUser(rs);
+                    return new User(
+                            rs.getInt("user_id"),
+                            rs.getString("email"),
+                            rs.getString("phone"),
+                            rs.getString("password"),
+                            rs.getInt("role_id"),
+                            rs.getString("fullname"),
+                            rs.getString("gender"),
+                            
+                            rs.getString("address"),
+                            rs.getTimestamp("create_at"),
+                            rs.getTimestamp("updated_at"),
+                            rs.getString("image"),
+                            rs.getString("status"),
+                            
+                            rs.getString("deleted")
+                    );
                 }
             }
         } catch (SQLException ex) {
@@ -531,7 +532,20 @@ public class DAOUsers extends DBConnect {
         }
         return 0;
     }
-
+    public int getCustomerCount() {
+        int customerCount = 0;
+        String sql = "SELECT COUNT(*) as totalCustomers FROM Users WHERE role_id = 4 ";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                customerCount = rs.getInt("totalCustomers");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerCount;
+    }
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
 //        Vector<User> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");

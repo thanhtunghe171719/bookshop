@@ -1,23 +1,40 @@
     
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+       <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Admin Dashboard</title>
+        <link rel="icon" href="img/Fevicon.png" type="image/png">
+        <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="vendors/themify-icons/themify-icons.css">
+        <link rel="stylesheet" href="vendors/linericon/style.css">
+        <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
+        <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
+        <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <jsp:include page="header.jsp"/>
         <main class="ttr-wrapper">
+            
             <div class="container-fluid">
                 <div class="db-breadcrumb">
                     <h4 class="breadcrumb-title">Dashboard</h4>
-                    <ul class="db-breadcrumb-list">
-                        <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
-                        <li>Dashboard</li>
-                    </ul>
+                    
                 </div>	
                 <!-- Card -->
+                <c:set var="totalProfit" value="${totalProfit}"/>
+                <c:set var="totalOrders" value="${totalOrders}"/>
+                <c:set var="totalCustomers" value="${totalCustomers}"/>
                 <div class="row">
                     <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
                         <div class="widget-card widget-bg1">					 
@@ -29,7 +46,7 @@
                                     All Customs Value
                                 </span>
                                 <span class="wc-stats">
-                                    $<span class="counter">18</span>M 
+                                   <span class="counter">${totalProfit}</span>VND 
                                 </span>		
                                 <div class="progress wc-progress">
                                     <div class="progress-bar" role="progressbar" style="width: 78%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -75,13 +92,13 @@
                         <div class="widget-card widget-bg3">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    New Orders 
+                                    Orders 
                                 </h4>
                                 <span class="wc-des">
                                     Fresh Order Amount 
                                 </span>
                                 <span class="wc-stats counter">
-                                    772 
+                                     ${totalOrders} 
                                 </span>		
                                 <div class="progress wc-progress">
                                     <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -101,13 +118,13 @@
                         <div class="widget-card widget-bg4">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    New Users 
+                                    Customers 
                                 </h4>
                                 <span class="wc-des">
                                     Joined New User
                                 </span>
                                 <span class="wc-stats counter">
-                                    350 
+                                    ${totalCustomers}
                                 </span>		
                                 <div class="progress wc-progress">
                                     <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>

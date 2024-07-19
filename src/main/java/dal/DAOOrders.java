@@ -114,7 +114,35 @@ public class DAOOrders extends DBConnect {
 
         return orderItems;
     }
-
+    public int getOrdersCount() {
+        int totalOrders = 0;
+        String sql = "SELECT COUNT(*) as totalOrders FROM orders";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalOrders = rs.getInt("totalOrders");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalOrders;
+    }
+    public double getTotalProfit() {
+        double totalProfit = 0.0;
+        String sql = "SELECT SUM(total) as total FROM orders WHERE order_status_id = 4";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalProfit = rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalProfit;
+    }
+    
     public ArrayList<Orders> getOrdersByID(String id) {
         ArrayList<Orders> list = new ArrayList<>();
         try {

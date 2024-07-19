@@ -117,29 +117,54 @@ public class AuthorizationFilter implements Filter {
                 res.sendRedirect("home");
                 return;
             }
-            if (url.equals("/admin-category")) {
-                // Only allow access to /admin-category for users with roleId 1 (admin)
-                if (user.getRoleId() == 1) {
-                    chain.doFilter(request, response);
-                } else {
-                    res.sendRedirect("error.jsp");
-                }
-            } else if (url.equals("/marketing-product")) {
-                if (user.getRoleId() == 2) {
-                    chain.doFilter(request, response);
-                } else {
-                    res.sendRedirect("error.jsp");
-                }
-            } else if (url.equals("/managerpost")) {
-                if (user.getRoleId() == 2) {
-                    chain.doFilter(request, response);
-                } else {
-                    res.sendRedirect("error.jsp");
-                }
-            } else {
-                // For any other URL, allow access
+                int roleId = user.getRoleId();
+        
+        if (roleId == 1) {
+            // Admin role: only allow access to admin_category and admin_dashboard
+            if (url.equals("/admin-category") || url.equals("/admin-dashboard")) {
                 chain.doFilter(request, response);
+            } else {
+                res.sendRedirect("error.jsp");
             }
+        } else {
+            // Other roles: deny access
+            res.sendRedirect("error.jsp");
+        }
+        if (roleId == 2) {
+            // Admin role: only allow access to admin_category and admin_dashboard
+            if (url.equals("/marketing-product") || url.equals("/managerpost")) {
+                chain.doFilter(request, response);
+            } else {
+                res.sendRedirect("error.jsp");
+            }
+        } else {
+            // Other roles: deny access
+            res.sendRedirect("error.jsp");
+        }
+        
+//            if (url.equals("/admin-category")) {
+//                // Only allow access to /admin-category for users with roleId 1 (admin)
+//                if (user.getRoleId() == 1) {
+//                    chain.doFilter(request, response);
+//                } else {
+//                    res.sendRedirect("error.jsp");
+//                }
+//            } else if (url.equals("/marketing-product")) {
+//                if (user.getRoleId() == 2) {
+//                    chain.doFilter(request, response);
+//                } else {
+//                    res.sendRedirect("error.jsp");
+//                }
+//            } else if (url.equals("/managerpost")) {
+//                if (user.getRoleId() == 2) {
+//                    chain.doFilter(request, response);
+//                } else {
+//                    res.sendRedirect("error.jsp");
+//                }
+//            } else {
+//                // For any other URL, allow access
+//                chain.doFilter(request, response);
+//            }
 
         } else {
             // If the user is not logged in, allow access to login and register pages

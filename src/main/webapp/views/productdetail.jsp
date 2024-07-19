@@ -41,31 +41,41 @@
                         </div>
                     </div>
                     <div class="col-lg-5 offset-lg-1">
+                        <c:set var="originalPrice" value="${book.getPrice()}" />
+                        <c:set var="discount" value="${book.getDiscount()}" />
+                        <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
                         <div class="s_product_text">
                             <h3>${book.getTitle()}</h3>
-                            <h2>${book.getPrice()}</h2>
+                            <h2>
+                                <c:choose>
+                                    <c:when test="${originalPrice eq discountedPrice}">
+                                        <p class="card-productdetail__price">
+                                            <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                        </p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p class="card-productdetail__price">
+                                            <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                        </p>
+                                    </c:otherwise>
+                                </c:choose>
+                            </h2>
                             <ul class="list">
-                                <li><a class="active" href="#"><span>Thể loại</span>${book.getCategory_id()}</a></li>
-                                <li><a href="#"><span>Kho:</span>${book.getStock()}</a></li>
+                                <li><a href="#"><span>Kho: </span>${book.getStock()}</a></li>
                             </ul>
-
                             <div class="product_count">
                                 <label for="qty">Số lượng:</label>
-                                <button onclick="var result = document.getElementById('sst');
-                                        var sst = result.value;
-                                        if (!isNaN(sst))
-                                            result.value++;
-                                        return false;"
+                                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if (!isNaN(sst))
+                          result.value++;
+                      return false;"
                                         class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
                                 <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
                                 <button onclick="var result = document.getElementById('sst'); var sst = result.value; if (!isNaN(sst) & amp; & amp; sst > 0) result.value--; return false;"
                                         class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-                                <a class="button primary-btn" href="cartdetails?service=addCart&bookId=${book.getBook_id()}">Add to Cart</a>               
+                                                                                 <!--<a class="button primary-btn" href="cartdetails?service=addCart&bookId=${book.getBook_id()}">Add to Cart</a>--> 
+                                <a class="button primary-btn" id="addToCartBtn" onclick="addToCart(${book.getBook_id()})">Thêm vào giỏ hàng</a>
                             </div>
-                            <div class="card_area d-flex align-items-center">
-                                <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                                <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -95,9 +105,84 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-
-                    
-                    
+                    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <p>${book.getSummary()}</p>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h5>Mã hàng</h5>
+                                        </td>
+                                        <td>
+                                            <h5>${book.getBook_id()}</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Nhà xuất bản</h5>
+                                        </td>
+                                        <td>
+                                            <h5>${book.getPublishing_house()}</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Tác giả</h5>
+                                        </td>
+                                        <td>
+                                            <h5>${book.getAuthor()}</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Năm Xuất Bản</h5>
+                                        </td>
+                                        <td>
+                                            <h5>${book.getPublished_year()}</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Trọng lượng(gr)</h5>
+                                        </td>
+                                        <td>
+                                            <h5>${book.getWeight()}</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Kích Thước(cm)</h5>
+                                        </td>
+                                        <td>
+                                            <h5>${book.getSize()}</h5>
+                                        </td>
+                                    </tr>
+                                    <!--                                    <tr>
+                                                                            <td>
+                                                                                <h5>Số trang</h5>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h5>Without touch of hand</h5>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h5>Hình thức</h5>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h5>60pcs</h5>
+                                                                            </td>
+                                                                        </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="tab-content" id="myTabContent">  
                     <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
                         <div class="row">
                             <div class="col-lg-6">
@@ -135,7 +220,7 @@
         <!--================End Product Description Area =================-->
 
         <!--================ Start related Product area =================-->  
-        <section class="related-product-area section-margin--small mt-0">
+<!--        <section class="related-product-area section-margin--small mt-0">
             <div class="container">
                 <div class="section-intro pb-60px">
                     <p>Popular Item in the market</p>
@@ -247,7 +332,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!--================ end related Product area =================-->  	
         <jsp:include page="footer.jsp"/>
 
