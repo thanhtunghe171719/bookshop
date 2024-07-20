@@ -135,6 +135,10 @@
         <servlet-name>Error404</servlet-name>
         <servlet-class>controllers.Error404</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PaymentController</servlet-name>
+        <servlet-class>controllers.PaymentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -258,6 +262,10 @@
     <servlet-mapping>
         <servlet-name>Error404</servlet-name>
         <url-pattern>/error404</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentController</servlet-name>
+        <url-pattern>/payment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

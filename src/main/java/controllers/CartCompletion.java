@@ -90,7 +90,7 @@ public class CartCompletion extends HttpServlet {
                     // Xử lý thanh toán qua ứng dụng ngân hàng
                     request.setAttribute("amount", amount);
 
-                    request.getRequestDispatcher("views/cartcompletion.jsp").forward(request, response);
+                    request.getRequestDispatcher("views/thankyou.jsp").forward(request, response);
                 }
             }
         }

@@ -90,9 +90,9 @@
                                         <span class="current">${user.address}</span>
                                         <ul class="list">
                                             <li data-value="${user.address}" class="option selected focus">${user.address}</li>
-                                            <c:forEach var="shipInfo" items="${listShipInfor}">
+                                                <c:forEach var="shipInfo" items="${listShipInfor}">
                                                 <li data-value="${shipInfo.address}" class="option">${shipInfo.address}</li>
-                                            </c:forEach>
+                                                </c:forEach>
                                         </ul>
                                     </div>
                                 </div>
@@ -103,9 +103,9 @@
                                         <span class="current">${user.phone}</span>
                                         <ul class="list">
                                             <li data-value="${user.phone}" class="option selected focus">${user.phone}</li>
-                                            <c:forEach var="shipInfo" items="${listShipInfor}">
+                                                <c:forEach var="shipInfo" items="${listShipInfor}">
                                                 <li data-value="${shipInfo.address}" class="option">${shipInfo.phone}</li>
-                                            </c:forEach>
+                                                </c:forEach>
                                         </ul>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="order_box">
-                                <form action="cart" method="post">
+                                <form action="payment" method="post">
                                     <div style="display: flex">
                                         <h2 style="flex: 1;border: none">Đơn hàng của bạn</h2>
                                         <a href="cartdetails"><i class="ti-shopping-cart" style="font-size: 20px;"></i></a>
@@ -162,12 +162,16 @@
                                     <br>
                                     <h3>Chọn Phương Thức Thanh Toán</h3>
                                     <div class="payment_item active">
-                                        <div class="radion_btn">
-                                            <input type="radio" id="f-option6" name="paymentMethod" value="Pay with Banking App">
-                                            <label for="f-option6">Thanh toán online</label>
-                                            <div class="check"></div>
-                                        </div>
-                                        <p>Sử dụng app ngân hàng</p>
+                                        <input type="radio" id="f-option5" name="paymentMethod" value="International card">
+                                        <label for="f-option5">Thanh toán bằng thẻ quốc tế</label>
+                                        <div class="check"></div>
+                                        <p>Sử dụng thẻ quốc tế</p>
+
+                                        <input type="radio" id="f-option6" name="paymentMethod" value="Pay with Banking App">
+                                        <label for="f-option6">Thanh toán bằng thẻ/tài khoản</label>
+                                        <div class="check"></div>
+                                        <p>Sử dụng thẻ/tài khoản nội địa</p>
+
                                     </div>
 
                                     <input type="hidden" name="subTotal" value="${subTotal}" />
