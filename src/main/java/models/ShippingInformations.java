@@ -15,19 +15,29 @@ public class ShippingInformations {
     private int userId;
     private String phone;
     private String address;
+    private int action;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
     public ShippingInformations() {
     }
 
-    public ShippingInformations(int shippingId, int userId, String phone, String address, Timestamp createdAt, Timestamp updatedAt) {
+    public ShippingInformations(int shippingId, int userId, String phone, String address, int action, Timestamp createdAt, Timestamp updatedAt) {
         this.shippingId = shippingId;
         this.userId = userId;
         this.phone = phone;
         this.address = address;
+        this.action = action;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
     }
 
     public int getShippingId() {
@@ -80,7 +90,7 @@ public class ShippingInformations {
 
     @Override
     public String toString() {
-        return "shipping_info{" + "shippingId=" + shippingId + ", userId=" + userId + ", phone=" + phone + ", address=" + address + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+        return "shipping_info{" + "shippingId=" + shippingId + ", userId=" + userId + ", phone=" + phone + ", address=" + address + ", action=" +action+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
     }
     
     
