@@ -50,14 +50,74 @@ public class DAOOrders extends DBConnect {
                     + "    CASE WHEN rn = 1 THEN total ELSE '' END as total,\n"
                     + "    CASE WHEN rn = 1 THEN order_status ELSE '' END as order_status\n"
                     + "FROM OrderDetails\n"
-                    + "ORDER BY order_date DESC\n"
+                    + "ORDER BY order_date DESC\n" // Keep orders sorted by date
                     + "LIMIT 2 OFFSET ?;";
+
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, cartID);
             statement.setInt(2, (index - 1) * 2);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
+                int orderID = rs.getInt("order_id");
+                Timestamp orderDate = rs.getTimestamp("order_date");
+                double total = rs.getDouble("total");
+                String status = rs.getString("order_status");
 
+                Orders o = new Orders(orderID, orderDate, total, status);
+                List<Items> items = getOrderItemsForOrder(orderID);
+                o.setOrderItems(items);
+                list.add(o);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public ArrayList<Orders> getOrdersByStatus(int cartID, int index, String statusFilter) {
+        ArrayList<Orders> list = new ArrayList<>();
+        try {
+            // Validate status filter
+            String statusCondition = "";
+            if (!statusFilter.equals("all")) {
+                statusCondition = "AND ot.order_status = ?";
+            }
+
+            String sql = "WITH OrderDetails AS (\n"
+                    + "    SELECT \n"
+                    + "        o.order_id, \n"
+                    + "        o.order_date, \n"
+                    + "        b.title, \n"
+                    + "        oi.quantity, \n"
+                    + "        o.total, \n"
+                    + "        ot.order_status,\n"
+                    + "        ROW_NUMBER() OVER (PARTITION BY o.order_id ORDER BY b.title) as rn\n"
+                    + "    FROM orders o\n"
+                    + "    JOIN order_items oi on oi.order_id = o.order_id\n"
+                    + "    JOIN books b on oi.book_id = b.book_id\n"
+                    + "    JOIN order_status ot on o.order_status_id = ot.order_status_id\n"
+                    + "    WHERE o.cart_id = ? " + statusCondition + "\n"
+                    + ")\n"
+                    + "SELECT\n"
+                    + "    CASE WHEN rn = 1 THEN order_id ELSE '' END as order_id,\n"
+                    + "    CASE WHEN rn = 1 THEN order_date ELSE '' END as order_date,\n"
+                    + "    title,\n"
+                    + "    quantity,\n"
+                    + "    CASE WHEN rn = 1 THEN total ELSE '' END as total,\n"
+                    + "    CASE WHEN rn = 1 THEN order_status ELSE '' END as order_status\n"
+                    + "FROM OrderDetails\n"
+                    + "ORDER BY order_date DESC\n" // Keep orders sorted by date
+                    + "LIMIT 2 OFFSET ?;";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, cartID);
+            int paramIndex = 2;
+            if (!statusFilter.equals("all")) {
+                statement.setString(paramIndex++, statusFilter);
+            }
+            statement.setInt(paramIndex, (index - 1) * 2);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
                 int orderID = rs.getInt("order_id");
                 Timestamp orderDate = rs.getTimestamp("order_date");
                 double total = rs.getDouble("total");
@@ -88,6 +148,25 @@ public class DAOOrders extends DBConnect {
         return 0;
     }
 
+    // Add this method to your DAOOrders class
+    public int getOrderCountByStatus(String status) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM orders o "
+                + "JOIN order_status os ON o.order_status_id = os.order_status_id "
+                + "WHERE os.order_status = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
     public ArrayList<Items> getOrderItemsForOrder(int orderId) {
         ArrayList<Items> orderItems = new ArrayList<>();
 
@@ -115,6 +194,7 @@ public class DAOOrders extends DBConnect {
 
         return orderItems;
     }
+
     public int getOrdersCount() {
         int totalOrders = 0;
         String sql = "SELECT COUNT(*) as totalOrders FROM orders";
@@ -129,6 +209,7 @@ public class DAOOrders extends DBConnect {
         }
         return totalOrders;
     }
+
     public double getTotalProfit() {
         double totalProfit = 0.0;
         String sql = "SELECT SUM(total) as total FROM orders WHERE order_status_id = 4";
@@ -143,7 +224,7 @@ public class DAOOrders extends DBConnect {
         }
         return totalProfit;
     }
-    
+
     public ArrayList<Orders> getOrdersByID(String id) {
         ArrayList<Orders> list = new ArrayList<>();
         try {
@@ -200,11 +281,14 @@ public class DAOOrders extends DBConnect {
 //        }
 //        return orders;
 //    }
+
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);
 //        int cancel = order.cancelOrder(2);
-          int count = order.getOrderCount();
-        System.out.println(count);
+//        int count = order.getOrderCountByStatus("Canceled");
+//        ArrayList<Orders> o = order.getOrders(1, 1, "Pending");
+        ArrayList<Orders> o = order.getOrders(1, 1);
+        System.out.println(o);
     }
 }

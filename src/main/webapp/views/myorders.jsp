@@ -36,10 +36,25 @@
         <jsp:include page="header.jsp"/>
         <!--================ End Header Menu Area =================-->
 
-        <!--================Cart Area =================-->
+        <!--================Orders Area =================-->
 
         <section class="cart_area">
             <div class="container">
+                <!-- Start Filter Bar -->
+                <div class="filter-bar d-flex flex-wrap align-items-center justify-content-around mt-4 mb-4">
+                    <a href="myorders?index=1" class="nav-item">Tất cả</a>
+
+                    <a href="myorders?index=1&status=Pending" class="nav-item">Đang chờ</a>
+
+                    <a href="myorders?index=1&status=Processing" class="nav-item">Đang xử lý</a>
+
+                    <a href="myorders?index=1&status=Shipped" class="nav-item">Chờ giao hàng</a>
+
+                    <a href="myorders?index=1&status=Delivered" class="nav-item">Hoàn thành</a>
+
+                    <a href="myorders?index=1&status=Canceled" class="nav-item">Đã Huỷ</a>
+                </div>
+                <!-- End Filter Bar -->
                 <div class="cart_inner">
                     <div class="table-responsive">
                         <table class="table">
@@ -98,25 +113,27 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a>
+                            <c:if test="${pagetag > 1}">
+                                <a class="page-link" href="myorders?index=${pagetag - 1}<c:if test='${param.status != null}'>&status=${param.status}</c:if>" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a>
+                            </c:if>
                         </li>
 
                         <c:forEach begin="1" end="${page}" var="page">
-                            <li class="page-item">
-                                <a class="page-link" href="myorders?index=${page}">${page}</a>
-                            </li>
+                            <li class="page-item <c:if test='${pagetag == page}'>active</c:if>">
+                                <a class="page-link" href="myorders?index=${page}<c:if test='${param.status != null}'>&status=${param.status}</c:if>">${page}</a>
+                                </li>
                         </c:forEach>
 
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next" ><span aria-hidden="true">&raquo;</span>
-                            </a>
+                            <c:if test="${pagetag < page}">
+                                <a class="page-link" href="myorders?index=${pagetag + 1}<c:if test='${param.status != null}'>&status=${param.status}</c:if>" aria-label="Next" ><span aria-hidden="true">&raquo;</span></a>
+                            </c:if>
                         </li>
                     </ul>
                 </nav>
             </div>
         </section>
-        <!--================End Cart Area =================-->
-
+        <!--================End Orders Area =================-->
 
 
         <!--================ Start footer Area  =================-->	
