@@ -5,6 +5,7 @@
 package dal;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -43,6 +44,20 @@ public class DAOPosts extends DBConnect{
             Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public int getPostsCount() {
+        int totalPosts = 0;
+        String sql = "SELECT COUNT(*) as totalPosts FROM posts";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalPosts = rs.getInt("totalPosts");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalPosts;
     }
     public static void main(String[] args) {
         DAOPosts dao = new DAOPosts();

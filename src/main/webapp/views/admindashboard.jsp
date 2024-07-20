@@ -20,7 +20,22 @@
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Login</title>
+        <link rel="icon" href="img/Fevicon.png" type="image/png">
+        <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="vendors/themify-icons/themify-icons.css">
+        <link rel="stylesheet" href="vendors/linericon/style.css">
+        <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
+        <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
+        <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="icon" href="../error-404.html" type="image/x-icon" />
         <link
@@ -68,15 +83,8 @@
             href="assets/css/color/color-1.css"
             />
     </head>
-    <body>
-        <div class="fixed-container">
-            <header>
+    <body>      
                 <jsp:include page="header.jsp"/>
-            </header>
-        <nav class="ttr-sidebar">
-        <jsp:include page="navbar.jsp"/>
-        </nav>
-</div>
         
         <main class="ttr-wrapper">
             
