@@ -41,7 +41,7 @@
         <section class="cart_area">
             <div class="container">
                 <!-- Start Filter Bar -->
-                <div class="filter-bar d-flex flex-wrap align-items-center justify-content-around mt-4 mb-4">
+                <div class="filter-bar d-flex flex-wrap align-items-center justify-content-around mt-4 mb-4 pt-3 pb-3">
                     <a href="myorders?index=1" class="nav-item">Tất cả</a>
 
                     <a href="myorders?index=1&status=Pending" class="nav-item">Đang chờ</a>
@@ -239,8 +239,27 @@
 
         </script>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the current URL parameters
+                const params = new URLSearchParams(window.location.search);
+                const status = params.get('status');
 
+                // Get all <a> elements within the filter bar
+                const links = document.querySelectorAll('.filter-bar .nav-item');
 
+                // Loop through all links and add the class to the selected one
+                links.forEach(link => {
+                    // Extract the status from the href attribute
+                    const href = new URL(link.href);
+                    const linkStatus = href.searchParams.get('status');
+
+                    if (status === linkStatus) {
+                        link.classList.add('active-category');
+                    }
+                });
+            });
+        </script>
 
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
