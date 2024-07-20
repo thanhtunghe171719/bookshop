@@ -1,6 +1,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -68,7 +69,15 @@
             />
     </head>
     <body>
-        <jsp:include page="header.jsp"/>
+        <div class="fixed-container">
+            <header>
+                <jsp:include page="header.jsp"/>
+            </header>
+        <nav class="ttr-sidebar">
+        <jsp:include page="navbar.jsp"/>
+        </nav>
+</div>
+        
         <main class="ttr-wrapper">
             
             <div class="container-fluid">
@@ -85,15 +94,17 @@
                         <div class="widget-card widget-bg1">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                  Doanh thu
+                                  Total Profit
                                 </h4>
                                 <span class="wc-des">
                                     All Customs Value
                                 </span>
                                 <span class="wc-stats">
-                                   <span class="counter">${totalProfit}</span>VND 
-                                </span>		
-                                
+                                   <span class="counter">
+                                       <fmt:formatNumber value="${totalProfit}" type="number" minFractionDigits="3" maxFractionDigits="3" />
+                                   </span>
+                                   VND 
+                                </span>		      
                                 <span class="wc-progress-bx">
                                    
                                 </span>
@@ -121,7 +132,7 @@
                         <div class="widget-card widget-bg3">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Đơn đặt hàng mới  
+                                   New Orders
                                 </h4>
                                 <span class="wc-des">
                                     Fresh Order Amount 
@@ -137,7 +148,7 @@
                         <div class="widget-card widget-bg4">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Customers 
+                                    New Customers 
                                 </h4>
                                 <span class="wc-des">
                                     Joined New User
@@ -151,62 +162,22 @@
                     </div>
                 </div>
                 </form>
-                <div class="row">             
-                    <c:forEach var="user" items="${newUsers}">
-                    <div class="col-lg-6 m-b30">
+                                <div class="row">
+                    <!-- Your Profile Views Chart -->
+                    <div class="col-lg-8 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
-                                <h4>New Users</h4>
+                                <h4>Total Orders</h4>
                             </div>
                             <div class="widget-inner">
-                                <div class="new-user-list">
-                                    <ul>
-                                        <li>
-                                            <span class="new-users-pic">
-                                                <img src="${user.getImage()}" alt="${user.getName()}"/>
-                                            </span>
-                                            <span class="new-users-text">
-                                                <a href="#" class="new-users-name">${user.getFullName()} </a>
-                                                <span class="new-users-info">${user.getAddress()} </span>
-                                            </span>
-                                            <span class="new-users-btn">
-                                                <a href="#" class="btn button-sm outline">${user.getStatus()}</a>
-                                            </span>
-                                        </li>                                       
-                                    </ul>
-                                </div>
+                                <canvas id="chart" width="100" height="45"></canvas>
                             </div>
                         </div>
                     </div>
-                    </c:forEach>
-                     <c:forEach var="orders" items="${orders}">
-                    <div class="col-lg-6 m-b30">
-                        <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Orders</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <div class="orders-list">
-                                    <ul>
-                                        <li>
-                                            <span class="orders-title">
-                                                <a href="#" class="orders-title-name"></a>
-                                                <span class="orders-info">Order ${orders.getOrderStatus()} | Date ${orders.getOrderDate()}</span>
-                                            </span>
-                                            <span class="orders-btn">
-                                                <a href="#" class="btn button-sm red">${orders.getOrderStatus()}</a>
-                                            </span>
-                                        </li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                            </c:forEach>
+                    <!-- Your Profile Views Chart END-->
                                     </div>
             </div>
-        
+        </div>
         </main>
         <div class="ttr-overlay"></div>
 
@@ -230,7 +201,6 @@
         <script src='assets/vendors/calendar/moment.min.js'></script>
         <script src='assets/vendors/calendar/fullcalendar.js'></script>
         <script src='assets/vendors/switcher/switcher.js'></script>
-        
-        <jsp:include page="footer.jsp"/>
+
     </body>
 </html>

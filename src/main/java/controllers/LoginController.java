@@ -36,7 +36,24 @@ public class LoginController extends HttpServlet {
         } else if (us != null && us.getPassword().equals(password) && dao.isAccountActive(us)) {
             // Authentication successful
             request.getSession().setAttribute("user", us);
-            response.sendRedirect("home");
+            switch (us.getRoleId()) {
+            case 1:
+                response.sendRedirect("admin_dashboard");
+                break;
+            case 2:
+                response.sendRedirect("marketing_dashboard");
+                break;
+            case 3:
+                response.sendRedirect("sale_dashboard");
+                break;
+            case 4:
+                response.sendRedirect("home");
+                break;
+            default:
+                // Trường hợp roleId không khớp với bất kỳ trường hợp nào trên
+                response.sendRedirect("home");
+                break;
+        }
         } else if (us != null && !dao.isAccountActive(us)) {
             request.setAttribute("errorMessage", "Tài khoản không được phép truy cập vào hệ thống");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);

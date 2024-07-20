@@ -33,6 +33,13 @@
 .ttr-header.hide{
 	top: -60px;
 }
+.fixed-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
 .ttr-toggle-sidebar{
 	width: 60px;
 	height: 60px;
