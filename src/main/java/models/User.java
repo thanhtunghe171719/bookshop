@@ -48,6 +48,15 @@ public class User {
         this.roleName = roleName;
     }
 
+    public User(int userId, String fullname, String address, String image, String status) {
+        this.userId = userId;
+        this.fullname = fullname;
+        this.address = address;
+        this.image = image;
+        this.status = status;
+    }
+
+
     public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
         this.userId = userId;
         this.email = email;

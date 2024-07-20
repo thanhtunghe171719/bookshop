@@ -13,6 +13,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import models.User;
 
 /**
  *
@@ -52,6 +54,7 @@ public class AdminDashboardServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -61,7 +64,9 @@ public class AdminDashboardServlet extends HttpServlet {
         double totalProfit = dao.getTotalProfit();
         int totalOrders = dao.getOrdersCount();
         int totalCustomers = dao1.getCustomerCount();
-
+        List<User> newUsers = dao1.selectNewUsers();
+        request.setAttribute("newUsers", newUsers);
+    
         request.setAttribute("totalProfit", totalProfit);
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("totalCustomers", totalCustomers);

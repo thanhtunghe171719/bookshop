@@ -198,8 +198,8 @@
                             <div class="form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" name="gender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -247,8 +247,8 @@
                             <div class="form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" name="gender" id="editGender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -262,8 +262,8 @@
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control" name="status" id="editStatus" required>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
                                 </select>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

@@ -721,7 +721,26 @@ public class DAOUsers extends DBConnect {
         }
         return 0;
     }
-   
+   public List<User> selectNewUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * from users";
+        try (
+             PreparedStatement preparedStatement = conn.prepareStatement(sql);) {
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt("userId");
+                String fullName = rs.getString("full_name");
+                String address = rs.getString("address");
+                String status = rs.getString("status");
+                String image = rs.getString("image");
+                users.add(new User(userId, fullName, address, status, image));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
 

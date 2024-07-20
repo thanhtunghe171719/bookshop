@@ -73,8 +73,7 @@
             
             <div class="container-fluid">
                 <div class="db-breadcrumb">
-                    <h4 class="breadcrumb-title">Dashboard</h4>
-                    
+                    <h4 class="breadcrumb-title">Dashboard</h4>           
                 </div>	
                 <!-- Card -->
                 <form action="admin_dashboard" method="post">
@@ -86,7 +85,7 @@
                         <div class="widget-card widget-bg1">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Total Profit
+                                  Doanh thu
                                 </h4>
                                 <span class="wc-des">
                                     All Customs Value
@@ -105,7 +104,7 @@
                         <div class="widget-card widget-bg2">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    New Feedbacks
+                                    Feedback
                                 </h4>
                                 <span class="wc-des">
                                     Customer Review
@@ -122,7 +121,7 @@
                         <div class="widget-card widget-bg3">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Orders 
+                                    Đơn đặt hàng mới  
                                 </h4>
                                 <span class="wc-des">
                                     Fresh Order Amount 
@@ -153,7 +152,7 @@
                 </div>
                 </form>
                 <div class="row">             
-                    <c:forEach var="user" items="${user}">
+                    <c:forEach var="user" items="${newUsers}">
                     <div class="col-lg-6 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
@@ -164,7 +163,7 @@
                                     <ul>
                                         <li>
                                             <span class="new-users-pic">
-                                                <img src="${user.getImage()}" alt=""/>
+                                                <img src="${user.getImage()}" alt="${user.getName()}"/>
                                             </span>
                                             <span class="new-users-text">
                                                 <a href="#" class="new-users-name">${user.getFullName()} </a>

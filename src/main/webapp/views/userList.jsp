@@ -88,8 +88,8 @@
                            
                             <select name="gender">
                                 <option value="">All Genders</option>
-                                <option value="Male" <c:if test="${param.gender == 'Male'}">Male</option>
-                                <option value="Female" <c:if test="${param.gender == 'Female'}">Female</option>
+                                <option value="Nam" <c:if test="${param.gender == 'Nam'}">Nam</option>
+                                <option value="Nữ" <c:if test="${param.gender == 'Nữ'}">Nữ</option>
                             </select>
                         </div>
                         <div class="input-field third-wrap">
@@ -214,41 +214,48 @@
             <!-- Pagination -->
             <nav class="blog-pagination justify-content-center d-flex">
                 <ul class="pagination">
-                    <% 
+                    <%
                         int currentPage = (int) request.getAttribute("currentPage");
                         int totalPages = (int) request.getAttribute("totalPages");
                         String searchQuery = (String) request.getAttribute("searchQuery");
-                        sortField = (String) request.getAttribute("sortField");
-                        sortOrder = (String) request.getAttribute("sortOrder");
+                        String gender = (String) request.getAttribute("gender");
+                        String role = (String) request.getAttribute("role");
+                        String status = (String) request.getAttribute("status");
+
+                        String buildUrl = "userList?index=";
+                        String parameters = "&search=" + (searchQuery != null ? searchQuery : "")
+                                + "&sortField=" + (sortField != null ? sortField : "")
+                                + "&sortOrder=" + (sortOrder != null ? sortOrder : "")
+                                + "&gender=" + (gender != null ? gender : "")
+                                + "&role=" + (role != null ? role : "")
+                                + "&status=" + (status != null ? status : "");
 
                         if (currentPage > 1) {
                     %>
                     <li class="page-item">
-                        <a href="userList?index=<%= currentPage - 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Previous">
+                        <a href="<%= buildUrl + (currentPage - 1) + parameters%>" class="page-link" aria-label="Previous">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-left"></span>
                             </span>
                         </a>
                     </li>
                     <% } %>
-                    <% for (int i = 1; i <= totalPages; i++) { %>
-                    <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-                        <a href="userList?index=<%= i %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link"><%= i %></a>
+                    <% for (int i = 1; i <= totalPages; i++) {%>
+                    <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
+                        <a href="<%= buildUrl + i + parameters%>" class="page-link"><%= i%></a>
                     </li>
                     <% } %>
-                    <% if (currentPage < totalPages) { %>
+                    <% if (currentPage < totalPages) {%>
                     <li class="page-item">
-                        <a href="userList?index=<%= currentPage + 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Next">
+                        <a href="<%= buildUrl + (currentPage + 1) + parameters%>" class="page-link" aria-label="Next">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-right"></span>
                             </span>
                         </a>
                     </li>
-                    <% } %>
+                    <% }%>
                 </ul>
             </nav>
-
-
         </div>
 
         <!-- Add User Modal -->
@@ -271,8 +278,8 @@
                             <div class="form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" name="gender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -320,8 +327,8 @@
                             <div class="form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" name="gender" id="editGender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -335,8 +342,8 @@
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control" name="status" id="editStatus" required>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
                                 </select>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
