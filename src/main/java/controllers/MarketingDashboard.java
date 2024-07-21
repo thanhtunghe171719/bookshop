@@ -8,6 +8,7 @@ package controllers;
 import dal.DAOBooks;
 import dal.DAOOrders;
 import dal.DAOPosts;
+import dal.DAOSlider;
 import dal.DAOUsers;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,16 +63,17 @@ public class MarketingDashboard extends HttpServlet {
         DAOPosts dao= new DAOPosts();
         DAOUsers dao1 = new DAOUsers();
         DAOBooks dao2 = new DAOBooks();
+        DAOSlider dao3 = new DAOSlider();
         
         int totalPosts = dao.getPostsCount();
         int totalBooks = dao2.getBooksCount();
         int totalCustomers = dao1.getCustomerCount();
-        List<User> newUsers = dao1.selectNewUsers();
-        
-        request.setAttribute("newUsers", newUsers);
+         int totalSliders = dao3.getSlidersCount();
+         
         request.setAttribute("totalPosts", totalPosts);
         request.setAttribute("totalBooks", totalBooks);
-        request.setAttribute("totalCustomers", totalCustomers);      
+        request.setAttribute("totalCustomers", totalCustomers);
+        request.setAttribute("totalSliders", totalSliders);
         request.getRequestDispatcher("./views/marketingdashboard.jsp").forward(request, response);
     } 
 

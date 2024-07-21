@@ -83,7 +83,20 @@ public class DAOSlider extends DBConnect{
         }
         return n;
     }
-    
+    public int getSlidersCount() {
+        int totalSliders = 0;
+        String sql = "SELECT COUNT(*) as totalSliders FROM slider";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalSliders= rs.getInt("totalSliders");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalSliders;
+    }
     public static void main(String[] args) {
         DAOSlider dao = new DAOSlider();
         String title = "er 1";

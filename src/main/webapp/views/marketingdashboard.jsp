@@ -78,10 +78,11 @@
                     <h4 class="breadcrumb-title">Dashboard</h4>           
                 </div>	
                 <!-- Card -->
-                <form action="admin_dashboard" method="post">
+                <form action="marketing_dashboard" method="post">
                 <c:set var="totalPosts" value="${totalPosts}"/>
                 <c:set var="totalBooks" value="${totalBooks}"/>
                 <c:set var="totalCustomers" value="${totalCustomers}"/>
+                <c:set var="totalSliders" value="${totalSliders}"/>
                 <div class="row">
                     <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
                         <div class="widget-card widget-bg1">					 
@@ -108,13 +109,13 @@
                         <div class="widget-card widget-bg2">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Feedback
+                                    Slider
                                 </h4>
                                 <span class="wc-des">
-                                    Customer Review
+                                    All Slider Count
                                 </span>
                                 <span class="wc-stats counter">
-                                    120 
+                                    ${totalSliders} 
                                 </span>		
                                 
                                 </span>
@@ -159,41 +160,20 @@
                     <div class="col-lg-6 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
-                                <h4>Total Orders</h4>
+                                <h4>Customer</h4>
                             </div>
                             <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
+                                <canvas id="chart3" width="100" height="45"></canvas>
                             </div>
                         </div>
                     </div>
                                     <div class="col-lg-6 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
-                                <h4>Total Profit</h4>
+                                <h4>Post</h4>
                             </div>
                             <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                                    
-                                <div class="col-lg-6 m-b30">
-                         <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Total Customers</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 m-b30">
-                         <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Total Orders</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
+                                <canvas id="chart4" width="100" height="45"></canvas>
                             </div>
                         </div>
                     </div>

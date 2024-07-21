@@ -5,6 +5,8 @@
 
 package controllers;
 
+import com.google.gson.Gson;
+import dal.DAOBooksList;
 import dal.DAOOrders;
 import dal.DAOUsers;
 import java.io.IOException;
@@ -13,7 +15,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import models.Books;
+import models.Categories;
 import models.User;
 
 /**
@@ -61,18 +68,19 @@ public class AdminDashboardServlet extends HttpServlet {
 //        processRequest(request, response);
         DAOOrders dao= new DAOOrders();
         DAOUsers dao1 = new DAOUsers();
+        
         double totalProfit = dao.getTotalProfit();
         int totalOrders = dao.getOrdersCount();
         int totalCustomers = dao1.getCustomerCount();
-        List<User> newUsers = dao1.selectNewUsers();
-        request.setAttribute("newUsers", newUsers);
-    
+        
         request.setAttribute("totalProfit", totalProfit);
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("totalCustomers", totalCustomers);
         
         request.getRequestDispatcher("./views/admindashboard.jsp").forward(request, response);
-    } 
+
+    }
+     
 
     /** 
      * Handles the HTTP <code>POST</code> method.

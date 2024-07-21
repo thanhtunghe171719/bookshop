@@ -5,12 +5,18 @@
 
 package controllers;
 
+import dal.DAOBooks;
+import dal.DAOOrders;
+import dal.DAOPosts;
+import dal.DAOUsers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import models.User;
 
 /**
  *
@@ -33,10 +39,10 @@ public class SaleDashboard extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");  
+            out.println("<title>Servlet MarketingDashboard</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet MarketingDashboard at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,7 +59,20 @@ public class SaleDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        DAOPosts dao= new DAOPosts();
+        DAOUsers dao1 = new DAOUsers();
+        DAOBooks dao2 = new DAOBooks();
+        
+        int totalPosts = dao.getPostsCount();
+        int totalBooks = dao2.getBooksCount();
+        int totalCustomers = dao1.getCustomerCount();
+        List<User> newUsers = dao1.selectNewUsers();
+        
+        request.setAttribute("newUsers", newUsers);
+        request.setAttribute("totalPosts", totalPosts);
+        request.setAttribute("totalBooks", totalBooks);
+        request.setAttribute("totalCustomers", totalCustomers);      
+        request.getRequestDispatcher("./views/marketingdashboard.jsp").forward(request, response);
     } 
 
     /** 
@@ -66,7 +85,7 @@ public class SaleDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       
     }
 
     /** 
