@@ -117,8 +117,13 @@ public class AuthorizationFilter implements Filter {
                 res.sendRedirect("home");
                 return;
             }
-            if (url.equals("/admin-category")||url.equals("/admin_dashboard")) {
-                // Only allow access to /admin-category for users with roleId 1 (admin)
+            if (url.equals("/admin-category") || url.equals("/admin_dashboard")) {
+                if (user.getRoleId() == 1) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
+            } else if (url.equals("/userList")) {
                 if (user.getRoleId() == 1) {
                     chain.doFilter(request, response);
                 } else {
@@ -136,6 +141,24 @@ public class AuthorizationFilter implements Filter {
                 } else {
                     res.sendRedirect("error404");
                 }
+            } else if (url.equals("/customers")) {
+                if (user.getRoleId() == 2) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
+            } else if (url.equals("/marketingslider")) {
+                if (user.getRoleId() == 2) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
+            } else if (url.equals("/manage-feedback")) {
+                if (user.getRoleId() == 2) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
             } else if (url.equals("/marketing_dashboard")) {
                 if (user.getRoleId() == 2) {
                     chain.doFilter(request, response);
@@ -148,12 +171,22 @@ public class AuthorizationFilter implements Filter {
                 } else {
                     res.sendRedirect("error404");
                 }
-            }
-            else {
+            } else if (url.equals("/sale-dashboard")) {
+                if (user.getRoleId() == 3) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
+            } else if (url.equals("/manage-order-sale")) {
+                if (user.getRoleId() == 3) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("error404");
+                }
+            } else {
                 // For any other URL, allow access
                 chain.doFilter(request, response);
             }
-            
 
         } else {
             // If the user is not logged in, allow access to login and register pages
