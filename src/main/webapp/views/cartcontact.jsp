@@ -217,105 +217,105 @@
                         <div class="col-lg-8">
                             <h3>Chi Tiết Liên Hệ</h3>
                             <!--<form class="row contact_form" action="cart" method="post" novalidate="novalidate">-->
-                                <div class="col-md-12 form-group p_star">
-                                    <p>Họ và Tên:</p>
-                                    <input type="text" class="form-control" id="first" name="name" placeholder="Full Name" value="${user.fullname}" style="color: black" readonly>
+                            <div class="col-md-12 form-group p_star">
+                                <p>Họ và Tên:</p>
+                                <input type="text" class="form-control" id="first" name="name" placeholder="Full Name" value="${user.fullname}" style="color: black" readonly>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <p>Địa Chỉ:</p>
+                                <div class="col-md-12 row">
+                                    <span class="form-control" id="address" style="color: black;width: 445px;background-color: #e9ecef;">${user.address}</span>
+                                    <button type="button" class="btn btn-primary" id="editAddressBtn" onclick="editAddress()">Sửa</button>
                                 </div>
-
-                                <div class="col-md-12 form-group">
-                                    <p>Địa Chỉ:</p>
-                                    <div class="col-md-12 row">
-                                        <span class="form-control" id="address" style="color: black;width: 445px;background-color: #e9ecef;">${user.address}</span>
-                                        <button type="button" class="btn btn-primary" id="editAddressBtn" onclick="editAddress()">Sửa</button>
+                            </div>           
+                            <!-- pop up edit address -->
+                            <div id="addressModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <h3 style="font-size: 28px">Sửa Địa Chỉ</h3>
+                                    <div style="display:flex; justify-content: space-between; align-items: center;padding-bottom: 20px">
+                                        <input type="text" class="address-input" id="add-address" name="address">
+                                        <button class="btn btn-info" id="addNewAddressBtn" onclick="addNewAddress()">Thêm Địa Chỉ Mới</button>
                                     </div>
-                                </div>           
-                                <!-- pop up edit address -->
-                                <div id="addressModal" class="modal">
-                                    <div class="modal-content">
-                                        <span class="close">&times;</span>
-                                        <h3 style="font-size: 28px">Sửa Địa Chỉ</h3>
-                                        <div style="display:flex; justify-content: space-between; align-items: center;padding-bottom: 20px">
-                                            <input type="text" class="address-input" id="add-address" name="address">
-                                            <button class="btn btn-info" id="addNewAddressBtn" onclick="addNewAddress()">Thêm Địa Chỉ Mới</button>
-                                        </div>
 
-                                        <!-- List of address options -->
-                                        <div id="phoneOptions">
-                                            <h3 >Địa Chỉ Mặc Định:</h3>
-                                            <div class="address-row">
-                                                <input type="text" class="address-input" id="address-0" value="${user.address}" readonly>
-                                                <div style="display: flex; align-items: center;">
-                                                    <button class="btn btn-success" onclick="saveAddress(0)">Chọn</button>
-                                                </div>
+                                    <!-- List of address options -->
+                                    <div id="phoneOptions">
+                                        <h3 >Địa Chỉ Mặc Định:</h3>
+                                        <div class="address-row">
+                                            <input type="text" class="address-input" id="address-0" value="${user.address}" readonly>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="btn btn-success" onclick="saveAddress(0)">Chọn</button>
                                             </div>
-                                            <h3>Danh Sách Địa Chỉ:</h3>        
-                                            <c:forEach var="shipInfo" items="${listShipInfor}">
-                                                <c:if test="${not empty shipInfo.address}">
-                                                    <div class="address-row">
-                                                        <input type="text" class="address-input" id="address-${shipInfo.shippingId}" value="${shipInfo.address}" readonly>
-                                                        <button class="btn" id="updateBtn-${shipInfo.shippingId}" onclick="updateAddress(${shipInfo.shippingId})" style="display: none">Cập Nhật</button>
-                                                        <div style="display: flex; align-items: center;">
-                                                            <button class="btn btn-success" onclick="saveAddress(${shipInfo.shippingId})">Chọn</button>
-                                                            <button class="btn btn-primary edit-btn" onclick="editAddressInput(${shipInfo.shippingId})"><i class="bi bi-pencil"></i></button>
-                                                            <button class="btn btn-danger delete-btn" onclick="deleteItem(${shipInfo.shippingId})"><i class="bi bi-trash"></i></button>
-                                                        </div>
+                                        </div>
+                                        <h3>Danh Sách Địa Chỉ:</h3>        
+                                        <c:forEach var="shipInfo" items="${listShipInfor}">
+                                            <c:if test="${not empty shipInfo.address}">
+                                                <div class="address-row">
+                                                    <input type="text" class="address-input" id="address-${shipInfo.shippingId}" value="${shipInfo.address}" readonly>
+                                                    <button class="btn" id="updateBtn-${shipInfo.shippingId}" onclick="updateAddress(${shipInfo.shippingId})" style="display: none">Cập Nhật</button>
+                                                    <div style="display: flex; align-items: center;">
+                                                        <button class="btn btn-success" onclick="saveAddress(${shipInfo.shippingId})">Chọn</button>
+                                                        <button class="btn btn-primary edit-btn" onclick="editAddressInput(${shipInfo.shippingId})"><i class="bi bi-pencil"></i></button>
+                                                        <button class="btn btn-danger delete-btn" onclick="deleteItem(${shipInfo.shippingId})"><i class="bi bi-trash"></i></button>
                                                     </div>
-                                                </c:if>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 form-group">
-                                    <p>Số Điện Thoại:</p>
-                                    <div class="col-md-12 row">
-                                        <span class="form-control" id="phone" style="color: black;width: 445px;background-color: #e9ecef;">${user.phone}</span>
-                                        <button type="button" class="btn btn-primary" id="editAddressBtn" onclick="editAddress1()">Sửa</button>
-                                    </div>
-                                </div> 
-
-                                <div id="addressModal1" class="modal">
-                                    <div class="modal-content">
-                                        <span class="close1">&times;</span>
-                                        <h3 style="font-size: 28px">Sửa Số Điện Thoại</h3>
-                                        <div style="display:flex; justify-content: space-between; align-items: center;padding-bottom: 20px">
-                                            <input type="text" class="address-input" id="add-phone" name="address">
-                                            <button class="btn btn-info" id="addNewAddressBtn" onclick="addNewAddress1()">Thêm Số Điện Thoại Mới</button>
-                                        </div>
-
-                                        <!-- List of address options -->
-                                        <div id="addressOptions">
-                                            <h3 >Số Điện Thoại Mặc Định:</h3>
-                                            <div class="address-row">
-                                                <input type="text" class="address-input" id="phone-0" value="${user.phone}" readonly>
-                                                <div style="display: flex; align-items: center;">
-                                                    <button class="btn btn-success" onclick="saveAddress1(0)">Chọn</button>
                                                 </div>
-                                            </div>
-                                            <h3>Danh Sách Số Điện Thoại:</h3>        
-                                            <c:forEach var="shipInfo" items="${listShipInfor}">
-                                                <c:if test="${not empty shipInfo.phone}">
-                                                    <div class="address-row">
-                                                        <input type="text" class="address-input" id="phone-${shipInfo.shippingId}" value="${shipInfo.phone}" readonly>
-                                                        <button class="btn" id="updateBtn1-${shipInfo.shippingId}" onclick="updateAddress1(${shipInfo.shippingId})" style="display: none">Cập Nhật</button>
-                                                        <div style="display: flex; align-items: center;">
-                                                            <button class="btn btn-success" onclick="saveAddress1(${shipInfo.shippingId})">Chọn</button>
-                                                            <button class="btn btn-primary edit-btn" onclick="editAddressInput1(${shipInfo.shippingId})"><i class="bi bi-pencil"></i></button>
-                                                            <button class="btn btn-danger delete-btn" onclick="deleteItem1(${shipInfo.shippingId})"><i class="bi bi-trash"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                            </c:forEach>
-                                        </div>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
-                                </div>  
-
-                                <div class="col-md-12 form-group mb-0">
-                                    <div class="creat_account">
-                                        <h3>Lưu ý cho bên giao hàng</h3>
-                                    </div>
-                                    <textarea class="form-control" name="message" id="message" rows="1" placeholder="message"></textarea>
                                 </div>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <p>Số Điện Thoại:</p>
+                                <div class="col-md-12 row">
+                                    <span class="form-control" id="phone" style="color: black;width: 445px;background-color: #e9ecef;">${user.phone}</span>
+                                    <button type="button" class="btn btn-primary" id="editAddressBtn" onclick="editAddress1()">Sửa</button>
+                                </div>
+                            </div> 
+
+                            <div id="addressModal1" class="modal">
+                                <div class="modal-content">
+                                    <span class="close1">&times;</span>
+                                    <h3 style="font-size: 28px">Sửa Số Điện Thoại</h3>
+                                    <div style="display:flex; justify-content: space-between; align-items: center;padding-bottom: 20px">
+                                        <input type="text" class="address-input" id="add-phone" name="address">
+                                        <button class="btn btn-info" id="addNewAddressBtn" onclick="addNewAddress1()">Thêm Số Điện Thoại Mới</button>
+                                    </div>
+
+                                    <!-- List of address options -->
+                                    <div id="addressOptions">
+                                        <h3 >Số Điện Thoại Mặc Định:</h3>
+                                        <div class="address-row">
+                                            <input type="text" class="address-input" id="phone-0" value="${user.phone}" readonly>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="btn btn-success" onclick="saveAddress1(0)">Chọn</button>
+                                            </div>
+                                        </div>
+                                        <h3>Danh Sách Số Điện Thoại:</h3>        
+                                        <c:forEach var="shipInfo" items="${listShipInfor}">
+                                            <c:if test="${not empty shipInfo.phone}">
+                                                <div class="address-row">
+                                                    <input type="text" class="address-input" id="phone-${shipInfo.shippingId}" value="${shipInfo.phone}" readonly>
+                                                    <button class="btn" id="updateBtn1-${shipInfo.shippingId}" onclick="updateAddress1(${shipInfo.shippingId})" style="display: none">Cập Nhật</button>
+                                                    <div style="display: flex; align-items: center;">
+                                                        <button class="btn btn-success" onclick="saveAddress1(${shipInfo.shippingId})">Chọn</button>
+                                                        <button class="btn btn-primary edit-btn" onclick="editAddressInput1(${shipInfo.shippingId})"><i class="bi bi-pencil"></i></button>
+                                                        <button class="btn btn-danger delete-btn" onclick="deleteItem1(${shipInfo.shippingId})"><i class="bi bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>  
+
+                            <div class="col-md-12 form-group mb-0">
+                                <div class="creat_account">
+                                    <h3>Lưu ý cho bên giao hàng</h3>
+                                </div>
+                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="message"></textarea>
+                            </div>
                             <!--</form>-->
 
                         </div>
@@ -360,6 +360,10 @@
                                         </tr>
                                     </table>
                                     <br>
+                                    
+                                    <!-- Hidden input for address -->
+                                    <input type="hidden" id="hiddenAddressInput" name="address" value="${user.address}" />
+
                                     <h3>Chọn Phương Thức Thanh Toán</h3>
                                     <div class="payment_item active">
                                         <input type="radio" id="f-option5" name="paymentMethod" value="International card">
@@ -396,7 +400,7 @@
         <!--================ End footer Area  =================-->
 
         <script src="js/cart.js"></script>
-        
+
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="vendors/skrollr.min.js"></script>

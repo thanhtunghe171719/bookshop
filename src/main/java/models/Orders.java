@@ -19,15 +19,17 @@ public class Orders {
     private double total;
     private String status;
     private int statusId;
+    private String address;
 
     public Orders() {
     }
 
-    public Orders(int orderID, Timestamp orderDate, double total, String status) {
+    public Orders(int orderID, Timestamp orderDate, double total, String status, String address) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.total = total;
         this.status = status;
+        this.address = address;
     }
 
     public int getOrderID() {
@@ -76,6 +78,14 @@ public class Orders {
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

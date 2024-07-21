@@ -52,6 +52,7 @@ public class PaymentController extends HttpServlet {
 
         String amount = req.getParameter("subTotal");
         String paymentMethod = req.getParameter("paymentMethod"); // Lấy giá trị của phương thức thanh toán
+        String address = req.getParameter("address"); // Get the address value from the form
 
         User user = (User) session.getAttribute("user");
         session.setAttribute("user", user);
@@ -74,7 +75,7 @@ public class PaymentController extends HttpServlet {
             }
 
             // Tạo đơn hàng mới và lấy order_id
-            int newOrderID = cartCompletion.newOrder(cartId, Double.parseDouble(amount), 1);
+            int newOrderID = cartCompletion.newOrder(cartId, Double.parseDouble(amount), 1, address);
             if (newOrderID != -1) {
                 cartCompletion.addOrderItems(newOrderID); // Gọi phương thức với order_id cụ thể
                 cartCompletion.removeOrderedBooks(newOrderID); // Gọi phương thức với order_id cụ thể

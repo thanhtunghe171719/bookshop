@@ -40,6 +40,11 @@ function saveAddress(shipId) {
     var newAddress = editedAddressInput.value; // Get the edited address value
     var addressSpan = document.getElementById('address');
     addressSpan.innerText = newAddress; // Update the address shown on the web page
+
+    var hiddenAddressInput = document.getElementById('hiddenAddressInput');
+    hiddenAddressInput.value = newAddress;
+    console.log(hiddenAddressInput);
+
     var modal = document.getElementById('addressModal');
     modal.style.display = 'none'; // Close the modal after saving
 
