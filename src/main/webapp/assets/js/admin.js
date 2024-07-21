@@ -552,7 +552,7 @@
                     scales: {
                         yAxes: [{
                                 ticks: {
-                                    beginAtZero: true, // Đảm bảo trục y bắt đầu từ 0
+              
                                     callback: function (value, index, values) {
                                         return value.toLocaleString();  // Định dạng số
                                     }

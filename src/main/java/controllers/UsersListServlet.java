@@ -45,7 +45,7 @@ public class UsersListServlet extends HttpServlet {
         }
 
         int pageIndex = (pageIndexParam == null || pageIndexParam.isEmpty()) ? 1 : Integer.parseInt(pageIndexParam);
-        int pageSize = 10;
+        int pageSize = 5;
 
         List<User> users;
         int totalUsers;

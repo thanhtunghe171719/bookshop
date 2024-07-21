@@ -30,49 +30,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String image, String address, Timestamp createAt, Timestamp updatedAt, String status, String deleted) {
-        this.userId = userId;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.roleId = roleId;
-        this.fullname = fullname;
-        this.gender = gender;
-        this.image = image;
-        this.address = address;
-        this.createAt = createAt;
-        this.updatedAt = updatedAt;
-        this.status = status;
-        this.deleted = deleted;
-    }
-
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted, String roleName) {
-        this.userId = userId;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.roleId = roleId;
-        this.fullname = fullname;
-        this.gender = gender;
-        this.address = address;
-        this.createAt = createAt;
-        this.updatedAt = updatedAt;
-        this.image = image;
-        this.status = status;
-        this.deleted = deleted;
-        this.roleName = roleName;
-    }
-
-    public User(int userId, String fullname, String address, String image, String status) {
-        this.userId = userId;
-        this.fullname = fullname;
-        this.address = address;
-        this.image = image;
-        this.status = status;
-    }
-
-
-    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
+        public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -122,6 +80,17 @@ public class User {
         this.password = password;
         this.phone = phone;
         this.status = status;
+    }
+    
+            
+    public User(int userId, String fullname,String gender, String email,String phone, String address, String image) {
+        this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.image = image;
     }
 
     public int getUserId() {

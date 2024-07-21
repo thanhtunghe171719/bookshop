@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 import models.Books;
 import models.User;
+import models.UserChangeHistory;
 import models.UserHistory;
 
 /**
@@ -405,42 +406,7 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
-    public ArrayList<User> getAllNewUsers() {
-        try {
-            ArrayList<User> listnewusers = new ArrayList<User>();
-            String sql = "SELECT * FROM users \n"
-                    + "WHERE deleted = 'no' and status ='active'\n"
-                    + "order by create_at desc";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                int userId = rs.getInt("user_id");
-                String fullname = rs.getString("fullname");
-                String gender = rs.getString("gender");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String status = rs.getString("status");
-                String address = rs.getString("address");
-                Timestamp updatedAt = rs.getTimestamp("updated_at");
-                String password=rs.getString("password");
-                int roleId = rs.getInt("role_id");
-                String image = rs.getString("image");
-                String deleted = rs.getString("deleted");
-                Timestamp createAt = rs.getTimestamp("create_at");
-
-                User user = new User(userId, email, phone, password, roleId,fullname, gender, image, address, createAt, updatedAt, status, deleted);
-
-                listnewusers.add(user);
-
-            }
-            return listnewusers;
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
-
-    }
+    
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -548,7 +514,30 @@ public class DAOUsers extends DBConnect {
         // user.setRoleName(roleName);
         return user;
     }
+public List<UserChangeHistory> getUserChangeHistory(int userId) {
+        List<UserChangeHistory> historyList = new ArrayList<>();
+        String query = "SELECT * FROM UserChangeHistory WHERE user_id = ? ORDER BY updated_date DESC";
 
+        try (  PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String fieldName = resultSet.getString("field_name");
+                String oldValue = resultSet.getString("old_value");
+                String newValue = resultSet.getString("new_value");
+                Timestamp updatedDate = resultSet.getTimestamp("updated_date");
+
+                UserChangeHistory history = new UserChangeHistory(userId, fieldName, oldValue, newValue, updatedDate);
+                historyList.add(history);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return historyList;
+    }
     public List<User> getCustomersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder) {
         String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '4' ORDER BY "
                 + (sortField != null ? sortField : "fullname") + " "
@@ -757,26 +746,6 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
-    public List<User> selectNewUsers() {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * from users";
-        try (
-                PreparedStatement preparedStatement = conn.prepareStatement(sql);) {
-            ResultSet rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-                int userId = rs.getInt("userId");
-                String fullName = rs.getString("full_name");
-                String address = rs.getString("address");
-                String status = rs.getString("status");
-                String image = rs.getString("image");
-                users.add(new User(userId, fullName, address, status, image));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
 
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
