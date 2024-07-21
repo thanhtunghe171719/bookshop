@@ -93,7 +93,7 @@ public class DAOUsers extends DBConnect {
                             rs.getString("image"),
                             rs.getString("status"),
                             
-                            rs.getString("deleted")
+                            ""
                     );
                 }
             }

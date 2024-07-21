@@ -49,6 +49,9 @@ public class LoginController extends HttpServlet {
             case 4:
                 response.sendRedirect("home");
                 break;
+            case 5:
+                response.sendRedirect("manage-sale");
+                break;
             default:
                 // Trường hợp roleId không khớp với bất kỳ trường hợp nào trên
                 response.sendRedirect("home");

@@ -18,6 +18,7 @@ public class Orders {
     private List<Items> orderItems;
     private double total;
     private String status;
+    private int statusId;
 
     public Orders() {
     }
@@ -67,6 +68,14 @@ public class Orders {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
 }

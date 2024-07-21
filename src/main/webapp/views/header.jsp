@@ -134,6 +134,7 @@
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="editprofile">User Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
+                                <li class="nav-item"><a class="nav-link" href="history-order">History order</a></li>
                                 <li class="nav-item"><a class="nav-link" href="myorders">My Orders</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
                             </ul>

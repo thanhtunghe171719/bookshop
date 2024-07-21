@@ -12,9 +12,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import models.Order;
 import models.OrderItems;
+import models.OrderStatus;
+import models.User;
 
 /**
  *
@@ -30,6 +33,7 @@ public class ManageOrderController extends HttpServlet {
         orderDAO = new OrderDAO();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
@@ -46,20 +50,48 @@ public class ManageOrderController extends HttpServlet {
     }
 
     private void viewOrderDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int orderId = Integer.parseInt(request.getParameter("orderId"));
-        Order order = orderDAO.getOrderById(orderId);
-        List<OrderItems> orderitems = orderDAO.getOrderItemsByOrderId(orderId);
-        request.setAttribute("orderItems", orderitems);
-        request.setAttribute("order", order);
-        request.getRequestDispatcher("./views/manage-orderDetail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user == null || (user != null && user.getRoleId() != 3)) {
+            response.sendRedirect("login");
+            return;
+        }
+        Integer userId = user.getUserId();
+        try {
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            Order order = orderDAO.getOrderByIdUser(orderId, userId);
+            if (order != null) {
+                List<OrderItems> orderItems = orderDAO.getOrderItemsByOrderId(orderId);
+                List<OrderStatus> orderStatuses = orderDAO.getAllOrderStatuses();
+                request.setAttribute("orderStatuses", orderStatuses);
+                request.setAttribute("orderItems", orderItems);
+                request.setAttribute("order", order);
+                request.getRequestDispatcher("./views/manage-orderDetail-sale.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("manage-order-sale?error=Not have this order for you");
+            }
+        } catch (Exception e) {
+            response.sendRedirect("manage-order-sale?error=Have a error");
+        }
     }
 
     private void listOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Order> orders = orderDAO.getAllOrders();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user == null || (user != null && user.getRoleId() != 3)) {
+            response.sendRedirect("login");
+            return;
+        }
+        Integer userId = user.getUserId();
+
+        List<Order> orders = orderDAO.getAllOrdersByUserStaff(userId);
         request.setAttribute("orders", orders);
         request.getRequestDispatcher("./views/orderList.jsp").forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
