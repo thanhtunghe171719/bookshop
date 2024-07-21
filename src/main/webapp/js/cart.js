@@ -212,8 +212,9 @@ closeModal.onclick = function () {
 function addNewAddress1() {
     var phone = document.getElementById('add-phone').value.trim();
     // Check if the new address is not empty
-    if (phone === '') {
-        alert('Please enter a valid phone.');
+    var phonePattern = /^\d{10,}$/;
+    if (!phonePattern.test(phone)) {
+        alert('Vui lòng nhập số điện thoại hợp lệ.');
         return;
     }
     // Gửi yêu cầu bằng AJAX
