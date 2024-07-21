@@ -34,28 +34,28 @@ public class slider extends HttpServlet {
         
         String service = request.getParameter("service");
         
-        ArrayList<Slider> listSlider = daoSlider.getAll("SELECT * FROM slider limit 5;");
+        ArrayList<Slider> listSlider = daoSlider.getAll("SELECT * FROM slider  ORDER BY slider_id DESC limit 5;");
         request.setAttribute("listSlider", listSlider);
             
         if(service == null){
             service="listAll";
         }
         if(service.equals("listAll")){
-            ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider LIMIT 1;");
+            ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider where status = 'Show' ORDER BY slider_id DESC;");
             request.setAttribute("detailSlider", detailSlider);
         }
         if(service.equals("backlink")){
-            ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider where slider_id = "+sliderID+";");
+            ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider where status = 'Show' and slider_id = "+sliderID+" ORDER BY slider_id DESC;");
             request.setAttribute("detailSlider", detailSlider);
         }
         if(service.equals("search")){
             String title = request.getParameter("title");
             if(title != null){
                 request.setAttribute("title", title);
-                listSlider = daoSlider.getAll("SELECT * FROM slider where title like '%"+title+"%' limit 5;");
+                listSlider = daoSlider.getAll("SELECT * FROM slider where status = 'Show' and title like '%"+title+"%' ORDER BY slider_id DESC limit 5;");
                 request.setAttribute("listSlider", listSlider);
 
-                ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider where title like '%"+title+"%' limit 1;");
+                ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider where status = 'Show' and title like '%"+title+"%' limit 1;");
                 request.setAttribute("detailSlider", detailSlider);
 
             }

@@ -154,7 +154,8 @@ public class MarketingSlider extends HttpServlet {
             if (!fileName.isEmpty()) {
                 // If a new image is uploaded, save it and update slider image path
                 InputStream fileContent = filePart.getInputStream();
-                File uploads = new File("E:\\Summer2024\\SWP391\\bookshop11\\src\\main\\webapp\\img\\slider");
+//                File uploads = new File("E:\\Summer2024\\SWP391\\bookshop11\\src\\main\\webapp\\img\\slider");
+                File uploads = new File("C:\\Users\\TDG\\Documents\\NetBeansProjects\\ban\\bookshop\\src\\main\\webapp\\img\\slider");
                 File file = new File(uploads, fileName);
                 try (OutputStream out = new FileOutputStream(file)) {
                     byte[] buffer = new byte[1024];
@@ -205,7 +206,8 @@ public class MarketingSlider extends HttpServlet {
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             InputStream fileContent = filePart.getInputStream();
 
-            File uploads = new File("E:\\Summer2024\\SWP391\\bookshop11\\src\\main\\webapp\\img\\slider");
+//            File uploads = new File("E:\\Summer2024\\SWP391\\bookshop11\\src\\main\\webapp\\img\\slider");
+            File uploads = new File("C:\\Users\\TDG\\Documents\\NetBeansProjects\\ban\\bookshop\\src\\main\\webapp\\img\\slider");
             File file = new File(uploads, fileName);
             try (OutputStream out = new FileOutputStream(file)) {
                 byte[] buffer = new byte[1024];

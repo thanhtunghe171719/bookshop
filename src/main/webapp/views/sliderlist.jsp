@@ -66,7 +66,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="addSliderForm" action="marketingslider" method="POST" enctype="multipart/form-data">
+                                <form id="addSliderForm" action="marketingslider" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                                     <input type="hidden" name="service" value="addSlider">
                                     <div class="form-group">
                                         <label for="newTitle">Tiêu Đề</label>
@@ -103,21 +103,21 @@
 
             <!-- Notification Section -->
             <h4 class="text-primary" style="padding-top: 20px;">${messageSlider}</h4>
-            <% 
+            <%
 //                String messageSlider = (String) session.getAttribute("messageSlider");
 //                messageSlider = "";
                 session.setAttribute("messageSlider", "");
             %>
             <br>
-            <c:if test="${not empty listSlider}">
-                <table class="table table-hover table-bordered" >
-                    <tr>
-                        <td>Hình Ảnh</td>
-                        <td>Tiêu Đề</td>
-                        <td>Mô Tả</td>
-                        <td>Trạng Thái</td>
-                        <td>Hoạt Động</td>
-                    </tr>
+            <table class="table table-hover table-bordered" >
+                <tr>
+                    <td>Hình Ảnh</td>
+                    <td>Tiêu Đề</td>
+                    <td>Mô Tả</td>
+                    <td>Trạng Thái</td>
+                    <td>Hoạt Động</td>
+                </tr>
+                <c:if test="${not empty listSlider}">
                     <c:forEach var="slider" items="${listSlider}">
                         <tr>
                             <td><img src="${slider.image}" alt="alt" style="width: 210px;height: 110px"/></td>
@@ -217,32 +217,32 @@
                         </div>
 
                     </c:forEach>
+                </c:if>
+                <c:if test="${ empty listSlider}"><tr><td colspan="5"><h3 class="text-success" style="text-align:center">Không Có Sản Phẩm</h3></td></tr></c:if> 
                 </table>
 
                 <!-- Phân trang -->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
 
-                        <c:if test="${page > 1}">
-                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=1&title=${title}&status=${status}" >Đầu</a></li>
-                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${page - 1}&title=${title}&status=${status}">Trước</a></li>
-                            </c:if>
+                    <c:if test="${page > 1}">
+                        <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=1&title=${title}&status=${status}" >Đầu</a></li>
+                        <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${page - 1}&title=${title}&status=${status}">Trước</a></li>
+                        </c:if>
 
-                        <c:forEach begin="1" end="${totalPage}" var="pageNumber">
-                            <li class="page-item ${pageNumber == page ? 'active' : ''}">
-                                <a class="page-link" href="marketingslider?service=listAll&page=${pageNumber}&title=${title}&status=${status}">${pageNumber}</a>
-                            </li>
-                        </c:forEach>
+                    <c:forEach begin="1" end="${totalPage}" var="pageNumber">
+                        <li class="page-item ${pageNumber == page ? 'active' : ''}">
+                            <a class="page-link" href="marketingslider?service=listAll&page=${pageNumber}&title=${title}&status=${status}">${pageNumber}</a>
+                        </li>
+                    </c:forEach>
 
-                        <c:if test="${page < totalPage}">
-                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${page + 1}&title=${title}&status=${status}">Tiếp</a></li>
-                            <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${totalPage}&title=${title}&status=${status}">Cuối</a></li>
-                            </c:if>
+                    <c:if test="${page < totalPage}">
+                        <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${page + 1}&title=${title}&status=${status}">Tiếp</a></li>
+                        <li class="page-item"><a class="page-link" href="marketingslider?service=listAll&page=${totalPage}&title=${title}&status=${status}">Cuối</a></li>
+                        </c:if>
 
-                    </ul>
-                </nav>
-            </c:if>
-                <c:if test="${ empty listSlider}"><% response.sendRedirect("marketingslider"); %></c:if> 
+                </ul>
+            </nav>
         </div>
 
 
@@ -255,6 +255,25 @@
     </body>
 
     <script>
+        function validateForm() {
+            // Lấy các giá trị của các trường
+            var title = document.getElementById('newTitle').value.trim();
+            var description = document.getElementById('newDescription').value.trim();
+
+            // Kiểm tra nếu trường bị bỏ trống sau khi loại bỏ dấu cách
+            if (title === '') {
+                alert('Tiêu đề không được chỉ chứa dấu cách!');
+                return false;
+            }
+
+            if (description === '') {
+                alert('Mô tả không được chỉ chứa dấu cách!');
+                return false;
+            }
+
+            // Nếu không có lỗi, cho phép gửi biểu mẫu
+            return true;
+        }
         function search() {
             var title = document.getElementById('titleSearch').value;
             var status = document.getElementById('statusFilter').value;
@@ -307,6 +326,20 @@
 
         function submitEditForm(event, sliderId) {
             event.preventDefault();
+            // Lấy giá trị từ các trường
+            var title = document.getElementById('editTitle_' + sliderId).value.trim();
+            var description = document.getElementById('editDescription_' + sliderId).value.trim();
+
+            // Kiểm tra nếu các trường bị bỏ trống sau khi loại bỏ dấu cách
+            if (title === '') {
+                alert('Tiêu đề không được chỉ chứa dấu cách!');
+                return;
+            }
+
+            if (description === '') {
+                alert('Mô tả không được chỉ chứa dấu cách!');
+                return;
+            }
             var formData = new FormData(document.getElementById('editSliderForm_' + sliderId));
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'marketingslider', true);

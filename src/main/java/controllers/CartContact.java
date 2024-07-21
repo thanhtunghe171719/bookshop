@@ -103,6 +103,9 @@ public class CartContact extends HttpServlet {
                         for (ShippingInformations shippingInformations : addressExit) {
                             return;
                         }
+                        if(user.getAddress().equals(newAddress)){
+                            return;
+                        }
                         ship.setAddress(newAddress);
                         daoShipInfor.updateBook(ship);
                         listShipInfor = (ArrayList<ShippingInformations>) session.getAttribute("listShipInfor");
@@ -122,6 +125,9 @@ public class CartContact extends HttpServlet {
                         ArrayList<ShippingInformations> phoneExit = daoShipInfor.getAll("Select * from shipping_info where shipping_id != " + shipId + " and phone = '" + newPhone + "'and action = 1;");
                         for (ShippingInformations shippingInformations : phoneExit) {
                             out.println(shippingInformations);
+                            return;
+                        }
+                        if(user.getPhone().equals(newPhone)){
                             return;
                         }
                         ship1.setPhone(newPhone);
