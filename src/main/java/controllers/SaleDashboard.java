@@ -59,20 +59,19 @@ public class SaleDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        DAOPosts dao= new DAOPosts();
-        DAOUsers dao1 = new DAOUsers();
-        DAOBooks dao2 = new DAOBooks();
+        DAOOrders dao = new DAOOrders();
         
-        int totalPosts = dao.getPostsCount();
-        int totalBooks = dao2.getBooksCount();
-        int totalCustomers = dao1.getCustomerCount();
-        List<User> newUsers = dao1.selectNewUsers();
+        int totalPendingOrder = dao.getTotalPendingOrder();
+        int totalShippingOrder = dao.getTotalShippingOrder();
+        int totalDeliveredOrder = dao.getTotalDeliveredOrder();
+        int totalCanceledOrder = dao.getTotalCanceledOrder();
         
-        request.setAttribute("newUsers", newUsers);
-        request.setAttribute("totalPosts", totalPosts);
-        request.setAttribute("totalBooks", totalBooks);
-        request.setAttribute("totalCustomers", totalCustomers);      
-        request.getRequestDispatcher("./views/marketingdashboard.jsp").forward(request, response);
+       
+        request.setAttribute("totalPendingOrder", totalPendingOrder);
+        request.setAttribute("totalShippingOrder", totalShippingOrder);
+        request.setAttribute("totalDeliveredOrder", totalDeliveredOrder);
+        request.setAttribute("totalCanceledOrder", totalCanceledOrder);      
+        request.getRequestDispatcher("./views/saledashboard.jsp").forward(request, response);
     } 
 
     /** 

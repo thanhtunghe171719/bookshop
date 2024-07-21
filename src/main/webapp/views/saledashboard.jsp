@@ -9,7 +9,7 @@
        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Marketing Dashboard</title>
+        <title>Sale Dashboard</title>
         <link rel="icon" href="img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
@@ -78,23 +78,24 @@
                     <h4 class="breadcrumb-title">Dashboard</h4>           
                 </div>	
                 <!-- Card -->
-                <form action="admin_dashboard" method="post">
-                <c:set var="totalPosts" value="${totalPosts}"/>
-                <c:set var="totalBooks" value="${totalBooks}"/>
-                <c:set var="totalCustomers" value="${totalCustomers}"/>
+                <form action="sale_dashboard" method="post">
+                <c:set var="totalPendingOrder" value="${totalPendingOrder}"/>
+                <c:set var="totalShippingOrder" value="${totalShippingOrder}"/>
+                <c:set var="totalDeliveredOrder" value="${totalDeliveredOrder}"/>
+                <c:set var="totalCanceledOrder" value="${totalCanceledOrder}"/>
                 <div class="row">
                     <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
                         <div class="widget-card widget-bg1">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                  Total Posts
+                                  Pending Order
                                 </h4>
                                 <span class="wc-des">
-                                    All Blog Count
+                                    All Pending Order Count
                                 </span>
                                 <span class="wc-stats">
                                    <span class="counter">
-                                      ${totalPosts}
+                                      ${totalPendingOrder}
                                    </span>
                                    
                                 </span>		      
@@ -108,13 +109,13 @@
                         <div class="widget-card widget-bg2">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Feedback
+                                    Shipping Order
                                 </h4>
                                 <span class="wc-des">
-                                    Customer Review
+                                    All Shipping Order Count
                                 </span>
                                 <span class="wc-stats counter">
-                                    120 
+                                    ${totalShippingOrder}
                                 </span>		
                                 
                                 </span>
@@ -125,13 +126,13 @@
                         <div class="widget-card widget-bg3">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                   Books
+                                   Delivered Order
                                 </h4>
                                 <span class="wc-des">
-                                    All Books Count 
+                                    All Delivered Order Count 
                                 </span>
                                 <span class="wc-stats counter">
-                                     ${totalBooks} 
+                                     ${totalDeliveredOrder}
                                 </span>		
                                
                             </div>				      
@@ -141,13 +142,13 @@
                         <div class="widget-card widget-bg4">					 
                             <div class="wc-item">
                                 <h4 class="wc-title">
-                                    Customers 
+                                    Canceled Order
                                 </h4>
                                 <span class="wc-des">
-                                    All Customer Count
+                                    All Canceled Order Count
                                 </span>
                                 <span class="wc-stats counter">
-                                    ${totalCustomers}
+                                    ${totalCanceledOrder}
                                 </span>		
                                 
                             </div>				      
@@ -156,47 +157,18 @@
                 </div>
                 </form>
                                 <div class="row">
-                    <div class="col-lg-6 m-b30">
+                    <div class="col-lg-8 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
-                                <h4>Total Orders</h4>
+                                <h4>Orders</h4>
                             </div>
                             <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
+                                <canvas id="chart5" width="100" height="45"></canvas>
                             </div>
                         </div>
                     </div>
-                                    <div class="col-lg-6 m-b30">
-                        <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Total Profit</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                                    
-                                <div class="col-lg-6 m-b30">
-                         <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Total Customers</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 m-b30">
-                         <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Total Orders</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
+                     
+                                
         </div>
             </div>
         </main>

@@ -36,7 +36,7 @@ public class DAOOrders extends DBConnect {
                     + "        oi.quantity, \n"
                     + "        o.total, \n"
                     + "        ot.order_status,\n"
-                    + "        o.address,\n"                    
+                    + "        o.address,\n"
                     + "        ROW_NUMBER() OVER (PARTITION BY o.order_id ORDER BY b.title) as rn\n"
                     + "    FROM orders o\n"
                     + "    JOIN order_items oi on oi.order_id = o.order_id\n"
@@ -95,7 +95,7 @@ public class DAOOrders extends DBConnect {
                     + "        oi.quantity, \n"
                     + "        o.total, \n"
                     + "        ot.order_status,\n"
-                    + "        o.address,\n"                    
+                    + "        o.address,\n"
                     + "        ROW_NUMBER() OVER (PARTITION BY o.order_id ORDER BY b.title) as rn\n"
                     + "    FROM orders o\n"
                     + "    JOIN order_items oi on oi.order_id = o.order_id\n"
@@ -215,6 +215,70 @@ public class DAOOrders extends DBConnect {
             e.printStackTrace();
         }
         return totalOrders;
+    }
+
+    public int getTotalPendingOrder() {
+        int totalPendingOrder = 0;
+        String sql = "SELECT COUNT(*) as totalPendingOrder FROM orders\n"
+                + "where order_status_id = 1;";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalPendingOrder = rs.getInt("totalPendingOrder");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalPendingOrder;
+    }
+
+    public int getTotalShippingOrder() {
+        int totalShippingOrder = 0;
+        String sql = "SELECT COUNT(*) as totalShippingOrder FROM orders\n"
+                + "where order_status_id = 3;";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalShippingOrder = rs.getInt("totalShippingOrder");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalShippingOrder;
+    }
+
+    public int getTotalDeliveredOrder() {
+        int totalDeliveredOrder = 0;
+        String sql = "SELECT COUNT(*) as totalDeliveredOrder FROM orders\n"
+                + "where order_status_id = 4;";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalDeliveredOrder = rs.getInt("totalDeliveredOrder");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalDeliveredOrder;
+    }
+
+    public int getTotalCanceledOrder() {
+        int totalCanceledOrder = 0;
+        String sql = "SELECT COUNT(*) as totalCanceledOrder FROM orders\n"
+                + "where order_status_id = 5;";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalCanceledOrder = rs.getInt("totalCanceledOrder");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalCanceledOrder;
     }
 
     public double getTotalProfit() {

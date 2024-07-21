@@ -467,6 +467,135 @@
             });
 
         }
+        var displayLineGraphSale = function () {
+
+           if (!checkSelectorExistence('#chart5')) {
+                return;
+            }
+            Chart.defaults.global.defaultFontFamily = "rubik";
+            Chart.defaults.global.defaultFontColor = '#999';
+            Chart.defaults.global.defaultFontSize = '12';
+
+            var ctx = document.getElementById('chart5').getContext('2d');
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: ["January", "February", "March", "April", "May", "June"],
+                    // Information about the dataset
+                    datasets: [{
+                            label: "Pending",
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: "3",
+                            data: [0,1,1,1,2,3],
+                            pointRadius: 4,
+                            pointHoverRadius: 4,
+                            pointHitRadius: 10,
+                            pointBackgroundColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointBorderWidth: "3",
+                        },
+                        {
+                            label: "Shipping",
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: "3",
+                            data: [0,0,0,0,0,1],
+                            pointRadius: 4,
+                            pointHoverRadius: 4,
+                            pointHitRadius: 10,
+                            pointBackgroundColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointBorderWidth: "3",
+                        },
+                        {
+                            label: "Delivered",
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: "3",
+                            data: [0,1,2,1,0,3],
+                            pointRadius: 4,
+                            pointHoverRadius: 4,
+                            pointHitRadius: 10,
+                            pointBackgroundColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointBorderWidth: "3",
+                        },
+                        {
+                            label: "Canceled",
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: "3",
+                            data: [0,0,0,0,0,2],
+                            pointRadius: 4,
+                            pointHoverRadius: 4,
+                            pointHitRadius: 10,
+                            pointBackgroundColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointBorderWidth: "3",
+                        }]
+                },
+
+                // Configuration options
+                options: {
+
+                    layout: {
+                        padding: 0,
+                    },
+
+                    legend: {display: false},
+                    title: {display: false},
+
+                    scales: {
+                        yAxes: [{
+                                ticks: {
+                                    beginAtZero: true, // Đảm bảo trục y bắt đầu từ 0
+                                    callback: function (value, index, values) {
+                                        return value.toLocaleString();  // Định dạng số
+                                    }
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Order Number',
+                                    fontColor: '#999',
+                                    fontSize: 14,
+                                    fontStyle: 'bold'
+                                },
+                                gridLines: {
+                                    borderDash: [6, 6],
+                                    color: "#ebebeb",
+                                    lineWidth: 1,
+                                },
+                            }],
+                        xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Month',
+                                    fontColor: '#999',
+                                    fontSize: 14,
+                                    fontStyle: 'bold'
+                                },
+                                gridLines: {display: false},
+                            }],
+                    },
+
+                    tooltips: {
+                        backgroundColor: '#333',
+                        titleFontSize: 12,
+                        titleFontColor: '#fff',
+                        bodyFontColor: '#fff',
+                        bodyFontSize: 12,
+                        displayColors: false,
+                        xPadding: 10,
+                        yPadding: 10,
+                        intersect: false
+                    }
+                },
+            });
+        }
 
         return {
             initialHelper: function () {
@@ -479,6 +608,7 @@
                 displayPieGraphAdmin();
                 displayLineGraphMarketingCustomer();
                 displayLineGraphMarketingPost();
+                displayLineGraphSale();
             }
         }
 
