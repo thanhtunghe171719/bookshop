@@ -81,32 +81,28 @@
                 <fieldset>
                     <div class="inner-form">
                         <div class="input-field first-wrap">
-                           
-                            <input id="search" name="search" type="text" placeholder="Search by name" value="${searchQuery}">
+                            <input id="search" name="search" type="text" placeholder="Search by name" value="${param.search}">
                         </div>
                         <div class="input-field second-wrap">
-                           
                             <select name="gender">
                                 <option value="">All Genders</option>
-                                <option value="Male" <c:if test="${param.gender == 'Male'}">Male</option>
-                                <option value="Female" <c:if test="${param.gender == 'Female'}">Female</option>
+                                <option value="Male" <c:if test="${param.gender == 'Male'}"></c:if>Male</option>
+                                <option value="Female" <c:if test="${param.gender == 'Female'}"></c:if>Female</option>
                             </select>
                         </div>
                         <div class="input-field third-wrap">
-                           
                             <select name="role">
                                 <option value="">All Roles</option>
-                                <option value="sale" <c:if test="${param.role == 'sale'}">Sale</option>
-                                <option value="customer" <c:if test="${param.role == 'customer'}">Customer</option>
-                                <option value="Marketing" <c:if test="${param.role == 'Marketing'}">Marketing</option>
+                                <option value="sale" <c:if test="${param.role == 'sale'}"></c:if>Sale</option>
+                                <option value="customer" <c:if test="${param.role == 'customer'}"></c:if>Customer</option>
+                                <option value="Marketing" <c:if test="${param.role == 'Marketing'}"></c:if>Marketing</option>
                             </select>
                         </div>
                         <div class="input-field fouth-wrap">
-                            
                             <select name="status">
                                 <option value="">All Statuses</option>
-                                <option value="Active" <c:if test="${param.status == 'Active'}">Active</option>
-                                <option value="Inactive" <c:if test="${param.status == 'Inactive'}">Inactive</option>
+                                <option value="Active" <c:if test="${param.status == 'Active'}"></c:if>Active</option>
+                                <option value="Inactive" <c:if test="${param.status == 'Inactive'}"></c:if>Inactive</option>
                             </select>
                         </div>
                         <div class="input-field fifth-wrap">
@@ -114,40 +110,40 @@
                         </div>
                     </div>
                 </fieldset>
-
             </form>
+
 
             <div class="table-responsive-md-4">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <% 
-    String sortField = request.getParameter("sortField");
-    String sortOrder = request.getParameter("sortOrder");
-    String search = request.getParameter("search");
-    
-    if (sortOrder == null) {
-        sortOrder = "asc"; // Default sort order
-    }
+                            <%
+                                String sortField = request.getParameter("sortField");
+                                String sortOrder = request.getParameter("sortOrder");
+                                String search = request.getParameter("search");
+
+                                if (sortOrder == null) {
+                                    sortOrder = "asc"; // Default sort order
+                                }
                             %>
                             <th>Order</th>
-                            <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>"
-                                onclick="window.location.href = 'userList?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                            <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>"
+                                onclick="window.location.href = 'userList?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
                                 Full Name 
-                                <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter" %>"></i>
+                                <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter"%>"></i>
                             </th>
                             <th>Gender</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>" 
-                                onclick="window.location.href = 'userList?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                            <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
+                                onclick="window.location.href = 'userList?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
                                 Create At 
-                                <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter" %>"></i>
+                                <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
-                            <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>" 
-                                onclick="window.location.href = 'userList?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                            <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
+                                onclick="window.location.href = 'userList?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
                                 Update At 
-                                <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter" %>"></i>
+                                <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
                             <th>Role</th>
                             <th>Status</th>
@@ -156,31 +152,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% 
-                        List<User> users = (List<User>) request.getAttribute("users");
-                        if (users != null && !users.isEmpty()) {
-                            for (int i = 0; i < users.size(); i++) {
-                                 User user = users.get(i);
+                        <%
+                            List<User> users = (List<User>) request.getAttribute("users");
+                            if (users != null && !users.isEmpty()) {
+                                for (int i = 0; i < users.size(); i++) {
+                                    User user = users.get(i);
                         %>
                         <tr>
-                            <td><%= i + 1 %></td>
-                            <td><a href="userDetail?userId=<%= user.getUserId() %>"><%= user.getFullname() %></a></td>
-                            <td><%= user.getGender() %></td>
-                            <td><%= user.getEmail() %></td>
-                            <td><%= user.getPhone() %></td>
-                            <td><%= user.getCreateAt() %></td> 
-                            <td><%= user.getUpdatedAt() %></td> 
-                            <td><%= user.getRoleName() %></td> 
-                            <td><%= user.getStatus() %></td> 
+                            <td><%= i + 1%></td>
+                            <td><a href="userDetail?userId=<%= user.getUserId()%>"><%= user.getFullname()%></a></td>
+                            <td><%= user.getGender()%></td>
+                            <td><%= user.getEmail()%></td>
+                            <td><%= user.getPhone()%></td>
+                            <td><%= user.getCreateAt()%></td> 
+                            <td><%= user.getUpdatedAt()%></td> 
+                            <td><%= user.getRoleName()%></td> 
+                            <td><%= user.getStatus()%></td> 
                             <td>
                                 <!-- Edit Button -->
                                 <button class="table-link btn btn-link" data-toggle="modal" data-target="#editUserModal"
-                                        data-userid="<%= user.getUserId() %>"
-                                        data-fullname="<%= user.getFullname() %>"
-                                        data-gender="<%= user.getGender() %>"
-                                        data-email="<%= user.getEmail() %>"
-                                        data-phone="<%= user.getPhone() %>"
-                                        data-status="<%= user.getStatus() %>">
+                                        data-userid="<%= user.getUserId()%>"
+                                        data-fullname="<%= user.getFullname()%>"
+                                        data-gender="<%= user.getGender()%>"
+                                        data-email="<%= user.getEmail()%>"
+                                        data-phone="<%= user.getPhone()%>"
+                                        data-status="<%= user.getStatus()%>">
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -188,7 +184,7 @@
                                 </button>
 
                                 <!-- Delete Button -->
-                                <button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId() %>"
+                                <button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId()%>"
                                         data-toggle="modal" data-target="#deleteUserModal">
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
@@ -198,9 +194,9 @@
 
                             </td>
                         </tr>
-                        <% 
-                            } 
-                        } else { 
+                        <%
+                            }
+                        } else {
                         %>
                         <tr>
                             <td colspan="10" class="text-center">No users available</td>
@@ -214,37 +210,46 @@
             <!-- Pagination -->
             <nav class="blog-pagination justify-content-center d-flex">
                 <ul class="pagination">
-                    <% 
+                    <%
                         int currentPage = (int) request.getAttribute("currentPage");
                         int totalPages = (int) request.getAttribute("totalPages");
                         String searchQuery = (String) request.getAttribute("searchQuery");
-                        sortField = (String) request.getAttribute("sortField");
-                        sortOrder = (String) request.getAttribute("sortOrder");
+                        String gender = (String) request.getAttribute("gender");
+                        String role = (String) request.getAttribute("role");
+                        String status = (String) request.getAttribute("status");
+
+                        String buildUrl = "userList?index=";
+                        String parameters = "&search=" + (searchQuery != null ? searchQuery : "")
+                                + "&sortField=" + (sortField != null ? sortField : "")
+                                + "&sortOrder=" + (sortOrder != null ? sortOrder : "")
+                                + "&gender=" + (gender != null ? gender : "")
+                                + "&role=" + (role != null ? role : "")
+                                + "&status=" + (status != null ? status : "");
 
                         if (currentPage > 1) {
                     %>
                     <li class="page-item">
-                        <a href="userList?index=<%= currentPage - 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Previous">
+                        <a href="<%= buildUrl + (currentPage - 1) + parameters%>" class="page-link" aria-label="Previous">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-left"></span>
                             </span>
                         </a>
                     </li>
                     <% } %>
-                    <% for (int i = 1; i <= totalPages; i++) { %>
-                    <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-                        <a href="userList?index=<%= i %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link"><%= i %></a>
+                    <% for (int i = 1; i <= totalPages; i++) {%>
+                    <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
+                        <a href="<%= buildUrl + i + parameters%>" class="page-link"><%= i%></a>
                     </li>
                     <% } %>
-                    <% if (currentPage < totalPages) { %>
+                    <% if (currentPage < totalPages) {%>
                     <li class="page-item">
-                        <a href="userList?index=<%= currentPage + 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Next">
+                        <a href="<%= buildUrl + (currentPage + 1) + parameters%>" class="page-link" aria-label="Next">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-right"></span>
                             </span>
                         </a>
                     </li>
-                    <% } %>
+                    <% }%>
                 </ul>
             </nav>
 

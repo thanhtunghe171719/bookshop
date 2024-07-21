@@ -17,7 +17,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import models.User;
-import models.UserHistory;
+import models.UserChangeHistory;
 
 /**
  *
@@ -92,7 +92,6 @@ public class DAOUsers extends DBConnect {
                             rs.getTimestamp("updated_at"),
                             rs.getString("image"),
                             rs.getString("status"),
-                            
                             rs.getString("deleted")
                     );
                 }
@@ -103,12 +102,10 @@ public class DAOUsers extends DBConnect {
         return null;
     }
 
-    
-
     public boolean isAccountActive(User user) {
         return "active".equalsIgnoreCase(user.getStatus());
     }
-    
+
     public boolean addUser(User user) {
         String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try ( PreparedStatement ps = conn.prepareStatement(query)) {
@@ -379,7 +376,6 @@ public class DAOUsers extends DBConnect {
         return users;
     }
 
-  
     public int countUsersByName(String name) {
         String sql = "SELECT COUNT(*) FROM Users WHERE fullname LIKE ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -433,30 +429,32 @@ public class DAOUsers extends DBConnect {
         return users;
     }
 
-    public List<UserHistory> getUserHistory(int userId) {
-        List<UserHistory> historyList = new ArrayList<>();
-        String query = "SELECT * FROM UserHistory WHERE userId = ?";
-        try ( PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, userId);
-            try ( ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    historyList.add(new UserHistory(
-                            rs.getInt("historyId"),
-                            rs.getInt("userId"),
-                            rs.getString("updatedDate"),
-                            rs.getString("updatedBy"),
-                            rs.getString("email"),
-                            rs.getString("fullname"),
-                            rs.getString("gender"),
-                            rs.getString("address")
-                    ));
-                }
+    public List<UserChangeHistory> getUserChangeHistory(int userId) {
+        List<UserChangeHistory> historyList = new ArrayList<>();
+        String query = "SELECT * FROM UserChangeHistory WHERE user_id = ? ORDER BY updated_date DESC";
+
+        try (  PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String fieldName = resultSet.getString("field_name");
+                String oldValue = resultSet.getString("old_value");
+                String newValue = resultSet.getString("new_value");
+                Timestamp updatedDate = resultSet.getTimestamp("updated_date");
+
+                UserChangeHistory history = new UserChangeHistory(userId, fieldName, oldValue, newValue, updatedDate);
+                historyList.add(history);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return historyList;
     }
+   
+
 
     public int updateUserDetail(User user) {
         String query = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE userId = ?";
@@ -721,7 +719,7 @@ public class DAOUsers extends DBConnect {
         }
         return 0;
     }
-   
+
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
 
@@ -749,7 +747,7 @@ public class DAOUsers extends DBConnect {
 //        }
     }
 
-      private User mapResultSetToUser(ResultSet rs) throws SQLException {
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
         return new User(
                 rs.getInt("user_id"),
                 rs.getString("email"),

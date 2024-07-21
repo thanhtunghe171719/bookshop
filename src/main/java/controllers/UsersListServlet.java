@@ -70,6 +70,30 @@ public class UsersListServlet extends HttpServlet {
         request.setAttribute("role", role);
         request.setAttribute("status", status);
 
+        // Generate the pagination URL with query parameters
+        StringBuilder paginationUrl = new StringBuilder("UsersListServlet?");
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            paginationUrl.append("search=").append(searchQuery).append("&");
+        }
+        if (sortField != null && !sortField.isEmpty()) {
+            paginationUrl.append("sortField=").append(sortField).append("&");
+        }
+        if (sortOrder != null && !sortOrder.isEmpty()) {
+            paginationUrl.append("sortOrder=").append(sortOrder).append("&");
+        }
+        if (gender != null && !gender.isEmpty()) {
+            paginationUrl.append("gender=").append(gender).append("&");
+        }
+        if (role != null && !role.isEmpty()) {
+            paginationUrl.append("role=").append(role).append("&");
+        }
+        if (status != null && !status.isEmpty()) {
+            paginationUrl.append("status=").append(status).append("&");
+        }
+        String finalPaginationUrl = paginationUrl.toString();
+
+        request.setAttribute("paginationUrl", finalPaginationUrl);
+
         request.getRequestDispatcher("views/userList.jsp").forward(request, response);
     }
 

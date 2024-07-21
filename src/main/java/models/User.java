@@ -99,8 +99,18 @@ public class User {
         this.phone = phone;
         this.status = status;
     }
-
-    public int getUserId() {
+    
+            
+    public User(int userId, String fullname,String gender, String email,String phone, String address, String image) {
+        this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.image = image;
+    }
+public int getUserId() {
         return userId;
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
-import models.UserHistory;
+import models.UserChangeHistory;
 
 public class UserDetailServlet extends HttpServlet {
 
@@ -47,12 +47,12 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userIdParam = request.getParameter("userId"); // Get userId from URL
+        String userIdParam = request.getParameter("userId");
         if (userIdParam != null) {
             try {
                 int userId = Integer.parseInt(userIdParam);
-                User user = daoUsers.getUserById(userId); // Fetch the user based on userId
-                List<UserHistory> historyList = daoUsers.getUserHistory(userId); // Fetch user history from the database
+                User user = daoUsers.getUserById(userId);
+                List<UserChangeHistory> historyList = daoUsers.getUserChangeHistory(userId);
 
                 request.setAttribute("user", user);
                 request.setAttribute("historyList", historyList);
@@ -76,29 +76,47 @@ public class UserDetailServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
 
-        User user = new User(userId, fullname, gender, email, phone, address);
+        User oldUser = daoUsers.getUserById(userId);
+        User newUser = new User(userId,
+                fullname != null ? fullname : "",
+                gender != null ? gender : "",
+                email != null ? email : "",
+                phone != null ? phone : "",
+                address != null ? address : "");
 
         String jdbcURL = "jdbc:mysql://localhost:3306/checksql";
         String dbUser = "root";
         String dbPassword = "12345";
 
-        String query = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE user_Id = ?";
+        String updateQuery = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE user_Id = ?";
+        String insertHistoryQuery = "INSERT INTO UserChangeHistory (user_id, field_name, old_value, new_value) VALUES (?, ?, ?, ?)";
 
-        try ( Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);  PreparedStatement statement = connection.prepareStatement(query)) {
+        try ( Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword)) {
+            connection.setAutoCommit(false);
 
-            statement.setString(1, user.getFullname());
-            statement.setString(2, user.getGender());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getAddress());
-            statement.setInt(6, user.getUserId());
+            try ( PreparedStatement updateStatement = connection.prepareStatement(updateQuery);  PreparedStatement historyStatement = connection.prepareStatement(insertHistoryQuery)) {
 
-            int rowsAffected = statement.executeUpdate();
+                updateStatement.setString(1, newUser.getFullname());
+                updateStatement.setString(2, newUser.getGender());
+                updateStatement.setString(3, newUser.getEmail());
+                updateStatement.setString(4, newUser.getPhone());
+                updateStatement.setString(5, newUser.getAddress());
+                updateStatement.setInt(6, newUser.getUserId());
+                updateStatement.executeUpdate();
 
-            if (rowsAffected > 0) {
+                saveChangeHistory(historyStatement, userId, "fullname", oldUser.getFullname(), newUser.getFullname());
+                saveChangeHistory(historyStatement, userId, "gender", oldUser.getGender(), newUser.getGender());
+                saveChangeHistory(historyStatement, userId, "email", oldUser.getEmail(), newUser.getEmail());
+                saveChangeHistory(historyStatement, userId, "phone", oldUser.getPhone(), newUser.getPhone());
+                saveChangeHistory(historyStatement, userId, "address", oldUser.getAddress(), newUser.getAddress());
+
+                historyStatement.executeBatch();
+                connection.commit();
+
                 request.setAttribute("message", "Changes saved successfully.");
-            } else {
-                request.setAttribute("error", "Failed to save changes.");
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,6 +124,28 @@ public class UserDetailServlet extends HttpServlet {
         }
 
         doGet(request, response);
+    }
+
+    private void saveChangeHistory(PreparedStatement statement, int userId, String fieldName, String oldValue, String newValue) throws SQLException {
+        if (oldValue != null && newValue != null && !oldValue.equals(newValue)) {
+            statement.setInt(1, userId);
+            statement.setString(2, fieldName);
+            statement.setString(3, oldValue);
+            statement.setString(4, newValue);
+            statement.addBatch();
+        } else if (oldValue == null && newValue != null) {
+            statement.setInt(1, userId);
+            statement.setString(2, fieldName);
+            statement.setString(3, "null");
+            statement.setString(4, newValue);
+            statement.addBatch();
+        } else if (oldValue != null && newValue == null) {
+            statement.setInt(1, userId);
+            statement.setString(2, fieldName);
+            statement.setString(3, oldValue);
+            statement.setString(4, "null");
+            statement.addBatch();
+        }
     }
 
     @Override

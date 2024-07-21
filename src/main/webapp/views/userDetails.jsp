@@ -1,5 +1,5 @@
 <%@ page import="models.User" %>
-<%@ page import="models.UserHistory" %>
+<%@ page import="models.UserChangeHistory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -108,14 +108,7 @@
                                                 <input type="text" class="form-control" name="phone" value="${user.phone}">
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Address</h6>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                <input type="text" class="form-control" name="address" value="${user.address}">
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row mb-3">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Gender</h6>
@@ -139,24 +132,22 @@
                             <div class="col-sm-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="d-flex align-items-center mb-3">User History</h5>
+                                        <h5 class="d-flex align-items-center mb-3">User Change History</h5>
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Email</th>
-                                                    <th>Full Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Address</th>
+                                                    <th>Field</th>
+                                                    <th>Old Value</th>
+                                                    <th>New Value</th>
                                                     <th>Updated Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <c:forEach var="history" items="${historyList}">
                                                     <tr>
-                                                        <td>${history.email}</td>
-                                                        <td>${history.fullname}</td>
-                                                        <td>${history.gender}</td>
-                                                        <td>${history.address}</td>
+                                                        <td>${history.fieldName}</td>
+                                                        <td>${history.oldValue}</td>
+                                                        <td>${history.newValue}</td>
                                                         <td>${history.updatedDate}</td>
                                                     </tr>
                                                 </c:forEach>
@@ -166,6 +157,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
                 </div>
