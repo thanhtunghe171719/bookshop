@@ -259,9 +259,10 @@ public class DAOUsers extends DBConnect {
                 + "gender = ?,\n"
                 + "address = ?,\n"
                 + "create_at = ?,\n"
-                + "updated_at = ?\n"
-                + "image = ?\n"
+                + "updated_at = ?,\n"
+                + "image = ?,\n"
                 + "status = ?,\n"
+                + "deleted = ?\n"
                 + "WHERE user_id = ?;";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -277,7 +278,8 @@ public class DAOUsers extends DBConnect {
             pre.setTimestamp(9, obj.getUpdatedAt());
             pre.setString(10, obj.getImage());
             pre.setString(11, obj.getStatus());
-            pre.setInt(12, obj.getUserId());
+            pre.setString(12, obj.getDeleted());
+            pre.setInt(13, obj.getUserId());
             n = pre.executeUpdate();
 
         } catch (SQLException ex) {
@@ -749,7 +751,14 @@ public List<UserChangeHistory> getUserChangeHistory(int userId) {
 
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
-
+        User user = dao.getAll("SELECT * FROM users where email = 'thanhtung2733@gmail.com';").get(0);
+        System.out.println(user);
+        user.setPassword("12345678Tung!");
+        if(dao.update(user) > 0){
+            System.out.println("ok");
+        }else{
+            System.out.println("not ok");
+        }
         // Test getUsersWithPagination method
         //List<User> usersPage1 = dao.getUsersWithPagination(1, 10);
         //System.out.println("Users (Page 1):");

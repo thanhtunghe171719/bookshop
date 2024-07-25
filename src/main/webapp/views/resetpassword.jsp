@@ -149,20 +149,29 @@
                 newPasswordResult.textContent = '';
 
                 if (!newPassword) {
-                    newPasswordResult.textContent = 'Please enter your new password.';
+                    newPasswordResult.textContent = 'Vui lòng nhập mật khẩu mới của bạn.';
                     return false;
                 } else if (newPassword.length < 8) {
-                    newPasswordResult.textContent = 'Must be at least 8 characters long.';
+                    newPasswordResult.textContent = 'Phải có độ dài ít nhất 8 ký tự.';
+                    return false;
+                }else if(newPassword.length > 20){
+                    newPasswordResult.textContent = 'Không vượt quá 20 ký tự.';
                     return false;
                 } else if (/\s/.test(newPassword)) {
-                    newPasswordResult.textContent = 'Must not contain spaces.';
+                    newPasswordResult.textContent = 'Không được chứa dấu cách.';
                     return false;
-                } else if (!/^[A-Z]/.test(newPassword)) {
-                    newPasswordResult.textContent = 'Must start with an uppercase letter.';
+                }else if(!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)){
+                    newPasswordResult.textContent = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt.';
+                    return false;
+                } else if (!/[A-Za-z]/.test(newPassword)) {
+                    newPasswordResult.textContent = 'Mật khẩu phải chứa ít nhất một chữ cái.';
+                    return false;
+                }else if(!/\d/.test(newPassword)){
+                    newPasswordResult.textContent = 'Mật khẩu phải chứa ít nhất một số.';
                     return false;
                 }
 
-                newPasswordResult.innerHTML = '<span style="color: green;">&#10004; Password is valid.</span>';
+                newPasswordResult.innerHTML = '<span style="color: green;">&#10004; Mật khẩu hợp lệ.</span>';
                 return true;
             }
 
@@ -173,14 +182,14 @@
                 confirmNewPasswordResult.textContent = '';
 
                 if (!confirmNewPassword) {
-                    confirmNewPasswordResult.textContent = 'Please confirm your new password.';
+                    confirmNewPasswordResult.textContent = 'Vui lòng xác nhận mật khẩu mới của bạn.';
                     return false;
                 } else if (newPassword !== confirmNewPassword) {
-                    confirmNewPasswordResult.textContent = 'Passwords do not match.';
+                    confirmNewPasswordResult.textContent = 'Mật khẩu không phù hợp.';
                     return false;
                 }
 
-                confirmNewPasswordResult.innerHTML = '<span style="color: green;">&#10004; Passwords match.</span>';
+                confirmNewPasswordResult.innerHTML = '<span style="color: green;">&#10004; Mật khẩu trùng khớp.</span>';
                 return true;
             }
 
@@ -189,7 +198,7 @@ function validateForm() {
     var isConfirmPasswordValid = validateConfirmPassword();
 
       if (!isNewPasswordValid || !isConfirmPasswordValid) {
-        document.getElementById('buttonResult').textContent = 'Please correct the errors above and try again.';
+        document.getElementById('buttonResult').textContent = 'Vui lòng sửa các lỗi trên và thử lại.';
         return false;
       }
 

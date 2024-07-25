@@ -240,7 +240,7 @@
                 xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId, true);
                 xhr.send();
             }
-
+            
 
         </script>      
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>

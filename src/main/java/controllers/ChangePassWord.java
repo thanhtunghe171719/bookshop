@@ -36,7 +36,6 @@ public class ChangePassWord extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-
         session.setAttribute("user", user);
 
         if (user == null) {
@@ -53,6 +52,7 @@ public class ChangePassWord extends HttpServlet {
 
                 if(oldPassword.equals(user.getPassword())){
                     user.setPassword(newPassword);
+                    user.setDeleted("no");
                     int result = dao.update(user);
                     if(result != 0){
                         notice = "change password successful.";
@@ -60,11 +60,14 @@ public class ChangePassWord extends HttpServlet {
                         return;
                     }else{
                         notice = "change password fail.";
+                        return;
                     }
                 }else{
                     notice = "input wrong old password.";
+                    return;
                 }
             }
+            
             RequestDispatcher dispth = request.getRequestDispatcher("./views/changepassword.jsp");
             //run(view)
             dispth.forward(request, response);

@@ -117,10 +117,20 @@
                 } else if (oldPassword.length < 8) {
                     oldPasswordError.textContent = 'Phải có ít nhất 8 ký tự.';
                     return false;
-                } else if (!/^[A-Z]/.test(oldPassword)) {
-                    oldPasswordError.textContent = 'Phải bắt đầu bằng chữ in hoa.';
+                }else if(oldPassword.length > 20){
+                    oldPasswordError.textContent = 'Không vượt quá 20 ký tự.';
+                    return false;
+                }else if(!/[!@#$%^&*(),.?":{}|<>]/.test(oldPassword)){
+                    oldPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt.';
+                    return false;
+                } else if (!/[A-Za-z]/.test(oldPassword)) {
+                    oldPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một chữ cái.';
+                    return false;
+                }else if(!/\d/.test(oldPassword)){
+                    oldPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một số.';
                     return false;
                 }
+                    
                 return true;
             }
 
@@ -135,11 +145,20 @@
                 } else if (newPassword.length < 8) {
                     newPasswordError.textContent = 'Phải có độ dài ít nhất 8 ký tự.';
                     return false;
-                } else if (/[\s]/.test(newPassword)) {
+                }else if(newPassword.length > 20){
+                    newPasswordError.textContent = 'Không vượt quá 20 ký tự.';
+                    return false;
+                }else if (/[\s]/.test(newPassword)) {
                     newPasswordError.textContent = 'Không được chứa dấu cách.';
                     return false;
-                } else if (!/^[A-Z]/.test(newPassword)) {
-                    newPasswordError.textContent = 'Phải bắt đầu bằng chữ in hoa.';
+                }else if(!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)){
+                    newPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt.';
+                    return false;
+                } else if (!/[A-Za-z]/.test(newPassword)) {
+                    newPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một chữ cái.';
+                    return false;
+                }else if(!/\d/.test(newPassword)){
+                    newPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một số.';
                     return false;
                 } else if (newPassword === oldPassword) {
                     newPasswordError.textContent = 'Mật khẩu mới phải khác với Mật khẩu cũ.';
@@ -162,10 +181,16 @@
                 } else if (/[\s]/.test(confirmNewPassword)) {
                     confirmNewPasswordError.textContent = 'Không được chứa dấu cách.';
                     return false;
-                } else if (!/^[A-Z]/.test(confirmNewPassword)) {
-                    confirmNewPasswordError.textContent = 'Phải bắt đầu bằng chữ in hoa.';
+                } else if(!/[!@#$%^&*(),.?":{}|<>]/.test(confirmNewPassword)){
+                    confirmNewPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt.';
                     return false;
-                } else if (newPassword !== confirmNewPassword) {
+                } else if (!/[A-Za-z]/.test(confirmNewPassword)) {
+                    confirmNewPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một chữ cái.';
+                    return false;
+                }else if(!/\d/.test(confirmNewPassword)){
+                    confirmNewPasswordError.textContent = 'Mật khẩu phải chứa ít nhất một số.';
+                    return false;
+                }  else if (newPassword !== confirmNewPassword) {
                     confirmNewPasswordError.textContent = 'Mật khẩu mới và Xác nhận mật khẩu mới không khớp.';
                     return false;
                 }

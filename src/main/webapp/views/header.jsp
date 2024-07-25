@@ -30,7 +30,7 @@
                             </ul>
                         </li>
                         <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3}">
-                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>          
+                            <li class="nav-item"><a class="nav-link" id="contactLink">Contact</a></li>          
                             </c:if>
                             <c:if test="${sessionScope.user.roleId ==1}">
                             <li class="nav-item submenu dropdown">
