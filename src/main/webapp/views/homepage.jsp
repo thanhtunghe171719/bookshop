@@ -107,13 +107,12 @@
                     <div class="section-intro pb-60px">
                         <h2><span class="section-intro__style">Sản phẩm Thịnh Hành</span></h2>
 
-                        <div class="nice-select" tabindex="0" style="float : right;top: -30px;">
-                            <span class="current">${currentOption}</span>
-                            <ul class="list">
-                                <li data-value="discount" class="option selected focus">Giảm Giá Mạnh</li>
-                                <li data-value="sold" class="option">Sản Phẩm Bán Chạy</li>
-                                <li data-value="new-product" class="option">Sản Phẩm Mới</li>
-                            </ul>
+                        <div style="float : right;top: -30px;">
+                            <select id="optionId" name="selectedOption" class="form-control" onchange="selectOption()">
+                                <option value="discount" ${param.selectedOption == 'discount' ? 'selected' : ''}>Giảm Giá Mạnh</option>
+                                <option value="sold" ${param.selectedOption == 'sold' ? 'selected' : ''}>Sản Phẩm Bán Chạy</option>
+                                <option value="new-product" ${param.selectedOption == 'new-product' ? 'selected' : ''}>Sản Phẩm Mới</option>
+                            </select>
                         </div>
 
                     </div>
@@ -175,7 +174,7 @@
                                         </div>
                                         <div class="card-body">
 
-                                            <h4 class="card-blog__title"><a href="#">${post.title}</a></h4>
+                                            <h4 class="card-blog__title"><a href="blog?blogId = ${post.postId}">${post.title}</a></h4>
                   <!--                          <p>${post.description}...</p>
                                             <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>-->
                                         </div>
@@ -214,15 +213,9 @@
                 document.getElementById('slide_' + currentSlide).style.display = 'flex';
             }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                var options = document.querySelectorAll('.option');
-                options.forEach(function (option) {
-                    option.addEventListener('click', function () {
-                        var selectedValue = this.getAttribute('data-value');
-                        window.location.href = 'home?selectedOption=' + selectedValue;
-                    });
-                });
-            });
+            setInterval(function () {
+                nextSlide(currentSlide);
+            }, 5000);
 
             function addToCart(userId, bookId) {
                 if (userId === "") {
@@ -240,7 +233,27 @@
                 xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId, true);
                 xhr.send();
             }
-            
+
+//            function selectOption() {
+//                var selectElement = document.getElementById('optionId');
+//                var selectedValue = selectElement.value;
+//                var url = 'home?service=listAll&selectedOption=' + selectedValue;
+//                window.location.href = url;
+//            }
+
+function selectOption() {
+    var xhr = new XMLHttpRequest();
+    var selectedValue = document.getElementById("optionId").value;
+    xhr.onload = function () {  // Corrected line
+        if (this.readyState === 4 && this.status === 200) {
+            // Handle response from the server if needed
+            console.log("success");
+        }
+    };
+    xhr.open('GET', 'home?service=listAll&selectedOption=' + selectedValue, true);
+    xhr.send();
+}
+
 
         </script>      
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>

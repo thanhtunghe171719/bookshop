@@ -66,41 +66,43 @@ public class HomePage extends HttpServlet {
         ArrayList<Posts> listPost = daoPosts.getAll("SELECT * FROM posts WHERE status = 'Show' ORDER BY created_at DESC LIMIT 3;");
         request.setAttribute("listPost", listPost);
 
-        ArrayList<Book> listBook = new ArrayList<>();;
+        ArrayList<Book> listBook = new ArrayList<>();
         String service = (String) request.getParameter("service");
         if (service == null) {
             service = "listAll";
         }
         if (service.equals("listAll")) {
-            String currentOption = "Giảm Giá Mạnh";
-            String selectedOption = (String) request.getParameter("selectedOption");
+            String selectedOption = request.getParameter("selectedOption");
             if (selectedOption != null) {
-                // sách Giảm Giá Mạnh"
-                if (selectedOption.equals("discount")) {
-                    listBook = daoBooks.getAll("SELECT * FROM books WHERE discount > 0 AND stock > 0 ORDER BY discount DESC LIMIT 8;");
-                    currentOption = "Giảm Giá Mạnh";
+                switch (selectedOption) {
+                    // sách Giảm Giá Mạnh"
+                    case "discount":
+                        listBook = daoBooks.getAll("SELECT * FROM books WHERE discount > 0 AND stock > 0 ORDER BY discount DESC LIMIT 8;");
+                        break;
                     //    Sản Phẩm Bán Chạy
-                } else if (selectedOption.equals("sold")) {
-                    List<Integer> listBookId = daoOrderItems.getBookId("SELECT oi.book_id FROM order_items oi  GROUP BY oi.book_id  ORDER BY SUM(oi.quantity) DESC limit 8;");
-                    for (int i = 0; i < listBookId.size(); i++) {
-                        Book bookItem = daoBooks.getBookById("SELECT * FROM books WHERE stock > 0 and book_id = " + listBookId.get(i));
-                        if (bookItem != null) {
-                            listBook.add(bookItem);  // Now listBook is initialized, so this will work fine
+                    case "sold":
+                        List<Integer> listBookId = daoOrderItems.getBookId("SELECT oi.book_id FROM order_items oi  GROUP BY oi.book_id  ORDER BY SUM(oi.quantity) DESC limit 8;");
+                        for (int i = 0; i < listBookId.size(); i++) {
+                            Book bookItem = daoBooks.getBookById("SELECT * FROM books WHERE stock > 0 and book_id = " + listBookId.get(i));
+                            if (bookItem != null) {
+                                listBook.add(bookItem);  // Now listBook is initialized, so this will work fine
+                            }
                         }
-                    }
-                    currentOption = "Sản Phẩm Bán Chạy";
+                        break;
                     //  Sản Phẩm Mới  
-                } else if (selectedOption.equals("new-product")) {
-                    listBook = daoBooks.getAll("SELECT * FROM books WHERE stock > 0 ORDER BY book_id DESC LIMIT 8;");
-                    currentOption = "Sản Phẩm Mới";
+                    case "new-product":
+                        listBook = daoBooks.getAll("SELECT * FROM books WHERE stock > 0 ORDER BY book_id DESC LIMIT 8;");
+                        break;
+                    default:
+                        break;
                 }
 
             } else {
                 listBook = daoBooks.getAll("SELECT * FROM books WHERE discount > 0 AND stock > 0 ORDER BY discount DESC LIMIT 8;");
             }
 
-            request.setAttribute("listBook", listBook);
-            request.setAttribute("currentOption", currentOption);
+            session.setAttribute("listBook", listBook);
+            session.setAttribute("selectedOption", selectedOption);
 
         }
 

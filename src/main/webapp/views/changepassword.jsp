@@ -70,10 +70,10 @@
 
                                 <div class="col-md-12 form-group">
                                     <button type="submit" name ="submit" value="submit" class="button button-register w-100">Lưu</button>
-                                    <p  id="formError" class="text-danger"></p>
-                                    <c:if test="not empty notice">
-                                        <p class="text-danger">${notice}</p>
-                                    </c:if>
+                                    <p  id="formError" class="text-danger">${notice}</p>
+                                    <%--<c:if test="not empty notice">--%>
+                                        <!--<p class="text-danger">${notice}</p>-->
+                                    <%--</c:if>--%>
                                 </div>
                             </form>
                         </div>
@@ -205,10 +205,7 @@
                 if (!isOldPasswordValid || !isNewPasswordValid || !isConfirmPasswordValid) {
                     document.getElementById('formError').textContent = 'Vui lòng sửa các lỗi trên và thử lại.';
                     return false;
-                } else {
-                    document.getElementById('formError').textContent = 'Đổi mật khẩu thành công.';
                 }
-
                 return true;
             }
 

@@ -34,7 +34,7 @@ public class slider extends HttpServlet {
         
         String service = request.getParameter("service");
         
-        ArrayList<Slider> listSlider = daoSlider.getAll("SELECT * FROM slider  ORDER BY slider_id DESC limit 5;");
+        ArrayList<Slider> listSlider = daoSlider.getAll("SELECT * FROM slider where status = 'Show' ORDER BY slider_id DESC limit 5;");
         request.setAttribute("listSlider", listSlider);
             
         if(service == null){
@@ -57,11 +57,7 @@ public class slider extends HttpServlet {
 
                 ArrayList<Slider> detailSlider = daoSlider.getAll("SELECT * FROM slider where status = 'Show' and title like '%"+title+"%' limit 1;");
                 request.setAttribute("detailSlider", detailSlider);
-
             }
-            
-                
-            
         }
         //select(jsp)   
         RequestDispatcher dispth = request.getRequestDispatcher("./views/slider.jsp");

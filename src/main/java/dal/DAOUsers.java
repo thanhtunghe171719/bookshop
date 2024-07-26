@@ -253,7 +253,7 @@ public class DAOUsers extends DBConnect {
     public int update(User obj) {
         int n = 0;
 
-        String sql = "UPDATE bookshop.users\n"
+        String sql = "UPDATE users\n"
                 + "SET\n"
                 + "email = ?,\n"
                 + "phone = ?,\n"
