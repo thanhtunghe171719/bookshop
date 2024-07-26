@@ -22,7 +22,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        <div class="container mt-5">
+       <div class="container mt-5">
             <h2>Edit Post</h2>
             <form id="form-1" action="managerpost?action=edit" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="post_id" value="<%= post != null ? post.getPostId() : 0%>">
@@ -32,9 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" name="description" rows="5" readonly>
-                        <%= post != null ? post.getDescription().replace("\n", "<br>") : "" %>
-                    </textarea>
+                    <textarea class="form-control" name="description" rows="5" readonly><%= post != null ? post.getDescription() : ""%></textarea>
                 </div>
                 <div class="form-group">
                     <label for="post_type">Type</label>
@@ -60,7 +58,7 @@
                 </div>
                 <div class="text-center mt-4">
                     <button onclick="editPost()" id="edit" type="button" class="btn btn-primary">Edit</button>
-                </div>
+                      </div>
                 <div class="text-center mt-2">
                     <h6 id="statusMessage" style="color: green;"></h6>
                 </div>
@@ -71,47 +69,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
-                        function toggleStatus(postId) {
-                            if (confirm("Are you sure you want to toggle the status of this post?")) {
-                                $.ajax({
-                                    url: 'managerpost',
-                                    type: 'GET',
-                                    data: {
-                                        action: 'toggleStatus',
-                                        post_id: postId
-                                    },
-                                    success: function (response) {
-                                        if (response.status === 'success') {
-                                            alert('Post status toggled successfully!');
-                                            location.reload();
-                                        } else {
-                                            alert('Error toggling post status!');
-                                        }
-                                    }
-                                });
-                            }
-                        }
-
-                        function deletePost(postId) {
-                            if (confirm("Are you sure you want to delete this post?")) {
-                                $.ajax({
-                                    url: 'managerpost',
-                                    type: 'GET',
-                                    data: {
-                                        action: 'delete',
-                                        post_id: postId
-                                    },
-                                    success: function (response) {
-                                        if (response.status === 'success') {
-                                            alert('Post deleted successfully!');
-                                            window.location.href = 'posts';
-                                        } else {
-                                            alert('Error deleting post!');
-                                        }
-                                    }
-                                });
-                            }
-                        }
+                       
 
                         function editPost() {
                             document.querySelectorAll('input, textarea, select').forEach((el) => {

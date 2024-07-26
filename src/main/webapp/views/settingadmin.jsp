@@ -161,9 +161,7 @@
                 </div>
             </div>
         </div>
-
     </body>
-
     <script>
         function showContent(contentType) {
             var contents = document.getElementsByClassName('content');
