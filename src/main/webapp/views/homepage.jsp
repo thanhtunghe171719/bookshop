@@ -1,4 +1,6 @@
 
+<%@page import="com.google.gson.Gson"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -108,7 +110,7 @@
                         <h2><span class="section-intro__style">Sản phẩm Thịnh Hành</span></h2>
 
                         <div style="float : right;top: -30px;">
-                            <select id="optionId" name="selectedOption" class="form-control" onchange="selectOption()">
+                            <select id="optionId" name="selectedOption" class="form-control" onclick="selectOption()">
                                 <option value="discount" ${param.selectedOption == 'discount' ? 'selected' : ''}>Giảm Giá Mạnh</option>
                                 <option value="sold" ${param.selectedOption == 'sold' ? 'selected' : ''}>Sản Phẩm Bán Chạy</option>
                                 <option value="new-product" ${param.selectedOption == 'new-product' ? 'selected' : ''}>Sản Phẩm Mới</option>
@@ -117,7 +119,7 @@
 
                     </div>
 
-                    <div class="row">
+                    <div class="row" id="productList">
                         <c:if test="${not empty listBook}">
                             <c:forEach var="book" items="${listBook}">
                                 <div class="col-md-6 col-lg-4 col-xl-3">
@@ -196,7 +198,6 @@
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
 
-
         <script>
             var currentSlide = 0;
             var totalSlides = ${listSlider.size()};
@@ -234,26 +235,37 @@
                 xhr.send();
             }
 
-//            function selectOption() {
-//                var selectElement = document.getElementById('optionId');
-//                var selectedValue = selectElement.value;
-//                var url = 'home?service=listAll&selectedOption=' + selectedValue;
-//                window.location.href = url;
-//            }
+            function selectOption() {
+                var selectElement = document.getElementById('optionId');
+                var selectedValue = selectElement.value;
+                var url = 'home?service=listAll&selectedOption=' + selectedValue;
+                window.location.href = url;
+            }
 
-function selectOption() {
-    var xhr = new XMLHttpRequest();
-    var selectedValue = document.getElementById("optionId").value;
-    xhr.onload = function () {  // Corrected line
-        if (this.readyState === 4 && this.status === 200) {
-            // Handle response from the server if needed
-            console.log("success");
-        }
-    };
-    xhr.open('GET', 'home?service=listAll&selectedOption=' + selectedValue, true);
-    xhr.send();
-}
+            function selectOption1() {
+                var selectedValue = document.getElementById('optionId').value;
+                //su ajax toi con servlet change
+                $.ajax({
+                    url: '/BookShop/home?service=listAll&selectedOption=' + selectedValue,
+                    type: 'POST'
 
+                });
+
+            }
+            function selectOption2() {
+                var selectedValue = document.getElementById('optionId').value;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // Handle response from the server if needed
+                        console.log("Status updated successfully.");
+                        // Reload the page to reflect changes
+                        window.location.reload();
+                    }
+                };
+                xhr.open("GET", "home?service=listAll&selectedOption=" + selectedValue, true);
+                xhr.send();
+            }
 
         </script>      
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>

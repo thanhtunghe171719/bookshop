@@ -35,6 +35,7 @@ public class ChangePassWord extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
+        DAOUsers userDAO = new DAOUsers();
         User user = (User) session.getAttribute("user");
         session.setAttribute("user", user);
         PrintWriter out = response.getWriter();
@@ -45,9 +46,11 @@ public class ChangePassWord extends HttpServlet {
             if (submit != null && submit.equals("submit")) {
                 DAOUsers dao = new DAOUsers();
 
-                String oldPassword =  request.getParameter("oldPassword");
-                String newPassword =  request.getParameter("newPassword");
-
+                String oldPassword = request.getParameter("oldPassword");
+//                String encryptOld = userDAO.Sha256(oldPassword);
+                String newPassword = request.getParameter("newPassword");
+//                String encryptNew = userDAO.Sha256(newPassword);
+                
                 String notice = null;
 
                 if (oldPassword.equals(user.getPassword())) {
@@ -55,15 +58,15 @@ public class ChangePassWord extends HttpServlet {
                     user.setDeleted("no");
                     int result = dao.update(user);
                     if (result != 0) {
-                        notice = "change password successful.";
+                        notice = "thay đổi mật khẩu thành công.";
                         response.sendRedirect("home");
                         return;
                     } else {
-                        notice = "change password fail.";
+                        notice = "thay đổi mật khẩu thất bại.";
 
                     }
                 } else {
-                    notice = "input wrong old password.";
+                    notice = "nhập sai mật khẩu cũ.";
 
                 }
                 request.setAttribute("notice", notice);

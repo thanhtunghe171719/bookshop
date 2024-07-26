@@ -14,53 +14,49 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">                
-                        <li class="nav-item"><a class="nav-link" href="home">Home</a></li>                 
+                        <li class="nav-item"><a class="nav-link" href="home">trang chủ</a></li>                 
                         <li class="nav-item submenu dropdown">
-                            <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="products">Shop Category</a></li>
-                            </ul>
+                            <a href="products" class="nav-link dropdown-toggle"  role="button" aria-haspopup="true"
+                               aria-expanded="false">cửa hàng</a>
+                            
                         </li>
                         <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            <a href="blog" class="nav-link dropdown-toggle"  role="button" aria-haspopup="true"
                                aria-expanded="false">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog">Blog List</a></li>
-                            </ul>
+                            
                         </li>
                         <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3}">
-                            <li class="nav-item"><a class="nav-link" id="contactLink">Contact</a></li>          
+                            <li class="nav-item"><a class="nav-link" id="contactLink">Liên hệ</a></li>          
                             </c:if>
                             <c:if test="${sessionScope.user.roleId ==1}">
                             <li class="nav-item submenu dropdown">
                                 <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Manage</a>
+                                   aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="userList">User</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="settingadmin">Setting</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="userList">người dùng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="settingadmin">Cài đặt</a></li>
                                 </ul>
                             </li>
                         </c:if>
                         <c:if test="${sessionScope.user.roleId ==2}">
                             <li class="nav-item submenu dropdown">
                                 <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Manage</a>
+                                   aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="marketing-product">Product</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="marketing-product">sản phẩm</a></li>
                                     <li class="nav-item"><a class="nav-link" href="marketingslider">Slider</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="managerpost">Post</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="customers">Customer</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="manage-feedback">Feedback</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="managerpost">bài đăng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="customers">khách hàng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="manage-feedback">Nhận xét</a></li>
                                 </ul>
                             </li> 
                         </c:if>
                         <c:if test="${sessionScope.user.roleId ==3}">
                             <li class="nav-item submenu dropdown">
                                 <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Manage</a>
+                                   aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="manage-order-sale">Order</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="manage-order-sale">đơn hàng</a></li>
                                 </ul>
                             </li>
                         </c:if>
@@ -82,11 +78,9 @@
 
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <li class="nav-item  submenu dropdown">
-                            <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            <a href="cartdetails" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
                                aria-expanded="false"><i class="ti-shopping-cart"></i></a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="cartdetails">Cart Detail</a></li>
-                            </ul>
+                            
                         </li>
                     </ul>                
 
@@ -100,10 +94,10 @@
                         <!-- Nếu user là null -->
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false"><i class="bi bi-person-circle"></i>Account</a>
+                               aria-expanded="false"><i class="bi bi-person-circle"></i>tài khoản</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="login">đăng nhập</a></li>
+                                <li class="nav-item"><a class="nav-link" href="register">đăng ký</a></li>
                             </ul>
                         </li>
                         <%} else {%>
@@ -111,38 +105,38 @@
                         <!-- Nếu user không là null -->
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false"><i class="bi bi-person-circle"></i>  Hello, ${user.fullname}</a>
+                               aria-expanded="false"><i class="bi bi-person-circle"></i>  xin chào, ${user.fullname}</a>
                                <c:if test="${sessionScope.user.roleId == 1}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="admin_dashboard">Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                                <li class="nav-item"><a class="nav-link" href="admin_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 2}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="marketing_dashboard">Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                                <li class="nav-item"><a class="nav-link" href="marketing_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 3}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 4}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="editprofile">User Profile</a></li>
-                                <li class="nav-item"><a class="nav-link" href="changepassword">Change Password</a></li>
-                                <li class="nav-item"><a class="nav-link" href="history-order">History order</a></li>
-                                <li class="nav-item"><a class="nav-link" href="myorders">My Orders</a></li>
-                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                                <li class="nav-item"><a class="nav-link" href="editprofile">Hồ sơ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="changepassword">đổi mật khẩu</a></li>
+                                <li class="nav-item"><a class="nav-link" href="history-order">Lịch sử đặt hàng</a></li>
+                                <li class="nav-item"><a class="nav-link" href="myorders">đơn hàng của tôi</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 5}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                         </li>

@@ -103,7 +103,7 @@ public class HomePage extends HttpServlet {
 
             session.setAttribute("listBook", listBook);
             session.setAttribute("selectedOption", selectedOption);
-
+            
         }
 
         //select(jsp)   
