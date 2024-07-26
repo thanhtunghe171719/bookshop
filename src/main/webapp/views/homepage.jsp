@@ -110,7 +110,7 @@
                         <h2><span class="section-intro__style">Sản phẩm Thịnh Hành</span></h2>
 
                         <div style="float : right;top: -30px;">
-                            <select id="optionId" name="selectedOption" class="form-control" onclick="selectOption()">
+                            <select id="optionId" name="selectedOption" value="${selectedOption}" class="form-control" onchange="selectOption()">
                                 <option value="discount" ${param.selectedOption == 'discount' ? 'selected' : ''}>Giảm Giá Mạnh</option>
                                 <option value="sold" ${param.selectedOption == 'sold' ? 'selected' : ''}>Sản Phẩm Bán Chạy</option>
                                 <option value="new-product" ${param.selectedOption == 'new-product' ? 'selected' : ''}>Sản Phẩm Mới</option>
@@ -176,7 +176,7 @@
                                         </div>
                                         <div class="card-body">
 
-                                            <h4 class="card-blog__title"><a href="blog?blogId = ${post.postId}">${post.title}</a></h4>
+                                            <h4 class="card-blog__title"><a href="postdetail?postId=${post.postId}">${post.title}</a></h4>
                   <!--                          <p>${post.description}...</p>
                                             <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>-->
                                         </div>
@@ -216,6 +216,8 @@
 
             setInterval(function () {
                 nextSlide(currentSlide);
+                var selectedValue = document.getElementById('optionId').value;
+                console.log(selectedValue);
             }, 5000);
 
             function addToCart(userId, bookId) {
@@ -250,7 +252,6 @@
                     type: 'POST'
 
                 });
-
             }
             function selectOption2() {
                 var selectedValue = document.getElementById('optionId').value;
@@ -266,6 +267,10 @@
                 xhr.open("GET", "home?service=listAll&selectedOption=" + selectedValue, true);
                 xhr.send();
             }
+
+
+
+
 
         </script>      
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
