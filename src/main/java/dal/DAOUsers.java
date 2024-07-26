@@ -106,6 +106,50 @@ public class DAOUsers extends DBConnect {
         return "active".equalsIgnoreCase(user.getStatus());
     }
 
+    public int getRoleIdByRoleName(String roleName) {
+        String query = "SELECT role_id FROM roles WHERE role_name = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, roleName);
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("role_id");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1; // Return an invalid role ID if not found or in case of an error
+    }
+
+    public boolean addUserList(User user) {
+        String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            // Fetch the role_id based on role_name
+            int roleId = getRoleIdByRoleName(user.getRoleName());
+            if (roleId == -1) {
+                throw new SQLException("Role not found for role name: " + user.getRoleName());
+            }
+
+            try ( PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, user.getEmail());
+                ps.setString(2, user.getPhone());
+                ps.setString(3, user.getPassword() != null ? user.getPassword() : "defaultPassword"); // Handle default or null password
+                ps.setInt(4, roleId); // Use the fetched role ID
+                ps.setString(5, user.getFullname());
+                ps.setString(6, user.getGender());
+                ps.setString(7, user.getAddress() != null ? user.getAddress() : ""); // Handle default or null address
+                ps.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
+                ps.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
+                ps.setString(10, user.getImage() != null ? user.getImage() : ""); // Handle default or null image
+                int rowsAffected = ps.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean addUser(User user) {
         String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try ( PreparedStatement ps = conn.prepareStatement(query)) {

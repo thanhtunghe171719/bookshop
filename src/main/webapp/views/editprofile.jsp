@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Aroma Shop - Category</title>
+        <title>Aroma Shop - Category</title>
         <link rel="icon" href="img/Fevicon.png" type="image/png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -25,8 +25,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="./css/style.css">
         
-            <style>
-            
+        <style>
             .tab-pane {
                 display: flex;
                 justify-content: center;
@@ -112,8 +111,8 @@
             .edit:hover {
                 background-color: #007bff; /* Blue background on hover */
                 color: #fff; /* White text color on hover */
-
             }
+
             .profile-image {
                 text-align: center;
                 margin-bottom: 20px;
@@ -125,14 +124,11 @@
                 height: 150px;
                 object-fit: cover;
             }
-
         </style>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        
 
-        <!--profile popup-->
         <div class="tab-pane fade show active" id="account-details">
             <div class="login">
                 <div class="login_form_container">
@@ -159,11 +155,7 @@
                                 <option value="Female" ${user.gender == 'Female' ? 'selected' : ''}>Female</option>
                             </select>
                         </div>
-                        <div class="form-row">
-                            <label for="address">Address</label>
-                            <input class="input_type" type="text" name="address" value="${user.address}" readonly>
-                        </div>
-                        <div class="form-row">
+                           <div class="form-row">
                             <label for="phone">Phone</label>
                             <input class="input_type" type="text" name="phone" value="${user.phone}" readonly>
                         </div>
@@ -179,12 +171,10 @@
                                 </c:if>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
-
 
         <jsp:include page="footer.jsp"/>
 
@@ -217,7 +207,5 @@
                 }
             });
         </script>
-    </div>
-</body>
+    </body>
 </html>
-

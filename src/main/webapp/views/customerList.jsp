@@ -210,7 +210,7 @@
                                 <label for="password">Password</label>
                                 <div class="input-group">
                                     <input type="password" class="form-control" id="password" name="password" required>
-                                    
+
                                 </div>
                             </div>  <div class="form-group">
                                 <label for="phone">Phone</label>
@@ -381,20 +381,21 @@
                                                             location.reload();  // Reload page to reflect changes
                                                         }, 2000);
                                                     } else {
-                                                        $('#addUserMessage').text('Failed to add user').css('color', 'red');
+                                                        $('#addUserMessage').text('Failed to add user: ' + response.message).css('color', 'red');
                                                         setTimeout(function () {
                                                             $('#addUserMessage').text('');
-                                                        }, 2000);
+                                                        }, 5000);
                                                     }
                                                 },
                                                 error: function (xhr, status, error) {
                                                     $('#addUserMessage').text('Failed to add user: ' + xhr.responseText).css('color', 'red');
                                                     setTimeout(function () {
                                                         $('#addUserMessage').text('');
-                                                    }, 2000);
+                                                    }, 5000);
                                                 }
                                             });
                                         });
+
 
                                         $('#editUserModal').on('show.bs.modal', function (event) {
                                             var button = $(event.relatedTarget);

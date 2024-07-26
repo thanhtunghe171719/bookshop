@@ -99,7 +99,15 @@ public class User {
         this.phone = phone;
         this.status = status;
     }
-    
+     public User(String fullname, String gender, String email, String password, String phone,String roleName, String status) {
+        this.fullname = fullname;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.status = status;
+        this.roleName = roleName;
+    }
             
     public User(int userId, String fullname,String gender, String email,String phone, String address, String image) {
         this.userId = userId;

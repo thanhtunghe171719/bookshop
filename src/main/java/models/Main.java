@@ -27,7 +27,7 @@ public class Main {
             String sortOrder = "desc";
 
             System.out.println("Fetching posts for category: " + category);
-            List<Post> posts = daoBlog.getPostsByCategory(category, currentPage, pageSize, sortOrder);
+            List<Post> posts = daoBlog.getPostsByCategory(category, pageSize, pageSize, sortOrder, sortOrder);
             if (posts != null && !posts.isEmpty()) {
                 for (Post post : posts) {
                     System.out.println(post);
