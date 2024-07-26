@@ -92,7 +92,7 @@
                         %>
                         <tr>
                             <td><%= i + 1 %></td>
-                            <td><%= user.getFullname() %></td>
+                            <td><a href="userDetail?userId=<%= user.getUserId() %>"><%= user.getFullname() %></a></td>
                             <td><%= user.getGender() %></td>
                             <td><%= user.getEmail() %></td>
                             <td><%= user.getPhone() %></td>

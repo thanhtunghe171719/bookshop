@@ -157,7 +157,7 @@
                                                 for (String category : categories) {
                                         %>
                                         <li>
-                                            <a href="#" class="d-flex">
+                                            <a href="?category=<%= category%>" class="d-flex">
                                                 <p><%= category %></p>
                                             </a>
                                         </li>

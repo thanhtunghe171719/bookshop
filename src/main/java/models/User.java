@@ -81,6 +81,16 @@ public class User {
         this.status = status;
     }
 
+    public User(int userId,String fullname,String gender, String email,  String phone, String address, String status,Timestamp updatedAt) {
+        this.userId = userId;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.updatedAt = updatedAt;
+        this.status = status;
+    }
+    
     public User(String fullname, String gender, String email, String password, String phone, String status) {
         this.fullname = fullname;
         this.gender = gender;

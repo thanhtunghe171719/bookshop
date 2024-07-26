@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-    <servlet>
+<web-app version="4.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+     <servlet>
         <servlet-name>DetailServlet</servlet-name>
         <servlet-class>controllers.DetailServlet</servlet-class>
     </servlet>
@@ -81,8 +81,12 @@
         <servlet-class>controllers.CustomerServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UsersListServlet</servlet-name>
-        <servlet-class>controllers.UsersListServlet</servlet-class>
+        <servlet-name>UsersList</servlet-name>
+        <servlet-class>controllers.UsersList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <servlet-class>controllers.UserDetailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
@@ -165,8 +169,12 @@
         <url-pattern>/customers</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UsersListServlet</servlet-name>
+        <servlet-name>UsersList</servlet-name>
         <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <url-pattern>/userDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

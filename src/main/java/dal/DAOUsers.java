@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import models.User;
+import models.UserHistory;
 
 /**
  *
@@ -326,7 +327,7 @@ public class DAOUsers extends DBConnect {
         }
     }
 
-  /*  public List<User> getActiveUsers() {
+    /*  public List<User> getActiveUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE deleted = 'no' AND role_id = 2";
         try ( PreparedStatement pstmt = conn.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
@@ -353,7 +354,6 @@ public class DAOUsers extends DBConnect {
         }
         return users;
     }*/
-
     public List<User> searchUsersByName(String name) {
 
         String sql = "SELECT * FROM Users WHERE fullname LIKE ? LIMIT ?, ?";
@@ -422,7 +422,6 @@ public class DAOUsers extends DBConnect {
         String sql = "SELECT * FROM users WHERE deleted = 'no'";
 
         try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 int userId = rs.getInt("user_id");
                 String fullname = rs.getString("fullname");
@@ -430,19 +429,61 @@ public class DAOUsers extends DBConnect {
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
                 String status = rs.getString("status");
-                String deleted = rs.getString("deleted");
+                String address = rs.getString("address");
+                Timestamp updatedAt = rs.getTimestamp("updated_at");
 
-                if ("no".equals(deleted)) {
-                    User user = new User(userId, fullname, gender, email, phone, status);
+                if ("no".equals(rs.getString("deleted"))) {
+                    User user = new User(userId, fullname, gender, email, phone, status, address, updatedAt);
                     users.add(user);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return users;
+    }
+
+    public List<UserHistory> getUserHistory(int userId) {
+        List<UserHistory> history = new ArrayList<>();
+        String sql = "SELECT * FROM user_history WHERE user_id = ?";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String email = rs.getString("email");
+                    String fullname = rs.getString("fullname");
+                    String gender = rs.getString("gender");
+                    String mobile = rs.getString("mobile");
+                    String address = rs.getString("address");
+                    String updatedBy = rs.getString("updated_by");
+                    Timestamp updatedDate = rs.getTimestamp("updated_date");
+
+                    UserHistory record = new UserHistory(email, fullname, gender, mobile, address, updatedBy, updatedDate);
+                    history.add(record);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return history;
+    }
+
+    public void updateUserDetail(User user) {
+        String sql = "UPDATE users SET fullname = ?, gender = ?, email = ?, phone = ?, status = ?, address = ?, updated_at = ? WHERE user_id = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getFullname());
+            ps.setString(2, user.getGender());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getStatus());
+            ps.setString(6, user.getAddress());
+            ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+            ps.setInt(8, user.getUserId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //Customer
