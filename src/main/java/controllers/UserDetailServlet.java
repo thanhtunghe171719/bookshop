@@ -69,26 +69,42 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int userId;
+        try {
+            userId = Integer.parseInt(request.getParameter("userId"));
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
+            return;
+        }
+
         String fullname = request.getParameter("fullname");
         String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
 
+        // Fetch current user data from the database
         User oldUser = daoUsers.getUserById(userId);
-        User newUser = new User(userId,
-                fullname != null ? fullname : "",
-                gender != null ? gender : "",
-                email != null ? email : "",
-                phone != null ? phone : "",
-                address != null ? address : "");
+        if (oldUser == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            return;
+        }
 
+        // Ensure non-null fields retain their old values if not provided
+        fullname = (fullname != null && !fullname.trim().isEmpty()) ? fullname : oldUser.getFullname();
+        gender = (gender != null && !gender.trim().isEmpty()) ? gender : oldUser.getGender();
+        email = (email != null && !email.trim().isEmpty()) ? email : oldUser.getEmail();
+        phone = (phone != null && !phone.trim().isEmpty()) ? phone : oldUser.getPhone();
+        address = (address != null && !address.trim().isEmpty()) ? address : oldUser.getAddress();
+
+        User newUser = new User(userId, fullname, gender, email, phone, address);
+
+        // Database update logic
         String jdbcURL = "jdbc:mysql://localhost:3306/checksql";
         String dbUser = "root";
         String dbPassword = "12345";
 
-        String updateQuery = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE user_Id = ?";
+        String updateQuery = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE user_id = ?";
         String insertHistoryQuery = "INSERT INTO UserChangeHistory (user_id, field_name, old_value, new_value) VALUES (?, ?, ?, ?)";
 
         try ( Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword)) {
@@ -116,11 +132,12 @@ public class UserDetailServlet extends HttpServlet {
                 request.setAttribute("message", "Changes saved successfully.");
             } catch (SQLException e) {
                 connection.rollback();
-                throw e;
+                e.printStackTrace();
+                request.setAttribute("error", "Database error: " + e.getMessage());
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("error", "Database error: " + e.getMessage());
+            request.setAttribute("error", "Database connection error: " + e.getMessage());
         }
 
         doGet(request, response);

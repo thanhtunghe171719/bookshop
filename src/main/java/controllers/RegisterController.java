@@ -39,6 +39,7 @@ public class RegisterController extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String encrypt = userDAO.Sha256(password);
         String phone = request.getParameter("phone");
         String fullname = request.getParameter("fullname");
         String gender = request.getParameter("gender");
@@ -55,7 +56,7 @@ public class RegisterController extends HttpServlet {
         // Create a new user object
         User newUser = new User();
         newUser.setEmail(email);
-        newUser.setPassword(password);
+        newUser.setPassword(encrypt);
         newUser.setPhone(phone);
         newUser.setRoleId(4); 
         newUser.setFullname(fullname);

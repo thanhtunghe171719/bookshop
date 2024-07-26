@@ -141,6 +141,10 @@
         <servlet-name>PaymentController</servlet-name>
         <servlet-class>controllers.PaymentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SettingAdminServlet</servlet-name>
+        <servlet-class>controllers.SettingAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -268,6 +272,10 @@
     <servlet-mapping>
         <servlet-name>PaymentController</servlet-name>
         <url-pattern>/payment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingAdminServlet</servlet-name>
+        <url-pattern>/settingadmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

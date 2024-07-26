@@ -359,8 +359,8 @@ public class DAOOrders extends DBConnect {
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);
 //        int cancel = order.cancelOrder(2);
 //        int count = order.getOrderCountByStatus("Canceled");
-//        ArrayList<Orders> o = order.getOrders(1, 1, "Pending");
-        ArrayList<Items> o = order.getOrderItemsForOrder(9);
+        ArrayList<Orders> o = order.getOrders(1, 1);
+//        ArrayList<Items> o = order.getOrderItemsForOrder(9);
         System.out.println(o);
     }
 }

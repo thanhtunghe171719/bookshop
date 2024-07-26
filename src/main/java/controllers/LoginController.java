@@ -26,8 +26,10 @@ public class LoginController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DAOUsers userDAO = new DAOUsers();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String encrypt = userDAO.Sha256(password);
         DAOUsers dao = new DAOUsers();
         User us = dao.getUserByUsername(email);
         if (us == null) {

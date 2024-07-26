@@ -6,7 +6,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Profile Edit Data and Skills</title>
+        <title>Profile Edit</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -23,12 +23,10 @@
         <style type="text/css">
             body {
                 background: #ffff;
-
             }
             .container{
                 margin-top: 20px;
             }
-
             .card {
                 position: relative;
                 display: flex;
@@ -60,7 +58,7 @@
                                     <div class="mt-3">
                                         <c:choose>
                                             <c:when test="${not empty user}">
-                                                <h4>${user.fullname}</h4>
+                                                <h4>${user.getFullname()}</h4>
                                             </c:when>
                                             <c:otherwise>
                                                 <h4>User not found</h4>
@@ -83,13 +81,13 @@
                                 </c:if>
                                 <c:if test="${not empty user}">
                                     <form action="userDetail" method="post">
-                                        <input type="hidden" name="userId" value="${user.userId}">
+                                        <input type="hidden" name="userId" value="${user.getUserId()}">
                                         <div class="row mb-3">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Full Name</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input type="text" class="form-control" name="fullname" value="${user.fullname}">
+                                                <input type="text" class="form-control" name="fullname" value="${user.getFullname()}">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -97,7 +95,7 @@
                                                 <h6 class="mb-0">Email</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input type="text" class="form-control" name="email" value="${user.email}">
+                                                <input type="text" class="form-control" name="email" value="${user.getEmail()}">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -105,16 +103,23 @@
                                                 <h6 class="mb-0">Phone</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input type="text" class="form-control" name="phone" value="${user.phone}">
+                                                <input type="text" class="form-control" name="phone" value="${user.getPhone()}">
                                             </div>
                                         </div>
-                                        
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Address</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input type="text" class="form-control" name="address" value="${user.address}">
+                                            </div>
+                                        </div>
                                         <div class="row mb-3">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Gender</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input type="text" class="form-control" name="gender" value="${user.gender}">
+                                                <input type="text" class="form-control" name="gender" value="${user.getGender()}">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -124,6 +129,7 @@
                                             </div>
                                         </div>
                                     </form>
+
                                 </c:if>
                             </div>
                         </div>
@@ -145,10 +151,10 @@
                                             <tbody>
                                                 <c:forEach var="history" items="${historyList}">
                                                     <tr>
-                                                        <td>${history.fieldName}</td>
-                                                        <td>${history.oldValue}</td>
-                                                        <td>${history.newValue}</td>
-                                                        <td>${history.updatedDate}</td>
+                                                        <td>${history.getFieldName()}</td>
+                                                        <td>${history.getOldValue()}</td>
+                                                        <td>${history.getNewValue()}</td>
+                                                        <td>${history.getUpdatedDate()}</td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>

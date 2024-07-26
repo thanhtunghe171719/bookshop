@@ -5,6 +5,9 @@
 package dal;
 
 import static com.mysql.cj.conf.PropertyKey.logger;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class DAOUsers extends DBConnect {
     public int changePassWord(User obj) {
         int n = 0;
 
-        String sql = "UPDATE checksql.users\n"
+        String sql = "UPDATE users\n"
                 + "SET\n"
                 + "email = ?,\n"
                 + "phone = ?,\n"
@@ -103,6 +106,7 @@ public class DAOUsers extends DBConnect {
             ex.printStackTrace();
         }
         return null;
+
     }
 
     public boolean isAccountActive(User user) {
@@ -408,8 +412,6 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
-    
-
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE deleted = 'no'";
@@ -516,11 +518,12 @@ public class DAOUsers extends DBConnect {
         // user.setRoleName(roleName);
         return user;
     }
-public List<UserChangeHistory> getUserChangeHistory(int userId) {
+
+    public List<UserChangeHistory> getUserChangeHistory(int userId) {
         List<UserChangeHistory> historyList = new ArrayList<>();
         String query = "SELECT * FROM UserChangeHistory WHERE user_id = ? ORDER BY updated_date DESC";
 
-        try (  PreparedStatement statement = conn.prepareStatement(query)) {
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
 
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -540,6 +543,7 @@ public List<UserChangeHistory> getUserChangeHistory(int userId) {
 
         return historyList;
     }
+
     public List<User> getCustomersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder) {
         String query = "SELECT * FROM users WHERE deleted = 'no' AND role_id = '4' ORDER BY "
                 + (sortField != null ? sortField : "fullname") + " "
@@ -748,15 +752,14 @@ public List<UserChangeHistory> getUserChangeHistory(int userId) {
         return 0;
     }
 
-
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
         User user = dao.getAll("SELECT * FROM users where email = 'thanhtung2733@gmail.com';").get(0);
         System.out.println(user);
         user.setPassword("12345678Tung!");
-        if(dao.update(user) > 0){
+        if (dao.update(user) > 0) {
             System.out.println("ok");
-        }else{
+        } else {
             System.out.println("not ok");
         }
         // Test getUsersWithPagination method
@@ -801,4 +804,21 @@ public List<UserChangeHistory> getUserChangeHistory(int userId) {
         );
     }
 
+    public static String Sha256(String message) {
+        String digest = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(message.getBytes("UTF-8"));
+            StringBuilder sb = new StringBuilder(2 * hash.length);
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            digest = sb.toString();
+        } catch (UnsupportedEncodingException ex) {
+            digest = "";
+        } catch (NoSuchAlgorithmException ex) {
+            digest = "";
+        }
+        return digest;
+    }
 }

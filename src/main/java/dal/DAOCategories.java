@@ -45,6 +45,30 @@ public class DAOCategories extends DBConnect {
         return list;
     }
 
+    public List<Categorie> getAllCategory() {
+        List<Categorie> categories = new ArrayList<>();
+        String sql = "SELECT * FROM categories";
+
+        try (
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Categorie category = new Categorie(
+                    rs.getInt("category_id"),
+                    rs.getString("category_name"),
+                    rs.getString("image"),
+                    rs.getTimestamp("create_at"),
+                    rs.getTimestamp("updated_at")
+                );
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categories;
+    }
     public int addCategory(Categorie category) throws SQLException {
         String sql = "INSERT INTO categories (category_name, image, created_at, updated_at) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -38,6 +38,7 @@
                                    aria-expanded="false">Manage</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="userList">User</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="settingadmin">Setting</a></li>
                                 </ul>
                             </li>
                         </c:if>
@@ -138,7 +139,14 @@
                                 <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
                             </ul>
                                </c:if>
+                               <c:if test="${sessionScope.user.roleId == 5}">
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
+                            </ul>
+                               </c:if>
                         </li>
+                        
                         <%}%>
                     </ul>
                 </div>
