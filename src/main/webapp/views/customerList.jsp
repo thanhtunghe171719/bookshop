@@ -50,33 +50,33 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <% 
-    String sortField = request.getParameter("sortField");
-    String sortOrder = request.getParameter("sortOrder");
-    String search = request.getParameter("search");
-    
-    if (sortOrder == null) {
-        sortOrder = "asc"; // Default sort order
-    }
+                            <%
+                                String sortField = request.getParameter("sortField");
+                                String sortOrder = request.getParameter("sortOrder");
+                                String search = request.getParameter("search");
+
+                                if (sortOrder == null) {
+                                    sortOrder = "asc"; // Default sort order
+                                }
                             %>
                             <th>Order</th>
-                            <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>"
-                                onclick="window.location.href = 'customers?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                            <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>"
+                                onclick="window.location.href = 'customers?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
                                 Full Name 
-                                <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter" %>"></i>
+                                <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter"%>"></i>
                             </th>
                             <th>Gender</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>" 
-                                onclick="window.location.href = 'customers?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                            <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
+                                onclick="window.location.href = 'customers?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
                                 Create At 
-                                <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter" %>"></i>
+                                <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
-                            <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : "" %>" 
-                                onclick="window.location.href = 'customers?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc" %>&search=<%= search != null ? search : "" %>'">
+                            <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
+                                onclick="window.location.href = 'customers?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
                                 Update At 
-                                <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter" %>"></i>
+                                <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -84,30 +84,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% 
-                        List<User> users = (List<User>) request.getAttribute("users");
-                        if (users != null && !users.isEmpty()) {
-                            for (int i = 0; i < users.size(); i++) {
-                                 User user = users.get(i);
+                        <%
+                            List<User> users = (List<User>) request.getAttribute("users");
+                            if (users != null && !users.isEmpty()) {
+                                for (int i = 0; i < users.size(); i++) {
+                                    User user = users.get(i);
                         %>
                         <tr>
-                            <td><%= i + 1 %></td>
-                            <td><a href="userDetail?userId=<%= user.getUserId() %>"><%= user.getFullname() %></a></td>
-                            <td><%= user.getGender() %></td>
-                            <td><%= user.getEmail() %></td>
-                            <td><%= user.getPhone() %></td>
-                            <td><%= user.getCreateAt() %></td> 
-                            <td><%= user.getUpdatedAt() %></td> 
-                            <td><%= user.getStatus() %></td> 
+                            <td><%= i + 1%></td>
+                            <td><a href="userDetail?userId=<%= user.getUserId()%>"><%= user.getFullname()%></a></td>
+                            <td><%= user.getGender()%></td>
+                            <td><%= user.getEmail()%></td>
+                            <td><%= user.getPhone()%></td>
+                            <td><%= user.getCreateAt()%></td> 
+                            <td><%= user.getUpdatedAt()%></td> 
+                            <td><%= user.getStatus()%></td> 
                             <td>
                                 <!-- Edit Button -->
                                 <button class="table-link btn btn-link" data-toggle="modal" data-target="#editUserModal"
-                                        data-userid="<%= user.getUserId() %>"
-                                        data-fullname="<%= user.getFullname() %>"
-                                        data-gender="<%= user.getGender() %>"
-                                        data-email="<%= user.getEmail() %>"
-                                        data-phone="<%= user.getPhone() %>"
-                                        data-status="<%= user.getStatus() %>">
+                                        data-userid="<%= user.getUserId()%>"
+                                        data-fullname="<%= user.getFullname()%>"
+                                        data-gender="<%= user.getGender()%>"
+                                        data-email="<%= user.getEmail()%>"
+                                        data-phone="<%= user.getPhone()%>"
+                                        data-status="<%= user.getStatus()%>">
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -115,19 +115,19 @@
                                 </button>
 
                                 <!-- Delete Button -->
-                                <button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId() %>"
+                                <%--    <button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId() %>"
                                         data-toggle="modal" data-target="#deleteUserModal">
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </button>
-
+                                --%>
                             </td>
                         </tr>
-                        <% 
-                            } 
-                        } else { 
+                        <%
+                            }
+                        } else {
                         %>
                         <tr>
                             <td colspan="9" class="text-center">No users available</td>
@@ -141,7 +141,7 @@
             <!-- Pagination -->
             <nav class="blog-pagination justify-content-center d-flex">
                 <ul class="pagination">
-                    <% 
+                    <%
                         int currentPage = (int) request.getAttribute("currentPage");
                         int totalPages = (int) request.getAttribute("totalPages");
                         String searchQuery = (String) request.getAttribute("searchQuery");
@@ -151,27 +151,27 @@
                         if (currentPage > 1) {
                     %>
                     <li class="page-item">
-                        <a href="customers?index=<%= currentPage - 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Previous">
+                        <a href="customers?index=<%= currentPage - 1%>&search=<%= searchQuery != null ? searchQuery : ""%>&sortField=<%= sortField != null ? sortField : ""%>&sortOrder=<%= sortOrder != null ? sortOrder : ""%>" class="page-link" aria-label="Previous">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-left"></span>
                             </span>
                         </a>
                     </li>
                     <% } %>
-                    <% for (int i = 1; i <= totalPages; i++) { %>
-                    <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-                        <a href="customers?index=<%= i %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link"><%= i %></a>
+                    <% for (int i = 1; i <= totalPages; i++) {%>
+                    <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
+                        <a href="customers?index=<%= i%>&search=<%= searchQuery != null ? searchQuery : ""%>&sortField=<%= sortField != null ? sortField : ""%>&sortOrder=<%= sortOrder != null ? sortOrder : ""%>" class="page-link"><%= i%></a>
                     </li>
                     <% } %>
-                    <% if (currentPage < totalPages) { %>
+                    <% if (currentPage < totalPages) {%>
                     <li class="page-item">
-                        <a href="customers?index=<%= currentPage + 1 %>&search=<%= searchQuery != null ? searchQuery : "" %>&sortField=<%= sortField != null ? sortField : "" %>&sortOrder=<%= sortOrder != null ? sortOrder : "" %>" class="page-link" aria-label="Next">
+                        <a href="customers?index=<%= currentPage + 1%>&search=<%= searchQuery != null ? searchQuery : ""%>&sortField=<%= sortField != null ? sortField : ""%>&sortOrder=<%= sortOrder != null ? sortOrder : ""%>" class="page-link" aria-label="Next">
                             <span aria-hidden="true">
                                 <span class="lnr lnr-chevron-right"></span>
                             </span>
                         </a>
                     </li>
-                    <% } %>
+                    <% }%>
                 </ul>
             </nav>
 
@@ -208,11 +208,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="text" class="form-control" name="password" required>
-                            </div>
-
-
-                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    
+                                </div>
+                            </div>  <div class="form-group">
                                 <label for="phone">Phone</label>
                                 <input type="text" class="form-control" name="phone" required>
                             </div>

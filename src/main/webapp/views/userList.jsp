@@ -86,8 +86,8 @@
                         <div class="input-field second-wrap">
                             <select name="gender">
                                 <option value="">All Genders</option>
-                                <option value="Male" <c:if test="${param.gender == 'Male'}"></c:if>Male</option>
-                                <option value="Female" <c:if test="${param.gender == 'Female'}"></c:if>Female</option>
+                                <option value="Nam" <c:if test="${param.gender == 'Nam'}"></c:if>Nam</option>
+                                <option value="Nữ" <c:if test="${param.gender == 'Nữ'}"></c:if>Nữ</option>
                             </select>
                         </div>
                         <div class="input-field third-wrap">
@@ -184,13 +184,13 @@
                                 </button>
 
                                 <!-- Delete Button -->
-                                <button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId()%>"
+                                <%--<button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId()%>"
                                         data-toggle="modal" data-target="#deleteUserModal">
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                     </span>
-                                </button>
+</button>--%>
 
                             </td>
                         </tr>

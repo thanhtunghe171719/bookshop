@@ -18,7 +18,7 @@ public class DAOBlog {
     // Method to get a list of posts with sorting and pagination
     public List<Post> getPosts(int page, int pageSize, String sortOrder) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
+        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.status = 'Show' ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, pageSize);
             ps.setInt(2, (page - 1) * pageSize);
@@ -95,11 +95,58 @@ public class DAOBlog {
         }
         return categories;
     }
+public List<Post> getPostsByCategory(String category, int currentPage, int pageSize, String sortOrder) throws SQLException {
+    List<Post> posts = new ArrayList<>();
+    String query = "SELECT p.*, u.fullname FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.post_type LIKE ? AND p.status = 'Show' ORDER BY p.created_at " + sortOrder + " LIMIT ? OFFSET ?";
+    try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setString(1, category);
+        ps.setInt(2, pageSize);
+        ps.setInt(3, (currentPage - 1) * pageSize);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Post post = new Post();
+               post.setImage(rs.getString("image"));
+                    post.setTitle(rs.getString("title"));
+                    post.setUserId(rs.getInt("user_id"));
+                    post.setDescription(rs.getString("description"));
+                    post.setPostType(rs.getString("post_type"));
+                    post.setStatus(rs.getString("status"));
+                    post.setCreatedAt(rs.getDate("created_at"));                  
+                    post.setAuthorName(rs.getString("fullname"));
+                posts.add(post);
+            }
+        }
+    }
+    return posts;
+}
+public int getTotalPostsBySearch(String searchQuery) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM posts WHERE title LIKE ? AND p.status = 'Show'";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + searchQuery + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getTotalPostsByCategory(String category) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM posts WHERE category = ? AND p.status = 'Show'";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, category);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 
     // Method to get a post by its ID
     public Post getPostById(int postId) {
         Post post = null;
-        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id ORDER BY p.created_at WHERE p.post_id = ?";
+        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.post_id = ?ORDER BY p.created_at ";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, postId);
             try ( ResultSet rs = ps.executeQuery()) {

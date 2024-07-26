@@ -10,10 +10,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>User Profile</title>
-
-        <link rel="stylesheet" href="css/style.css">
+       <title>Aroma Shop - Category</title>
+        <link rel="icon" href="img/Fevicon.png" type="image/png">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/newcss.css">
         <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="./vendors/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="./vendors/themify-icons/themify-icons.css">
@@ -21,10 +22,11 @@
         <link rel="stylesheet" href="./vendors/owl-carousel/owl.theme.default.min.css">
         <link rel="stylesheet" href="./vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="./css/style.css">
-
-        <style>
+        
+            <style>
+            
             .tab-pane {
                 display: flex;
                 justify-content: center;
@@ -35,6 +37,8 @@
 
             .login {
                 width: 100%;
+                margin-top: 20px;
+                margin-bottom: 20px;
                 max-width: 500px;
                 padding: 20px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -125,11 +129,10 @@
         </style>
     </head>
     <body>
-        <!--header-->
-
         <jsp:include page="header.jsp"/>
+        
 
-        <!-- Profile popup -->
+        <!--profile popup-->
         <div class="tab-pane fade show active" id="account-details">
             <div class="login">
                 <div class="login_form_container">
@@ -183,8 +186,6 @@
         </div>
 
 
-
-        <!--footer-->
         <jsp:include page="footer.jsp"/>
 
         <script type="text/javascript">
@@ -207,7 +208,7 @@
 
             window.addEventListener('load', function () {
                 var statusMessage = document.getElementById('statusMessage');
-                var status = '<%= request.getAttribute("STATUS") %>';
+                var status = '<%= request.getAttribute("STATUS")%>';
 
                 if (status) {
                     statusMessage.textContent = status;
@@ -219,3 +220,4 @@
     </div>
 </body>
 </html>
+

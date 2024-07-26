@@ -69,7 +69,7 @@
     <servlet>
         <servlet-name>BlogServlet</servlet-name>
         <servlet-class>controllers.BlogServlet</servlet-class>
-    </servlet>
+    </servlet>    
     <servlet>
         <servlet-name>CreaterPostServlet</servlet-name>
         <servlet-class>controllers.CreaterPostServlet</servlet-class>

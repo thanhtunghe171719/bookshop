@@ -142,7 +142,7 @@ public class DAOUsers extends DBConnect {
     }
 
     public void updateCustomer(User user) {
-        String sql = "UPDATE users SET fullname=?, gender=?, email=?, phone=?, status=?, updated_at=?, address =? WHERE user_id=?";
+        String sql = "UPDATE users SET fullname=?, gender=?, email=?, phone=?, status=?, updated_at=? WHERE user_id=?";
 
         try ( PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getFullname());
@@ -151,8 +151,7 @@ public class DAOUsers extends DBConnect {
             preparedStatement.setString(4, user.getPhone());
             preparedStatement.setString(5, user.getStatus());
             preparedStatement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
-            preparedStatement.setString(7, user.getAddress() != null ? user.getAddress() : "");
-            preparedStatement.setInt(8, user.getUserId());
+            preparedStatement.setInt(7, user.getUserId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
@@ -196,15 +195,15 @@ public class DAOUsers extends DBConnect {
             pre.setInt(1, userId);
             try ( ResultSet rs = pre.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUser(rs);
+                    User user = mapResultSetToUser(rs);
+                    Logger.getLogger(DAOUsers.class.getName()).log(Level.INFO, "Fetched user address: " + user.getAddress());
+                    return user;
                 } else {
                     System.out.println("User not found with ID: " + userId);
-
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsers.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOUsers.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -246,7 +245,7 @@ public class DAOUsers extends DBConnect {
     public int update(User obj) {
         int n = 0;
 
-        String sql = "UPDATE bookshop.users\n"
+        String sql = "UPDATE checksql.users\n"
                 + "SET\n"
                 + "email = ?,\n"
                 + "phone = ?,\n"
@@ -257,7 +256,7 @@ public class DAOUsers extends DBConnect {
                 + "address = ?,\n"
                 + "create_at = ?,\n"
                 + "updated_at = ?\n"
-                + "image = ?\n"
+                + "image = ?,\n"
                 + "status = ?,\n"
                 + "WHERE user_id = ?;";
         try {
@@ -277,9 +276,9 @@ public class DAOUsers extends DBConnect {
             pre.setInt(12, obj.getUserId());
             n = pre.executeUpdate();
 
+            Logger.getLogger(DAOUsers.class.getName()).log(Level.INFO, "User updated successfully: " + obj.getUserId());
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsers.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOUsers.class.getName()).log(Level.SEVERE, "Error updating user: " + obj.getUserId(), ex);
         }
         return n;
     }
@@ -433,7 +432,7 @@ public class DAOUsers extends DBConnect {
         List<UserChangeHistory> historyList = new ArrayList<>();
         String query = "SELECT * FROM UserChangeHistory WHERE user_id = ? ORDER BY updated_date DESC";
 
-        try (  PreparedStatement statement = conn.prepareStatement(query)) {
+        try ( PreparedStatement statement = conn.prepareStatement(query)) {
 
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -452,39 +451,6 @@ public class DAOUsers extends DBConnect {
         }
 
         return historyList;
-    }
-   
-
-
-    public int updateUserDetail(User user) {
-        String query = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE userId = ?";
-        int rowsAffected = 0;
-        try ( PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, user.getFullname());
-            ps.setString(2, user.getGender());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhone());
-            ps.setString(5, user.getAddress());
-            ps.setInt(6, user.getUserId());
-
-            rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                // Save history record
-                String historyQuery = "INSERT INTO UserHistory (userId, updatedDate, updatedBy, email, fullname, gender, address) VALUES (?, NOW(), ?, ?, ?, ?, ?)";
-                try ( PreparedStatement historyPs = conn.prepareStatement(historyQuery)) {
-                    historyPs.setInt(1, user.getUserId());
-                    historyPs.setString(2, "Admin"); // Assuming 'Admin' is making the change, replace with actual user if needed
-                    historyPs.setString(3, user.getEmail());
-                    historyPs.setString(4, user.getFullname());
-                    historyPs.setString(5, user.getGender());
-                    historyPs.setString(6, user.getAddress());
-                    historyPs.executeUpdate();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return rowsAffected;
     }
 
     //Customer

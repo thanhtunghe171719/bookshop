@@ -110,6 +110,14 @@ public class User {
         this.address = address;
         this.image = image;
     }
+
+    public User(int userId, String fullname, String gender, String email, String phone) {
+       this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+    }
 public int getUserId() {
         return userId;
     }
