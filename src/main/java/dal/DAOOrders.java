@@ -141,10 +141,12 @@ public class DAOOrders extends DBConnect {
         return list;
     }
 
-    public int getOrderCount() {
-        String query = "SELECT COUNT(*) FROM orders";
+    public int getOrderCount(int cartID) {
+        String query = "SELECT COUNT(*) FROM orders o\n"
+                + "WHERE o.cart_id = ?;";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, cartID);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -156,13 +158,14 @@ public class DAOOrders extends DBConnect {
     }
 
     // Add this method to your DAOOrders class
-    public int getOrderCountByStatus(String status) {
+    public int getOrderCountByStatus(String status, int cartID) {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM orders o "
                 + "JOIN order_status os ON o.order_status_id = os.order_status_id "
-                + "WHERE os.order_status = ?";
+                + "WHERE os.order_status = ? AND o.cart_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, status);
+            ps.setInt(2, cartID);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     count = rs.getInt(1);
