@@ -24,7 +24,7 @@ public class DAOBooksList extends DBConnect {
     public ArrayList<Books> getListBooks(String grid, int index, String sort) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
-            String sql = "SELECT * FROM checksql.books ";
+            String sql = "SELECT * FROM books ";
             switch (sort) {
                 case "newest":
                     sql += "ORDER BY published_year DESC ";
@@ -79,7 +79,7 @@ public class DAOBooksList extends DBConnect {
     public ArrayList<Books> getListBooksByCategory(int categoryId, String grid, int index, String sort) {
         try {
             ArrayList<Books> ListBooksByCategory = new ArrayList<Books>();
-            String sql = "SELECT * FROM checksql.books WHERE category_id = ? ";
+            String sql = "SELECT * FROM books WHERE category_id = ? ";
             switch (sort) {
                 case "newest":
                     sql += "ORDER BY published_year DESC ";
@@ -135,7 +135,7 @@ public class DAOBooksList extends DBConnect {
     public ArrayList<Books> getBookBySearch(String searchText, String grid, int index, String sort) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
-            String sql = "SELECT * FROM checksql.books\n"
+            String sql = "SELECT * FROM books\n"
                     + "WHERE books.title like ?";
 
             switch (sort) {
@@ -193,16 +193,17 @@ public class DAOBooksList extends DBConnect {
     public ArrayList<Categories> getListCategories() {
         try {
             ArrayList<Categories> ListCategories = new ArrayList<Categories>();
-            String sql = "SELECT * FROM checksql.categories;";
+            String sql = "SELECT * FROM categories;";
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int categoryId = rs.getInt(1);
                 String categoryName = rs.getString(2);
-                Date create_at = rs.getDate(3);
-                Date updated_at = rs.getDate(4);
+                String image = rs.getString(3);
+                Date create_at = rs.getDate(4);
+                Date updated_at = rs.getDate(5);
 
-                Categories c = new Categories(categoryId, categoryName, create_at, updated_at);
+                Categories c = new Categories(categoryId, categoryName, image, create_at, updated_at);
 
                 ListCategories.add(c);
 
@@ -218,7 +219,7 @@ public class DAOBooksList extends DBConnect {
 
     public int getTotalBooks() {
         try {
-            String sql = "SELECT COUNT(*) FROM checksql.books;";
+            String sql = "SELECT COUNT(*) FROM books;";
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -234,7 +235,7 @@ public class DAOBooksList extends DBConnect {
 
     public int getTotalBooksByCategory(int categoryId) {
         try {
-            String sql = "SELECT COUNT(*) FROM checksql.books\n"
+            String sql = "SELECT COUNT(*) FROM books\n"
                     + "WHERE books.category_id = ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, categoryId);

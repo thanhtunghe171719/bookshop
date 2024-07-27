@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package models;
+
 import java.sql.Timestamp;
 
 /**
@@ -10,6 +11,7 @@ import java.sql.Timestamp;
  * @author TDG
  */
 public class users {
+
     private int userId;
     private String email;
     private String phone;
@@ -20,11 +22,12 @@ public class users {
     private String address;
     private Timestamp createAt;
     private Timestamp updatedAt;
+    private int status;
 
     public users() {
     }
 
-    public users(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt) {
+    public users(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, int status) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -35,6 +38,15 @@ public class users {
         this.address = address;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getUserId() {
@@ -121,7 +133,5 @@ public class users {
     public String toString() {
         return "users{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + '}';
     }
-    
-    
 
 }

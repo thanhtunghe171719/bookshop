@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Aroma Shop - Category</title>
+        <title>Products</title>
         <link rel="icon" href="img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
         <link rel="stylesheet" href="css/style.css">
     </head>
@@ -26,24 +27,6 @@
 
         <!--================ End Header Menu Area =================-->
 
-        <!-- ================ start banner area ================= -->	
-        <section class="blog-banner-area" id="category">
-            <div class="container h-100">
-                <div class="blog-banner">
-                    <div class="text-center">
-                        <h1>Shop Category</h1>
-                        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ================ end banner area ================= -->
-
 
         <!-- ================ category section start ================= -->		  
         <section class="section-margin--small mb-5">
@@ -51,7 +34,7 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-5">
                         <div class="sidebar-categories">
-                            <div class="head">Browse Categories</div>
+                            <div class="head">Thể loại</div>
                             <ul class="main-categories">
                                 <li class="common-filter">
                                 <li class="filter-list">
@@ -65,57 +48,10 @@
                                 </li>
                             </ul>
                         </div>
-
-
-                        <!--                        <div class="sidebar-filter">
-                                                    <div class="top-filter-head">Product Filters</div>
-                                                    <div class="common-filter">
-                                                        <div class="head">Brands</div>
-                                                        <form action="#">
-                                                            <ul>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">Apple<span>(29)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label for="asus">Asus<span>(29)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label for="gionee">Gionee<span>(19)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label for="micromax">Micromax<span>(19)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label for="samsung">Samsung<span>(19)</span></label></li>
-                                                            </ul>
-                                                        </form>
-                                                    </div>
-                                                    <div class="common-filter">
-                                                        <div class="head">Color</div>
-                                                        <form action="#">
-                                                            <ul>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label for="black">Black<span>(29)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather" name="color"><label for="balckleather">Black
-                                                                        Leather<span>(29)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label for="blackred">Black
-                                                                        with red<span>(19)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label for="gold">Gold<span>(19)</span></label></li>
-                                                                <li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey" name="color"><label for="spacegrey">Spacegrey<span>(19)</span></label></li>
-                                                            </ul>
-                                                        </form>
-                                                    </div>
-                                                    <div class="common-filter">
-                                                        <div class="head">Price</div>
-                                                        <div class="price-range-area">
-                                                            <div id="price-range"></div>
-                                                            <div class="value-wrapper d-flex">
-                                                                <div class="price">Price:</div>
-                                                                <span>$</span>
-                                                                <div id="lower-value"></div>
-                                                                <div class="to">to</div>
-                                                                <span>$</span>
-                                                                <div id="upper-value"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
-
-
                     </div>
                     <div class="col-xl-9 col-lg-8 col-md-7">
                         <%
-                                String searchText = (String) request.getAttribute("search");
+                            String searchText = (String) request.getAttribute("search");
                         %>
                         <!-- Start Filter Bar -->
                         <div class="filter-bar d-flex flex-wrap align-items-center">
@@ -124,7 +60,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=newest"
@@ -135,8 +71,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ 
+                                        <%
+                                            if ((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -145,7 +81,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=price_asc"
@@ -156,8 +92,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ 
+                                        <%
+                                            if ((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -165,7 +101,7 @@
                                     <option 
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=price_desc"
@@ -176,8 +112,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ 
+                                        <%
+                                            if ((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -189,7 +125,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=newest"
@@ -200,8 +136,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(6)){ 
+                                        <%
+                                            if ((request.getAttribute("grid") != null) && request.getAttribute("grid").equals("6")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -210,7 +146,7 @@
                                     <option  
 
                                         <%
-                                            if(searchText != null && searchText != ""){
+                                            if (searchText != null && searchText != "") {
                                         %>
 
                                         value="search?search=${search}&sort=price_asc"
@@ -221,8 +157,8 @@
 
                                         <% } %>
 
-                                        <% 
-                                            if((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(12)){ 
+                                        <%
+                                            if ((request.getAttribute("grid") != null) && request.getAttribute("grid").equals("12")) {
                                         %> 
                                         selected 
                                         <% } %>
@@ -249,10 +185,14 @@
                                         <div class="card text-center card-product">
                                             <div class="card-product__img">
                                                 <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
-                                                <ul class="card-product__imgOverlay">
-                                                    <li><button><i class="ti-search"></i></button></li>
-                                                    <li><button><i class="ti-shopping-cart"></i></button></li>
-                                                    <li><button><i class="ti-heart"></i></button></li>
+                                                <ul class="card-product__imgOverlay" style="display: flex">
+                                                    <!--                                                    <li><button><i class="ti-shopping-cart"></i></button></li>-->
+                                                    <form action="cartdetails" method="get">                             
+                                                        <input type="hidden" name="service" value="addCart">
+                                                        <input type="hidden" name="bookId" value="${book.getBook_id()}">
+                                                        <c:set var="userId" value="${user.userId}"></c:set>
+                                                        <li style="margin-left: 100px"><button type="button" onclick="addToCart('${userId}', ${book.getBook_id()})"><i class="ti-shopping-cart"></i></button></li>
+                                                    </form>    
                                                 </ul>
                                             </div>
 
@@ -261,7 +201,7 @@
                                             <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
 
                                             <div class="card-body">
-                                                <h4 class="card-product__title"><a href="#">${book.getTitle()}</a></h4>
+                                                <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
 
                                                 <c:choose>
                                                     <c:when test="${originalPrice eq discountedPrice}">
@@ -293,9 +233,9 @@
                                     <c:if test="${pagetag > 1}">
                                         <a class="page-link"
                                            <%
-                                    
-                                                if(searchText != null && searchText != ""){
-                                   
+
+                                               if (searchText != null && searchText != "") {
+
                                            %>
 
                                            href="search?search=${search}&index=${pagetag - 1}&sort=${param.sort}" aria-label="Previous"
@@ -311,9 +251,9 @@
                                 </li>
 
                                 <%
-                                    
-                                        if(searchText != null && searchText != ""){
-                                   
+
+                                    if (searchText != null && searchText != "") {
+
                                 %>
                                 <c:forEach begin="1" end="${page}" var="page">
                                     <li class="page-item">
@@ -333,9 +273,9 @@
                                         <a class="page-link" 
 
                                            <%
-                                    
-                                                if(searchText != null && searchText != ""){
-                                   
+
+                                               if (searchText != null && searchText != "") {
+
                                            %>
 
                                            href="search?search=${search}&index=${pagetag + 1}&sort=${param.sort}" aria-label="Next"
@@ -344,7 +284,7 @@
 
                                            href="products?categoryid=${param.categoryid}&index=${pagetag + 1}&sort=${param.sort}" aria-label="Next"
 
-                                           <% } %>
+                                           <% }%>
                                            ><span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </c:if>
@@ -355,155 +295,30 @@
                 </div>
             </div>
         </section>
-        <!-- ================ category section end ================= -->		  
-
-        <!-- ================ top product area start ================= -->	
-        <!--        <section class="related-product-area">
-                    <div class="container">
-                        <div class="section-intro pb-60px">
-                            <p>Popular Item in the market</p>
-                            <h2>Top <span class="section-intro__style">Product</span></h2>
-                        </div>
-                        <div class="row mt-30">
-                            <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-                                <div class="single-search-product-wrapper">
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-1.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-2.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-3.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- ================ category section end ================= -->		  	  
         
-                            <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-                                <div class="single-search-product-wrapper">
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-4.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-5.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-6.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-                                <div class="single-search-product-wrapper">
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-7.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-8.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-9.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-                                <div class="single-search-product-wrapper">
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-1.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-2.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="single-search-product d-flex">
-                                        <a href="#"><img src="img/product/product-sm-3.png" alt=""></a>
-                                        <div class="desc">
-                                            <a href="#" class="title">Gray Coffee Cup</a>
-                                            <div class="price">$170.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>-->
-        <!-- ================ top product area end ================= -->		
-
-        <!-- ================ Subscribe section start ================= -->		  
-        <!--        <section class="subscribe-position">
-                    <div class="container">
-                        <div class="subscribe text-center">
-                            <h3 class="subscribe__title">Get Update From Anywhere</h3>
-                            <p>Bearing Void gathering light light his eavening unto dont afraid</p>
-                            <div id="mc_embed_signup">
-                                <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe-form form-inline mt-5 pt-1">
-                                    <div class="form-group ml-sm-auto">
-                                        <input class="form-control mb-1" type="email" name="EMAIL" placeholder="Enter your email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '" >
-                                        <div class="info"></div>
-                                    </div>
-                                    <button class="button button-subscribe mr-auto mb-1" type="submit">Subscribe Now</button>
-                                    <div style="position: absolute; left: -5000px;">
-                                        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                                    </div>
-        
-                                </form>
-                            </div>
-        
-                        </div>
-                    </div>
-                </section>-->
-        <!-- ================ Subscribe section end ================= -->		  
-
-
         <!--================ Start footer Area  =================-->	
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
 
-
+        <script>
+            function addToCart(userId, bookId) {
+                if (userId === "") {
+                    alert("Vui lòng đăng nhập.");
+                    window.location.href = 'login';
+                    return;
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // Handle response from the server if needed
+                        alert("Thêm sáng vào giỏ hàng thành công.");
+                    }
+                };
+                xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId, true);
+                xhr.send();
+            }
+        </script>
 
         <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>

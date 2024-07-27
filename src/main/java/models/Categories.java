@@ -13,15 +13,17 @@ import java.util.Date;
 public class Categories {
     int categoryId;
     String categoryName;
+    String image;
     Date create_at;
     Date updated_at;
-
+    
     public Categories() {
     }
 
-    public Categories(int categoryId, String categoryName, Date create_at, Date updated_at) {
+    public Categories(int categoryId, String categoryName, String image, Date create_at, Date updated_at) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
+        this.image = image;
         this.create_at = create_at;
         this.updated_at = updated_at;
     }
@@ -40,6 +42,14 @@ public class Categories {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Date getCreate_at() {
