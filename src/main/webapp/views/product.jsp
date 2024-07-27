@@ -186,7 +186,6 @@
                                             <div class="card-product__img">
                                                 <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
                                                 <ul class="card-product__imgOverlay" style="display: flex">
-                                                    <!--                                                    <li><button><i class="ti-shopping-cart"></i></button></li>-->
                                                     <form action="cartdetails" method="get">                             
                                                         <input type="hidden" name="service" value="addCart">
                                                         <input type="hidden" name="bookId" value="${book.getBook_id()}">
@@ -202,6 +201,8 @@
 
                                             <div class="card-body">
                                                 <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
+                                                
+                                                <p class="card-product__price">Còn hàng: ${book.getStock()}</p>
 
                                                 <c:choose>
                                                     <c:when test="${originalPrice eq discountedPrice}">
@@ -213,9 +214,14 @@
                                                         <p class="card-product__price">
                                                             <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                                         </p>
-                                                        <p class="card-product__pricewithsale">
-                                                            <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                                                        </p>
+                                                        <div class="d-flex justify-content-center">
+                                                            <p class="card-product__pricewithsale ml-1 mr-1">
+                                                                <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                            </p>
+                                                            <p class="ml-1 mr-1" style="font-size:12px">
+                                                                -${book.getDiscount()}%
+                                                            </p>
+                                                        </div>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
@@ -296,7 +302,7 @@
             </div>
         </section>
         <!-- ================ category section end ================= -->		  	  
-        
+
         <!--================ Start footer Area  =================-->	
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->

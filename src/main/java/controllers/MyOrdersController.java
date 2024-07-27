@@ -97,10 +97,10 @@ public class MyOrdersController extends HttpServlet {
 
             if (statusFilter == "all") {
                 list_orders = orders.getOrders(cartId, index);
-                totalOrders = orders.getOrderCount();
+                totalOrders = orders.getOrderCount(cartId);
             } else {
                 list_orders = orders.getOrdersByStatus(cartId, index, statusFilter);
-                totalOrders = orders.getOrderCountByStatus(statusFilter);
+                totalOrders = orders.getOrderCountByStatus(statusFilter, cartId);
             }
 
             int endPage = totalOrders / 2;

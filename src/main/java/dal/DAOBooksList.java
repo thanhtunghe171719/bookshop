@@ -250,4 +250,10 @@ public class DAOBooksList extends DBConnect {
         return 0;
 
     }
+    
+    public static void main(String[] args) {
+        DAOBooksList book = new DAOBooksList();
+        ArrayList<Books> b = book.getListBooks("6", 1, "newest");
+        System.out.println(b);
+    }
 }
