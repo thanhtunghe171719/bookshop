@@ -68,23 +68,24 @@
                         <div class="confirmation-card">
                             <h3 class="billing-title">Người Nhận</h3>
                             <table class="order-rable">
-                                <jsp:useBean id="users" scope="request" type="models.User" />
                                 <tr>
                                     <td>Tên</td>
-                                    <td>: ${users.fullname}</td>
+                                    <td>: ${user.fullname}</td>
                                 </tr>
                                 <tr>
                                     <td>Số điện thoại</td>
-                                    <td>: ${users.phone}</td>
+                                    <td>: ${user.phone}</td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>
-                                    <td>: ${users.email}</td>
+                                    <td>: ${user.email}</td>
                                 </tr>
-                                <tr>
-                                    <td>Địa chỉ</td>
-                                    <td>: ${users.address}</td>
-                                </tr>
+                                <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <td>Địa chỉ</td>
+                                        <td>: ${order.getAddress()}</td>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </div>
                     </div>
@@ -132,18 +133,19 @@
                     </div>
                 </div>
                 <div class="row justify-content-around">
-                    <div class="col-lg-4 mt-3">
-                        <div class="col-md-12 form-group">
-                            <button type="submit" value="submit" class="button button-login w-100">Thay đổi thông tin</button>
-                        </div>
-                    </div>
-
                     <c:forEach var="order" items="${orders}">
-                        <div class="col-lg-4 mt-3">
-                            <div class="col-md-12 form-group">
-                                <a href="cancel?oid=${order.getOrderID()}" class="button button-login w-100 text-center">Huỷ đơn hàng</a>
+                        <c:if test="${order.getStatus() == 'Pending'}">
+<!--                            <div class="col-lg-4 mt-3">
+                                <div class="col-md-12 form-group">
+                                    <button type="button" value="submit" class="button button-login w-100">Thay đổi thông tin</button>
+                                </div>
+                            </div>-->
+                            <div class="col-lg-4 mt-3">
+                                <div class="col-md-12 form-group">
+                                    <a href="cancel?oid=${order.getOrderID()}" class="button button-login w-100 text-center">Huỷ đơn hàng</a>
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>

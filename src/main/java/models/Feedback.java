@@ -14,6 +14,7 @@ public class Feedback {
     private String comment;
     private Date createdAt;
     private User user;
+    private Book book;
 
     public int getFeedbackId() {
         return feedbackId;
@@ -61,5 +62,13 @@ public class Feedback {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

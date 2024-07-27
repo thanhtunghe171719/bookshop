@@ -1,4 +1,6 @@
 
+<%@page import="com.google.gson.Gson"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -107,18 +109,17 @@
                     <div class="section-intro pb-60px">
                         <h2><span class="section-intro__style">Sản phẩm Thịnh Hành</span></h2>
 
-                        <div class="nice-select" tabindex="0" style="float : right;top: -30px;">
-                            <span class="current">${currentOption}</span>
-                            <ul class="list">
-                                <li data-value="discount" class="option selected focus">Giảm Giá Mạnh</li>
-                                <li data-value="sold" class="option">Sản Phẩm Bán Chạy</li>
-                                <li data-value="new-product" class="option">Sản Phẩm Mới</li>
-                            </ul>
+                        <div style="float : right;top: -30px;">
+                            <select id="optionId" name="selectedOption" value="${selectedOption}" class="form-control" onchange="selectOption()">
+                                <option value="discount" ${param.selectedOption == 'discount' ? 'selected' : ''}>Giảm Giá Mạnh</option>
+                                <option value="sold" ${param.selectedOption == 'sold' ? 'selected' : ''}>Sản Phẩm Bán Chạy</option>
+                                <option value="new-product" ${param.selectedOption == 'new-product' ? 'selected' : ''}>Sản Phẩm Mới</option>
+                            </select>
                         </div>
 
                     </div>
 
-                    <div class="row">
+                    <div class="row" id="productList">
                         <c:if test="${not empty listBook}">
                             <c:forEach var="book" items="${listBook}">
                                 <div class="col-md-6 col-lg-4 col-xl-3">
@@ -175,7 +176,7 @@
                                         </div>
                                         <div class="card-body">
 
-                                            <h4 class="card-blog__title"><a href="#">${post.title}</a></h4>
+                                            <h4 class="card-blog__title"><a href="postdetail?postId=${post.postId}">${post.title}</a></h4>
                   <!--                          <p>${post.description}...</p>
                                             <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>-->
                                         </div>
@@ -197,7 +198,6 @@
         <jsp:include page="footer.jsp"/>
         <!--================ End footer Area  =================-->
 
-
         <script>
             var currentSlide = 0;
             var totalSlides = ${listSlider.size()};
@@ -214,15 +214,11 @@
                 document.getElementById('slide_' + currentSlide).style.display = 'flex';
             }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                var options = document.querySelectorAll('.option');
-                options.forEach(function (option) {
-                    option.addEventListener('click', function () {
-                        var selectedValue = this.getAttribute('data-value');
-                        window.location.href = 'home?selectedOption=' + selectedValue;
-                    });
-                });
-            });
+            setInterval(function () {
+                nextSlide(currentSlide);
+                var selectedValue = document.getElementById('optionId').value;
+                console.log(selectedValue);
+            }, 5000);
 
             function addToCart(userId, bookId) {
                 if (userId === "") {
@@ -240,6 +236,40 @@
                 xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId, true);
                 xhr.send();
             }
+
+            function selectOption() {
+                var selectElement = document.getElementById('optionId');
+                var selectedValue = selectElement.value;
+                var url = 'home?service=listAll&selectedOption=' + selectedValue;
+                window.location.href = url;
+            }
+
+            function selectOption1() {
+                var selectedValue = document.getElementById('optionId').value;
+                //su ajax toi con servlet change
+                $.ajax({
+                    url: '/BookShop/home?service=listAll&selectedOption=' + selectedValue,
+                    type: 'POST'
+
+                });
+            }
+            function selectOption2() {
+                var selectedValue = document.getElementById('optionId').value;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // Handle response from the server if needed
+                        console.log("Status updated successfully.");
+                        // Reload the page to reflect changes
+                        window.location.reload();
+                    }
+                };
+                xhr.open("GET", "home?service=listAll&selectedOption=" + selectedValue, true);
+                xhr.send();
+            }
+
+
+
 
 
         </script>      

@@ -118,6 +118,7 @@
                                                 <!--<p class="card-product__price">${lineSubTotal} đ</p>-->
                                                 <fmt:formatNumber value="${lineSubTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                             </h5>
+                                            <input type="hidden" name="lineSubTotal-${cartItem.cartItemId}" value="${lineSubTotal}">
                                         </td>
                                         <td>
                                             <a href="cartdetails?service=delete&cartItemId=${cartItem.cartItemId}" style="font-size: 25px;color: red">
@@ -225,6 +226,8 @@
                 var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
                 // Cập nhật giá trị tổng giá trị cho sản phẩm
                 document.getElementById('total-price-' + cartItemId).innerText = formatNumber(totalPrice, 3, 3) + " đ";
+                
+                document.querySelector('input[name="lineSubTotal-' + cartItemId + '"]').value = totalPrice;
 
                 updateSubtotal();
 
@@ -257,6 +260,8 @@
                 // Update the total price based on the new quantity
                 var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
                 document.getElementById('total-price-' + cartItemId).innerText = formatNumber(totalPrice, 3, 3) + " đ";
+                
+                document.querySelector('input[name="lineSubTotal-' + cartItemId + '"]').value = totalPrice;
 
                 updateSubtotal();
 
@@ -274,16 +279,21 @@
 
             function updateSubtotal() {
                 var totalAll = 0;
-                var totalPriceElements = document.querySelectorAll('[id^="total-price-"]');
-                                                                                       
+                var totalPriceElements = document.querySelectorAll('[name^="lineSubTotal-"]');
+
                 totalPriceElements.forEach(function (element) {
-                    var priceText = element.innerText.replace(" đ", "").replace(/\./g, '').replace(',', '.');
+                    var priceText = element.value; // Sử dụng giá trị của phần tử ẩn
+                    console.log('Price text:', priceText); // Debugging line
+
                     var price = parseFloat(priceText);
-                    totalAll += price;
+                    console.log('Price:', price); // Debugging line
+
+                    if (!isNaN(price)) {
+                        totalAll += price;
+                    }
                 });
-                if (!Number.isInteger(totalAll)) {
-                    totalAll *= 1000;
-                }
+
+                console.log('Total All:', totalAll); // Debugging line
                 document.getElementById('total-all').innerText = formatNumber(totalAll, 3, 3) + " đ";
             }
 

@@ -82,27 +82,44 @@ public class MyOrdersController extends HttpServlet {
             }
             int index = Integer.parseInt(indexPage);
 
-            int userId = user.getUserId();
+            // Get status filter from the request
+            String statusFilter = request.getParameter("status");
+            if (statusFilter == null) {
+                statusFilter = "all"; // Default to show all orders
+            }
 
+            int userId = user.getUserId();
             int cartId = daoCart.getCartId(userId);
 
-            int totalOrders = orders.getOrderCount();
+            int totalOrders;
+
+            List<Orders> list_orders;
+
+            if (statusFilter == "all") {
+                list_orders = orders.getOrders(cartId, index);
+                totalOrders = orders.getOrderCount(cartId);
+            } else {
+                list_orders = orders.getOrdersByStatus(cartId, index, statusFilter);
+                totalOrders = orders.getOrderCountByStatus(statusFilter, cartId);
+            }
+
             int endPage = totalOrders / 2;
             if (totalOrders % 2 != 0) {
                 endPage++;
             }
 
-            List<Orders> list_orders = orders.getOrders(cartId, index); // Giả định bạn có phương thức này
-
             for (Orders list_order : list_orders) {
                 List<Items> orderItems = orders.getOrderItemsForOrder(list_order.getOrderID());
                 list_order.setOrderItems(orderItems);
             }
+
             request.setAttribute("orders", list_orders);
             request.setAttribute("page", endPage);
             request.setAttribute("pagetag", index);
+            request.setAttribute("status", statusFilter);
 
             request.getRequestDispatcher("views/myorders.jsp").forward(request, response);
+
         }
     }
 

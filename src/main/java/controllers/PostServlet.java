@@ -74,8 +74,8 @@ public class PostServlet extends HttpServlet {
             Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new ServletException(ex);
         }
-    }
-
+    
+}
     private void handleDeleteRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

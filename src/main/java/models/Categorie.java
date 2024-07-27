@@ -16,7 +16,7 @@ public class Categorie {
     private String image;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
+    
     public Categorie() {
     }
 

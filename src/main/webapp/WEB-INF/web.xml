@@ -9,6 +9,9 @@
         <url-pattern>/marketing-product</url-pattern>
         <url-pattern>/admin-category</url-pattern>
         <url-pattern>/managerpost</url-pattern>
+        <url-pattern>/admin_dashboard</url-pattern>
+        <url-pattern>/sale_dashboard</url-pattern>
+        <url-pattern>/marketing_dashboard</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>DetailServlet</servlet-name>
@@ -106,6 +109,42 @@
         <servlet-name>ThankYou</servlet-name>
         <servlet-class>controllers.ThankYou</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>controllers.AdminDashboardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerServlet</servlet-name>
+        <servlet-class>controllers.CustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsersListServlet</servlet-name>
+        <servlet-class>controllers.UsersListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <servlet-class>controllers.UserDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaleDashboard</servlet-name>
+        <servlet-class>controllers.SaleDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarketingDashboard</servlet-name>
+        <servlet-class>controllers.MarketingDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Error404</servlet-name>
+        <servlet-class>controllers.Error404</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentController</servlet-name>
+        <servlet-class>controllers.PaymentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SettingAdminServlet</servlet-name>
+        <servlet-class>controllers.SettingAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/productdetail</url-pattern>
@@ -201,6 +240,42 @@
     <servlet-mapping>
         <servlet-name>ThankYou</servlet-name>
         <url-pattern>/thankyou</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin_dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerServlet</servlet-name>
+        <url-pattern>/customers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersListServlet</servlet-name>
+        <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <url-pattern>/userDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleDashboard</servlet-name>
+        <url-pattern>/sale_dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarketingDashboard</servlet-name>
+        <url-pattern>/marketing_dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Error404</servlet-name>
+        <url-pattern>/error404</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentController</servlet-name>
+        <url-pattern>/payment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingAdminServlet</servlet-name>
+        <url-pattern>/settingadmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

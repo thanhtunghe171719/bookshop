@@ -26,17 +26,39 @@ public class LoginController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DAOUsers userDAO = new DAOUsers();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String encrypt = userDAO.Sha256(password);
         DAOUsers dao = new DAOUsers();
         User us = dao.getUserByUsername(email);
         if (us == null) {
             request.setAttribute("errorMessage", "Tài khoản không tồn tại. Vui lòng thử lại.");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);
-        } else if (us != null && us.getPassword().equals(password) && dao.isAccountActive(us)) {
+        } else if (us != null && us.getPassword().equals(encrypt) && dao.isAccountActive(us)) {
             // Authentication successful
             request.getSession().setAttribute("user", us);
-            response.sendRedirect("home");
+            switch (us.getRoleId()) {
+            case 1:
+                response.sendRedirect("admin_dashboard");
+                break;
+            case 2:
+                response.sendRedirect("marketing_dashboard");
+                break;
+            case 3:
+                response.sendRedirect("sale_dashboard");
+                break;
+            case 4:
+                response.sendRedirect("home");
+                break;
+            case 5:
+                response.sendRedirect("manage-sale");
+                break;
+            default:
+                // Trường hợp roleId không khớp với bất kỳ trường hợp nào trên
+                response.sendRedirect("home");
+                break;
+        }
         } else if (us != null && !dao.isAccountActive(us)) {
             request.setAttribute("errorMessage", "Tài khoản không được phép truy cập vào hệ thống");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);

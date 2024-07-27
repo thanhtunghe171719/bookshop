@@ -101,13 +101,13 @@
                                         function validateForm() {
                                             let isValid = true;
 
-                                            let email = document.getElementById('email').value;
-                                            let password = document.getElementById('password').value;
+                                            let email = document.getElementById('email').value.trim();
+                                            let password = document.getElementById('password').value.trim();
 
                                             document.getElementById('emailError').innerText = '';
                                             document.getElementById('passwordError').innerText = '';
 
-                                            if (!email) {
+                                            if (email =='') {
                                                 document.getElementById('emailError').innerText = 'Email không được để trống';
                                                 isValid = false;
                                             } else
@@ -115,7 +115,7 @@
                                                 document.getElementById('emailError').innerText = 'Email không đúng định dạng';
                                                 isValid = false;
                                             }
-                                            if (!password) {
+                                            if (password =='') {
                                                 document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
                                                 isValid = false;
                                             } else if (password.length < 8) {

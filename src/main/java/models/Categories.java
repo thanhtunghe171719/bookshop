@@ -16,7 +16,7 @@ public class Categories {
     String image;
     Date create_at;
     Date updated_at;
-
+    
     public Categories() {
     }
 

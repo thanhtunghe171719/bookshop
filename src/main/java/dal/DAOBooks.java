@@ -317,7 +317,20 @@ public class DAOBooks extends DBConnect {
         }
         return null;
     }
-
+    public int getBooksCount() {
+        int totalBooks = 0;
+        String sql = "SELECT COUNT(*) as totalBooks FROM books";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalBooks = rs.getInt("totalBooks");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalBooks;
+    }
     public static void main(String[] args) {
         DAOBooks dao = new DAOBooks();
         ArrayList<Book> list = dao.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 8;");

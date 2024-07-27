@@ -37,7 +37,7 @@
                                 <span class="fa fa-location-arrow"></span>
                                 Trụ sở chính
                             </p>
-                            <p>Thạch Thất, Hòa Lạc, Hà Nội</p>
+                            <p>Trường đại học FPT, Hòa Lạc, Thạch Thất, Hà Nội</p>
 
                             <p class="sm-head">
                                 <span class="fa fa-phone"></span>
@@ -53,8 +53,8 @@
                                 Email
                             </p>
                             <p>
-                                abc@gmail.com <br>
-                                abc123@gmail.com
+                                thanhtung2733@gmail.com <br>
+                                
                             </p>
                         </div>
                     </div>

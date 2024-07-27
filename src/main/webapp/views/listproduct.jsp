@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -97,8 +98,10 @@
                             <td><img src="${book.image}" alt="${book.title}" style="width:50px;height:50px;"></td>
                             <td>${book.title}</td>
                             <td>${categories[book.categoryId]}</td>
-                            <td>${book.price}vnd</td>
-                            <td>${book.discount}</td>
+                            <td>
+                    <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd
+                    </td>
+                            <td>${book.discount}%</td>
                             <td>
                                 <a href="marketing-product?action=view&id=${book.bookId}" class="btn btn-info btn-sm">View</a>
                                 <a href="marketing-product?action=edit&id=${book.bookId}" class="btn btn-warning btn-sm">Edit</a>

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controllers;
 
 import dal.DAOSlider;
@@ -33,16 +32,18 @@ import models.User;
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class MarketingSlider extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
@@ -62,10 +63,10 @@ public class MarketingSlider extends HttpServlet {
         if (service.equals("listAll")) {
             String title = request.getParameter("title");
             String status = request.getParameter("status");
-            
+
             ArrayList<Slider> listAllSlider;
             ArrayList<Slider> listSlider;
-            
+
             int pageSize = 4;
             String stringPage = request.getParameter("page");
             int page = 1;
@@ -73,7 +74,7 @@ public class MarketingSlider extends HttpServlet {
                 page = Integer.parseInt(stringPage);
             }
             int offset = (page - 1) * pageSize;
-            
+
             if ((title == null || title.isEmpty()) && (status == null || status.isEmpty())) {
                 listAllSlider = daoSlider.getAll("SELECT * FROM slider");
                 listSlider = daoSlider.getAll("SELECT * FROM slider ORDER BY slider_id DESC LIMIT " + offset + "," + pageSize);
@@ -153,19 +154,28 @@ public class MarketingSlider extends HttpServlet {
 
             if (!fileName.isEmpty()) {
                 // If a new image is uploaded, save it and update slider image path
-                InputStream fileContent = filePart.getInputStream();
-                File uploads = new File("C:\\Users\\TDG\\Documents\\NetBeansProjects\\main\\bookshopmain\\src\\main\\webapp\\img\\slider");
-                File file = new File(uploads, fileName);
-                try (OutputStream out = new FileOutputStream(file)) {
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = fileContent.read(buffer)) != -1) {
-                        out.write(buffer, 0, bytesRead);
-                    }
+//                InputStream fileContent = filePart.getInputStream();
+//                File uploads = new File("E:\\Summer2024\\SWP391\\bookshop11\\src\\main\\webapp\\img\\slider");
+//                File uploads = new File("C:\\Users\\TDG\\Documents\\NetBeansProjects\\ban\\bookshop\\src\\main\\webapp\\img\\slider");
+//                File file = new File(uploads, fileName);
+//                try (OutputStream out = new FileOutputStream(file)) {
+//                    byte[] buffer = new byte[1024];
+//                    int bytesRead;
+//                    while ((bytesRead = fileContent.read(buffer)) != -1) {
+//                        out.write(buffer, 0, bytesRead);
+//                    }
+//                }
+//                sliderToUpdate.setImage("img/slider/" + fileName);
+                String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
                 }
-                sliderToUpdate.setImage("img/slider/" + fileName);
-            }
 
+                String filePath = uploadPath + File.separator + fileName;
+                filePart.write(filePath);
+            }
+            sliderToUpdate.setImage("uploads/" + fileName);
             sliderToUpdate.setTitle(title);
             sliderToUpdate.setDescription(description);
             sliderToUpdate.setStatus(status);
@@ -193,7 +203,7 @@ public class MarketingSlider extends HttpServlet {
                 }
             }
             session.setAttribute("listSlider", listSlider);
-            
+
         }
 
         if (service.equals("addSlider")) {
@@ -203,29 +213,33 @@ public class MarketingSlider extends HttpServlet {
 
             Part filePart = request.getPart("newImage");
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            InputStream fileContent = filePart.getInputStream();
+//            InputStream fileContent = filePart.getInputStream();
 
-            File uploads = new File("C:\\Users\\TDG\\Documents\\NetBeansProjects\\main\\bookshopmain\\src\\main\\webapp\\img\\slider");
-            File file = new File(uploads, fileName);
-            try (OutputStream out = new FileOutputStream(file)) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = fileContent.read(buffer)) != -1) {
-                    out.write(buffer, 0, bytesRead);
-                }
+//            File uploads = new File("E:\\Summer2024\\SWP391\\bookshop11\\src\\main\\webapp\\img\\slider");
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
             }
+
+            String filePath = uploadPath + File.separator + fileName;
+            filePart.write(filePath);
 
             Slider slider = new Slider();
             slider.setUserId(user.getUserId());
             slider.setTitle(title);
             slider.setDescription(description);
-            slider.setImage("img/slider/" + fileName);
+//            slider.setImage("img/slider/" + fileName);
+            slider.setImage("uploads/" + fileName);
             slider.setStatus(status);
             int result = daoSlider.insert(slider);
 
-            if(result > 0) session.setAttribute("messageSlider", "Thêm Slider Thành Công");
-            else session.setAttribute("messageSlider", "Thêm Slider Thất Bại");
-            
+            if (result > 0) {
+                session.setAttribute("messageSlider", "Thêm Slider Thành Công");
+            } else {
+                session.setAttribute("messageSlider", "Thêm Slider Thất Bại");
+            }
+
             ArrayList<Slider> listSlider = (ArrayList<Slider>) session.getAttribute("listSlider");
             listSlider.add(slider);
 
@@ -237,12 +251,13 @@ public class MarketingSlider extends HttpServlet {
         //select(jsp)   
         RequestDispatcher dispth = request.getRequestDispatcher("./views/sliderlist.jsp");
         //run(view)
-        dispth.forward(request, response);        
-    } 
+        dispth.forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -250,12 +265,13 @@ public class MarketingSlider extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -263,12 +279,13 @@ public class MarketingSlider extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

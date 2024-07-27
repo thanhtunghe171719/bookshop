@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : manage-orderDetail
     Created on : Jul 15, 2024, 12:25:42 AM
     Author     : HP
@@ -37,7 +37,7 @@
     <body>
         <jsp:include page="header.jsp"/>
         <div class="container mt-5">
-            <h2 class="mb-4">Order List</h2>
+
             <c:if test="${param.error != null}">
                 <div class="alert alert-danger" role="alert">
                     ${param.error}
@@ -50,7 +50,7 @@
             </c:if>
             <div class="container">
                 <h2>Order Detail</h2>
-
+                <a href="javascript:history.back()" class="btn btn-primary">Back to Order List</a>
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 200px;">Order ID</th>
@@ -89,7 +89,6 @@
                         <td>${order.updatedAt}</td>
                     </tr>
                 </table>
-
                 <h2>Order Items</h2>
                 <table class="table table-bordered">
                     <thead class="thead-dark">

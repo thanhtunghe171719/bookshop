@@ -29,7 +29,7 @@
                 padding: 2px;
                 width: 100px;
                 font-size: 16px;
-                font-style:normal;
+                font-style: normal;
                 vertical-align: middle;
                 transition: background-color 0.3s ease;
             }
@@ -69,6 +69,7 @@
                                     List<Post> posts = (List<Post>) request.getAttribute("posts");
                                     if (posts != null && !posts.isEmpty()) {
                                         for (Post post : posts) {
+                                            if (!post.isHidden()) {
                                 %>
                                 <article class="row blog_item">
                                     <div class="col-md-3">
@@ -98,8 +99,9 @@
                                     </div>
                                 </article>
                                 <%
-                                    }
-                                } else {
+                                            }
+                                        }
+                                    } else {
                                 %>
                                 <p>No posts found.</p>
                                 <%
@@ -155,7 +157,7 @@
                                                 for (String category : categories) {
                                         %>
                                         <li>
-                                            <a href="#" class="d-flex">
+                                            <a href="?category=<%= category%>" class="d-flex">
                                                 <p><%= category %></p>
                                             </a>
                                         </li>
@@ -175,21 +177,31 @@
                 </div>
             </section>
         </div>
-        <!--================Blog Area =================-->
         <script>
-            // L?ng nghe s? ki?n nh?p chu?t vào tiêu ?? c?a bài ??ng
+            // Lắng nghe sự kiện nhấp chuột vào tiêu đề của bài đăng
             document.querySelectorAll('.post-title').forEach(title => {
                 title.addEventListener('click', () => {
                     const postId = title.getAttribute('data-postId');
                     window.location.href = 'postdetail?postId=' + postId;
                 });
             });
+
             function sortPosts() {
-                var sortOrder = document.getElementByI
-        <!-- Bootstrap JS and dependencies -->
+                var sortOrder = document.getElementById("sortDropdown").value;
+                var currentUrl = window.location.href.split('?')[0];
+                var pageSize = '<%= request.getAttribute("pageSize") %>';
+                var searchParams = new URLSearchParams(window.location.search);
+                searchParams.set('sortOrder', sortOrder);
+                searchParams.set('page', '1');
+                searchParams.set('pageSize', pageSize);
+                window.location.href = currentUrl + '?' + searchParams.toString();
+            }
         </script>
+        <!--================Blog Area =================-->
+
         <jsp:include page="footer.jsp"/>
 
+        <!-- Bootstrap JS và các dependencies -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa2t6zI+QLtd0h5PvXja/hFOF" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIyO4FfSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></script>
