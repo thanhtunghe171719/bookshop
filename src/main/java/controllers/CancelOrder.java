@@ -48,20 +48,6 @@ public class CancelOrder extends HttpServlet {
             try {
                 int orderId = Integer.parseInt(id);
                 orderDAO.cancelOrder(orderId);
-                int cancelResult = orderDAO.cancelOrder(orderId);
-                if (cancelResult > 0) {
-                    int updatedItems = orderDAO.updateInventoryOnCancel(orderId); // Update inventory
-                    if (updatedItems > 0) {
-                        request.getRequestDispatcher("views/cancelsuccess.jsp").forward(request, response);
-                        // Optionally set a success message
-                    } else {
-                        request.getRequestDispatcher("views/cancelfail.jsp").forward(request, response);
-                        // Optionally set a warning message
-                    }
-                } else {
-                    request.getRequestDispatcher("views/cancelfail.jsp").forward(request, response);
-                    // Optionally set a failure message
-                }
             } catch (NumberFormatException e) {
                 // Log the exception and handle the error
                 e.printStackTrace();
@@ -70,6 +56,8 @@ public class CancelOrder extends HttpServlet {
             // Handle the case where id is null or empty
             // You might want to set an error message in the request and forward it to an error page or back to the homepage
         }
+
+        response.sendRedirect("myorders");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -338,51 +338,6 @@ public class DAOOrders extends DBConnect {
         }
         return 0;
     }
-
-    public int updateInventoryOnCancel(int orderId) {
-        String selectSql = "SELECT book_id, quantity FROM order_items WHERE order_id = ?";
-        String updateStockSql = "UPDATE books b SET b.stock = b.stock + ? WHERE b.book_id = ?";
-        int updatedCount = 0; // Count of successfully updated items
-
-        try (
-                PreparedStatement selectStmt = conn.prepareStatement(selectSql); PreparedStatement updateStockStmt = conn.prepareStatement(updateStockSql)) {
-            selectStmt.setInt(1, orderId);
-            try (ResultSet rs = selectStmt.executeQuery()) {
-                // Check if the result set contains data
-                if (!rs.isBeforeFirst()) {
-                    System.out.println("No order items found for order ID: " + orderId);
-                    return updatedCount; // No items found, return 0
-                }
-
-                // Loop through each item in the order
-                while (rs.next()) {
-                    int bookId = rs.getInt("book_id");
-                    int quantity = rs.getInt("quantity");
-
-                    // Log retrieved book details
-                    System.out.println("Updating stock for book ID: " + bookId + ", quantity: " + quantity);
-
-                    // Update the stock for each book in the order
-                    updateStockStmt.setInt(1, quantity);
-                    updateStockStmt.setInt(2, bookId);
-                    int rowsAffected = updateStockStmt.executeUpdate();
-
-                    // Increment the count if the stock was updated successfully
-                    if (rowsAffected > 0) {
-                        updatedCount++;
-                        System.out.println("Stock updated successfully for book ID: " + bookId);
-                    } else {
-                        System.out.println("Failed to update stock for book ID: " + bookId);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return updatedCount; // Return the number of successfully updated items
-    }
-
 // public List<Order> selectNewOrders() {
 //        List<Order> orders = new ArrayList<>();
 //        String sql = "SELECT * FROM orders where create_at = ?";
@@ -401,15 +356,14 @@ public class DAOOrders extends DBConnect {
 //        }
 //        return orders;
 //    }
+
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);
 //        int cancel = order.cancelOrder(2);
 //        int count = order.getOrderCountByStatus("Canceled");
-//        ArrayList<Orders> o = order.getOrders(1, 1);
+        ArrayList<Orders> o = order.getOrders(1, 1);
 //        ArrayList<Items> o = order.getOrderItemsForOrder(9);
-
-        int update = order.updateInventoryOnCancel(41);
-        System.out.println(update);
+        System.out.println(o);
     }
 }
