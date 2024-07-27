@@ -99,9 +99,9 @@
                                     </div>
                                 </article>
                                 <%
+                                            }
                                         }
-                                    }
-                                } else {
+                                    } else {
                                 %>
                                 <p>No posts found.</p>
                                 <%
@@ -109,37 +109,29 @@
                                 %>
                                 <nav class="blog-pagination justify-content-center d-flex">
                                     <ul class="pagination">
+                                        <li class="page-item">
+                                            <a href="?page=<%= Math.max(1, (Integer) request.getAttribute("currentPage") - 1)%>&pageSize=<%= request.getAttribute("pageSize")%>&sortOrder=<%= request.getAttribute("sortOrder")%>" class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
                                         <%
                                             int totalPosts = (Integer) request.getAttribute("totalPosts");
                                             int pageSize = (Integer) request.getAttribute("pageSize");
                                             int currentPage = (Integer) request.getAttribute("currentPage");
                                             int totalPages = (int) Math.ceil((double) totalPosts / pageSize);
-
-                                            if (totalPages > 1) {
-                                        %>
-                                        <li class="page-item <%= (currentPage == 1) ? "disabled" : ""%>">
-                                            <a href="?page=<%= Math.max(1, currentPage - 1)%>&pageSize=<%= pageSize%>&sortOrder=<%= request.getAttribute("sortOrder")%><%= request.getParameter("category") != null ? "&category=" + request.getParameter("category") : ""%><%= request.getParameter("search") != null ? "&search=" + request.getParameter("search") : ""%>" class="page-link" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <%
                                             for (int i = 1; i <= totalPages; i++) {
                                         %>
-                                        <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
-                                            <a href="?page=<%= i%>&pageSize=<%= pageSize%>&sortOrder=<%= request.getAttribute("sortOrder")%><%= request.getParameter("category") != null ? "&category=" + request.getParameter("category") : ""%><%= request.getParameter("search") != null ? "&search=" + request.getParameter("search") : ""%>" class="page-link"><%= i%></a>
+                                        <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+                                            <a href="?page=<%= i %>&pageSize=<%= pageSize %>&sortOrder=<%= request.getAttribute("sortOrder") %>" class="page-link"><%= i %></a>
                                         </li>
-                                        <% }%>
-                                        <li class="page-item <%= (currentPage == totalPages) ? "disabled" : ""%>">
-                                            <a href="?page=<%= Math.min(totalPages, currentPage + 1)%>&pageSize=<%= pageSize%>&sortOrder=<%= request.getAttribute("sortOrder")%><%= request.getParameter("category") != null ? "&category=" + request.getParameter("category") : ""%><%= request.getParameter("search") != null ? "&search=" + request.getParameter("search") : ""%>" class="page-link" aria-label="Next">
+                                        <% } %>
+                                        <li class="page-item">
+                                            <a href="?page=<%= Math.min(totalPages, currentPage + 1) %>&pageSize=<%= pageSize %>&sortOrder=<%= request.getAttribute("sortOrder") %>" class="page-link" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
-                                        <% }%>
                                     </ul>
                                 </nav>
-
-
-
                             </div>
                         </div>
 
@@ -149,7 +141,7 @@
                                     <form action="blog" method="get">
                                         <div class="form-group">
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="Tìm kiếm" name="search" value="<%= request.getParameter("search") != null ? request.getParameter("search") : ""%>">
+                                                <input type="text" class="form-control" placeholder="Tìm kiếm" name="search" value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
 
                                             </div>
                                         </div>
@@ -166,12 +158,12 @@
                                         %>
                                         <li>
                                             <a href="?category=<%= category%>" class="d-flex">
-                                                <p><%= category%></p>
+                                                <p><%= category %></p>
                                             </a>
                                         </li>
                                         <%
-                                            }
-                                        } else {
+                                                }
+                                            } else {
                                         %>
                                         <li><p>No categories found.</p></li>
                                             <%
@@ -197,7 +189,7 @@
             function sortPosts() {
                 var sortOrder = document.getElementById("sortDropdown").value;
                 var currentUrl = window.location.href.split('?')[0];
-                var pageSize = '<%= request.getAttribute("pageSize")%>';
+                var pageSize = '<%= request.getAttribute("pageSize") %>';
                 var searchParams = new URLSearchParams(window.location.search);
                 searchParams.set('sortOrder', sortOrder);
                 searchParams.set('page', '1');
