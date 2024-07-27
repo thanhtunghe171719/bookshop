@@ -193,6 +193,7 @@
                                                         <c:set var="userId" value="${user.userId}"></c:set>
                                                         <li ><button type="button" onclick="addToCart('${userId}', ${book.getBook_id()})"><i class="ti-shopping-cart"></i></button></li>
                                                     </form>    
+                                                    <li style="margin-left: 5px"><button><i class="ti-heart"></i></button></li>
                                                 </ul>
                                             </div>
 
