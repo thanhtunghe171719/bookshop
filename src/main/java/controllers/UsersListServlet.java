@@ -104,7 +104,28 @@ public class UsersListServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
-            if ("edit".equals(action)) {
+            if ("add".equals(action)) {
+                String fullname = request.getParameter("fullname");
+                String gender = request.getParameter("gender");
+                String email = request.getParameter("email");
+                String phone = request.getParameter("phone");
+                String password = request.getParameter("password");
+                String roleName = request.getParameter("role");
+
+                logger.info("Adding user with details: fullname=" + fullname + ", gender=" + gender + ", email=" + email + ", phone=" + phone + ", role=" + roleName);
+
+                if (isValidInput(fullname, gender, email, phone, password, roleName)) {
+                    User user = new User(fullname, gender, email, password, phone,  "Active");
+                    if (daoUsers.addUser(user)) {
+                        out.print("{\"status\":\"success\"}");
+                    } else {
+                        out.print("{\"status\":\"error\",\"message\":\"Failed to add user\"}");
+                    }
+                } else {
+                    logger.warning("Invalid input data for adding user.");
+                    out.print("{\"status\":\"error\",\"message\":\"Invalid input data\"}");
+                }
+            } else if ("edit".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("user_id"));
                 String fullname = request.getParameter("fullname");
                 String gender = request.getParameter("gender");
@@ -128,6 +149,15 @@ public class UsersListServlet extends HttpServlet {
         } finally {
             out.flush();
         }
+    }
+
+    private boolean isValidInput(String... inputs) {
+        for (String input : inputs) {
+            if (input == null || input.trim().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

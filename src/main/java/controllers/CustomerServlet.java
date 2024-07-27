@@ -95,6 +95,17 @@ public class CustomerServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 String phone = request.getParameter("phone");
                 String password = request.getParameter("password");
+                // Kiểm tra điều kiện mật khẩu
+                if (!isValidPassword(password)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Invalid password format.\"}");
+                    return;
+                }
+
+                // Kiểm tra điều kiện số điện thoại
+                if (!isValidPhoneNumber(phone)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Phone number must be 10 digits.\"}");
+                    return;
+                }
                 User user = new User(fullname, gender, email, password, phone, "Active");
                 user.setRoleId(2);
                 daoUsers.addUser(user);
@@ -123,6 +134,15 @@ public class CustomerServlet extends HttpServlet {
         } finally {
             out.flush();
         }
+    }
+
+    private boolean isValidPassword(String password) {
+        return password.length() >= 8 && password.matches(".*[a-zA-Z].*") && password.matches(".*\\d.*") && password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*");
+    }
+
+// Phương thức kiểm tra số điện thoại hợp lệ
+    private boolean isValidPhoneNumber(String phone) {
+        return phone.matches("\\d{10}");
     }
 
     @Override

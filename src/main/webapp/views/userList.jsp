@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="models.User" %>
 <%@ page import="java.util.List" %>
@@ -110,6 +109,7 @@
                             <button class="btn-search" type="submit">SEARCH</button>
                         </div>
                     </div>
+                        
                 </fieldset>
             </form>
 
@@ -287,13 +287,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="text" class="form-control" name="password" required>
+                                <input type="password" class="form-control" name="password" required>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="text" class="form-control" name="phone" required>
+                                <input type="phone" class="form-control" name="phone" required>
+                            </div>
+                             <div class="form-group">
+                                <label for="phone">Role</label>
+                                <select class="form-control" name="gender" required>
+                                    <option value="customer">Customer</option>
+                                    <option value="sale">Sale</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Add User</button>

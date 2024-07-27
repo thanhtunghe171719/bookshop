@@ -54,7 +54,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <img src="${user.getImage()}" alt="Profile Image" class="rounded-circle p-1 bg-primary" width="150">
                                     <div class="mt-3">
                                         <c:choose>
                                             <c:when test="${not empty user}">
