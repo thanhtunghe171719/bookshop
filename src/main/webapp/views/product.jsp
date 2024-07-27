@@ -186,7 +186,6 @@
                                             <div class="card-product__img">
                                                 <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
                                                 <ul class="card-product__imgOverlay" style="display: flex">
-                                                    <li style="margin-left: 28%"><button><i class="ti-search"></i></button></li>
                                                     <!--                                                    <li><button><i class="ti-shopping-cart"></i></button></li>-->
                                                     <form action="cartdetails" method="get">                             
                                                         <input type="hidden" name="service" value="addCart">
@@ -194,7 +193,6 @@
                                                         <c:set var="userId" value="${user.userId}"></c:set>
                                                         <li ><button type="button" onclick="addToCart('${userId}', ${book.getBook_id()})"><i class="ti-shopping-cart"></i></button></li>
                                                     </form>    
-                                                    <li style="margin-left: 5px"><button><i class="ti-heart"></i></button></li>
                                                 </ul>
                                             </div>
 
