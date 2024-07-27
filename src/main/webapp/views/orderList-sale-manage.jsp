@@ -77,7 +77,7 @@
                         <c:set value="${getUserAsssin.getAssignedSalesForOrder(order.orderId)}" var="saleM"/>
                         <tr>
                             <td>${index.index + 1}</td>
-                            <td>${order.total}</td>
+                            <td><fmt:formatNumber value="${order.total}" type="number" minFractionDigits="3" maxFractionDigits="3" /></td>
                             <td>${order.orderStatus}</td>
                             <td>${order.orderDate}</td>
                             <td>${order.updatedAt}</td>

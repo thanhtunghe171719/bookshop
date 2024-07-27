@@ -82,7 +82,7 @@ public class DAOBlog {
 
     public Post getPostById(int postId) {
         Post post = null;
-        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.post_id = ? ORDER BY p.created_at";
+        String sql = "SELECT p.*, u.fullname AS author_name FROM posts p JOIN users u ON  p.user_id = u.user_id WHERE p.post_id = ? ORDER BY p.created_at";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, postId);
             try ( ResultSet rs = ps.executeQuery()) {

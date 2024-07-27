@@ -118,7 +118,7 @@
                                         Customer Review
                                     </span>
                                     <span class="wc-stats counter">
-                                        0
+                                        ${totalFeedbacks}
                                     </span>		
 
                                     </span>

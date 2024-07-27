@@ -47,19 +47,19 @@ public class ChangePassWord extends HttpServlet {
                 DAOUsers dao = new DAOUsers();
 
                 String oldPassword = request.getParameter("oldPassword");
-//                String encryptOld = userDAO.Sha256(oldPassword);
+                String encryptOld = userDAO.Sha256(oldPassword);
                 String newPassword = request.getParameter("newPassword");
-//                String encryptNew = userDAO.Sha256(newPassword);
+                String encryptNew = userDAO.Sha256(newPassword);
                 
                 String notice = null;
 
-                if (oldPassword.equals(user.getPassword())) {
-                    user.setPassword(newPassword);
+                if (encryptOld.equals(user.getPassword())) {
+                    user.setPassword(encryptNew);
                     user.setDeleted("no");
                     int result = dao.update(user);
                     if (result != 0) {
                         notice = "thay đổi mật khẩu thành công.";
-                        response.sendRedirect("home");
+                        response.sendRedirect("login");
                         return;
                     } else {
                         notice = "thay đổi mật khẩu thất bại.";

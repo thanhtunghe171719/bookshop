@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import dal.DAOBooksList;
 import dal.DAOOrders;
 import dal.DAOUsers;
+import dal.FeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -68,14 +69,17 @@ public class AdminDashboardServlet extends HttpServlet {
 //        processRequest(request, response);
         DAOOrders dao= new DAOOrders();
         DAOUsers dao1 = new DAOUsers();
+        FeedbackDAO dao2 = new FeedbackDAO();
         
         double totalProfit = dao.getTotalProfit();
         int totalOrders = dao.getOrdersCount();
         int totalCustomers = dao1.getCustomerCount();
+        int totalFeedbacks = dao2.getFeedbacksCount();
         
         request.setAttribute("totalProfit", totalProfit);
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("totalCustomers", totalCustomers);
+        request.setAttribute("totalFeedbacks", totalFeedbacks);
         
         request.getRequestDispatcher("./views/admindashboard.jsp").forward(request, response);
 

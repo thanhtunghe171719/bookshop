@@ -133,8 +133,8 @@ public class ResetPassWord extends HttpServlet {
                     ArrayList<User> listUser = daoUsers.getAll("SELECT * FROM users where email = '"+emailReset+"'");
                     if(listUser!=null){
                         User user = listUser.get(0);
-                        //String encryptNew = daoUsers.Sha256(newPassWord);
-                        user.setPassword(newPassWord);
+                        String encryptNew = daoUsers.Sha256(newPassWord);
+                        user.setPassword(encryptNew);
                         daoUsers.update(user);
                         indexScreen = "";
                         messageUpdate = "Đổi mật khẩu thành công";

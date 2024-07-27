@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 </form>
-                                <div class="row">
+<!--                                <div class="row">
                     <div class="col-lg-8 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
@@ -169,7 +169,7 @@
                     </div>
                      
                                 
-        </div>
+        </div>-->
             </div>
         </main>
         <div class="ttr-overlay"></div>

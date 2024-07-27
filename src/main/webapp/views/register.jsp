@@ -110,74 +110,74 @@
         <script src="js/main.js"></script>
         <script>
                                                 function validateForm() {
-                                                    let isValid = true;
+    let isValid = true;
 
-                                                    let fullname = document.getElementById('fullname').value;
-                                                    let phone = document.getElementById('phone').value;
-                                                    let address = document.getElementById('address').value;
-                                                    let email = document.getElementById('email').value;
-                                                    let password = document.getElementById('password').value;
-                                                    let gender = document.getElementById('gender').value;
+    let fullname = document.getElementById('fullname').value.trim();
+    let phone = document.getElementById('phone').value.trim();
+    let address = document.getElementById('address').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let password = document.getElementById('password').value;
+    let gender = document.getElementById('gender').value.trim();
 
-                                                    // Reset error messages
-                                                    document.getElementById('fullnameError').innerText = '';
-                                                    document.getElementById('phoneError').innerText = '';
-                                                    document.getElementById('addressError').innerText = '';
-                                                    document.getElementById('emailError').innerText = '';
-                                                    document.getElementById('passwordError').innerText = '';
-                                                    document.getElementById('genderError').innerText = '';
+    // Reset error messages
+    document.getElementById('fullnameError').innerText = '';
+    document.getElementById('phoneError').innerText = '';
+    document.getElementById('addressError').innerText = '';
+    document.getElementById('emailError').innerText = '';
+    document.getElementById('passwordError').innerText = '';
+    document.getElementById('genderError').innerText = '';
 
-                                                    if (!fullname) {
-                                                        document.getElementById('fullnameError').innerText = 'Họ và tên không được để trống';
-                                                        isValid = false;
-                                                    }
-                                                    if (!phone) {
-                                                        document.getElementById('phoneError').innerText = 'Số điện thoại không được để trống';
-                                                        isValid = false;
-                                                    } else if (!/^\d+$/.test(phone)) {
-                                                        document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa số';
-                                                        isValid = false;
-                                                    } else if (phone.length > 10) {
-                                                        document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa tối đa 10 số';
-                                                        isValid = false;
-                                                    }
-                                                    if (!address) {
-                                                        document.getElementById('addressError').innerText = 'Địa chỉ không được để trống';
-                                                        isValid = false;
-                                                    }
-                                                    if (!email) {
-                                                        document.getElementById('emailError').innerText = 'Email không được để trống';
-                                                        isValid = false;
-                                                    } else if (!/\S+@\S+\.\S+/.test(email)) {
-                                                        document.getElementById('emailError').innerText = 'Email không đúng định dạng';
-                                                        isValid = false;
-                                                    }
-                                                    if (!password) {
-                                                        document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
-                                                        isValid = false;
-                                                    } else if (password.length < 8) {
-                                                        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
-                                                        isValid = false;
-                                                    } else if (!/[A-Za-z]/.test(password)) {
-                                                        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
-                                                        isValid = false;
-                                                    } else if (!/\d/.test(password)) {
-                                                        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
-                                                        isValid = false;
-                                                    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-                                                        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt';
-                                                        isValid = false;
-                                                    }
-                                                    if (!gender) {
-                                                        document.getElementById('genderError').innerText = 'Giới tính không được để trống';
-                                                        isValid = false;
-                                                    } else if (gender !== 'Nam' && gender !== 'Nữ') {
-                                                        document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
-                                                        isValid = false;
-                                                    }
+    if (fullname === '') {
+        document.getElementById('fullnameError').innerText = 'Họ và tên không được để trống';
+        isValid = false;
+    }
+    if (phone === '') {
+        document.getElementById('phoneError').innerText = 'Số điện thoại không được để trống';
+        isValid = false;
+    } else if (!/^\d+$/.test(phone)) {
+        document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa số';
+        isValid = false;
+    } else if (phone.length > 10) {
+        document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa tối đa 10 số';
+        isValid = false;
+    }
+    if (address === '') {
+        document.getElementById('addressError').innerText = 'Địa chỉ không được để trống';
+        isValid = false;
+    }
+    if (email === '') {
+        document.getElementById('emailError').innerText = 'Email không được để trống';
+        isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+        document.getElementById('emailError').innerText = 'Email không đúng định dạng';
+        isValid = false;
+    }
+    if (password === '') {
+        document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
+        isValid = false;
+    } else if (password.length < 8) {
+        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
+        isValid = false;
+    } else if (!/[A-Za-z]/.test(password)) {
+        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
+        isValid = false;
+    } else if (!/\d/.test(password)) {
+        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
+        isValid = false;
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt';
+        isValid = false;
+    }
+    if (gender === '') {
+        document.getElementById('genderError').innerText = 'Giới tính không được để trống';
+        isValid = false;
+    } else if (gender !== 'Nam' && gender !== 'Nữ') {
+        document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
+        isValid = false;
+    }
 
-                                                    return isValid;
-                                                }
+    return isValid;
+}
         </script>
 
     </body>
