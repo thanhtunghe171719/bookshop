@@ -20,17 +20,11 @@ public class AuthorizationFilter implements Filter {
     private static final Map<String, Integer> urlRoleMap = new HashMap<>();
 
     static {
-        urlRoleMap.put("/admin-category", 1);
         urlRoleMap.put("/admin_dashboard", 1);
-        urlRoleMap.put("/userList", 1);
-        urlRoleMap.put("/marketing-product", 2);
-        urlRoleMap.put("/managerpost", 2);
-        urlRoleMap.put("/customers", 2);
-        urlRoleMap.put("/marketingslider", 2);
-        urlRoleMap.put("/manage-feedback", 2);
         urlRoleMap.put("/marketing_dashboard", 2);
         urlRoleMap.put("/sale_dashboard", 3);
-        urlRoleMap.put("/manage-order-sale", 3);
+        urlRoleMap.put("/sale_dashboard", 5);
+        
     }
 
     @Override

@@ -821,4 +821,5 @@ public class DAOUsers extends DBConnect {
         }
         return digest;
     }
+    
 }

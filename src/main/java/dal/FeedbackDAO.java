@@ -7,6 +7,7 @@ package dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,20 @@ public class FeedbackDAO extends DBConnect {
         }
         return false;
     }
-
+    public int getFeedbacksCount() {
+        int totalFeedbacks = 0;
+        String sql = "SELECT COUNT(*) as totalFeedbacks FROM feedback";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalFeedbacks = rs.getInt("totalFeedbacks");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalFeedbacks;
+    }
     public void addFeedback(Feedback feedback) {
         try {
             String query = "INSERT INTO feedback (order_item_id, rating, comment, created_at) VALUES (?, ?, ?, ?)";

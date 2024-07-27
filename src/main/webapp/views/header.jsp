@@ -108,19 +108,19 @@
                                aria-expanded="false"><i class="bi bi-person-circle"></i>  xin chào, ${user.fullname}</a>
                                <c:if test="${sessionScope.user.roleId == 1}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="admin_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="admin_dashboard">Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 2}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="marketing_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="marketing_dashboard">Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 3}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
@@ -135,7 +135,7 @@
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 5}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">bảng điều khiển</a></li>
+                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>

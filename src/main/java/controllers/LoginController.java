@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
         if (us == null) {
             request.setAttribute("errorMessage", "Tài khoản không tồn tại. Vui lòng thử lại.");
             request.getRequestDispatcher("./views/login.jsp").forward(request, response);
-        } else if (us != null && us.getPassword().equals(password) && dao.isAccountActive(us)) {
+        } else if (us != null && us.getPassword().equals(encrypt) && dao.isAccountActive(us)) {
             // Authentication successful
             request.getSession().setAttribute("user", us);
             switch (us.getRoleId()) {

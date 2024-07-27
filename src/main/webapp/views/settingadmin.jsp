@@ -111,11 +111,7 @@
             </div>
             <div class="main-content">
                 <div id="userRoleContent" class="content active">
-                    <h2>Setting User Role</h2>
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search role...">
-                        <button>Search</button>
-                        <button style="background-color: green; color: white;" onclick="showAddRoleModal()">Add new role</button>
+                    <h2>Setting User Role</h2>             
                     </div>
                     <table>
                         <tr>
@@ -130,19 +126,18 @@
                                 <td>
                                     <button onclick="updateStatus(${role.role_id}, ${role.status_id})" class="status-btn ${role.status_id == 1 ? 'active' : 'inactive'}">
                                         ${role.status_id == 1 ? 'Active' : 'Inactive'}
-
                                     </button>
                                 </td>
                             </tr>
                         </c:forEach>
                     </table>
-                </div>
+                
                 <div id="categoryContent" class="content">
                     <h2>Setting Categories</h2>
                     <div class="search-bar">
-                        <input type="text" placeholder="Search category...">
-                        <button>Search</button>
-                        <button style="background-color: green; color: white;">Add new category</button>
+                       <div class="col-md-6 text-right">
+                    <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewSlider()">Tạo category</button>
+                </div>
                     </div>
                     <table>
                         <tr>

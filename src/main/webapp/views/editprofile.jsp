@@ -145,7 +145,7 @@
                     <form id="form-1" action="editprofile" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="user_id" value="${user.userId}">
                         <div class="form-row">
-                            <label for="fullname">Full Name</label>
+                            <label for="fullname">Họ và tên</label>
                             <input class="input_type" type="text" name="fullname" value="${user.fullname}" readonly>
                         </div>
                         <div class="form-row">
@@ -153,22 +153,22 @@
                             <input class="input_type" type="text" name="email" value="${user.email}" readonly>
                         </div>
                         <div class="form-row">
-                            <label for="gender">Gender</label>
+                            <label for="gender">Giới tính  </label>
                             <select class="select_type" name="gender" id="gender" disabled>
                                 <option value="Male" ${user.gender == 'Male' ? 'selected' : ''}>Male</option>
                                 <option value="Female" ${user.gender == 'Female' ? 'selected' : ''}>Female</option>
                             </select>
                         </div>
                         <div class="form-row">
-                            <label for="address">Address</label>
+                            <label for="address">Địa chỉ</label>
                             <input class="input_type" type="text" name="address" value="${user.address}" readonly>
                         </div>
                         <div class="form-row">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Số điện thoại</label>
                             <input class="input_type" type="text" name="phone" value="${user.phone}" readonly>
                         </div>
                         <div class="form-row">
-                            <label for="image">Profile Image</label>
+                            <label for="image">Ảnh đại diện</label>
                             <input type="file" name="image" accept=".png, .jpg, .jpeg" class="input_type" readonly>
                         </div>
                         <div class="save_button">

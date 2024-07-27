@@ -100,9 +100,9 @@ public class UserDetailServlet extends HttpServlet {
         User newUser = new User(userId, fullname, gender, email, phone, address);
 
         // Database update logic
-        String jdbcURL = "jdbc:mysql://localhost:3306/checksql";
+        String jdbcURL = "jdbc:mysql://localhost:3306/bookshop";
         String dbUser = "root";
-        String dbPassword = "12345";
+        String dbPassword = "1234";
 
         String updateQuery = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE user_id = ?";
         String insertHistoryQuery = "INSERT INTO UserChangeHistory (user_id, field_name, old_value, new_value) VALUES (?, ?, ?, ?)";

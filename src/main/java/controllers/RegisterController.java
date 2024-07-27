@@ -44,7 +44,32 @@ public class RegisterController extends HttpServlet {
         String fullname = request.getParameter("fullname");
         String gender = request.getParameter("gender");
         String address = request.getParameter("address");
-        
+         ArrayList<String> errors = new ArrayList<>();
+    if (email == null || email.trim().isEmpty()) {
+        errors.add("Email không được để trống");
+    }
+    if (password == null || password.trim().isEmpty()) {
+        errors.add("Mật khẩu không được để trống");
+    }
+    if (phone == null || phone.trim().isEmpty()) {
+        errors.add("Số điện thoại không được để trống");
+    }
+    if (fullname == null || fullname.trim().isEmpty()) {
+        errors.add("Họ tên không được để trống");
+    }
+    if (gender == null || gender.trim().isEmpty()) {
+        errors.add("Giới tính không được để trống");
+    }
+    if (address == null || address.trim().isEmpty()) {
+        errors.add("Địa chỉ không được để trống");
+    }
+
+    // If there are errors, return to the registration page with error messages
+    if (!errors.isEmpty()) {
+        request.setAttribute("errors", errors);
+        request.getRequestDispatcher("./views/register.jsp").forward(request, response);
+        return;
+    }
         // Check if username already exists
         User existingUser = userDAO.getUserByUsername(email);
         if (existingUser != null) {
