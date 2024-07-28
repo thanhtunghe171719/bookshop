@@ -253,7 +253,8 @@ public class DAOBooksList extends DBConnect {
     
     public static void main(String[] args) {
         DAOBooksList book = new DAOBooksList();
-        ArrayList<Books> b = book.getListBooks("6", 1, "newest");
-        System.out.println(b);
+//        ArrayList<Books> b = book.getListBooks("6", 1, "newest");
+        int count = book.getTotalBooksByCategory(1);
+        System.out.println(count);
     }
 }

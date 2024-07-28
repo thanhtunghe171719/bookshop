@@ -103,8 +103,8 @@ public class MyOrdersController extends HttpServlet {
                 totalOrders = orders.getOrderCountByStatus(statusFilter, cartId);
             }
 
-            int endPage = totalOrders / 2;
-            if (totalOrders % 2 != 0) {
+            int endPage = totalOrders / 3;
+            if (totalOrders % 3 != 0) {
                 endPage++;
             }
 
