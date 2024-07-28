@@ -84,13 +84,18 @@ public class HomePage extends HttpServlet {
                     break;
                 //    Sản Phẩm Bán Chạy
                 case "sold":
+                    listBook = new ArrayList<Book>();
                     List<Integer> listBookId = daoOrderItems.getBookId("SELECT oi.book_id FROM order_items oi  GROUP BY oi.book_id  ORDER BY SUM(oi.quantity) DESC limit 8;");
+                    List<Integer> quantitySold = daoOrderItems.getBookId("SELECT SUM(oi.quantity) as 'book_id' FROM order_items oi  GROUP BY oi.book_id  ORDER BY SUM(oi.quantity) DESC limit 8;");
+                    List<Integer> sold = new ArrayList<>();
                     for (int i = 0; i < listBookId.size(); i++) {
                         Book bookItem = daoBooks.getBookById("SELECT * FROM books WHERE stock > 0 and book_id = " + listBookId.get(i));
                         if (bookItem != null) {
                             listBook.add(bookItem);  // Now listBook is initialized, so this will work fine
+                            sold.add(quantitySold.get(i));
                         }
                     }
+                    request.setAttribute("sold", sold);
                     break;
                 //  Sản Phẩm Mới  
                 case "new-product":

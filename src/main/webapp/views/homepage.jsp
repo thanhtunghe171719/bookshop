@@ -121,7 +121,8 @@
 
                     <div class="row" id="productList">
                         <c:if test="${not empty listBook}">
-                            <c:forEach var="book" items="${listBook}">
+                            <c:forEach var="book" items="${listBook}"  varStatus="status">
+                                <c:set var="index" value="${status.index}" />
                                 <div class="col-md-6 col-lg-4 col-xl-3">
                                     <div class="card text-center card-product">
                                         <div class="card-product__img">
@@ -139,13 +140,20 @@
                                         <div class="card-body">
                                             <h4 class="card-product__title"><a href="productdetail?pid=${book.bookId}">${book.title}</a></h4>
                 <!--                            <p class="card-product__price" style="color: red">$${book.price*book.discount/100}</p>-->
+                                            <p class="card-product__price" style="color: #008000">Còn hàng: ${book.stock}</p>
                                             <p class="card-product__price">
                                                 <fmt:formatNumber value="${book.price*(100-book.discount)/100}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                             </p>
-                                            <!--<p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>-->
-                                            <p class="card-product__price" style="text-decoration: line-through;font-size: 15px">
-                                                <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                                            </p>
+                                            <div class="d-flex justify-content-center">
+                                                <!--<p class="card-product__price" style="text-decoration: line-through">$${book.price}</p>-->
+                                                <p class="card-product__pricewithsale ml-1 mr-1" style="color: #f25529">
+                                                    <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                </p>
+                                                <p class="ml-1 mr-1" style="font-size:12px; color: #f25529">-${book.getDiscount()}%</p>
+                                            </div>
+                                            <c:if test="${not empty sold}">
+                                                <p class="card-product__price" style="color: blue">Đã bán: ${sold[index]}</p>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
