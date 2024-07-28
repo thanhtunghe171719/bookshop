@@ -37,7 +37,7 @@
 
         <!--================Order Details Area =================-->
         <section class="order_details section-margin--small">
-            <div class="container">
+            <div class="container" id="blur">
                 <div class="row mb-5">
                     <div class="col-md-6 col-xl-6 mb-4 mb-xl-0">
                         <div class="confirmation-card">
@@ -135,23 +135,31 @@
                 <div class="row justify-content-around">
                     <c:forEach var="order" items="${orders}">
                         <c:if test="${order.getStatus() == 'Pending'}">
-                            <!--                            <div class="col-lg-4 mt-3">
-                                                            <div class="col-md-12 form-group">
-                                                                <button type="button" value="submit" class="button button-login w-100">Thay đổi thông tin</button>
-                                                            </div>
-                                                        </div>-->
                             <div class="col-lg-4 mt-3">
                                 <div class="col-md-12 form-group">
-                                    <form action="cancel" method="post">
-                                        <input type="hidden" id="oid" name="oid" value="${order.getOrderID()}">
-                                        <button type="submit" class="button button-login w-100 text-center">Huỷ đơn hàng</button>
-                                    </form>
+                                    <a href="#" onclick="toggle()" class="button button-login w-100 text-center">Huỷ đơn hàng</a>
                                 </div>
                             </div>
                         </c:if>
                     </c:forEach>
                 </div>
             </div>
+
+            <div id="popup">
+                <c:forEach var="order" items="${orders}">
+                    <c:if test="${order.getStatus() == 'Pending'}">
+                        <h2 class="d-flex justify-content-center">Bạn có muốn huỷ đơn hàng ?</h2>
+                        <div class="d-flex justify-content-center">
+                            <form action="cancel" method="post">
+                                <input type="hidden" id="oid" name="oid" value="${order.getOrderID()}">
+                                <a href="#" onclick="toggle()" class="btn btn-light">Đóng</a>
+                                <button type="submit" class="btn btn-primary">Huỷ</button>
+                            </form>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
+
         </section>
         <!--================End Order Details Area =================-->
 
@@ -167,5 +175,13 @@
         <script src="vendors/jquery.ajaxchimp.min.js"></script>
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
+        <script type="text/javascript">
+                            function toggle() {
+                                var blur = document.getElementById("blur");
+                                blur.classList.toggle("active");
+                                var popup = document.getElementById("popup");
+                                popup.classList.toggle("active");
+                            }
+        </script>
     </body>
 </html>
