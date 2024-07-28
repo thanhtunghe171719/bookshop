@@ -101,7 +101,6 @@ public class ViewProducts extends HttpServlet {
                 categoryid = Integer.parseInt(categoryidParam);
                 lst_books = daoBooksList.getListBooksByCategory(categoryid, grid, index, sort);
                 totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
-
             } catch (NumberFormatException e) {
                 // Handle the error, maybe set a default category or show an error message
                 totalBooks = daoBooksList.getTotalBooks();
@@ -109,7 +108,10 @@ public class ViewProducts extends HttpServlet {
             }
         }
 
-        int page = (totalBooks + 2) / Integer.parseInt(grid); // Round up for pagination
+        int page = totalBooks / Integer.parseInt(grid);
+        if (totalBooks % Integer.parseInt(grid) != 0) {
+            page++;
+        }
 
         ArrayList<Categories> lst_categories = daoBooksList.getListCategories();
 

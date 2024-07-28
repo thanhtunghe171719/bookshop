@@ -40,7 +40,7 @@
                 </p>
 
                 <div class="text-center">
-                    <a style="color: #FFF" href="myorders" class="button button-tracking button-review">Trở về</a>
+                    <a href="myorders" class="button button-tracking button-review">Trở về</a>
                 </div>
 
             </div>

@@ -135,14 +135,17 @@
                 <div class="row justify-content-around">
                     <c:forEach var="order" items="${orders}">
                         <c:if test="${order.getStatus() == 'Pending'}">
-<!--                            <div class="col-lg-4 mt-3">
-                                <div class="col-md-12 form-group">
-                                    <button type="button" value="submit" class="button button-login w-100">Thay đổi thông tin</button>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="col-lg-4 mt-3">
+                                                            <div class="col-md-12 form-group">
+                                                                <button type="button" value="submit" class="button button-login w-100">Thay đổi thông tin</button>
+                                                            </div>
+                                                        </div>-->
                             <div class="col-lg-4 mt-3">
                                 <div class="col-md-12 form-group">
-                                    <a href="cancel?oid=${order.getOrderID()}" class="button button-login w-100 text-center">Huỷ đơn hàng</a>
+                                    <form action="cancel" method="post">
+                                        <input type="hidden" id="oid" name="oid" value="${order.getOrderID()}">
+                                        <button type="submit" class="button button-login w-100 text-center">Huỷ đơn hàng</button>
+                                    </form>
                                 </div>
                             </div>
                         </c:if>

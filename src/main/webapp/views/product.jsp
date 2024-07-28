@@ -181,52 +181,94 @@
                         <section class="lattest-product-area pb-40 category-list">
                             <div class="row">
                                 <c:forEach items="${book}" var="book">
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="card text-center card-product">
-                                            <div class="card-product__img">
-                                                <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
-                                                <ul class="card-product__imgOverlay" style="display: flex">
-                                                    <form action="cartdetails" method="get">                             
-                                                        <input type="hidden" name="service" value="addCart">
-                                                        <input type="hidden" name="bookId" value="${book.getBook_id()}">
-                                                        <c:set var="userId" value="${user.userId}"></c:set>
-                                                        <li style="margin-left: 100px"><button type="button" onclick="addToCart('${userId}', ${book.getBook_id()})"><i class="ti-shopping-cart"></i></button></li>
-                                                    </form>    
-                                                </ul>
-                                            </div>
+                                    <c:if test="${book.getStock() > 0}">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="card text-center card-product">
+                                                <div class="card-product__img">
+                                                    <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
+                                                    <ul class="card-product__imgOverlay" style="display: flex">
+                                                        <form action="cartdetails" method="get">                             
+                                                            <input type="hidden" name="service" value="addCart">
+                                                            <input type="hidden" name="bookId" value="${book.getBook_id()}">
+                                                            <c:set var="userId" value="${user.userId}"></c:set>
+                                                            <li style="margin-left: 100px"><button type="button" onclick="addToCart('${userId}', ${book.getBook_id()})"><i class="ti-shopping-cart"></i></button></li>
+                                                        </form>    
+                                                    </ul>
+                                                </div>
 
-                                            <c:set var="originalPrice" value="${book.getPrice()}" />
-                                            <c:set var="discount" value="${book.getDiscount()}" />
-                                            <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
+                                                <c:set var="originalPrice" value="${book.getPrice()}" />
+                                                <c:set var="discount" value="${book.getDiscount()}" />
+                                                <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
 
-                                            <div class="card-body">
-                                                <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
-                                                
-                                                <p class="card-product__price">Còn hàng: ${book.getStock()}</p>
+                                                <div class="card-body">
+                                                    <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
 
-                                                <c:choose>
-                                                    <c:when test="${originalPrice eq discountedPrice}">
-                                                        <p class="card-product__price">
-                                                            <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                                                        </p>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <p class="card-product__price">
-                                                            <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                                                        </p>
-                                                        <div class="d-flex justify-content-center">
-                                                            <p class="card-product__pricewithsale ml-1 mr-1">
+                                                    <p class="card-product__price" style="color: #008000">Còn hàng: ${book.getStock()}</p>
+
+                                                    <c:choose>
+                                                        <c:when test="${originalPrice eq discountedPrice}">
+                                                            <p class="card-product__price">
                                                                 <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                                             </p>
-                                                            <p class="ml-1 mr-1" style="font-size:12px">
-                                                                -${book.getDiscount()}%
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p class="card-product__price">
+                                                                <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                                             </p>
-                                                        </div>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                            <div class="d-flex justify-content-center">
+                                                                <p class="card-product__pricewithsale ml-1 mr-1" style="color: #f25529">
+                                                                    <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                                </p>
+                                                                <p class="ml-1 mr-1" style="font-size:12px; color: #f25529">
+                                                                    -${book.getDiscount()}%
+                                                                </p>
+                                                            </div>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:if>
+                                    <c:if test="${book.getStock() <= 0}">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="card text-center card-product">
+                                                <div class="card-product__img">
+                                                    <img class="card-img" src="${book.getImage()}" alt="${book.getTitle()}">
+                                                </div>
+
+                                                <c:set var="originalPrice" value="${book.getPrice()}" />
+                                                <c:set var="discount" value="${book.getDiscount()}" />
+                                                <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
+
+                                                <div class="card-body">
+                                                    <h4 class="card-product__title"><a href="productdetail?pid=${book.getBook_id()}">${book.getTitle()}</a></h4>
+
+                                                    <p class="card-product__price" style="color: #008000">Còn hàng: ${book.getStock()}</p>
+
+                                                    <c:choose>
+                                                        <c:when test="${originalPrice eq discountedPrice}">
+                                                            <p class="card-product__price">
+                                                                <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                            </p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p class="card-product__price">
+                                                                <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                            </p>
+                                                            <div class="d-flex justify-content-center">
+                                                                <p class="card-product__pricewithsale ml-1 mr-1" style="color: #f25529">
+                                                                    <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                                                </p>
+                                                                <p class="ml-1 mr-1" style="font-size:12px; color: #f25529">
+                                                                    -${book.getDiscount()}%
+                                                                </p>
+                                                            </div>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
                                 </c:forEach>
                             </div>
                         </section>

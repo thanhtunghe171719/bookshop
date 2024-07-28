@@ -62,7 +62,7 @@
                 </p>
 
                 <div class="text-center">
-                    <a style="color: #FFF" href="home" class="button button-tracking button-review">Trở về trang chủ</a>
+                    <a href="home" class="button button-tracking button-review">Trở về trang chủ</a>
                 </div>
 
             </div>

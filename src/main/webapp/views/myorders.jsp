@@ -101,7 +101,10 @@
                                             <p>${orders.getStatus()}</p>
                                         </td>
                                         <td>
-                                            <a href="orderinformation?oid=${orders.getOrderID()}">Chi tiết</a>
+                                            <form action="orderinformation" method="post">
+                                                <input type="hidden" id="oid" name="oid" value="${orders.getOrderID()}">
+                                                <button type="submit" style="border-style: none; background: none">Chi tiết</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 </c:forEach>

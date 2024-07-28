@@ -54,11 +54,11 @@ public class DAOOrders extends DBConnect {
                     + "    CASE WHEN rn = 1 THEN address ELSE '' END as address\n"
                     + "FROM OrderDetails\n"
                     + "ORDER BY order_date DESC\n" // Keep orders sorted by date
-                    + "LIMIT 2 OFFSET ?;";
+                    + "LIMIT 3 OFFSET ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, cartID);
-            statement.setInt(2, (index - 1) * 2);
+            statement.setInt(2, (index - 1) * 3);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int orderID = rs.getInt("order_id");
@@ -344,8 +344,7 @@ public class DAOOrders extends DBConnect {
         String updateStockSql = "UPDATE books b SET b.stock = b.stock + ? WHERE b.book_id = ?";
         int updatedCount = 0; // Count of successfully updated items
 
-        try (
-                PreparedStatement selectStmt = conn.prepareStatement(selectSql); PreparedStatement updateStockStmt = conn.prepareStatement(updateStockSql)) {
+        try (PreparedStatement selectStmt = conn.prepareStatement(selectSql); PreparedStatement updateStockStmt = conn.prepareStatement(updateStockSql)) {
             selectStmt.setInt(1, orderId);
             try (ResultSet rs = selectStmt.executeQuery()) {
                 // Check if the result set contains data
@@ -409,7 +408,7 @@ public class DAOOrders extends DBConnect {
 //        ArrayList<Orders> o = order.getOrders(1, 1);
 //        ArrayList<Items> o = order.getOrderItemsForOrder(9);
 
-        int update = order.updateInventoryOnCancel(41);
+        int update = order.updateInventoryOnCancel(66);
         System.out.println(update);
     }
 }
