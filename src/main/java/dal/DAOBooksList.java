@@ -30,10 +30,10 @@ public class DAOBooksList extends DBConnect {
                     sql += "ORDER BY published_year DESC ";
                     break;
                 case "price_asc":
-                    sql += "ORDER BY price ASC ";
+                    sql += "ORDER BY price - (price * discount / 100) ASC ";
                     break;
                 case "price_desc":
-                    sql += "ORDER BY price DESC ";
+                    sql += "ORDER BY price - (price * discount / 100) DESC ";
                     break;
                 default:
                     // Default sorting logic, if needed
@@ -85,10 +85,10 @@ public class DAOBooksList extends DBConnect {
                     sql += "ORDER BY published_year DESC ";
                     break;
                 case "price_asc":
-                    sql += "ORDER BY price ASC ";
+                    sql += "ORDER BY price - (price * discount / 100) ASC ";
                     break;
                 case "price_desc":
-                    sql += "ORDER BY price DESC ";
+                    sql += "ORDER BY price - (price * discount / 100) DESC ";
                     break;
                 default:
                     // Default sorting logic, if needed
@@ -143,10 +143,10 @@ public class DAOBooksList extends DBConnect {
                     sql += "ORDER BY published_year DESC ";
                     break;
                 case "price_asc":
-                    sql += "ORDER BY price ASC ";
+                    sql += "ORDER BY price - (price * discount / 100) ASC ";
                     break;
                 case "price_desc":
-                    sql += "ORDER BY price DESC ";
+                    sql += "ORDER BY price - (price * discount / 100) DESC ";
                     break;
                 default:
                     // Default sorting logic, if needed

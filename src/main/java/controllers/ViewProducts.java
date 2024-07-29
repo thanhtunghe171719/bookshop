@@ -79,7 +79,7 @@ public class ViewProducts extends HttpServlet {
         }
 
         String grid = request.getParameter("grid");
-        if (grid == null) {
+        if (grid == null || grid == "") {
             grid = "6";
         }
 
@@ -103,8 +103,8 @@ public class ViewProducts extends HttpServlet {
                 totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
             } catch (NumberFormatException e) {
                 // Handle the error, maybe set a default category or show an error message
-                totalBooks = daoBooksList.getTotalBooks();
                 lst_books = daoBooksList.getListBooks(grid, index, sort); // Default behavior if parsing fails
+                totalBooks = daoBooksList.getTotalBooks();
             }
         }
 

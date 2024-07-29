@@ -84,11 +84,7 @@ public class DAOCartCompletion extends DBConnect {
     public static void main(String[] args) {
         DAOCartCompletion cart = new DAOCartCompletion();
         int cart_id = 1;
-        int re = cart.newOrder(cart_id, 60000, 1, "Tây Hồ");
-        if (re > 0) {
-            System.out.println("ok");
-        } else {
-            System.out.println("no");
-        }
+        int re = cart.newOrder(29, 60, 1, "Bắc Từ Liêm");
+        System.out.println(re);
     }
 }

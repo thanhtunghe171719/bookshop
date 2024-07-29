@@ -311,7 +311,7 @@
                                 <% } else { %>
                                 <c:forEach begin="1" end="${page}" var="page">
                                     <li class="page-item">
-                                        <a class="page-link" href="products?categoryid=${param.categoryid}&index=${page}&sort=${param.sort}">${page}</a>
+                                        <a class="page-link" href="products?categoryid=${param.categoryid}&index=${page}&sort=${param.sort}&grid=${param.grid}">${page}</a>
                                     </li>
                                 </c:forEach>
                                 <% } %>
