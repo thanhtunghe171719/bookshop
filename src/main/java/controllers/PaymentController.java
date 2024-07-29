@@ -100,7 +100,7 @@ public class PaymentController extends HttpServlet {
                     long totalAmount = (long) (subtotal * 100000);
                     String bankCode = "INTCARD";
 
-                    String vnp_TxnRef = Config.getRandomNumber(8);
+                    String vnp_TxnRef = Integer.toString(newOrderID);
                     String vnp_IpAddr = Config.getIpAddress(req);
 
                     String vnp_TmnCode = Config.vnp_TmnCode;
@@ -170,7 +170,7 @@ public class PaymentController extends HttpServlet {
                     long totalAmount = (long) (subtotal * 100000);
                     String bankCode = "VNBANK";
 
-                    String vnp_TxnRef = Config.getRandomNumber(8);
+                    String vnp_TxnRef = Integer.toString(newOrderID);
                     String vnp_IpAddr = Config.getIpAddress(req);
 
                     String vnp_TmnCode = Config.vnp_TmnCode;
