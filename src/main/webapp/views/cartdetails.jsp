@@ -108,7 +108,7 @@
                                         <td>
                                             <div class="product_count">
                                                 <input type="text" name="qty" id="qty-${cartItem.cartItemId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty" 
-                                                       oninput="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, this.value, ${book.stock})" >
+                                                       onchange="updateTotalPrice(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock})" >
                                                 <button class="increase items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
                                                 <button class="reduced items-count" type="button" onclick="updateQuantity(${cartItem.cartItemId}, ${book.price}, ${book.discount}, ${book.stock}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
                                             </div>
@@ -212,12 +212,15 @@
                         quantity++;
                     } else {
                         quantity = stock;
+                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
                     }
                 }
 
                 // Nếu hành động là giảm quantity và quantity hiện tại lớn hơn 1
                 else if (action === 'decrease' && quantity > 1) {
                     quantity--;
+                } else if (action === 'decrease' && quantity < 1) {
+                    alert("Số lượng không thể nhỏ hơn 1");
                 }
 
                 // Cập nhật giá trị mới của quantity trên giao diện
@@ -226,7 +229,7 @@
                 var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
                 // Cập nhật giá trị tổng giá trị cho sản phẩm
                 document.getElementById('total-price-' + cartItemId).innerText = formatNumber(totalPrice, 3, 3) + " đ";
-                
+
                 document.querySelector('input[name="lineSubTotal-' + cartItemId + '"]').value = totalPrice;
 
                 updateSubtotal();
@@ -243,16 +246,28 @@
                 xhr.send();
             }
 
-            function updateTotalPrice(cartItemId, bookPrice, discount, quantity, stock) {
-                // Parse quantity to integer
-                quantity = parseInt(quantity);
+            function updateTotalPrice(cartItemId, bookPrice, discount, stock) {
+                var quantity = document.getElementById('qty-' + cartItemId).value.trim();
+                if(quantity ===""){
+                    quantity = 1;
+                    alert("Không được để trống.");
+                }else{
+                    // Parse quantity to integer
+                    quantity = parseInt(quantity);
 
-                // Validate quantity
-                if (isNaN(quantity) || quantity < 1) {
-                    quantity = 1; // Set quantity to 1 if it's NaN or less than 1
-                }
-                if (quantity > stock) {
-                    quantity = stock; // Set quantity to stock if it's more than stock
+                    // Validate quantity
+                    if (quantity < 1) {
+                        quantity = 1; // Set quantity to 1 if it's less than 1
+                        alert("Số lượng không thể nhỏ hơn 1.");
+                    }
+                    if (quantity > stock) {
+                        quantity = stock; // Set quantity to stock if it's more than stock
+                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
+                    }
+                    if (isNaN(quantity)) {
+                        quantity = 1; // Set quantity to 1 if it's NaN
+                        alert("Vui lòng nhập số hợp lệ.");
+                    }
                 }
                 // Update the input value to display the corrected quantity
                 document.getElementById('qty-' + cartItemId).value = quantity;
@@ -260,7 +275,7 @@
                 // Update the total price based on the new quantity
                 var totalPrice = (bookPrice * quantity * (100 - discount) / 100);
                 document.getElementById('total-price-' + cartItemId).innerText = formatNumber(totalPrice, 3, 3) + " đ";
-                
+
                 document.querySelector('input[name="lineSubTotal-' + cartItemId + '"]').value = totalPrice;
 
                 updateSubtotal();
