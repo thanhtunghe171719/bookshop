@@ -1,8 +1,3 @@
-<%-- 
-    Document   : orderList
-    Created on : Jul 15, 2024, 12:25:59 AM
-    Author     : HP
---%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -59,15 +54,15 @@
                 <thead class="table-dark">
                     <tr>
                         <th>No.</th>
-                        <th>Total</th>
-                        <th>Order Status</th>
-                        <th>Order Date</th>
-                        <th>Updated At</th>
-                        <th>User Email</th>
-                        <th>User Phone</th>
-                        <th>User Fullname</th>
-                        <th>User Gender</th>
-                        <th>User Address</th>
+                        <th>Tổng giá tiền</th>
+                        <th>Trạng thái đơn hàng</th>
+                        <th>Ngày đặt hàng</th>
+                        <th>Ngày được cập nhật</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Tên khách hàng</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
                         <th>Sale</th>
                         <th>Actions</th>
                     </tr>
@@ -91,7 +86,9 @@
                             </td>
                             <td>
                                 <a class="btn btn-info" href="manage-sale?action=view&orderId=${order.orderId}">View Detail</a>
-                                <button type="button" class="btn btn-primary" onclick="showAssignSaleModal(${order.orderId})">Assign</button>
+                                <c:if test="${saleM == null}">
+                                    <button type="button" class="btn btn-primary" onclick="showAssignSaleModal(${order.orderId})">Assign</button>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>

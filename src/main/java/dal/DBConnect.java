@@ -27,7 +27,7 @@ public class DBConnect {
         return conn;
     }
     public DBConnect(){
-        this("jdbc:mysql://localhost:3306/bookshop","sa","123456");
+        this("jdbc:mysql://localhost:3306/bookshop","root","12345");
     }
     public static void main(String[] args){
         new DBConnect();

@@ -22,7 +22,7 @@ public class AuthorizationFilter implements Filter {
     static {
         urlRoleMap.put("/admin_dashboard", 1);
         urlRoleMap.put("/marketing_dashboard", 2);
-        urlRoleMap.put("/sale_dashboard", 3);
+
         urlRoleMap.put("/sale_dashboard", 5);
         
     }

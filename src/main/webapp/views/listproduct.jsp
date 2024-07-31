@@ -5,10 +5,11 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Books List</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <title style="font-family: 'Roboto', sans-serif;">Books List</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title></title>
+        <title></title>       
         <link rel="icon" href="img/Fevicon.png" type="image/png">
         <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
@@ -18,10 +19,17 @@
         <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
         <link rel="stylesheet" href="css/style.css">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+            }
+        </style>
+
+
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -40,11 +48,11 @@
             <form method="get" action="marketing-product" class="form-inline mb-4">
                 <input type="hidden" name="action" value="">
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="title" class="sr-only">Search</label>
+                    <label for="title" class="sr-only">Tìm kiếm</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Search" value="${title}">
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="category">Category</label>
+                    <label for="category">Thể loại</label>
                     <select class="form-control" id="category" name="category">
                         <option value="">All Categories</option>
                         <c:forEach var="cat" items="${categoriesAll}">
@@ -53,7 +61,7 @@
                     </select>
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="sortTitle">Sort title</label>
+                    <label for="sortTitle">Sắp xếp theo tên</label>
                     <select class="form-control" id="sortTitle" name="sortTitle">
                         <option value="" ${sortTitle == "" ? "selected" : ""}>--Default--</option>
                         <option value="desc" ${sortTitle == "desc" ? "selected" : ""}>Desc</option>
@@ -61,7 +69,7 @@
                     </select>
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="sortListPrice">Sort list price</label>
+                    <label for="sortListPrice">Sắp xếp theo giá</label>
                     <select class="form-control" id="sortListPrice" name="sortListPrice">
                         <option value="" ${sortListPrice == "" ? "selected" : ""}>--Default--</option>
                         <option value="desc" ${sortListPrice == "desc" ? "selected" : ""}>Desc</option>
@@ -69,25 +77,25 @@
                     </select>
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="sortPriceSale">Sort price sale</label>
+                    <label for="sortPriceSale">Sắp xếp theo discount</label>
                     <select class="form-control" id="sortPriceSale" name="sortPriceSale">
                         <option value="" ${sortPriceSale == "" ? "selected" : ""}>--Default--</option>
                         <option value="desc" ${sortPriceSale == "desc" ? "selected" : ""}>Desc</option>
                         <option value="asc" ${sortPriceSale == "asc" ? "selected" : ""}>Asc</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Filter</button>
+                <button type="submit" class="btn btn-primary mb-2">Lọc</button>
             </form>
-            <a href="marketing-product?action=add" class="btn btn-success btn-sm mb-2">Add new</a>
+            <a href="marketing-product?action=add" class="btn btn-success btn-sm mb-2">Thêm mới</a>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Thumbnail</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>List Price</th>
-                        <th>Sale Price</th>
+                        <th>Ảnh</th>
+                        <th>Tên sách</th>
+                        <th>Thể loại</th>
+                        <th>Giá</th>
+                        <th>Sale</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -99,13 +107,13 @@
                             <td>${book.title}</td>
                             <td>${categories[book.categoryId]}</td>
                             <td>
-                    <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd
-                    </td>
+                                <fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd
+                            </td>
                             <td>${book.discount}%</td>
                             <td>
-                                <a href="marketing-product?action=view&id=${book.bookId}" class="btn btn-info btn-sm">View</a>
-                                <a href="marketing-product?action=edit&id=${book.bookId}" class="btn btn-warning btn-sm">Edit</a>
-                                <a onclick="return confirm('Are you sure to delete this books?')" href="marketing-product?action=delete&id=${book.bookId}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="marketing-product?action=view&id=${book.bookId}" class="btn btn-info btn-sm">Xem</a>
+                                <a href="marketing-product?action=edit&id=${book.bookId}" class="btn btn-warning btn-sm">Sửa</a>
+                                <a onclick="return confirm('Are you sure to delete this books?')" href="marketing-product?action=delete&id=${book.bookId}" class="btn btn-danger btn-sm">Xóa</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -125,7 +133,7 @@
                 </ul>
             </nav>
         </div>
-                    <jsp:include page="footer.jsp"/>
+        <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

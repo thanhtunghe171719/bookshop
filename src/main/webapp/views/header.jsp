@@ -120,7 +120,7 @@
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 3}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" href="manage-order-sale">Quản lý đơn hàng</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
@@ -136,9 +136,16 @@
                                <c:if test="${sessionScope.user.roleId == 5}">
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" href="manage-sale">Quản lí đơn hàng</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
+                               <c:if test="${sessionScope.user.roleId == 6}">
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="manage-shipper">Quản lí đơn hàng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
+                                </ul>
+                            </c:if>
                         </li>
                         
                         <%}%>

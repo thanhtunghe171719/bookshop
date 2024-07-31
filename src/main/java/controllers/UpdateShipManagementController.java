@@ -5,6 +5,7 @@
 package controllers;
 
 import dal.OrderDAO;
+import dal.ShipManagementDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,8 +20,14 @@ import models.User;
  *
  * @author HP
  */
-@WebServlet(name = "UpdateSaleManagementController", urlPatterns = {"/updateSaleManagement"})
-public class UpdateSaleManagementController extends HttpServlet {
+@WebServlet(name = "UpdateShipManagementController", urlPatterns = {"/update-ship-manage"})
+public class UpdateShipManagementController extends HttpServlet {
+
+    private ShipManagementDAO shipDAO;
+
+    public void init() {
+        shipDAO = new ShipManagementDAO();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +46,10 @@ public class UpdateSaleManagementController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateSaleManagementController</title>");
+            out.println("<title>Servlet UpdateShipManagementController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateSaleManagementController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateShipManagementController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +67,7 @@ public class UpdateSaleManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -77,21 +84,21 @@ public class UpdateSaleManagementController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null || (user != null && user.getRoleId() != 5)) {
+        if (user == null || (user != null && user.getRoleId() != 3)) {
             response.sendRedirect("login");
             return;
         }
         Integer userId = user.getUserId();
+        OrderDAO orderDao = new OrderDAO();
         try {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
-            int saleId = Integer.parseInt(request.getParameter("saleId"));
-            OrderDAO orderDao = new OrderDAO();
-            orderDao.updateOrderStatus(orderId, 2);
-            orderDao.updateOrInsertSaleForOrder(orderId, saleId);
-            response.sendRedirect("manage-sale?success=Assign order for sale successfully");
+            int shipId = Integer.parseInt(request.getParameter("shipId"));
+            shipDAO.updateOrInsertShipForOrder(orderId, shipId);
+            orderDao.updateOrderStatus(orderId, 3);
+            response.sendRedirect("manage-order-sale?success=Assing shipper successfully.");
         } catch (Exception e) {
             System.out.println("Error: " + e);
-            response.sendRedirect("manage-sale");
+            response.sendRedirect("manage-order-sale");
         }
     }
 

@@ -85,9 +85,10 @@ public class ManageOrderController extends HttpServlet {
             return;
         }
         Integer userId = user.getUserId();
-
+        List<User> users = orderDAO.getAllShip();
         List<Order> orders = orderDAO.getAllOrdersByUserStaff(userId);
         request.setAttribute("orders", orders);
+        request.setAttribute("users", users);
         request.getRequestDispatcher("./views/orderList.jsp").forward(request, response);
     }
 

@@ -20,6 +20,7 @@ import models.Order;
 import models.OrderItems;
 import models.OrderStatus;
 import models.SalesRepresentative;
+import models.ShipManagement;
 import models.User;
 
 public class OrderDAO extends DBConnect {
@@ -140,6 +141,62 @@ public class OrderDAO extends DBConnect {
         return order;
     }
 
+        public Order getOrderByIdShipper(int orderId, int userId) {
+        Order order = null;
+        try {
+            String query = "SELECT "
+                    + "orders.order_id, "
+                    + "orders.cart_id, "
+                    + "orders.total, "
+                    + "order_status.order_status, "
+                    + "orders.order_status_id, "
+                    + "orders.order_date, "
+                    + "orders.updated_at, "
+                    + "users.user_id, "
+                    + "users.email, "
+                    + "users.phone, "
+                    + "users.fullname, "
+                    + "users.gender, "
+                    + "users.image, "
+                    + "users.address "
+                    + "FROM "
+                    + "orders "
+                    + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
+                    + "JOIN cart ON orders.cart_id = cart.cart_id "
+                    + "JOIN users ON cart.user_id = users.user_id "
+                    + "JOIN ship_management as sm on sm.order_id = orders.order_id "
+                    + "WHERE orders.order_id = ? and sm.user_id=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderId);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                order = new Order();
+                order.setOrderId(rs.getInt("order_id"));
+                order.setCartId(rs.getInt("cart_id"));
+                order.setStatusId(rs.getInt("order_status_id"));
+                order.setTotal(rs.getDouble("total"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderDate(rs.getDate("order_date"));
+                order.setUpdatedAt(rs.getDate("updated_at"));
+
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setFullname(rs.getString("fullname"));
+                user.setGender(rs.getString("gender"));
+                user.setImage(rs.getString("image"));
+                user.setAddress(rs.getString("address"));
+
+                order.setUser(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return order;
+    }
+        
     public List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
         try {
@@ -355,6 +412,58 @@ public class OrderDAO extends DBConnect {
         }
         return orderItems;
     }
+        public List<Order> getAllOrdersByUserShipper(int shipper) {
+        List<Order> orders = new ArrayList<>();
+        try {
+            String query = "SELECT "
+                    + "orders.order_id, "
+                    + "orders.cart_id, "
+                    + "orders.total, "
+                    + "order_status.order_status, "
+                    + "orders.order_date, "
+                    + "orders.updated_at, "
+                    + "users.user_id, "
+                    + "users.email, "
+                    + "users.phone, "
+                    + "users.fullname, "
+                    + "users.gender, "
+                    + "users.image, "
+                    + "users.address "
+                    + "FROM "
+                    + "orders "
+                    + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
+                    + "JOIN cart ON orders.cart_id = cart.cart_id "
+                    + "JOIN users ON cart.user_id = users.user_id "
+                    + "JOIN ship_management as sm on sm.order_id = orders.order_id "
+                    + "where sm.user_id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, shipper);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("order_id"));
+                order.setCartId(rs.getInt("cart_id"));
+                order.setTotal(rs.getDouble("total"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderDate(rs.getDate("order_date"));
+                order.setUpdatedAt(rs.getDate("updated_at"));
+
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setFullname(rs.getString("fullname"));
+                user.setGender(rs.getString("gender"));
+                user.setImage(rs.getString("image"));
+                user.setAddress(rs.getString("address"));
+                order.setUser(user);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
 
     public List<OrderItems> getOrderItemsByOrderIdUser(int orderId, int userId) {
         List<OrderItems> orderItems = new ArrayList<>();
@@ -533,5 +642,58 @@ public class OrderDAO extends DBConnect {
         }
         return salesRep;
     }
+    
+        public ArrayList<User> getAllShip() {
+        ArrayList<User> list = new ArrayList<>();
+        String sqlGet = "select * from Users where role_id = 6";
+        try {
+
+            PreparedStatement st = conn.prepareStatement(sqlGet);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                int userId = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String password = rs.getString("password");
+                int roleId = rs.getInt("role_id");
+                String fullname = rs.getString("fullname");
+                String gender = rs.getString("gender");
+                String image = rs.getString("image");
+                String address = rs.getString("address");
+                java.sql.Timestamp createdAt = new java.sql.Timestamp(System.currentTimeMillis());
+                java.sql.Timestamp updatedAt = new java.sql.Timestamp(System.currentTimeMillis());
+                String status = rs.getString("status");
+                String deleted = "";
+                User c = new User(userId, email, phone, password, roleId, fullname, gender, address, createdAt, updatedAt, image, status, deleted);
+                list.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+        }
+        return list;
+    }
+            public ShipManagement getAssignedShipForOrder(int orderId) {
+        String sql = "SELECT u.user_id, u.fullname, u.email, u.phone, u.address "
+                + "FROM ship_management sm "
+                + "JOIN users u ON sm.user_id = u.user_id "
+                + "WHERE sm.order_id = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            DAOUsers userDao = new DAOUsers();
+            if (rs.next()) {
+                ShipManagement shipManagement = new ShipManagement();
+                User user = userDao.getUserById(rs.getInt("user_id"));
+                shipManagement.setShipper(user);
+                return shipManagement;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+
 
 }

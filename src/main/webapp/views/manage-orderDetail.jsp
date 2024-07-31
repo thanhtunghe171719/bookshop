@@ -50,14 +50,13 @@
             </c:if>
             <div class="container">
                 <h2>Order Detail</h2>
-                <a href="javascript:history.back()" class="btn btn-primary">Back to Order List</a>
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 200px;">Order ID</th>
                         <td>${order.orderId}</td>
                     </tr>
                     <tr>
-                        <th style="width: 200px;">Fullname</th>
+                        <th style="width: 200px;">Tên khách hàng</th>
                         <td>${order.user.fullname}</td>
                     </tr>
                     <tr>
@@ -69,23 +68,23 @@
                         <td>${order.user.phone}</td>
                     </tr>
                     <tr>
-                        <th style="width: 200px;">Address</th>
+                        <th style="width: 200px;">Địa chỉ</th>
                         <td>${order.user.address}</td>
                     </tr>
                     <tr>
-                        <th>Total</th>
+                        <th>Tổng giá tiền</th>
                         <td>${order.total}</td>
                     </tr>
                     <tr>
-                        <th>Order Status</th>
+                        <th>Trạng thái đơn hàng</th>
                         <td>${order.orderStatus}</td>
                     </tr>
                     <tr>
-                        <th>Order Date</th>
+                        <th>Ngày đặt</th>
                         <td>${order.orderDate}</td>
                     </tr>
                     <tr>
-                        <th>Updated At</th>
+                        <th>Ngày cập nhật</th>
                         <td>${order.updatedAt}</td>
                     </tr>
                 </table>
@@ -94,11 +93,11 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Order Item ID</th>
-                            <th>Book Title</th>
-                            <th>Book Author</th>
-                            <th>Book Image</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
+                            <th>Tên sách</th>
+                            <th>Tác giả</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
                         </tr>
                     </thead>
                     <tbody>
