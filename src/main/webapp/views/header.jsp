@@ -23,9 +23,8 @@
                         <li class="nav-item submenu dropdown">
                             <a href="blog" class="nav-link dropdown-toggle"  role="button" aria-haspopup="true"
                                aria-expanded="false">Blog</a>
-                            
                         </li>
-                        <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3 && sessionScope.user.roleId != 5}">
+                        <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3 && sessionScope.user.roleId != 5&& sessionScope.user.roleId != 6}">
                             <li class="nav-item"><a class="nav-link" id="contactLink">Liên hệ</a></li>          
                             </c:if>
                             <c:if test="${sessionScope.user.roleId ==1}">
