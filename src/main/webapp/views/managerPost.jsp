@@ -88,7 +88,7 @@
                         <td><%= post.getUpdateAt() %></td>
                         <td>
                             <a href="managerpost?action=edit&post_id=<%= post.getPostId() %>" class="btn btn-primary">Sửa</a>
-                            <button onclick="deletePost(<%= post.getPostId() %>)" class="btn btn-danger">Xóa</button>
+                          
                         </td>   
                     </tr>
                     <% 

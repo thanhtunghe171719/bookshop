@@ -181,6 +181,18 @@ public class DAOBooks extends DBConnect {
         }
         return 0;
     }
+    
+    public int updateQuantityBook(int book_id, int quantity) {
+        String sql = "UPDATE books SET stock = stock + ? WHERE book_id = ?";
+        try (PreparedStatement state = conn.prepareStatement(sql)) {
+            state.setInt(1, quantity);
+            state.setInt(2, book_id);
+            return state.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Update book error: " + ex);
+        }
+        return 0;
+    }
 
     public int deleteBook(int bookId) {
         String sql = "DELETE FROM books WHERE book_id = ?";

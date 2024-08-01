@@ -1,8 +1,4 @@
-<%-- 
-    Document   : orderList
-    Created on : Jul 15, 2024, 12:25:59 AM
-    Author     : HP
---%>
+
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -45,11 +41,11 @@
             </c:if>
             <div class="row mb-4">
                 <div class="col-md-4">
-                    <label for="min-date">From Date:</label>
+                    <label for="min-date">Ngày đặt từ:</label>
                     <input type="text" id="min-date" class="form-control" placeholder="yyyy-mm-dd">
                 </div>
                 <div class="col-md-4">
-                    <label for="max-date">To Date:</label>
+                    <label for="max-date">Đến ngày:</label>
                     <input type="text" id="max-date" class="form-control" placeholder="yyyy-mm-dd">
                 </div>
             </div>
@@ -58,15 +54,15 @@
                 <thead class="table-dark">
                     <tr>
                         <th>No.</th>
-                        <th>Total</th>
-                        <th>Order Status</th>
-                        <th>Order Date</th>
-                        <th>Updated At</th>
-                        <th>User Email</th>
-                        <th>User Phone</th>
-                        <th>User Fullname</th>
-                        <th>User Gender</th>
-                        <th>User Address</th>
+                        <th>Tổng giá tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày đặt</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Tên</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -84,7 +80,7 @@
                             <td>${order.user.gender}</td>
                             <td>${order.user.address}</td>
                             <td>
-                                <a class="btn btn-info" href="manage-shipper?action=view&orderId=${order.orderId}">View Detail</a>
+                                <a class="btn btn-info" href="manage-shipper?action=view&orderId=${order.orderId}">Xem chi tiết</a>
                             </td>
                         </tr>
                     </c:forEach>

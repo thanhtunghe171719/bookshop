@@ -184,7 +184,7 @@
             if (gender === '') {
                 document.getElementById('genderError').innerText = 'Giới tính không được để trống';
                 isValid = false;
-            } else if (gender !== 'Nam' && gender !== 'Nữ') {
+            } else if (gender !== 'Nam' && gender !== 'nam' && gender !== 'nữ' && gender !== 'Nữ' ) {
                 document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
                 isValid = false;
             }
@@ -195,7 +195,6 @@
                 document.getElementById('confirmPasswordError').innerText = 'Mật khẩu xác nhận không khớp';
                 isValid = false;
             }
-
             return isValid;
         }
         </script>
@@ -207,6 +206,17 @@
                 // Toggle the type attribute
                 const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
                 password.setAttribute('type', type);
+                // Toggle the eye / eye slash icon
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+            const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+            const confirmPassword = document.querySelector('#confirmPassword');
+
+            toggleConfirmPassword.addEventListener('click', function (e) {
+                // Toggle the type attribute
+                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPassword.setAttribute('type', type);
                 // Toggle the eye / eye slash icon
                 this.classList.toggle('bi-eye');
                 this.classList.toggle('bi-eye-slash');

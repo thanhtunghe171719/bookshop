@@ -132,7 +132,9 @@
                                                     <input type="hidden" name="service" value="addCart">
                                                     <input type="hidden" name="bookId" value="${book.bookId}">
                                                     <c:set var="userId" value="${user.userId}"></c:set>
-                                                    <li ><button type="button" onclick="addToCart('${userId}', ${book.bookId})"><i class="ti-shopping-cart"></i></button></li>
+                                                    <c:if test="${user.roleId == 4}">
+                                                        <li ><button type="button" onclick="addToCart('${userId}', ${book.bookId})"><i class="ti-shopping-cart"></i></button></li>
+                                                    </c:if>
                                                 </form>
                                             </ul>
                                         </div>
