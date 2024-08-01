@@ -68,15 +68,15 @@
                                 </div>
                                 <div class="col-md-12 form-group">                               
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
-                                        <i class="bi bi-eye-slash" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                                    <i class="bi bi-eye-slash" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
                                     <div id="passwordError" class="error-message2"></div>
                                 </div>  
                                 <div class="col-md-12 form-group">
-    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Xác nhận mật khẩu'">
-    <i class="bi bi-eye-slash" id="toggleConfirmPassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
-    <div id="confirmPasswordError" class="error-message2"></div>
-</div>
-                                
+                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Xác nhận mật khẩu'">
+                                    <i class="bi bi-eye-slash" id="toggleConfirmPassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                                    <div id="confirmPasswordError" class="error-message2"></div>
+                                </div>
+
 
 
 
@@ -116,110 +116,109 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
         <script>
-                                                function validateForm() {
-    let isValid = true;
+        function validateForm() {
+            let isValid = true;
 
-    let fullname = document.getElementById('fullname').value.trim();
-    let phone = document.getElementById('phone').value.trim();
-    let address = document.getElementById('address').value.trim();
-    let email = document.getElementById('email').value.trim();
-    let password = document.getElementById('password').value;
-    let gender = document.getElementById('gender').value.trim();
-    let confirmPassword = document.getElementById('confirmPassword').value;
+            let fullname = document.getElementById('fullname').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            let address = document.getElementById('address').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let password = document.getElementById('password').value;
+            let gender = document.getElementById('gender').value.trim();
+            let confirmPassword = document.getElementById('confirmPassword').value;
 
-    // Reset error messages
-    document.getElementById('fullnameError').innerText = '';
-    document.getElementById('phoneError').innerText = '';
-    document.getElementById('addressError').innerText = '';
-    document.getElementById('emailError').innerText = '';
-    document.getElementById('passwordError').innerText = '';
-    document.getElementById('genderError').innerText = '';
-    document.getElementById('confirmPasswordError').innerText = '';
+            // Reset error messages
+            document.getElementById('fullnameError').innerText = '';
+            document.getElementById('phoneError').innerText = '';
+            document.getElementById('addressError').innerText = '';
+            document.getElementById('emailError').innerText = '';
+            document.getElementById('passwordError').innerText = '';
+            document.getElementById('genderError').innerText = '';
+            document.getElementById('confirmPasswordError').innerText = '';
 
 
-    if (fullname === '') {
-        document.getElementById('fullnameError').innerText = 'Họ và tên không được để trống';
-        isValid = false;
-    }
-    if (phone === '') {
-        document.getElementById('phoneError').innerText = 'Số điện thoại không được để trống';
-        isValid = false;
-    } else if (!/^\d+$/.test(phone)) {
-        document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa số';
-        isValid = false;
-    } else if (phone.length > 10) {
-        document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa tối đa 10 số';
-        isValid = false;
-    }
-    if (address === '') {
-        document.getElementById('addressError').innerText = 'Địa chỉ không được để trống';
-        isValid = false;
-    }
-    if (email === '') {
-        document.getElementById('emailError').innerText = 'Email không được để trống';
-        isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-        document.getElementById('emailError').innerText = 'Email không đúng định dạng';
-        isValid = false;
-    }
-    if (password === '') {
-        document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
-        isValid = false;
-    } else if (password.length < 8) {
-        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
-        isValid = false;
-    } else if (!/[A-Za-z]/.test(password)) {
-        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
-        isValid = false;
-    } else if (!/\d/.test(password)) {
-        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
-        isValid = false;
-    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-        document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt';
-        isValid = false;
-    }
-    if (gender === '') {
-        document.getElementById('genderError').innerText = 'Giới tính không được để trống';
-        isValid = false;
-    } else if (gender !== 'Nam' && gender !== 'Nữ') {
-        document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
-        isValid = false;
-    }
-    if (confirmPassword === '') {
-    document.getElementById('confirmPasswordError').innerText = 'Xác nhận mật khẩu không được để trống';
-    isValid = false;
-} else if (confirmPassword !== password) {
-    document.getElementById('confirmPasswordError').innerText = 'Mật khẩu xác nhận không khớp';
-    isValid = false;
-}
-
-    return isValid;
-}
+            if (fullname === '') {
+                document.getElementById('fullnameError').innerText = 'Họ và tên không được để trống';
+                isValid = false;
+            }
+            if (phone === '') {
+                document.getElementById('phoneError').innerText = 'Số điện thoại không được để trống';
+                isValid = false;
+            } else if (!/^\d+$/.test(phone)) {
+                document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa số';
+                isValid = false;
+            } else if (phone.length > 10) {
+                document.getElementById('phoneError').innerText = 'Số điện thoại chỉ chứa tối đa 10 số';
+                isValid = false;
+            }
+            if (address === '') {
+                document.getElementById('addressError').innerText = 'Địa chỉ không được để trống';
+                isValid = false;
+            }
+            if (email === '') {
+                document.getElementById('emailError').innerText = 'Email không được để trống';
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                document.getElementById('emailError').innerText = 'Email không đúng định dạng';
+                isValid = false;
+            }
+            if (password === '') {
+                document.getElementById('passwordError').innerText = 'Mật khẩu không được để trống';
+                isValid = false;
+            } else if (password.length < 8) {
+                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất 8 ký tự';
+                isValid = false;
+            } else if (!/[A-Za-z]/.test(password)) {
+                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một chữ cái';
+                isValid = false;
+            } else if (!/\d/.test(password)) {
+                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một số';
+                isValid = false;
+            } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                document.getElementById('passwordError').innerText = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt';
+                isValid = false;
+            }
+            if (gender === '') {
+                document.getElementById('genderError').innerText = 'Giới tính không được để trống';
+                isValid = false;
+            } else if (gender !== 'Nam' && gender !== 'Nữ') {
+                document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
+                isValid = false;
+            }
+            if (confirmPassword === '') {
+                document.getElementById('confirmPasswordError').innerText = 'Xác nhận mật khẩu không được để trống';
+                isValid = false;
+            } else if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').innerText = 'Mật khẩu xác nhận không khớp';
+                isValid = false;
+            }
+            return isValid;
+        }
         </script>
         <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
 
-    togglePassword.addEventListener('click', function (e) {
-        // Toggle the type attribute
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        // Toggle the eye / eye slash icon
-        this.classList.toggle('bi-eye');
-        this.classList.toggle('bi-eye-slash');
-    });
-    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-const confirmPassword = document.querySelector('#confirmPassword');
+            togglePassword.addEventListener('click', function (e) {
+                // Toggle the type attribute
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                // Toggle the eye / eye slash icon
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+            const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+            const confirmPassword = document.querySelector('#confirmPassword');
 
-toggleConfirmPassword.addEventListener('click', function (e) {
-    // Toggle the type attribute
-    const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-    confirmPassword.setAttribute('type', type);
-    // Toggle the eye / eye slash icon
-    this.classList.toggle('bi-eye');
-    this.classList.toggle('bi-eye-slash');
-});
-</script>
+            toggleConfirmPassword.addEventListener('click', function (e) {
+                // Toggle the type attribute
+                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPassword.setAttribute('type', type);
+                // Toggle the eye / eye slash icon
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        </script>
 
     </body>
 </html>

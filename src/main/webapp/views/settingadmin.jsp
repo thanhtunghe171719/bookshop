@@ -106,18 +106,22 @@
         <jsp:include page = "header.jsp"/>
         <div class="container">
             <div class="sidebar">
-                <a onclick="showContent('userRole')">Setting User Role</a>
-                <a onclick="showContent('category')">Setting Category</a>
+                <a onclick="showContent('userRole')">Cài đặt vai trò</a>
+                <a onclick="showContent('category')">Cài đặt danh mục</a>
             </div>
             <div class="main-content">
                 <div id="userRoleContent" class="content active">
-                    <h2>Setting User Role</h2>             
+                    <h2>Cài đặt vai trò</h2>             
+                    <div class="search-bar">
+                       <div class="col-md-6 text-right">
+                    <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewRole()">Tạo vai trò</button>
+                </div>
                     </div>
                     <table>
                         <tr>
                             <th>Role ID</th>
-                            <th>Role Name</th>
-                            <th>Status</th>
+                            <th>Tên vai trò</th>
+                            <th>Trạng thái</th>
                         </tr>
                         <c:forEach items="${roles}" var="role">
                             <tr>
@@ -131,19 +135,19 @@
                             </tr>
                         </c:forEach>
                     </table>
-                
+                </div>
                 <div id="categoryContent" class="content">
-                    <h2>Setting Categories</h2>
+                    <h2>Cài đặt danh mục</h2>
                     <div class="search-bar">
                        <div class="col-md-6 text-right">
-                    <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewSlider()">Tạo category</button>
+                    <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewCategory()">Tạo danh mục</button>
                 </div>
                     </div>
                     <table>
                         <tr>
-                            <th>Category ID</th>
-                            <th>Category Name</th>
-                            <th>Image</th>
+                            <th>ID Danh mục</th>
+                            <th>Tên danh mục</th>
+                            <th>Ảnh</th>
                         </tr>
                         <c:forEach items="${categories}" var="category">
                             <tr>
