@@ -21,9 +21,28 @@ public class AuthorizationFilter implements Filter {
 
     static {
         urlRoleMap.put("/admin_dashboard", 1);
+        urlRoleMap.put("/userList", 1);
+        urlRoleMap.put("/settingadmin", 1);
+        
         urlRoleMap.put("/marketing_dashboard", 2);
+        urlRoleMap.put("/marketing-product", 2);
+        urlRoleMap.put("/managerpost", 2);
+        urlRoleMap.put("/createrpost", 2);
+        urlRoleMap.put("/marketingslider", 2);
+        urlRoleMap.put("/customers", 2);
+        urlRoleMap.put("/manage-feedback", 2);
+        urlRoleMap.put("/createrpost", 2);
+        
+        urlRoleMap.put("/manage-order-sale", 3);
+        
         urlRoleMap.put("/cartdetails", 4);
+        urlRoleMap.put("/cartcontact", 4);
+        urlRoleMap.put("/myorders", 4);
+        urlRoleMap.put("/orderinformation", 4);
+        urlRoleMap.put("/thankyou", 4);
+        
         urlRoleMap.put("/sale_dashboard", 5);
+        urlRoleMap.put("/manage-sale", 5);
         
     }
 
@@ -42,32 +61,34 @@ public class AuthorizationFilter implements Filter {
         HttpSession session = req.getSession();
         String url = req.getServletPath();
         User user = (User) session.getAttribute("user");
-
-        if (user != null) {
-            // Prevent direct access to login and register pages
-            if (url.equals("/login") || url.equals("/register")) {
-                res.sendRedirect("home");
-                return;
-            }
-            Integer requiredRole = urlRoleMap.get(url);
-            if (requiredRole != null) {
-                if (user.getRoleId() == requiredRole) {
-                    chain.doFilter(request, response);
-                } else {
-                    res.sendRedirect("error404");
-                }
-            } else {
-                // Allow access for URLs not in the map
+        
+       if (user != null) {
+        // Prevent direct access to login and register pages for logged-in users
+        if (url.equals("/login") || url.equals("/register")) {
+            res.sendRedirect("home");
+            return;
+        }
+        
+        Integer requiredRole = urlRoleMap.get(url);
+        if (requiredRole != null) {
+            if (user.getRoleId() == requiredRole) {
                 chain.doFilter(request, response);
+            } else {
+                res.sendRedirect("error404");
             }
         } else {
-            // If the user is not logged in, allow access to login and register pages
-            if (url.equals("/login") || url.equals("/register")) {
-                chain.doFilter(request, response);
-            } else {
-                res.sendRedirect("login");
-            }
+            // Allow access for URLs not in the map
+            chain.doFilter(request, response);
         }
+    } else {
+        // If the user is not logged in, allow access to login and register pages
+        if (url.equals("/login") || url.equals("/register")) {
+            chain.doFilter(request, response);
+        } else {
+            res.sendRedirect("login");
+        }
+    }
+        
 
 //        Throwable problem = null;
 //        try {

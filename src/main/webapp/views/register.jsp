@@ -208,6 +208,17 @@
         this.classList.toggle('bi-eye');
         this.classList.toggle('bi-eye-slash');
     });
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+const confirmPassword = document.querySelector('#confirmPassword');
+
+toggleConfirmPassword.addEventListener('click', function (e) {
+    // Toggle the type attribute
+    const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmPassword.setAttribute('type', type);
+    // Toggle the eye / eye slash icon
+    this.classList.toggle('bi-eye');
+    this.classList.toggle('bi-eye-slash');
+});
 </script>
 
     </body>
