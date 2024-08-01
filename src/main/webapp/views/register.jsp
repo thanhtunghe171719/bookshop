@@ -181,7 +181,7 @@
             if (gender === '') {
                 document.getElementById('genderError').innerText = 'Giới tính không được để trống';
                 isValid = false;
-            } else if (gender !== 'Nam' && gender !== 'Nữ') {
+            } else if (gender !== 'Nam' && gender !== 'nam' && gender !== 'nữ' && gender !== 'Nữ' ) {
                 document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
                 isValid = false;
             }

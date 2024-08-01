@@ -604,11 +604,11 @@
                 leftSidebar();
                 materialButton();
                 headerSubMenu();
-                displayLineGraphAdmin();
-                displayPieGraphAdmin();
-                displayLineGraphMarketingCustomer();
-                displayLineGraphMarketingPost();
-                displayLineGraphSale();
+//                displayLineGraphAdmin();
+//                displayPieGraphAdmin();
+//                displayLineGraphMarketingCustomer();
+//                displayLineGraphMarketingPost();
+//                displayLineGraphSale();
             }
         }
 

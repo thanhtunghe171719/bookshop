@@ -125,11 +125,13 @@
                                 <c:choose>
                                     <c:when test="${book.getStock() > 0}">
                                         <label for="qty">Số lượng:</label>
-                                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty" onchange="updateTotalPrice(${book.stock})">                    
-                                        <button class="increase items-count" type="button" onclick="updateQuantity(${book.stock}, 'increase')"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button class="reduced items-count" type="button" onclick="updateQuantity(${book.stock}, 'decrease')"><i class="lnr lnr-chevron-down"></i></button>
+                                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty" onchange="updateTotalPrice(${book.stock})">
+                                        <button class="increase items-count" type="button" onclick="updateQuantity(${book.stock}, 'increase')" style="    left: -100px;
+                                                bottom: 15px;"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button class="reduced items-count" type="button" onclick="updateQuantity(${book.stock}, 'decrease')"style="    left: -100px;
+                                                bottom: 1px;"><i class="lnr lnr-chevron-down"></i></button>
                                             <c:set var="userId" value="${user.userId}"></c:set>
-                                            <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}',${book.getBook_id()})" >Thêm vào giỏ hàng</div>
+                                        <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}',${book.getBook_id()})" >Thêm vào giỏ hàng</div>
                                     </c:when>
                                     <c:otherwise>
                                         <p class="out-of-stock">Sản phẩm đã hết hàng</p>
@@ -246,78 +248,78 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
         <script>
-                                                function updateQuantity(stock, action) {
-                                                    // Lấy ra giá trị hiện tại của quantity
-                                                    var quantity = parseInt(document.getElementById('sst').value);
+                                            function updateQuantity(stock, action) {
+                                                // Lấy ra giá trị hiện tại của quantity
+                                                var quantity = parseInt(document.getElementById('sst').value);
 
-                                                    // Nếu hành động là tăng quantity
-                                                    if (action === 'increase') {
-                                                        if (quantity < stock) {
-                                                            quantity++;
-                                                        } else {
-                                                            quantity = stock;
-                                                            alert("Không thể vượt quá số lượng trong kho là : " + stock);
-                                                        }
-                                                    }
-
-                                                    // Nếu hành động là giảm quantity và quantity hiện tại lớn hơn 1
-                                                    else if (action === 'decrease' && quantity > 1) {
-                                                        quantity--;
-                                                    } else if (action === 'decrease' && quantity < 1) {
-                                                        alert("Số lượng không thể nhỏ hơn 1");
-                                                    }
-                                                    document.getElementById('sst').value = quantity;
-                                                }
-                                                // Hàm tăng số lượng
-                                                function updateTotalPrice(stock) {
-                                                    var quantity = document.getElementById('sst').value.trim();
-                                                    if (quantity === "") {
-                                                        quantity = 1;
-                                                        alert("Không được để trống.");
+                                                // Nếu hành động là tăng quantity
+                                                if (action === 'increase') {
+                                                    if (quantity < stock) {
+                                                        quantity++;
                                                     } else {
-                                                        // Parse quantity to integer
-                                                        quantity = parseInt(quantity);
-
-                                                        // Validate quantity
-                                                        if (quantity < 1) {
-                                                            quantity = 1; // Set quantity to 1 if it's less than 1
-                                                            alert("Số lượng không thể nhỏ hơn 1.");
-                                                        }
-                                                        if (quantity > stock) {
-                                                            quantity = stock; // Set quantity to stock if it's more than stock
-                                                            alert("Không thể vượt quá số lượng trong kho là : " + stock);
-                                                        }
-                                                        if (isNaN(quantity)) {
-                                                            quantity = 1; // Set quantity to 1 if it's NaN
-                                                            alert("Vui lòng nhập số hợp lệ.");
-                                                        }
+                                                        quantity = stock;
+                                                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
                                                     }
-                                                    document.getElementById('sst').value = quantity;
                                                 }
-                                                function addToCart(userId, bookId) {
-                                                    if (userId === "") {
-                                                        alert("Vui lòng đăng nhập.");
-                                                        window.location.href = 'login';
-                                                        return;
-                                                    }
 
-                                                    var stock = ${book.getStock()};
-                                                    if (stock <= 0) {
-                                                        alert("Sản phẩm đã hết hàng.");
-                                                        return;
-                                                    }
-
-                                                    var quantity = document.getElementById('sst').value;
-                                                    var xhr = new XMLHttpRequest();
-                                                    xhr.onreadystatechange = function () {
-                                                        if (this.readyState === 4 && this.status === 200) {
-                                                            // Handle response from the server if needed
-                                                            alert("Thêm sách vào giỏ hàng thành công.");
-                                                        }
-                                                    };
-                                                    xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId + '&quantity=' + quantity, true);
-                                                    xhr.send();
+                                                // Nếu hành động là giảm quantity và quantity hiện tại lớn hơn 1
+                                                else if (action === 'decrease' && quantity > 1) {
+                                                    quantity--;
+                                                } else if (action === 'decrease' && quantity < 1) {
+                                                    alert("Số lượng không thể nhỏ hơn 1");
                                                 }
+                                                document.getElementById('sst').value = quantity;
+                                            }
+                                            // Hàm tăng số lượng
+                                            function updateTotalPrice(stock) {
+                                                var quantity = document.getElementById('sst').value.trim();
+                                                if (quantity === "") {
+                                                    quantity = 1;
+                                                    alert("Không được để trống.");
+                                                } else {
+                                                    // Parse quantity to integer
+                                                    quantity = parseInt(quantity);
+
+                                                    // Validate quantity
+                                                    if (quantity < 1) {
+                                                        quantity = 1; // Set quantity to 1 if it's less than 1
+                                                        alert("Số lượng không thể nhỏ hơn 1.");
+                                                    }
+                                                    if (quantity > stock) {
+                                                        quantity = stock; // Set quantity to stock if it's more than stock
+                                                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
+                                                    }
+                                                    if (isNaN(quantity)) {
+                                                        quantity = 1; // Set quantity to 1 if it's NaN
+                                                        alert("Vui lòng nhập số hợp lệ.");
+                                                    }
+                                                }
+                                                document.getElementById('sst').value = quantity;
+                                            }
+                                            function addToCart(userId, bookId) {
+                                                if (userId === "") {
+                                                    alert("Vui lòng đăng nhập.");
+                                                    window.location.href = 'login';
+                                                    return;
+                                                }
+
+                                                var stock = ${book.getStock()};
+                                                if (stock <= 0) {
+                                                    alert("Sản phẩm đã hết hàng.");
+                                                    return;
+                                                }
+
+                                                var quantity = document.getElementById('sst').value;
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (this.readyState === 4 && this.status === 200) {
+                                                        // Handle response from the server if needed
+                                                        alert("Thêm sách vào giỏ hàng thành công.");
+                                                    }
+                                                };
+                                                xhr.open("POST", "cartdetails?service=addCart&bookId=" + bookId + '&quantity=' + quantity, true);
+                                                xhr.send();
+                                            }
         </script>
 
     </body>

@@ -44,6 +44,8 @@ public class AuthorizationFilter implements Filter {
 
         urlRoleMap.put("/sale_dashboard", 5);
         urlRoleMap.put("/manage-sale", 5);
+        
+        urlRoleMap.put("/manage-shipper", 6);
 
     }
 
@@ -62,23 +64,24 @@ public class AuthorizationFilter implements Filter {
         HttpSession session = req.getSession();
         String url = req.getServletPath();
         User user = (User) session.getAttribute("user");
-
+        log(url);
         if (user != null) {
             // Prevent direct access to login and register pages for logged-in users
             if (url.equals("/login") || url.equals("/register")) {
                 res.sendRedirect("home");
                 return;
-            }
-            Integer requiredRole = urlRoleMap.get(url);
-            if (requiredRole != null) {
-                if (user.getRoleId() == requiredRole) {
-                    chain.doFilter(request, response);
-                } else {
-                    res.sendRedirect("error404");
-                }
             } else {
-                // Allow access for URLs not in the map
-                chain.doFilter(request, response);
+                Integer requiredRole = urlRoleMap.get(url);
+                if (requiredRole != null) {
+                    if (user.getRoleId() == requiredRole) {
+                        chain.doFilter(request, response);
+                    } else {
+                        res.sendRedirect("error404");
+                    }
+                } else {
+                    // Allow access for URLs not in the map
+                    chain.doFilter(request, response);
+                }
             }
         } else {
             // If the user is not logged in, allow access to login and register pages

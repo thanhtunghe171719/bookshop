@@ -23,9 +23,10 @@
         <url-pattern>/orderinformation</url-pattern>
         <url-pattern>/thankyou</url-pattern>
         <url-pattern>/sale_dashboard</url-pattern>
-        <url-pattern>/manage-sale</url-pattern>
-        
-
+        <url-pattern>/manage-sale</url-pattern>    
+        <url-pattern>/login</url-pattern>  
+        <url-pattern>/register</url-pattern>  
+        <url-pattern>/manage-shipper</url-pattern>
         
     </filter-mapping>
     <servlet>

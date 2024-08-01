@@ -113,17 +113,63 @@
                 <div id="userRoleContent" class="content active">
                     <h2>Cài đặt vai trò</h2>             
                     <div class="search-bar">
-                       <div class="col-md-6 text-right">
-                    <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewRole()">Tạo vai trò</button>
-                </div>
+                        <div class="col-md-6 text-right">
+                            <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewRole()">Tạo vai trò</button>
+                        </div>
+<!--                        <div class="modal" id="addRoleModal" tabindex="-1" role="dialog">
+                            
+                    <div class="modal-dialog" role="document" style="max-width: 800px; margin: 100px auto;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Tạo Role Mới</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addRoleForm" action="settingadmin" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                                    <input type="hidden" name="service" value="addRole">
+                                    <div class="form-group">
+                                        <label for="newId">Role ID</label>
+                                        <input type="number" class="form-control" id="newId" name="newId" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="newName">Role Name</label>
+                                        <textarea class="form-control" id="newName" name="newName" rows="3" required></textarea>
+                                    </div>
+                                    <div class="form-group" style="padding-bottom: 10px">
+                                        <div for="newStatus">Trạng Thái</div>
+                                        <div>
+                                            <select class="form-control" id="newStatus" name="newStatus">
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary">Thêm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                </div>-->
+                    </div>
+                    <h4 class="text-primary" style="padding-top: 20px;">${messageRole}</h4>
+            <%
+//                String messageSlider = (String) session.getAttribute("messageSlider");
+//                messageSlider = "";
+                session.setAttribute("messageSlider", "");
+            %>
+            <br>
                     <table>
                         <tr>
                             <th>Role ID</th>
                             <th>Tên vai trò</th>
                             <th>Trạng thái</th>
                         </tr>
-                        <c:forEach items="${roles}" var="role">
+                        <c:forEach items="${listRole}" var="role">
                             <tr>
                                 <td>${role.role_id}</td>
                                 <td>${role.role_name}</td>
@@ -139,9 +185,9 @@
                 <div id="categoryContent" class="content">
                     <h2>Cài đặt danh mục</h2>
                     <div class="search-bar">
-                       <div class="col-md-6 text-right">
-                    <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewCategory()">Tạo danh mục</button>
-                </div>
+                        <div class="col-md-6 text-right">
+                            <button class="btn btn-primary" style="background-color: green; color: white;" onclick="addNewCategory()">Tạo danh mục</button>
+                        </div>
                     </div>
                     <table>
                         <tr>
@@ -181,9 +227,9 @@
                 }
             };
             xhr.open("GET", "settingadmin?service=updateStatus&roleId=" + role_id + "&newStatus=" + newStatus, true);
-            xhr.send();       
+            xhr.send();
         }
-       
+
         function showAddRoleModal() {
             document.getElementById('addRoleModal').style.display = 'block';
         }
@@ -228,5 +274,27 @@
         }
     `;
         document.head.appendChild(style);
+    </script>
+    <script>
+        function updateStatus(sliderId, currentStatus) {
+            var newStatus = currentStatus === 'Show' ? 'Hide' : 'Show';
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log("Cập nhật trạng thái thành công.");
+                    var button = event.target;
+                    button.textContent = newStatus;
+                    button.classList.toggle('active');
+                    button.classList.toggle('inactive');
+                }
+            };
+            xhr.open("GET", "settingadmin?service=updateSliderStatus&sliderId=" + sliderId + "&newStatus=" + newStatus, true);
+            xhr.send();
+        }
+    </script>
+    <script>
+        function addNewRole() {
+            $('#addRoleModal').modal('show');
+        }
     </script>
 </html>
