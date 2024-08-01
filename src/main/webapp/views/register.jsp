@@ -68,8 +68,15 @@
                                 </div>
                                 <div class="col-md-12 form-group">                               
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
+                                        <i class="bi bi-eye-slash" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
                                     <div id="passwordError" class="error-message2"></div>
                                 </div>  
+                                <div class="col-md-12 form-group">
+    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Xác nhận mật khẩu'">
+    <i class="bi bi-eye-slash" id="toggleConfirmPassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+    <div id="confirmPasswordError" class="error-message2"></div>
+</div>
+                                
 
 
 
@@ -118,6 +125,7 @@
     let email = document.getElementById('email').value.trim();
     let password = document.getElementById('password').value;
     let gender = document.getElementById('gender').value.trim();
+    let confirmPassword = document.getElementById('confirmPassword').value;
 
     // Reset error messages
     document.getElementById('fullnameError').innerText = '';
@@ -126,6 +134,8 @@
     document.getElementById('emailError').innerText = '';
     document.getElementById('passwordError').innerText = '';
     document.getElementById('genderError').innerText = '';
+    document.getElementById('confirmPasswordError').innerText = '';
+
 
     if (fullname === '') {
         document.getElementById('fullnameError').innerText = 'Họ và tên không được để trống';
@@ -175,10 +185,30 @@
         document.getElementById('genderError').innerText = 'Giới tính chỉ có thể là "Nam" hoặc "Nữ"';
         isValid = false;
     }
+    if (confirmPassword === '') {
+    document.getElementById('confirmPasswordError').innerText = 'Xác nhận mật khẩu không được để trống';
+    isValid = false;
+} else if (confirmPassword !== password) {
+    document.getElementById('confirmPasswordError').innerText = 'Mật khẩu xác nhận không khớp';
+    isValid = false;
+}
 
     return isValid;
 }
         </script>
+        <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+        // Toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // Toggle the eye / eye slash icon
+        this.classList.toggle('bi-eye');
+        this.classList.toggle('bi-eye-slash');
+    });
+</script>
 
     </body>
 </html>

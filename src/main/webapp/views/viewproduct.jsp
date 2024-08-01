@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <title>Book Detail</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+        font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -18,47 +24,47 @@
             <td>${book.bookId}</td>
         </tr>
         <tr>
-            <th>Title</th>
+            <th>Tên sách</th>
             <td>${book.title}</td>
         </tr>
         <tr>
-            <th>Author</th>
+            <th>Tác giả</th>
             <td>${book.author}</td>
         </tr>
         <tr>
-            <th>Image</th>
+            <th>Ảnh</th>
             <td><img src="${book.image}" alt="Book Image" style="width:100px;height:100px;"></td>
         </tr>
         <tr>
-            <th>Category</th>
+            <th>Thể loại</th>
             <td>${category.categoryName}</td>
         </tr>
         <tr>
-            <th>Publishing House</th>
+            <th>Nhà xuất bản</th>
             <td>${book.publishingHouse}</td>
         </tr>
         <tr>
-            <th>Published Year</th>
+            <th>Năm xuất bản</th>
             <td>${book.publishedYear}</td>
         </tr>
         <tr>
-            <th>Size</th>
+            <th>Kích thước</th>
             <td>${book.size}</td>
         </tr>
         <tr>
-            <th>Weight</th>
+            <th>Cân nặng</th>
             <td>${book.weight}</td>
         </tr>
         <tr>
-            <th>Summary</th>
+            <th>Tóm tắt</th>
             <td>${book.summary}</td>
         </tr>
         <tr>
-            <th>Price</th>
+            <th>Giá</th>
             <td><fmt:formatNumber value="${book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd</td>
         </tr>
         <tr>
-            <th>Rating</th>
+            <th>Đánh giá</th>
             <td>${book.rating}</td>
         </tr>
         <tr>
@@ -66,28 +72,28 @@
             <td>${book.discount}%</td>
         </tr>
         <tr>
-            <th>Stock</th>
+            <th>Số lượng</th>
             <td>${book.stock}</td>
         </tr>
         <tr>
-            <th>Created At</th>
+            <th>Ngày tạo</th>
             <td>${book.createdAt}</td>
         </tr>
         <tr>
-            <th>Updated At</th>
+            <th>Ngày cập nhật</th>
             <td>${book.updatedAt}</td>
         </tr>
         <tr>
-            <th>Format</th>
+            <th>Hình thức</th>
             <td>${book.format}</td>
         </tr>
         <tr>
-            <th>Pages</th>
+            <th>Số trang</th>
             <td>${book.pages}</td>
         </tr>
     </table>
 
-    <a href="marketing-product" class="btn btn-primary">Back to Book List</a>
+    <a href="marketing-product" class="btn btn-primary">Trở về Book List</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
