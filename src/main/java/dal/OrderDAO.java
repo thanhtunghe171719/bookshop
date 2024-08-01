@@ -48,7 +48,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
@@ -76,6 +76,7 @@ public class OrderDAO extends DBConnect {
                 user.setGender(rs.getString("gender"));
                 user.setImage(rs.getString("image"));
                 user.setAddress(rs.getString("address"));
+                System.out.println(rs.getString("address"));
 
                 order.setUser(user);
             }
@@ -102,7 +103,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
@@ -158,7 +159,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
@@ -213,7 +214,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
@@ -263,7 +264,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
@@ -315,7 +316,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
@@ -428,7 +429,7 @@ public class OrderDAO extends DBConnect {
                     + "users.fullname, "
                     + "users.gender, "
                     + "users.image, "
-                    + "users.address "
+                    + "orders.address "
                     + "FROM "
                     + "orders "
                     + "JOIN order_status ON orders.order_status_id = order_status.order_status_id "
