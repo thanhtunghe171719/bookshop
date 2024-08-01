@@ -14,10 +14,10 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">                
-                        <li class="nav-item"><a class="nav-link" href="home">trang chủ</a></li>                 
+                        <li class="nav-item"><a class="nav-link" href="home">Trang chủ</a></li>                 
                         <li class="nav-item submenu dropdown">
                             <a href="products" class="nav-link dropdown-toggle"  role="button" aria-haspopup="true"
-                               aria-expanded="false">cửa hàng</a>
+                               aria-expanded="false">Cửa hàng</a>
                             
                         </li>
                         <li class="nav-item submenu dropdown">
@@ -25,7 +25,7 @@
                                aria-expanded="false">Blog</a>
                             
                         </li>
-                        <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3}">
+                        <c:if test="${sessionScope.user.roleId != 1 && sessionScope.user.roleId != 2 && sessionScope.user.roleId != 3 && sessionScope.user.roleId != 5}">
                             <li class="nav-item"><a class="nav-link" id="contactLink">Liên hệ</a></li>          
                             </c:if>
                             <c:if test="${sessionScope.user.roleId ==1}">
@@ -33,7 +33,7 @@
                                 <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="userList">người dùng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="userList">Người dùng</a></li>
                                     <li class="nav-item"><a class="nav-link" href="settingadmin">Cài đặt</a></li>
                                 </ul>
                             </li>
@@ -43,11 +43,11 @@
                                 <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="marketing-product">sản phẩm</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="marketing-product">Sản phẩm</a></li>
                                     <li class="nav-item"><a class="nav-link" href="marketingslider">Slider</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="managerpost">bài đăng</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="customers">khách hàng</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="manage-feedback">Nhận xét</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="managerpost">Bài đăng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="customers">Khách hàng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="manage-feedback">Đánh giá</a></li>
                                 </ul>
                             </li> 
                         </c:if>
@@ -56,7 +56,16 @@
                                 <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="manage-order-sale">đơn hàng</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="manage-order-sale">Đơn hàng</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
+                            <c:if test="${sessionScope.user.roleId ==5}">
+                            <li class="nav-item submenu dropdown">
+                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Quản lý</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="manage-sale">Đơn hàng</a></li>
                                 </ul>
                             </li>
                         </c:if>
@@ -78,7 +87,7 @@
 
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <li class="nav-item  submenu dropdown">
-                            <a href="cartdetails" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
+                            <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
                                aria-expanded="false"><i class="ti-shopping-cart"></i></a>
                             
                         </li>
@@ -120,7 +129,7 @@
                                </c:if>
                                <c:if test="${sessionScope.user.roleId == 3}">
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="manage-order-sale">Quản lý đơn hàng</a></li>
+                                <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
@@ -136,16 +145,9 @@
                                <c:if test="${sessionScope.user.roleId == 5}">
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="sale_dashboard">Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link" href="manage-sale">Quản lí đơn hàng</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
-                               <c:if test="${sessionScope.user.roleId == 6}">
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="manage-shipper">Quản lí đơn hàng</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
-                                </ul>
-                            </c:if>
                         </li>
                         
                         <%}%>

@@ -22,7 +22,7 @@ public class AuthorizationFilter implements Filter {
     static {
         urlRoleMap.put("/admin_dashboard", 1);
         urlRoleMap.put("/marketing_dashboard", 2);
-
+        urlRoleMap.put("/cartdetails", 4);
         urlRoleMap.put("/sale_dashboard", 5);
         
     }
@@ -49,7 +49,6 @@ public class AuthorizationFilter implements Filter {
                 res.sendRedirect("home");
                 return;
             }
-
             Integer requiredRole = urlRoleMap.get(url);
             if (requiredRole != null) {
                 if (user.getRoleId() == requiredRole) {
@@ -70,25 +69,25 @@ public class AuthorizationFilter implements Filter {
             }
         }
 
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            problem = t;
-            t.printStackTrace();
-        }
+//        Throwable problem = null;
+//        try {
+//            chain.doFilter(request, response);
+//        } catch (Throwable t) {
+//            problem = t;
+//            t.printStackTrace();
+//        }
 
-        doAfterProcessing(request, response);
-
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
+//        doAfterProcessing(request, response);
+//
+//        if (problem != null) {
+//            if (problem instanceof ServletException) {
+//                throw (ServletException) problem;
+//            }
+//            if (problem instanceof IOException) {
+//                throw (IOException) problem;
+//            }
+//            sendProcessingError(problem, response);
+//        }
     }
 
     @Override

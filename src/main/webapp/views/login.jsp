@@ -23,7 +23,6 @@
         <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
         <link rel="stylesheet" href="vendors/nouislider/nouislider.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -57,6 +56,7 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'">
+                                     <i class="bi bi-eye-slash" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
                                     <div id="passwordError" class="error-message2"></div>
                                 </div>
                                 <!--                                    <div class="col-md-12 form-group">
@@ -139,6 +139,20 @@
                                             }
                                             return isValid;
                                         }
+                                        
         </script>
+        <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+        // Toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // Toggle the eye / eye slash icon
+        this.classList.toggle('bi-eye');
+        this.classList.toggle('bi-eye-slash');
+    });
+</script>
     </body>
 </html>
