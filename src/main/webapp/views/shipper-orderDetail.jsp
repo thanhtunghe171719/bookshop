@@ -4,12 +4,6 @@
     Author     : HP
 --%>
 
-<%-- 
-    Document   : orderList
-    Created on : Jul 15, 2024, 12:25:59 AM
-    Author     : HP
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -55,7 +49,7 @@
                         <td>${order.orderId}</td>
                     </tr>
                     <tr>
-                        <th style="width: 200px;">Tên khách hàng</th>
+                        <th style="width: 200px;">Fullname</th>
                         <td>${order.user.fullname}</td>
                     </tr>
                     <tr>
@@ -67,36 +61,57 @@
                         <td>${order.user.phone}</td>
                     </tr>
                     <tr>
-                        <th style="width: 200px;">Địa chỉ</th>
+                        <th style="width: 200px;">Address</th>
                         <td>${order.user.address}</td>
                     </tr>
                     <tr>
-                        <th>Tổng giá tiền</th>
+                        <th>Total</th>
                         <td>${order.total}</td>
                     </tr>
                     <tr>
-                        <th>Trạng thái đơn hàng</th>
+                        <th>Order Status</th>
                         <td>${order.orderStatus}</td>
                     </tr>
                     <tr>
-                        <th>Ngày đặt</th>
+                        <th>Order Date</th>
                         <td>${order.orderDate}</td>
                     </tr>
                     <tr>
-                        <th>Ngày cập nhật</th>
+                        <th>Updated At</th>
                         <td>${order.updatedAt}</td>
                     </tr>
                 </table>
+                <c:if test="${order.statusId == 3}">
+                    <div class="card" style="padding: 10px">
+                        <form action="update-order-status" method="post">
+                            <input type="hidden" name="orderId" value="${order.orderId}">
+                            <div class="form-group">
+                                <label for="status">Select Status:</label>
+                                <select name="status" id="status" class="form-control">
+                                    <c:forEach var="status" items="${orderStatuses}">
+                                        <c:if test="${status.orderStatusId >= 3}">
+                                            <option value="${status.orderStatusId}" 
+                                                    ${status.orderStatusId == order.statusId ? 'selected' : ''}>
+                                                ${status.orderStatus}
+                                            </option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Update Status</button>
+                        </form>
+                    </div>
+                </c:if>
                 <h2>Order Items</h2>
                 <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
                             <th>Order Item ID</th>
-                            <th>Tên sách</th>
-                            <th>Tác giả</th>
-                            <th>Ảnh</th>
-                            <th>Số lượng</th>
-                            <th>Giá</th>
+                            <th>Book Title</th>
+                            <th>Book Author</th>
+                            <th>Book Image</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>

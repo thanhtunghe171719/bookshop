@@ -238,6 +238,11 @@ function saveAddress1(shipId) {
     var newAddress = editedAddressInput.value; // Get the edited address value
     var addressSpan = document.getElementById('phone');
     addressSpan.innerText = newAddress; // Update the address shown on the web page
+    
+    var hiddenPhoneInput = document.getElementById('hiddenPhoneInput');
+    hiddenPhoneInput.value = newAddress;
+    console.log(hiddenPhoneInput);
+    
     var modal = document.getElementById('addressModal1');
     modal.style.display = 'none'; // Close the modal after saving
 

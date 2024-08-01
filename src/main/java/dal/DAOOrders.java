@@ -37,6 +37,7 @@ public class DAOOrders extends DBConnect {
                     + "        o.total, \n"
                     + "        ot.order_status,\n"
                     + "        o.address,\n"
+                    + "        o.phone,\n"
                     + "        ROW_NUMBER() OVER (PARTITION BY o.order_id ORDER BY b.title) as rn\n"
                     + "    FROM orders o\n"
                     + "    JOIN order_items oi on oi.order_id = o.order_id\n"
@@ -51,7 +52,8 @@ public class DAOOrders extends DBConnect {
                     + "    quantity,\n"
                     + "    CASE WHEN rn = 1 THEN total ELSE '' END as total,\n"
                     + "    CASE WHEN rn = 1 THEN order_status ELSE '' END as order_status,\n"
-                    + "    CASE WHEN rn = 1 THEN address ELSE '' END as address\n"
+                    + "    CASE WHEN rn = 1 THEN address ELSE '' END as address,\n"
+                    + "    CASE WHEN rn = 1 THEN phone ELSE '' END as phone\n"
                     + "FROM OrderDetails\n"
                     + "ORDER BY order_date DESC\n" // Keep orders sorted by date
                     + "LIMIT 3 OFFSET ?;";
@@ -66,8 +68,9 @@ public class DAOOrders extends DBConnect {
                 double total = rs.getDouble("total");
                 String status = rs.getString("order_status");
                 String address = rs.getString("address");
+                String phone = rs.getString("phone");
 
-                Orders o = new Orders(orderID, orderDate, total, status, address);
+                Orders o = new Orders(orderID, orderDate, total, status, address, phone);
                 List<Items> items = getOrderItemsForOrder(orderID);
                 o.setOrderItems(items);
                 list.add(o);
@@ -96,6 +99,7 @@ public class DAOOrders extends DBConnect {
                     + "        o.total, \n"
                     + "        ot.order_status,\n"
                     + "        o.address,\n"
+                    + "        o.phone,\n"
                     + "        ROW_NUMBER() OVER (PARTITION BY o.order_id ORDER BY b.title) as rn\n"
                     + "    FROM orders o\n"
                     + "    JOIN order_items oi on oi.order_id = o.order_id\n"
@@ -110,7 +114,8 @@ public class DAOOrders extends DBConnect {
                     + "    quantity,\n"
                     + "    CASE WHEN rn = 1 THEN total ELSE '' END as total,\n"
                     + "    CASE WHEN rn = 1 THEN order_status ELSE '' END as order_status,\n"
-                    + "    CASE WHEN rn = 1 THEN address ELSE '' END as address\n"
+                    + "    CASE WHEN rn = 1 THEN address ELSE '' END as address,\n"
+                    + "    CASE WHEN rn = 1 THEN phone ELSE '' END as phone\n"
                     + "FROM OrderDetails\n"
                     + "ORDER BY order_date DESC\n" // Keep orders sorted by date
                     + "LIMIT 2 OFFSET ?;";
@@ -129,8 +134,9 @@ public class DAOOrders extends DBConnect {
                 double total = rs.getDouble("total");
                 String status = rs.getString("order_status");
                 String address = rs.getString("address");
+                String phone = rs.getString("phone");
 
-                Orders o = new Orders(orderID, orderDate, total, status, address);
+                Orders o = new Orders(orderID, orderDate, total, status, address, phone);
                 List<Items> items = getOrderItemsForOrder(orderID);
                 o.setOrderItems(items);
                 list.add(o);
@@ -302,7 +308,7 @@ public class DAOOrders extends DBConnect {
     public ArrayList<Orders> getOrdersByID(String id) {
         ArrayList<Orders> list = new ArrayList<>();
         try {
-            String sql = "SELECT o.order_id, o.order_date, o.total, ot.order_status, o.address \n"
+            String sql = "SELECT o.order_id, o.order_date, o.total, ot.order_status, o.address, o.phone \n"
                     + "FROM orders o\n"
                     + "JOIN order_status ot ON o.order_status_id = ot.order_status_id\n"
                     + "WHERE o.order_id = ?\n"
@@ -317,8 +323,9 @@ public class DAOOrders extends DBConnect {
                 double total = rs.getDouble("total");
                 String status = rs.getString("order_status");
                 String address = rs.getString("address");
+                String phone = rs.getString("phone");
 
-                Orders o = new Orders(orderID, orderDate, total, status, address);
+                Orders o = new Orders(orderID, orderDate, total, status, address, phone);
                 list.add(o);
             }
         } catch (SQLException ex) {
@@ -405,10 +412,10 @@ public class DAOOrders extends DBConnect {
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);
 //        int cancel = order.cancelOrder(2);
 //        int count = order.getOrderCountByStatus("Canceled");
-//        ArrayList<Orders> o = order.getOrders(1, 1);
+        ArrayList<Orders> o = order.getOrders(29, 1);
 //        ArrayList<Items> o = order.getOrderItemsForOrder(9);
 
-        int update = order.updateInventoryOnCancel(66);
-        System.out.println(update);
+//        int update = order.updateInventoryOnCancel(66);
+        System.out.println(o);
     }
 }
