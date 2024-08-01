@@ -21,9 +21,9 @@
                     <div class="single-footer-widget tp_widgets">
                         <h4 class="footer_title">Truy Cập Nhanh</h4>
                         <ul class="list">
-                            <li><a href="home">Home</a></li>
-                            <li><a href="products">Shop Category</a></li>
-                            <li><a href="blog">Blog List</a></li>
+                            <li><a href="home">Trang chủ</a></li>
+                            <li><a href="products">Sản phẩm</a></li>
+                            <li><a href="blog">Blog</a></li>
                             <li><a href="#"></a></li>
                         </ul>
                     </div>

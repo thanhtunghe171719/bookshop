@@ -156,11 +156,11 @@
                     </div>
                 </div>
                 </form>
-<!--                                <div class="row">
+                                <div class="row">
                     <div class="col-lg-8 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
-                                <h4>Orders</h4>
+                                <h4>Successful Orders</h4>
                             </div>
                             <div class="widget-inner">
                                 <canvas id="chart5" width="100" height="45"></canvas>
@@ -193,6 +193,91 @@
         <script src="assets/js/admin.js"></script>
         <script src='assets/vendors/calendar/moment.min.js'></script>
         <script src='assets/vendors/calendar/fullcalendar.js'></script>
+        <script>
+            Chart.defaults.global.defaultFontFamily = "rubik";
+            Chart.defaults.global.defaultFontColor = '#999';
+            Chart.defaults.global.defaultFontSize = '12';
 
+            var ctx = document.getElementById('chart5').getContext('2d');
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    // Information about the dataset
+                    datasets: [{
+                            label: "Total Order",
+                            backgroundColor: 'rgba(0,0,0,0.05)',
+                            borderColor: '#4c1864',
+                            borderWidth: "3",
+                    data: [${requestScope.months1}, ${requestScope.months2}, ${requestScope.months3}, ${requestScope.months4}, ${requestScope.months5}, ${requestScope.months6}, ${requestScope.months7}, ${requestScope.months8}, ${requestScope.months9}, ${requestScope.months10}, ${requestScope.months11}, ${requestScope.months12}],
+                            pointRadius: 4,
+                            pointHoverRadius: 4,
+                            pointHitRadius: 10,
+                            pointBackgroundColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointBorderWidth: "3",
+                        }]
+                },
+
+                // Configuration options
+                options: {
+
+                    layout: {
+                        padding: 0,
+                    },
+
+                    legend: {display: false},
+                    title: {display: false},
+
+                    scales: {
+                        yAxes: [{
+                                ticks: {
+                                    beginAtZero: true, // Đảm bảo trục y bắt đầu từ 0
+                                    callback: function (value, index, values) {
+                                        return value.toLocaleString();  // Định dạng số
+                                    }
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Order',
+                                    fontColor: '#999',
+                                    fontSize: 14,
+                                    fontStyle: 'bold'
+                                },
+                                gridLines: {
+                                    borderDash: [6, 6],
+                                    color: "#ebebeb",
+                                    lineWidth: 1,
+                                },
+                            }],
+                        xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Month',
+                                    fontColor: '#999',
+                                    fontSize: 14,
+                                    fontStyle: 'bold'
+                                },
+                                gridLines: {display: false},
+                            }],
+                    },
+
+                    tooltips: {
+                        backgroundColor: '#333',
+                        titleFontSize: 12,
+                        titleFontColor: '#fff',
+                        bodyFontColor: '#fff',
+                        bodyFontSize: 12,
+                        displayColors: false,
+                        xPadding: 10,
+                        yPadding: 10,
+                        intersect: false
+                    }
+                },
+            });
+        </script>
     </body>
 </html>

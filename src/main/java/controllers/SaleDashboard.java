@@ -66,6 +66,31 @@ public class SaleDashboard extends HttpServlet {
         int totalDeliveredOrder = dao.getTotalDeliveredOrder();
         int totalCanceledOrder = dao.getTotalCanceledOrder();
         
+        int months1 = dao.getOrderSuccessfulCountByMonth(1);
+        int months2 = dao.getOrderSuccessfulCountByMonth(2);
+        int months3 = dao.getOrderSuccessfulCountByMonth(3);
+        int months4 = dao.getOrderSuccessfulCountByMonth(4);
+        int months5 = dao.getOrderSuccessfulCountByMonth(5);
+        int months6 = dao.getOrderSuccessfulCountByMonth(6);
+        int months7 = dao.getOrderSuccessfulCountByMonth(7);
+        int months8 = dao.getOrderSuccessfulCountByMonth(8);
+        int months9 = dao.getOrderSuccessfulCountByMonth(9);
+        int months10 = dao.getOrderSuccessfulCountByMonth(10);
+        int months11 = dao.getOrderSuccessfulCountByMonth(11);
+        int months12 = dao.getOrderSuccessfulCountByMonth(12);
+        
+        request.setAttribute("months1", months1);
+        request.setAttribute("months2", months2);
+        request.setAttribute("months3", months3);
+        request.setAttribute("months4", months4);
+        request.setAttribute("months5", months5);
+        request.setAttribute("months6", months6);
+        request.setAttribute("months7", months7);
+        request.setAttribute("months8", months8);
+        request.setAttribute("months9", months9);
+        request.setAttribute("months10", months10);
+        request.setAttribute("months11", months11);
+        request.setAttribute("months12", months12);
        
         request.setAttribute("totalPendingOrder", totalPendingOrder);
         request.setAttribute("totalShippingOrder", totalShippingOrder);

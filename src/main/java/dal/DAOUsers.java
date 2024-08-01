@@ -593,6 +593,23 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
+public int getCustomerCountByMonth(int month) {
+    String sql = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '4' AND MONTH(create_at) = ?";
+    try (
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, month); // Set the month parameter
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) { // Use if since you're expecting one result
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return 0;
+}
+
+    
     public int getCustomerCountWithSearch(String searchQuery) {
         String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '4'";
         try (PreparedStatement ps = conn.prepareStatement(query)) {

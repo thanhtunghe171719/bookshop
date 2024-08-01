@@ -59,6 +59,21 @@ public class DAOPosts extends DBConnect{
         }
         return totalPosts;
     }
+    public int getPostsCountByMonth(int month) {
+    String sql = "SELECT COUNT(*) FROM posts WHERE MONTH(created_at) = ?";
+    try (
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, month); // Set the month parameter
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) { // Use if since you're expecting one result
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return 0;
+    }
     public static void main(String[] args) {
         DAOPosts dao = new DAOPosts();
         ArrayList<Posts> list = dao.getAll("SELECT * FROM posts WHERE status = 'Show' ORDER BY created_at DESC LIMIT 3;");
