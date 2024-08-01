@@ -36,7 +36,7 @@
         <!--================ End Header Menu Area =================-->
 
         <div class="container mt-5">
-            <h2 style="padding-bottom: 10px ">Manager Slider</h2>
+            <h2 style="padding-bottom: 10px ">Quản Lý Slider</h2>
             <div class="row">
 
                 <div class="col-md-4">

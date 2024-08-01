@@ -76,7 +76,7 @@
                                     <div class="col-md-12 form-group">
                                         <p style="float: left;color: red">${messageEnrrorOtp}</p>
                                         <button type="submit" name="service" value="checkOtp" class="button button-login w-100">Tiếp Tục</button>
-                                        <a href="resetpassword">Nhập Lại Gmail</a>
+                                        <a href="resetpassword">Nhập Lại Email</a>
                                     </div>
                                 </form>        
                             </c:if> 
@@ -87,14 +87,14 @@
                                     <p style="text-align: left;padding-left: 15px;padding-bottom: 20px">Điền mật khẩu mới</p>
                                     <div class="col-md-12 form-group">
                                         <div class="password-container" style="display: flex">
-                                            <input type="password" class="form-control" id="newPassword" name="newPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="New Password" onblur="validateNewPassword()">
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Mật Khẩu Mới" onblur="validateNewPassword()">
                                             <button type="button" onclick="togglePassword('newPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
                                         </div>
                                         <p id="newPasswordResult" style="text-align: left;padding-left: 15px;color: red"></p>
                                     </div>
                                     <div class="col-md-12 form-group">
                                         <div class="password-container" style="display: flex">
-                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Confirm Password" onblur="validateConfirmPassword()">
+                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" style="border: 1px #7c3aed solid; border-radius: 15px;" placeholder="Xác Nhận Mật Khẩu Mới" onblur="validateConfirmPassword()">
                                             <button type="button" onclick="togglePassword('confirmNewPassword', this)" style="border: none;background-color: white"><i class="bi bi-eye-slash"></i></button>
                                         </div>
                                         <p id="confirmNewPasswordResult" style="text-align: left;padding-left: 15px;color: red"></p>

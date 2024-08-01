@@ -214,18 +214,18 @@
 
                 <div class="billing_details">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-7">
                             <h3>Chi Tiết Liên Hệ</h3>
                             <!--<form class="row contact_form" action="cart" method="post" novalidate="novalidate">-->
                             <div class="col-md-12 form-group p_star">
                                 <p>Họ và Tên:</p>
-                                <input type="text" class="form-control" id="first" name="name" placeholder="Full Name" value="${user.fullname}" style="color: black" readonly>
+                                <input type="text" class="form-control" id="first" name="name" placeholder="Full Name" value="${user.fullname}" style="color: black;width: 549px" readonly>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <p>Địa Chỉ:</p>
                                 <div class="col-md-12 row">
-                                    <span class="form-control" id="address" style="color: black;width: 445px;background-color: #e9ecef;">${user.address}</span>
+                                    <span class="form-control" id="address" style="color: black;width: 500px;background-color: #e9ecef;">${user.address}</span>
                                     <button type="button" class="btn btn-primary" id="editAddressBtn" onclick="editAddress()">Sửa</button>
                                 </div>
                             </div>           
@@ -269,7 +269,7 @@
                             <div class="col-md-12 form-group">
                                 <p>Số Điện Thoại:</p>
                                 <div class="col-md-12 row">
-                                    <span class="form-control" id="phone" style="color: black;width: 445px;background-color: #e9ecef;">${user.phone}</span>
+                                    <span class="form-control" id="phone" style="color: black;width: 500px;background-color: #e9ecef;">${user.phone}</span>
                                     <button type="button" class="btn btn-primary" id="editAddressBtn" onclick="editAddress1()">Sửa</button>
                                 </div>
                             </div> 
@@ -319,7 +319,7 @@
                             </form>-->
 
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-5">
                             <div class="order_box">
                                 <form action="payment" method="post">
                                     <div style="display: flex">
@@ -329,8 +329,8 @@
 
                                     <table class="table">
                                         <tr>
-                                            <td >Sản Phẩm</td>
-                                            <td></td>
+                                            <td colspan="2">Sản Phẩm</td>
+                                            <td >số lượng</td>
                                             <td style="float: right">Thành Giá</td>
                                         </tr>
                                         <c:if test="${not empty cartItemBookMap}">
@@ -341,7 +341,7 @@
                                                 <c:set var="subTotal" value="${subTotal + lineSubTotal}" />
 
                                                 <tr>
-                                                    <td><p style="width: 100px;">${book.title}</p></td>
+                                                    <td colspan="2"><p style="width: 160px;">${book.title}</p></td>
                                                     <td>x${cartItem.quantity}</td>
                                                     <td style="float: right">
                                                         <fmt:formatNumber value="${lineSubTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
@@ -353,7 +353,7 @@
 
 
                                         <tr  style="border-bottom: 1px #dee2e6 solid;">
-                                            <td colspan="2">Tổng Tiền Đơn Hàng</td>
+                                            <td colspan="3">Tổng Tiền Đơn Hàng</td>
                                             <td style="float: right">
                                                 <fmt:formatNumber value="${subTotal}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
                                             </td>
