@@ -84,10 +84,10 @@
                             </form>
                         </div>
                     </ul>
-
+                                    
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <li class="nav-item  submenu dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
+                            <a href="cartdetails" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
                                aria-expanded="false"><i class="ti-shopping-cart"></i></a>
                             
                         </li>

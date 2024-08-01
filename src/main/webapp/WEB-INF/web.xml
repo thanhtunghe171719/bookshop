@@ -12,6 +12,7 @@
         <url-pattern>/admin_dashboard</url-pattern>
         <url-pattern>/sale_dashboard</url-pattern>
         <url-pattern>/marketing_dashboard</url-pattern>
+        <url-pattern>/cartdetails</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>DetailServlet</servlet-name>
