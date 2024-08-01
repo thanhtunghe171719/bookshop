@@ -22,6 +22,7 @@ import models.OrderStatus;
 import models.SalesRepresentative;
 import models.ShipManagement;
 import models.User;
+import models.users;
 
 public class OrderDAO extends DBConnect {
 
@@ -76,7 +77,6 @@ public class OrderDAO extends DBConnect {
                 user.setGender(rs.getString("gender"));
                 user.setImage(rs.getString("image"));
                 user.setAddress(rs.getString("address"));
-                System.out.println(rs.getString("address"));
 
                 order.setUser(user);
             }
@@ -141,8 +141,8 @@ public class OrderDAO extends DBConnect {
         }
         return order;
     }
-
-        public Order getOrderByIdShipper(int orderId, int userId) {
+    
+    public Order getOrderByIdShipper(int orderId, int userId) {
         Order order = null;
         try {
             String query = "SELECT "
@@ -197,7 +197,7 @@ public class OrderDAO extends DBConnect {
         }
         return order;
     }
-        
+
     public List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
         try {
@@ -352,68 +352,8 @@ public class OrderDAO extends DBConnect {
         }
         return orders;
     }
-
-    public List<OrderStatus> getAllOrderStatuses() {
-        List<OrderStatus> statuses = new ArrayList<>();
-        String sql = "SELECT order_status_id, order_status, create_at, updated_at FROM order_status";
-        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                OrderStatus status = new OrderStatus();
-                status.setOrderStatusId(rs.getInt("order_status_id"));
-                status.setOrderStatus(rs.getString("order_status"));
-                status.setCreatedAt(rs.getDate("create_at"));
-                status.setUpdatedAt(rs.getDate("updated_at"));
-                statuses.add(status);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return statuses;
-    }
-
-    public void updateOrderStatus(int orderId, int statusId) {
-        String sql = "UPDATE orders SET order_status_id = ?, updated_at = NOW() WHERE order_id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, statusId);
-            ps.setInt(2, orderId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<OrderItems> getOrderItemsByOrderId(int orderId) {
-        List<OrderItems> orderItems = new ArrayList<>();
-        try {
-            String query = "SELECT order_items.order_item_id,books.price, order_items.order_id, order_items.book_id, order_items.quantity, "
-                    + "books.title, books.author, books.image "
-                    + "FROM order_items "
-                    + "JOIN books ON order_items.book_id = books.book_id "
-                    + "WHERE order_items.order_id = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, orderId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                OrderItems orderItem = new OrderItems();
-                orderItem.setOrderItemId(rs.getInt("order_item_id"));
-                orderItem.setOrderId(rs.getInt("order_id"));
-                orderItem.setQuantity(rs.getInt("quantity"));
-
-                Book book = new Book();
-                book.setTitle(rs.getString("title"));
-                book.setAuthor(rs.getString("author"));
-                book.setImage(rs.getString("image"));
-                book.setPrice(rs.getBigDecimal("price"));
-                orderItem.setBook(book);
-
-                orderItems.add(orderItem);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orderItems;
-    }
-        public List<Order> getAllOrdersByUserShipper(int shipper) {
+    
+    public List<Order> getAllOrdersByUserShipper(int shipper) {
         List<Order> orders = new ArrayList<>();
         try {
             String query = "SELECT "
@@ -464,6 +404,76 @@ public class OrderDAO extends DBConnect {
             e.printStackTrace();
         }
         return orders;
+    }
+
+    public List<OrderStatus> getAllOrderStatuses() {
+        List<OrderStatus> statuses = new ArrayList<>();
+        String sql = "SELECT order_status_id, order_status, create_at, updated_at FROM order_status";
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                OrderStatus status = new OrderStatus();
+                status.setOrderStatusId(rs.getInt("order_status_id"));
+                status.setOrderStatus(rs.getString("order_status"));
+                status.setCreatedAt(rs.getDate("create_at"));
+                status.setUpdatedAt(rs.getDate("updated_at"));
+                statuses.add(status);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    public void updateOrderStatus(int orderId, int statusId) {
+        String sql = "UPDATE orders SET order_status_id = ?, updated_at = NOW() WHERE order_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, statusId);
+            ps.setInt(2, orderId);
+            int result = ps.executeUpdate();
+            if(result >= 1 && statusId == 5) {
+                OrderDAO orderDao = new OrderDAO();
+                List<OrderItems> orderItems = orderDao.getOrderItemsByOrderId(orderId);
+                DAOBooks bookDao = new DAOBooks();
+                for (OrderItems orderItem : orderItems) {
+                    bookDao.updateQuantityBook(orderItem.getBookId(), orderItem.getQuantity());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<OrderItems> getOrderItemsByOrderId(int orderId) {
+        List<OrderItems> orderItems = new ArrayList<>();
+        try {
+            String query = "SELECT order_items.order_item_id,books.price, order_items.order_id, order_items.book_id, order_items.quantity, "
+                    + "books.title, books.author, books.image, books.book_id "
+                    + "FROM order_items "
+                    + "JOIN books ON order_items.book_id = books.book_id "
+                    + "WHERE order_items.order_id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OrderItems orderItem = new OrderItems();
+                orderItem.setOrderItemId(rs.getInt("order_item_id"));
+                orderItem.setOrderId(rs.getInt("order_id"));
+                orderItem.setQuantity(rs.getInt("quantity"));
+                orderItem.setBookId(rs.getInt("book_id"));
+
+                Book book = new Book();
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setImage(rs.getString("image"));
+                book.setPrice(rs.getBigDecimal("price"));
+                orderItem.setBook(book);
+
+                orderItems.add(orderItem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderItems;
     }
 
     public List<OrderItems> getOrderItemsByOrderIdUser(int orderId, int userId) {
@@ -591,6 +601,37 @@ public class OrderDAO extends DBConnect {
         }
         return list;
     }
+    
+    public ArrayList<User> getAllShip() {
+        ArrayList<User> list = new ArrayList<>();
+        String sqlGet = "select * from Users where role_id = 6";
+        try {
+
+            PreparedStatement st = conn.prepareStatement(sqlGet);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                int userId = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String password = rs.getString("password");
+                int roleId = rs.getInt("role_id");
+                String fullname = rs.getString("fullname");
+                String gender = rs.getString("gender");
+                String image = rs.getString("image");
+                String address = rs.getString("address");
+                java.sql.Timestamp createdAt = new java.sql.Timestamp(System.currentTimeMillis());
+                java.sql.Timestamp updatedAt = new java.sql.Timestamp(System.currentTimeMillis());
+                String status = rs.getString("status");
+                String deleted = "";
+                User c = new User(userId, email, phone, password, roleId, fullname, gender, address, createdAt, updatedAt, image, status, deleted);
+                list.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+        }
+        return list;
+    }
 
     public void updateOrInsertSaleForOrder(int orderId, int saleId) {
         String checkSql = "SELECT COUNT(*) FROM sale_management WHERE order_id = ?";
@@ -644,37 +685,7 @@ public class OrderDAO extends DBConnect {
         return salesRep;
     }
     
-        public ArrayList<User> getAllShip() {
-        ArrayList<User> list = new ArrayList<>();
-        String sqlGet = "select * from Users where role_id = 6";
-        try {
-
-            PreparedStatement st = conn.prepareStatement(sqlGet);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-
-                int userId = rs.getInt("user_id");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String password = rs.getString("password");
-                int roleId = rs.getInt("role_id");
-                String fullname = rs.getString("fullname");
-                String gender = rs.getString("gender");
-                String image = rs.getString("image");
-                String address = rs.getString("address");
-                java.sql.Timestamp createdAt = new java.sql.Timestamp(System.currentTimeMillis());
-                java.sql.Timestamp updatedAt = new java.sql.Timestamp(System.currentTimeMillis());
-                String status = rs.getString("status");
-                String deleted = "";
-                User c = new User(userId, email, phone, password, roleId, fullname, gender, address, createdAt, updatedAt, image, status, deleted);
-                list.add(c);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-        }
-        return list;
-    }
-            public ShipManagement getAssignedShipForOrder(int orderId) {
+    public ShipManagement getAssignedShipForOrder(int orderId) {
         String sql = "SELECT u.user_id, u.fullname, u.email, u.phone, u.address "
                 + "FROM ship_management sm "
                 + "JOIN users u ON sm.user_id = u.user_id "
@@ -695,6 +706,5 @@ public class OrderDAO extends DBConnect {
         }
         return null;
     }
-
 
 }
