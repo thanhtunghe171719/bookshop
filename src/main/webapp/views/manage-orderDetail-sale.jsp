@@ -1,14 +1,4 @@
-<%-- 
-    Document   : manage-orderDetail
-    Created on : Jul 15, 2024, 12:25:42 AM
-    Author     : HP
---%>
 
-<%-- 
-    Document   : orderList
-    Created on : Jul 15, 2024, 12:25:59 AM
-    Author     : HP
---%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -72,7 +62,7 @@
                     </tr>
                     <tr>
                         <th>Tổng giá tiền</th>
-                        <td>${order.total}</td>
+                        <td><fmt:formatNumber value="${order.total}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd</td>
                     </tr>
                     <tr>
                         <th>Trạng thái đơn hàng</th>
@@ -107,13 +97,13 @@
                                 <td>${orderItem.book.author}</td>
                                 <td><img src="${orderItem.book.image}" alt="Book Image" style="max-width: 100px;"></td>
                                 <td>${orderItem.quantity}</td>
-                                <td>${orderItem.book.price}</td>
+                                <td><fmt:formatNumber value="${orderItem.book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd</td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
 
-                <a href="javascript:history.back()" class="btn btn-primary">Back to Order List</a>
+                <a href="javascript:history.back()" class="btn btn-primary">Trở về Order List</a>
             </div>
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>

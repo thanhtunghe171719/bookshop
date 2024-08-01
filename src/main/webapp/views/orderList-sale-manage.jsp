@@ -41,11 +41,11 @@
             </c:if>
             <div class="row mb-4">
                 <div class="col-md-4">
-                    <label for="min-date">From Date:</label>
+                    <label for="min-date">Ngày đặt từ:</label>
                     <input type="text" id="min-date" class="form-control" placeholder="yyyy-mm-dd">
                 </div>
                 <div class="col-md-4">
-                    <label for="max-date">To Date:</label>
+                    <label for="max-date">Đến ngày:</label>
                     <input type="text" id="max-date" class="form-control" placeholder="yyyy-mm-dd">
                 </div>
             </div>

@@ -77,7 +77,7 @@ public class UpdateStatusOrder extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user == null || (user != null && user.getRoleId() != 3)) {
+        if (user == null || (user != null && user.getRoleId() != 6)) {
             response.sendRedirect("login");
             return;
         }
@@ -87,9 +87,9 @@ public class UpdateStatusOrder extends HttpServlet {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             int statusId = Integer.parseInt(request.getParameter("status"));
             orderDao.updateOrderStatus(orderId, statusId);
-            response.sendRedirect("manage-order-sale?action=view&orderId=" + orderId + "&success=Order status updated successfully.");
-        }catch(Exception e) {
-            response.sendRedirect("manage-order-sale");
+            response.sendRedirect("manage-shipper?action=view&orderId=" + orderId + "&success=Order status updated successfully.");
+        } catch (Exception e) {
+            response.sendRedirect("manage-shipper");
         }
     }
 
