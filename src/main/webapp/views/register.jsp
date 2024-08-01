@@ -59,7 +59,10 @@
                                     <div id="addressError" class="error-message2"></div>
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="gender" name="gender" placeholder="Giới tính" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Giới tính'">
+                                    <select name="gender" id="gender">
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
                                     <div id="genderError" class="error-message2"></div>
                                 </div>
                                 <div class="col-md-12 form-group">
