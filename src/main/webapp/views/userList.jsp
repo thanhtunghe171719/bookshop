@@ -76,23 +76,23 @@
     <body>
         <jsp:include page="header.jsp"/>
         <div class="container">
-            <h2 class="text-center">User List</h2>
+            <h2 class="text-center">Danh Sách Người Dùng</h2>
             <form action="userList" method="get" class="mb-5">
                 <fieldset>
                     <div class="inner-form">
                         <div class="input-field first-wrap">
-                            <input id="search" name="search" type="text" placeholder="Search by name" value="${param.search}">
+                            <input id="search" name="search" type="text" placeholder="Tìm theo tên" value="${param.search}">
                         </div>
                         <div class="input-field second-wrap">
                             <select name="gender">
-                                <option value="">All Genders</option>
+                                <option value="">Tất cả giới tính</option>
                                 <option value="Nam" <c:if test="${param.gender == 'Nam'}"></c:if>Nam</option>
                                 <option value="Nữ" <c:if test="${param.gender == 'Nữ'}"></c:if>Nữ</option>
                             </select>
                         </div>
                         <div class="input-field third-wrap">
                             <select name="role">
-                                <option value="">All Roles</option>
+                                <option value="">Tất cả vai trò</option>
                                 <option value="sale" <c:if test="${param.role == 'sale'}"></c:if>Sale</option>
                                 <option value="customer" <c:if test="${param.role == 'customer'}"></c:if>Customer</option>
                                 <option value="Marketing" <c:if test="${param.role == 'Marketing'}"></c:if>Marketing</option>
@@ -100,20 +100,20 @@
                         </div>
                         <div class="input-field fouth-wrap">
                             <select name="status">
-                                <option value="">All Statuses</option>
+                                <option value="">Tất cả trạng thái</option>
                                 <option value="Active" <c:if test="${param.status == 'Active'}"></c:if>Active</option>
                                 <option value="Inactive" <c:if test="${param.status == 'Inactive'}"></c:if>Inactive</option>
                             </select>
                         </div>
                         <div class="input-field fifth-wrap">
-                            <button class="btn-search" type="submit">SEARCH</button>
+                            <button class="btn-search" type="submit">TÌM KIẾM</button>
                         </div>
                     </div>
-                        
                 </fieldset>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addUserModal">Thêm Người Dùng</button>
+                </div>
             </form>
-
-
             <div class="table-responsive-md-4">
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -127,29 +127,28 @@
                                     sortOrder = "asc"; // Default sort order
                                 }
                             %>
-                            <th>Order</th>
+                            <th>Thứ tự</th>
                             <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>"
                                 onclick="window.location.href = 'userList?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
-                                Full Name 
+                                Họ và Tên 
                                 <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter"%>"></i>
                             </th>
-                            <th>Gender</th>
+                            <th>Giới tính</th>
                             <th>Email</th>
-                            <th>Phone</th>
+                            <th>Số điện thoại</th>
                             <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
                                 onclick="window.location.href = 'userList?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
-                                Create At 
+                                Ngày tạo 
                                 <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
                             <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
                                 onclick="window.location.href = 'userList?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
-                                Update At 
+                                Ngày cập nhật 
                                 <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                            <th>Vai trò</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,10 +164,10 @@
                             <td><%= user.getGender()%></td>
                             <td><%= user.getEmail()%></td>
                             <td><%= user.getPhone()%></td>
-                            <td><%= user.getCreateAt()%></td> 
-                            <td><%= user.getUpdatedAt()%></td> 
-                            <td><%= user.getRoleName()%></td> 
-                            <td><%= user.getStatus()%></td> 
+                            <td><%= user.getCreateAt()%></td>
+                            <td><%= user.getUpdatedAt()%></td>
+                            <td><%= user.getRoleName()%></td>
+                            <td><%= user.getStatus()%></td>
                             <td>
                                 <!-- Edit Button -->
                                 <button class="table-link btn btn-link" data-toggle="modal" data-target="#editUserModal"
@@ -177,34 +176,23 @@
                                         data-gender="<%= user.getGender()%>"
                                         data-email="<%= user.getEmail()%>"
                                         data-phone="<%= user.getPhone()%>"
+                                        data-role="<%= user.getRoleName()%>"
                                         data-status="<%= user.getStatus()%>">
+
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </button>
-
-                                <!-- Delete Button -->
-                                <%--<button class="table-link btn btn-link deleteUserButton" data-userid="<%= user.getUserId()%>"
-                                        data-toggle="modal" data-target="#deleteUserModal">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-square fa-stack-2x"></i>
-                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                    </span>
-</button>--%>
-
                             </td>
                         </tr>
-                        <%
-                            }
-                        } else {
-                        %>
+                        <%  }
+                        } else { %>
                         <tr>
-                            <td colspan="10" class="text-center">No users available</td>
+                            <td colspan="10" class="text-center">Không tìm thấy người dùng nào.</td>
                         </tr>
-                        <% } %>
+                        <%  } %>
                     </tbody>
-
                 </table>
             </div>
 
@@ -253,66 +241,7 @@
                     <% }%>
                 </ul>
             </nav>
-
-
         </div>
-
-        <!-- Add User Modal -->
-        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addUserForm" action="userList" method="post">
-                            <input type="hidden" name="action" value="add">
-                            <div class="form-group">
-                                <label for="fullname">Full Name</label>
-                                <input type="text" class="form-control" name="fullname" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select class="form-control" name="gender" required>
-                                    <option value="Nam">Nam</option>
-                                    <option value="Nữ">Nữ</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" name="password" required>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="phone" class="form-control" name="phone" required>
-                            </div>
-                             <div class="form-group">
-                                <label for="phone">Role</label>
-                                <select class="form-control" name="gender" required>
-                                    <option value="Customer">Customer</option>
-                                    <option value="Sale">Sale</option>
-                                    <option value="Marketing">Marketing</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add User</button>
-                            <span id="addUserMessage" class="ml-2"></span>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Edit User Modal -->
         <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -328,11 +257,11 @@
                             <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="user_id" id="editUserId">
                             <div class="form-group">
-                                <label for="fullname">Full Name</label>
+                                <label for="fullname">Họ và Tên</label>
                                 <input type="text" class="form-control" name="fullname" id="editFullname" required>
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender</label>
+                                <label for="gender">Giới Tính</label>
                                 <select class="form-control" name="gender" id="editGender" required>
                                     <option value="Nam">Nam</option>
                                     <option value="Nữ">Nữ</option>
@@ -343,8 +272,18 @@
                                 <input type="email" class="form-control" name="email" id="editEmail" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Phone</label>
+                                <label for="phone">Số điện thoại</label>
                                 <input type="text" class="form-control" name="phone" id="editPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select class="form-control"  name="role" id="editRole" required>
+                                    <option value="Sale">Sale</option>
+                                    <option value="Customer" >Customer</option>
+                                    <option value="Marketing" >Marketing</option>
+                                    <option value="Sale Manager" >Sale Manager</option>
+                                    <option value="Shipper" >Shipper</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="status">Status</label>
@@ -353,48 +292,82 @@
                                     <option value="inactive">Inactive</option>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                             <span id="editUserMessage" class="ml-2"></span>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteUserModalLabel">Xác nhận xóa</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Bạn có muốn xóa tài khoản này không?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        <form id="deleteUserForm" action="userList" method="post">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="user_id" id="deleteUserId">
-                            <button type="submit" class="btn btn-danger">Xóa</button>
-                        </form>
+        </div>
+            <!-- Add User Modal -->
+            <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addUserModalLabel">Thêm Người Dùng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addUserForm" action="userList" method="post">
+                                <input type="hidden" name="action" value="add">
+                                <div class="form-group">
+                                    <label for="fullname">Họ và Tên</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Giới Tính</label>
+                                    <select class="form-control" name="gender" id="editGender" required>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Số điện thoại</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password" required>
+
+                                    </div>
+                                </div> 
+                                <div class="form-group">
+                                    <label for="role">Vai trò</label>
+                                    <select class="form-control" id="role" name="role" required>
+                                        <option value="Sale">Sale</option>
+                                        <option value="Customer">Customer</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sale Manager" >Sale Manager</option>
+                                        <option value="Shipper" >Shipper</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Trạng thái</label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Thêm Người Dùng</button>
+                                <span id="addUserMessage" class="ml-2"></span>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
-        <jsp:include page="footer.jsp"/>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
                                     $(document).ready(function () {
                                         $('#editUserForm').on('submit', function (e) {
                                             e.preventDefault();
@@ -411,16 +384,18 @@
                                                         location.reload();  // Reload page to reflect changes
                                                     }, 2000);
                                                 },
-                                                error: function () {
-                                                    $('#editUserMessage').text('Save failed').css('color', 'red');
+                                                error: function (xhr) {
+                                                    let errorMessage = 'Save failed';
+                                                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                                                        errorMessage += ': ' + xhr.responseJSON.message;
+                                                    }
+                                                    $('#editUserMessage').text(errorMessage).css('color', 'red');
                                                     setTimeout(function () {
                                                         $('#editUserMessage').text('');
                                                     }, 2000);
                                                 }
                                             });
                                         });
-
-
 
                                         let userIdToDelete;
 
@@ -446,8 +421,12 @@
                                                         alert('Delete failed: ' + response.message);
                                                     }
                                                 },
-                                                error: function (xhr, status, error) {
-                                                    alert('Delete failed: ' + xhr.responseText);
+                                                error: function (xhr) {
+                                                    let errorMessage = 'Delete failed';
+                                                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                                                        errorMessage += ': ' + xhr.responseJSON.message;
+                                                    }
+                                                    alert(errorMessage);
                                                 }
                                             });
                                         });
@@ -468,14 +447,18 @@
                                                             location.reload();  // Reload page to reflect changes
                                                         }, 2000);
                                                     } else {
-                                                        $('#addUserMessage').text('Failed to add user').css('color', 'red');
+                                                        $('#addUserMessage').text('Failed to add user: ' + response.message).css('color', 'red');
                                                         setTimeout(function () {
                                                             $('#addUserMessage').text('');
                                                         }, 2000);
                                                     }
                                                 },
-                                                error: function (xhr, status, error) {
-                                                    $('#addUserMessage').text('Failed to add user: ' + xhr.responseText).css('color', 'red');
+                                                error: function (xhr) {
+                                                    let errorMessage = 'Failed to add user';
+                                                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                                                        errorMessage += ': ' + xhr.responseJSON.message;
+                                                    }
+                                                    $('#addUserMessage').text(errorMessage).css('color', 'red');
                                                     setTimeout(function () {
                                                         $('#addUserMessage').text('');
                                                     }, 2000);
@@ -490,6 +473,7 @@
                                             var gender = button.data('gender');
                                             var email = button.data('email');
                                             var phone = button.data('phone');
+                                            var role = button.data('role');
                                             var status = button.data('status');
 
                                             var modal = $(this);
@@ -498,11 +482,13 @@
                                             modal.find('.modal-body #editGender').val(gender);
                                             modal.find('.modal-body #editEmail').val(email);
                                             modal.find('.modal-body #editPhone').val(phone);
+                                            modal.find('.modal-body #editRole').val(role);
                                             modal.find('.modal-body #editStatus').val(status);
                                         });
                                     });
 
 
-        </script>
+            </script>
+
     </body>
 </html>

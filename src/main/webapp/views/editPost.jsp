@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="models.Post" %>
 <%
     Post post = (Post) request.getAttribute("post");
@@ -27,15 +28,15 @@
             <form id="form-1" action="managerpost?action=edit" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="post_id" value="<%= post != null ? post.getPostId() : 0%>">
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">Tiêu Đề</label>
                     <input class="form-control" type="text" name="title" value="<%= post != null ? post.getTitle() : ""%>" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Nội Dung</label>
                     <textarea class="form-control" name="description" rows="5" readonly><%= post != null ? post.getDescription() : ""%></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="post_type">Type</label>
+                    <label for="post_type">Thể Loại</label>
                     <select class="form-control" name="post_type" id="post_type" disabled>
                         <option value="review" <%= post != null && "review".equals(post.getPostType()) ? "selected" : ""%>>Review</option>
                         <option value="event" <%= post != null && "event".equals(post.getPostType()) ? "selected" : ""%>>Event</option>
@@ -43,21 +44,21 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="status">Status</label>
+                    <label for="status">Trạng Thái</label>
                     <select class="form-control" name="status" id="status" disabled>
                         <option value="Show" <%= post != null && "Show".equals(post.getStatus()) ? "selected" : ""%>>Show</option>
                         <option value="Hide" <%= post != null && "Hide".equals(post.getStatus()) ? "selected" : ""%>>Hide</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="image">Image</label>
+                    <label for="image">Ảnh</label>
                     <input type="file" name="image" accept=".png, .jpg, .jpeg" class="form-control-file" readonly>
                     <% if (post != null && post.getImage() != null && !post.getImage().isEmpty()) {%>
                     <img src="<%= post.getImage()%>" alt="Post Image" class="img-thumbnail mt-2">
                     <% }%>
                 </div>
                 <div class="text-center mt-4">
-                    <button onclick="editPost()" id="edit" type="button" class="btn btn-primary">Edit</button>
+                    <button onclick="editPost()" id="edit" type="button" class="btn btn-primary">Chỉnh sử</button>
                       </div>
                 <div class="text-center mt-2">
                     <h6 id="statusMessage" style="color: green;"></h6>

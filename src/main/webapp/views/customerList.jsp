@@ -6,7 +6,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Customer List</title>
+        <title>Danh Sách Khách Hàng</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/newcss.css">
         <link rel="stylesheet" href="./vendors/bootstrap/bootstrap.min.css">
@@ -21,9 +21,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
 
-
         <style>
-            .table{
+            .table {
                 font-size: 12px;
             }
         </style>
@@ -31,17 +30,17 @@
     <body>
         <jsp:include page="header.jsp"/>
         <div class="container">
-            <h2 class="text-center">Customer List</h2>
+            <h2 class="text-center">Danh Sách Khách Hàng</h2>
             <form action="customers" method="get" class="mb-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" name="search" placeholder="Search by name" class="form-control" value="${param.search}">
+                        <input type="text" name="search" placeholder="Tìm kiếm theo tên" class="form-control" value="${param.search}">
                     </div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addUserModal">Add User</button>
+                        <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addUserModal">Thêm Người Dùng</button>
                     </div>
                 </div>
             </form>
@@ -59,28 +58,27 @@
                                     sortOrder = "asc"; // Default sort order
                                 }
                             %>
-                            <th>Order</th>
+                            <th>STT</th>
                             <th class="sorting<%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>"
                                 onclick="window.location.href = 'customers?sortField=fullname&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
-                                Full Name 
+                                Họ Tên
                                 <i class="bi <%= sortField != null && sortField.equals("fullname") ? (sortOrder.equals("asc") ? "bi-sort-alpha-up" : "bi-sort-alpha-down") : "bi-filter"%>"></i>
                             </th>
-                            <th>Gender</th>
+                            <th>Giới Tính</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
+                            <th>Số Điện Thoại</th>
+                            <th class="sorting<%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>"
                                 onclick="window.location.href = 'customers?sortField=create_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
-                                Create At 
+                                Ngày Tạo
                                 <i class="bi <%= sortField != null && sortField.equals("create_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
-                            <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>" 
+                            <th class="sorting<%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "_asc" : "_desc") : ""%>"
                                 onclick="window.location.href = 'customers?sortField=updated_at&sortOrder=<%= sortOrder != null && sortOrder.equals("asc") ? "desc" : "asc"%>&search=<%= search != null ? search : ""%>'">
-                                Update At 
+                                Ngày Cập Nhật
                                 <i class="bi <%= sortField != null && sortField.equals("updated_at") ? (sortOrder.equals("asc") ? "bi-sort-numeric-up" : "bi-sort-numeric-down") : "bi-filter"%>"></i>
                             </th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,9 +94,9 @@
                             <td><%= user.getGender()%></td>
                             <td><%= user.getEmail()%></td>
                             <td><%= user.getPhone()%></td>
-                            <td><%= user.getCreateAt()%></td> 
-                            <td><%= user.getUpdatedAt()%></td> 
-                            <td><%= user.getStatus()%></td> 
+                            <td><%= user.getCreateAt()%></td>
+                            <td><%= user.getUpdatedAt()%></td>
+                            <td><%= user.getStatus()%></td>
                             <td>
                                 <!-- Edit Button -->
                                 <button class="table-link btn btn-link" data-toggle="modal" data-target="#editUserModal"
@@ -130,7 +128,7 @@
                         } else {
                         %>
                         <tr>
-                            <td colspan="9" class="text-center">No users available</td>
+                            <td colspan="9" class="text-center">Không có người dùng nào</td>
                         </tr>
                         <% } %>
                     </tbody>
@@ -174,16 +172,15 @@
                     <% }%>
                 </ul>
             </nav>
-
-
         </div>
+        <jsp:include page="footer.jsp"/>
 
-        <!-- Add User Modal -->
+        <!-- Modal Add User -->
         <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                        <h5 class="modal-title" id="addUserModalLabel">Thêm Người Dùng</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -192,19 +189,20 @@
                         <form id="addUserForm" action="customers" method="post">
                             <input type="hidden" name="action" value="add">
                             <div class="form-group">
-                                <label for="fullname">Full Name</label>
-                                <input type="text" class="form-control" name="fullname" required>
+                                <label for="fullname">Họ và Tên</label>
+                                <input type="text" class="form-control" id="fullname" name="fullname" required>
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select class="form-control" name="gender" required>
+                                <label for="gender">Giới Tính</label>
+                                <select class="form-control" id="gender" name="gender" required>
                                     <option value="Nam">Nam</option>
                                     <option value="Nữ">Nữ</option>
+
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
@@ -212,21 +210,29 @@
                                     <input type="password" class="form-control" id="password" name="password" required>
 
                                 </div>
-                            </div>  <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Số Điện Thoại</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Trạng Thái</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="active">Hoạt Động</option>
+                                    <option value="inactive">Không Hoạt Động</option>
+                                </select>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add User</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                             <span id="addUserMessage" class="ml-2"></span>
-                        </form>
 
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Edit User Modal -->
+         <!-- Edit User Modal -->
         <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -239,73 +245,67 @@
                     <div class="modal-body">
                         <form id="editUserForm" method="post">
                             <input type="hidden" name="action" value="edit">
-                            <input type="hidden" name="user_id" id="editUserId">
-                            <div class="form-group">
-                                <label for="fullname">Full Name</label>
-                                <input type="text" class="form-control" name="fullname" id="editFullname" required>
+                            <input type="hidden" name="user_id" id="editUserId">                      <div class="form-group">
+                                <label for="editFullname">Họ và Tên</label>
+                                <input type="text" class="form-control" id="editFullname" name="fullname" required>
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select class="form-control" name="gender" id="editGender" required>
+                                <label for="editGender">Giới Tính</label>
+                                <select class="form-control" id="editGender" name="gender" required>
                                     <option value="Nam">Nam</option>
                                     <option value="Nữ">Nữ</option>
+
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" id="editEmail" required>
+                                <label for="editEmail">Email</label>
+                                <input type="email" class="form-control" id="editEmail" name="email" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" name="phone" id="editPhone" required>
+                                <label for="editPhone">Số Điện Thoại</label>
+                                <input type="tel" class="form-control" id="editPhone" name="phone" required>
                             </div>
                             <div class="form-group">
-                                <label for="status">Status</label>
-                                <select class="form-control" name="status" id="editStatus" required>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
+                                <label for="editStatus">Trạng Thái</label>
+                                <select class="form-control" id="editStatus" name="status" required>
+                                    <option value="active">Hoạt Động</option>
+                                    <option value="inactive">Không Hoạt Động</option>
                                 </select>
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                            <span id="editUserMessage" class="ml-2"></span>
+
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+ <span id="editUserMessage" class="ml-2"></span>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel"
-             aria-hidden="true">
+        <!-- Modal Delete User -->
+        <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteUserModalLabel">Xác nhận xóa</h5>
+                        <h5 class="modal-title" id="deleteUserModalLabel">Xóa Người Dùng</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        Bạn có muốn xóa tài khoản này không?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        <form id="deleteUserForm" action="customers" method="post">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="user_id" id="deleteUserId">
+                        <p>Bạn có chắc chắn muốn xóa người dùng này không?</p>
+                        <form action="deleteUser" method="post">
+                            <input type="hidden" id="deleteUserId" name="userId">
                             <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-
-        <jsp:include page="footer.jsp"/>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
                                     $(document).ready(function () {
@@ -317,7 +317,7 @@
                                                 type: 'POST',
                                                 data: $(this).serialize(),
                                                 success: function (response) {
-                                                    $('#editUserMessage').text('Save successful').css('color', 'green');
+                                                    $('#editUserMessage').text('Lưu thành công').css('color', 'green');
                                                     setTimeout(function () {
                                                         $('#editUserMessage').text('');
                                                         $('#editUserModal').modal('hide');
@@ -374,21 +374,21 @@
                                                 data: $(this).serialize(),
                                                 success: function (response) {
                                                     if (response.status === 'success') {
-                                                        $('#addUserMessage').text('User added successfully').css('color', 'green');
+                                                        $('#addUserMessage').text('Thêm người dùng mới thành công').css('color', 'green');
                                                         setTimeout(function () {
                                                             $('#addUserMessage').text('');
                                                             $('#addUserModal').modal('hide');
                                                             location.reload();  // Reload page to reflect changes
                                                         }, 2000);
                                                     } else {
-                                                        $('#addUserMessage').text('Failed to add user: ' + response.message).css('color', 'red');
+                                                        $('#addUserMessage').text('Thất bại: ' + response.message).css('color', 'red');
                                                         setTimeout(function () {
                                                             $('#addUserMessage').text('');
                                                         }, 5000);
                                                     }
                                                 },
                                                 error: function (xhr, status, error) {
-                                                    $('#addUserMessage').text('Failed to add user: ' + xhr.responseText).css('color', 'red');
+                                                    $('#addUserMessage').text('Thất bạ :' + xhr.responseText).css('color', 'red');
                                                     setTimeout(function () {
                                                         $('#addUserMessage').text('');
                                                     }, 5000);

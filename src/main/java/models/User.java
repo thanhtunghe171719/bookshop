@@ -27,10 +27,11 @@ public class User {
     private String status;
     private String deleted;
     private String roleName;
+
     public User() {
     }
 
-        public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
+    public User(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt, String image, String status, String deleted) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -63,7 +64,16 @@ public class User {
         this.status = status;
     }
 
-    public User(int userId,String fullname,String gender, String email,  String phone, String address, String status,Timestamp updatedAt) {
+    public User(String fullname, int userId, String gender, String email, String phone, String address) {
+        this.userId = userId;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public User(int userId, String fullname, String gender, String email, String phone, String address, String status, Timestamp updatedAt) {
         this.userId = userId;
         this.phone = phone;
         this.fullname = fullname;
@@ -72,7 +82,7 @@ public class User {
         this.updatedAt = updatedAt;
         this.status = status;
     }
-    
+
     public User(String fullname, String gender, String email, String password, String phone, String status) {
         this.fullname = fullname;
         this.gender = gender;
@@ -81,9 +91,17 @@ public class User {
         this.phone = phone;
         this.status = status;
     }
-    
-            
-    public User(int userId, String fullname,String gender, String email,String phone, String address, String image) {
+//userId, fullname, gender, email, phone, roleName, status
+    public User(int userId, String fullname, String gender, String email, String phone, String address, String status) {
+        this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.status = status;
+    }
+     public User( String fullname,int userId, String gender, String email, String phone, String address, String image) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -91,6 +109,26 @@ public class User {
         this.gender = gender;
         this.address = address;
         this.image = image;
+    }
+     //fullname,  gender,userId, email, phone, roleName, status
+     public User(String fullname, String gender, int userId,  String email, String phone, String roleName, String status) {
+        this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.roleName = roleName;
+        this.status = status;
+    }
+
+    public User(String fullname, String gender, String email, String password, String phone, String status, String roleName) {
+       this.fullname = fullname;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.status = status;
+        this.roleName = roleName;
     }
 
     public int getUserId() {
@@ -209,7 +247,5 @@ public class User {
     public String toString() {
         return "User{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + ", image=" + image + ", status=" + status + ", deleted=" + deleted + ", roleName=" + roleName + '}';
     }
-
-    
 
 }

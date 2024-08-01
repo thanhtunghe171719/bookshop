@@ -110,20 +110,35 @@ public class UsersListServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 String phone = request.getParameter("phone");
                 String password = request.getParameter("password");
+                String status = request.getParameter("status");
                 String roleName = request.getParameter("role");
+                String encryptOld = daoUsers.Sha256(password);
+                logger.info("Adding user with details: fullname=" + fullname + ", gender=" + gender + ", email=" + email + ", phone=" + phone + ", password=" + password + ", role=" + roleName + "status=" + status);
 
-                logger.info("Adding user with details: fullname=" + fullname + ", gender=" + gender + ", email=" + email + ", phone=" + phone + ", role=" + roleName);
+                // Validation
+                String namePattern = "^[\\p{L}\\s]+$"; // Allow Unicode letters and spaces
+                String phonePattern = "^\\d{10}$";
+                String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"; // Minimum 8 characters, at least one letter, one number and one special character
 
-                if (isValidInput(fullname, gender, email, phone, password, roleName)) {
-                    User user = new User(fullname, gender, email, password, phone,  "Active");
-                    if (daoUsers.addUser(user)) {
-                        out.print("{\"status\":\"success\"}");
-                    } else {
-                        out.print("{\"status\":\"error\",\"message\":\"Failed to add user\"}");
-                    }
+                if (fullname == null || fullname.trim().isEmpty() || !fullname.matches(namePattern)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Full name must contain only letters and spaces and must not be empty.\"}");
+                    return;
+                }
+
+                if (phone == null || phone.trim().isEmpty() || !phone.matches(phonePattern)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Phone number must be exactly 10 digits.\"}");
+                    return;
+                }
+                if (password == null || password.trim().isEmpty() || !password.matches(passwordPattern)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Password must be at least 8 characters long and include at least one letter, one number, and one special character.\"}");
+                    return;
+                }
+
+                User user = new User(fullname, gender, email, encryptOld, phone, status, roleName);
+                if (daoUsers.addUsers(user)) {
+                    out.print("{\"status\":\"success\"}");
                 } else {
-                    logger.warning("Invalid input data for adding user.");
-                    out.print("{\"status\":\"error\",\"message\":\"Invalid input data\"}");
+                    out.print("{\"status\":\"error\",\"message\":\"Failed to add user\"}");
                 }
             } else if ("edit".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("user_id"));
@@ -132,10 +147,29 @@ public class UsersListServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 String phone = request.getParameter("phone");
                 String status = request.getParameter("status");
-                User user = new User(userId, fullname, gender, email, phone, status);
+                String roleName = request.getParameter("role");
+                String namePattern = "^[\\p{L}\\s]+$"; // Allow Unicode letters and spaces
+                String phonePattern = "^\\d{10}$";
+
+                if (fullname == null || fullname.trim().isEmpty() || !fullname.matches(namePattern)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Full name must contain only letters and spaces and must not be empty.\"}");
+                    return;
+                }
+
+                if (phone == null || phone.trim().isEmpty() || !phone.matches(phonePattern)) {
+                    out.print("{\"status\":\"error\",\"message\":\"Phone number must be exactly 10 digits.\"}");
+                    return;
+                }
+               
+                User user = new User(fullname, userId, gender, email, phone, roleName, status);
                 user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-                daoUsers.updateCustomer(user);
-                out.print("{\"status\":\"success\"}");
+                boolean isUpdated = daoUsers.updateUsers(user);
+
+                if (isUpdated) {
+                    out.print("{\"status\":\"success\"}");
+                } else {
+                    out.print("{\"status\":\"error\",\"message\":\"Failed to edit user\"}");
+                }
             } else if ("delete".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("user_id"));
                 daoUsers.softDeleteUser(userId);
@@ -149,15 +183,6 @@ public class UsersListServlet extends HttpServlet {
         } finally {
             out.flush();
         }
-    }
-
-    private boolean isValidInput(String... inputs) {
-        for (String input : inputs) {
-            if (input == null || input.trim().isEmpty()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override
