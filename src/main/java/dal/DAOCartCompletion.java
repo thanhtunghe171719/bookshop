@@ -17,16 +17,17 @@ import java.util.logging.Logger;
  */
 public class DAOCartCompletion extends DBConnect {
 
-    public int newOrder(int cartID, double total, int orderStatusID, String address) {
-        String sql = "INSERT INTO `orders` (`cart_id`, `total`, `order_status_id`, `address`)\n"
+    public int newOrder(int cartID, double total, int orderStatusID, String address, String phone) {
+        String sql = "INSERT INTO `orders` (`cart_id`, `total`, `order_status_id`, `address`, `phone`)\n"
                 + "VALUES\n"
-                + "(?, ?, ?, ?)";
+                + "(?, ?, ?, ?, ?)";
         try {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, cartID);
             statement.setDouble(2, total);
             statement.setInt(3, orderStatusID);
             statement.setString(4, address);
+            statement.setString(5, phone);
             statement.executeUpdate();
 
             // Lấy order_id mới tạo
@@ -84,7 +85,7 @@ public class DAOCartCompletion extends DBConnect {
     public static void main(String[] args) {
         DAOCartCompletion cart = new DAOCartCompletion();
         int cart_id = 1;
-        int re = cart.newOrder(29, 60, 1, "Bắc Từ Liêm");
+        int re = cart.newOrder(29, 200, 1, "Minh Khai", "0828734612");
         System.out.println(re);
     }
 }

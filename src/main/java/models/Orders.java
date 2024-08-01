@@ -20,16 +20,18 @@ public class Orders {
     private String status;
     private int statusId;
     private String address;
+    private String phone;
 
     public Orders() {
     }
 
-    public Orders(int orderID, Timestamp orderDate, double total, String status, String address) {
+    public Orders(int orderID, Timestamp orderDate, double total, String status, String address, String phone) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.total = total;
         this.status = status;
         this.address = address;
+        this.phone = phone;
     }
 
     public int getOrderID() {
@@ -88,4 +90,13 @@ public class Orders {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    
 }
