@@ -26,52 +26,52 @@
                 margin-top: 10px;
             }
             .price-section {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-    }
+                display: flex;
+                align-items: baseline;
+                gap: 10px;
+            }
 
-    .current-price {
-        color: #ff4136;
-        font-size: 24px;
-        font-weight: bold;
-    }
+            .current-price {
+                color: #ff4136;
+                font-size: 24px;
+                font-weight: bold;
+            }
 
-    .old-price {
-        color: #888;
-        font-size: 18px;
-    }
+            .old-price {
+                color: #888;
+                font-size: 18px;
+            }
 
-    .discount-percentage {
-        background-color: #ff4136;
-        color: white;
-        padding: 2px 5px;
-        border-radius: 3px;
-        font-size: 14px;
-    }
-    .back-to-products {
-        margin-bottom: 20px;
-    }
+            .discount-percentage {
+                background-color: #ff4136;
+                color: white;
+                padding: 2px 5px;
+                border-radius: 3px;
+                font-size: 14px;
+            }
+            .back-to-products {
+                margin-bottom: 20px;
+            }
 
-    .btn-back {
-        display: inline-flex;
-        align-items: center;
-        padding: 10px 15px;
-        background-color: #f8f9fa;
-        color: #333;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
+            .btn-back {
+                display: inline-flex;
+                align-items: center;
+                padding: 10px 15px;
+                background-color: #f8f9fa;
+                color: #333;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
 
-    .btn-back:hover {
-        background-color: #e2e6ea;
-        color: #333;
-    }
+            .btn-back:hover {
+                background-color: #e2e6ea;
+                color: #333;
+            }
 
-    .btn-back i {
-        margin-right: 8px;
-    }
+            .btn-back i {
+                margin-right: 8px;
+            }
         </style>
     </head>
     <body>
@@ -80,10 +80,10 @@
             <c:set var="book" value="${book}"/>
             <div class="container">
                 <div class="back-to-products">
-            <a href="products" class="btn btn-back">
-                <i class="fa fa-arrow-left"></i> Quay lại danh sách sản phẩm
-            </a>
-        </div>
+                    <a href="products" class="btn btn-back">
+                        <i class="fa fa-arrow-left"></i> Quay lại danh sách sản phẩm
+                    </a>
+                </div>
                 <div class="row s_product_inner">
                     <div class="col-lg-6">
                         <div class="owl-carousel owl-theme s_Product_carousel">
@@ -99,25 +99,25 @@
                         <div class="s_product_text">
                             <h3>${book.getTitle()}</h3>
                             <div class="price-section">
-        <c:choose>
-            <c:when test="${originalPrice eq discountedPrice}">
-                <h2 class="current-price">
-                    <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                </h2>
-            </c:when>
-            <c:otherwise>
-                <h2 class="current-price">
-                    <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
-                </h2>
-                <span class="old-price">
-                    <del><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</del>
-                </span>
-                <span class="discount-percentage">
-                    -${book.getDiscount()}%
-                </span>
-            </c:otherwise>
-        </c:choose>
-    </div>
+                                <c:choose>
+                                    <c:when test="${originalPrice eq discountedPrice}">
+                                        <h2 class="current-price">
+                                            <fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                        </h2>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h2 class="current-price">
+                                            <fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ
+                                        </h2>
+                                        <span class="old-price">
+                                            <del><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</del>
+                                        </span>
+                                        <span class="discount-percentage">
+                                            -${book.getDiscount()}%
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                             <ul class="list">
                                 <li><a><span>Còn hàng: </span>${book.getStock()}</a></li>
                             </ul>
@@ -125,21 +125,19 @@
                                 <c:choose>
                                     <c:when test="${book.getStock() > 0}">
                                         <label for="qty">Số lượng:</label>
-<!--                                        <button onclick="var result = document.getElementById('sst');
-                                                var sst = result.value;
-                                                if (!isNaN(sst))
-                                                    result.value++;
-                                                return false;"
-                                                class="increase items-count" type="button"><i class="ti-angle-left"></i></button>-->
-                                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-<!--                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if (!isNaN(sst) & amp; & amp; sst > 0) result.value--; return false;"
-                                                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>-->
+                                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty" onchange="updateTotalPrice(${book.stock})">
+                                        <button class="increase items-count" type="button" onclick="updateQuantity(${book.stock}, 'increase')" style="    left: -100px;
+                                                bottom: 15px;"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button class="reduced items-count" type="button" onclick="updateQuantity(${book.stock}, 'decrease')"style="    left: -100px;
+                                                bottom: 1px;"><i class="lnr lnr-chevron-down"></i></button>
                                             <c:set var="userId" value="${user.userId}"></c:set>
+
                                             <c:set var="roleId" value="${user.roleId}"></c:set>
                                             
                                         <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}', '${roleId}', ${book.getBook_id()})" >Thêm vào giỏ hàng</div>
                                             
                                             </c:when>
+
                                     <c:otherwise>
                                         <p class="out-of-stock">Sản phẩm đã hết hàng</p>
                                     </c:otherwise>
@@ -255,24 +253,53 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
         <script>
-                                            // Hàm tăng số lượng
-                                            function increaseQty() {
-                                                var result = document.getElementById('sst');
-                                                var sst = result.value;
-                                                if (!isNaN(sst) && sst < 99) {
-                                                    result.value++;
+                                            function updateQuantity(stock, action) {
+                                                // Lấy ra giá trị hiện tại của quantity
+                                                var quantity = parseInt(document.getElementById('sst').value);
+
+                                                // Nếu hành động là tăng quantity
+                                                if (action === 'increase') {
+                                                    if (quantity < stock) {
+                                                        quantity++;
+                                                    } else {
+                                                        quantity = stock;
+                                                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
+                                                    }
                                                 }
-                                                return false;
+
+                                                // Nếu hành động là giảm quantity và quantity hiện tại lớn hơn 1
+                                                else if (action === 'decrease' && quantity > 1) {
+                                                    quantity--;
+                                                } else if (action === 'decrease' && quantity < 1) {
+                                                    alert("Số lượng không thể nhỏ hơn 1");
+                                                }
+                                                document.getElementById('sst').value = quantity;
                                             }
-                                            // Hàm giảm số lượng
-                                            function decreaseQty() {
-                                                var result = document.getElementById('sst');
-                                                var sst = result.value;
-                                                if (isNaN(sst) || sst < 1) {
-                                                    result.value = 1; // Nếu nhập sai hoặc nhỏ hơn 1 thì đặt lại thành 1
-                                                } else if (sst > 99) {
-                                                    result.value = 99; // Nếu nhập lớn hơn 99 thì đặt lại thành 99
+                                            // Hàm tăng số lượng
+                                            function updateTotalPrice(stock) {
+                                                var quantity = document.getElementById('sst').value.trim();
+                                                if (quantity === "") {
+                                                    quantity = 1;
+                                                    alert("Không được để trống.");
+                                                } else {
+                                                    // Parse quantity to integer
+                                                    quantity = parseInt(quantity);
+
+                                                    // Validate quantity
+                                                    if (quantity < 1) {
+                                                        quantity = 1; // Set quantity to 1 if it's less than 1
+                                                        alert("Số lượng không thể nhỏ hơn 1.");
+                                                    }
+                                                    if (quantity > stock) {
+                                                        quantity = stock; // Set quantity to stock if it's more than stock
+                                                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
+                                                    }
+                                                    if (isNaN(quantity)) {
+                                                        quantity = 1; // Set quantity to 1 if it's NaN
+                                                        alert("Vui lòng nhập số hợp lệ.");
+                                                    }
                                                 }
+                                                document.getElementById('sst').value = quantity;
                                             }
                                             function addToCart(userId, roleId, bookId) {
                                                 if (userId === "") {

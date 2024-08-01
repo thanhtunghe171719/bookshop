@@ -58,7 +58,7 @@
                         <div class="col-lg-8">
                             <div class="d-flex justify-content-start mb-3">
                                 <select class="form-select" id="sortDropdown" onchange="sortPosts()">
-                                    <option value="default">Sắp xếp</option>
+                                    <option value="default">Sắp xếp theo ngày đăng</option>
                                     <option value="asc">Tăng</option>
                                     <option value="desc">Giảm</option>
                                 </select>

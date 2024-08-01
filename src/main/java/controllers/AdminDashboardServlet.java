@@ -75,7 +75,32 @@ public class AdminDashboardServlet extends HttpServlet {
         int totalOrders = dao.getOrdersCount();
         int totalCustomers = dao1.getCustomerCount();
         int totalFeedbacks = dao2.getFeedbacksCount();
+        double month1 = dao.getTotalProfitByMonth(1);
+        double month2 = dao.getTotalProfitByMonth(2);
+        double month3 = dao.getTotalProfitByMonth(3);
+        double month4 = dao.getTotalProfitByMonth(4);
+        double month5 = dao.getTotalProfitByMonth(5);
+        double month6 = dao.getTotalProfitByMonth(6);
+        double month7 = dao.getTotalProfitByMonth(7);
+        double month8 = dao.getTotalProfitByMonth(8);
+        double month9 = dao.getTotalProfitByMonth(9);
+        double month10 = dao.getTotalProfitByMonth(10);
+        double month11 = dao.getTotalProfitByMonth(11);
+        double month12 = dao.getTotalProfitByMonth(12);
         
+        request.setAttribute("month1", month1);
+        request.setAttribute("month2", month2);
+        request.setAttribute("month3", month3);
+        request.setAttribute("month4", month4);
+        request.setAttribute("month5", month5);
+        request.setAttribute("month6", month6);
+        request.setAttribute("month7", month7);
+        request.setAttribute("month8", month8);
+        request.setAttribute("month9", month9);
+        request.setAttribute("month10", month10);
+        request.setAttribute("month11", month11);
+        request.setAttribute("month12", month12);
+
         request.setAttribute("totalProfit", totalProfit);
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("totalCustomers", totalCustomers);

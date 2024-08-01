@@ -97,7 +97,7 @@ public class UserDetailServlet extends HttpServlet {
         phone = (phone != null && !phone.trim().isEmpty()) ? phone : oldUser.getPhone();
         address = (address != null && !address.trim().isEmpty()) ? address : oldUser.getAddress();
 
-        User newUser = new User(userId, fullname, gender, email, phone, address);
+        User newUser = new User( fullname,userId, gender, email, phone, address);
 
         // Database update logic
         String jdbcURL = "jdbc:mysql://localhost:3306/bookshop";

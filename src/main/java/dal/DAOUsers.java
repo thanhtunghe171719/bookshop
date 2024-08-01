@@ -24,6 +24,7 @@ import models.Books;
 import models.User;
 import models.UserChangeHistory;
 import models.UserHistory;
+import models.UserRole;
 
 /**
  *
@@ -81,9 +82,9 @@ public class DAOUsers extends DBConnect {
 
     public User getUserByUsername(String email) {
         String query = "SELECT * FROM users WHERE email = ?";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, email);
-            try (ResultSet rs = ps.executeQuery()) {
+            try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new User(
                             rs.getInt("user_id"),
@@ -115,7 +116,7 @@ public class DAOUsers extends DBConnect {
 
     public boolean addUser(User user) {
         String query = "INSERT INTO users (email, phone, password, role_id, fullname, gender, address, create_at, updated_at, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPhone());
             ps.setString(3, user.getPassword() != null ? user.getPassword() : "defaultPassword");  // Handle default or null password
@@ -136,7 +137,7 @@ public class DAOUsers extends DBConnect {
 
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE users SET fullname = ?, gender = ?, address = ?, phone = ?, image = ?, updated_at = ? WHERE user_id = ?";
-        try (PreparedStatement ptm = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ptm = conn.prepareStatement(sql)) {
             ptm.setString(1, user.getFullname());
             ptm.setString(2, user.getGender());
             ptm.setString(3, user.getAddress());
@@ -149,9 +150,9 @@ public class DAOUsers extends DBConnect {
     }
 
     public void updateCustomer(User user) {
-        String sql = "UPDATE users SET fullname=?, gender=?, email=?, phone=?, status=?, updated_at=?, address =? WHERE user_id=?";
+        String sql = "UPDATE users SET fullname=?, gender=?, email=?, phone=?, status=?, updated_at=?, address =? WHERE user_id=? ";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        try ( PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getFullname());
             preparedStatement.setString(2, user.getGender());
             preparedStatement.setString(3, user.getEmail());
@@ -174,7 +175,7 @@ public class DAOUsers extends DBConnect {
 
     public int updateUserPassword(int userId, String password) {
         String sql = "UPDATE users SET password=?, updated_at = ? WHERE user_id = ?";
-        try (PreparedStatement ptm = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ptm = conn.prepareStatement(sql)) {
             ptm.setString(1, password);
             ptm.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             ptm.setInt(3, userId);
@@ -187,7 +188,7 @@ public class DAOUsers extends DBConnect {
 
     public int updateStatusUser(int userId, int status) {
         String sql = "UPDATE users SET status = ? WHERE user_id = ?";
-        try (PreparedStatement ptm = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ptm = conn.prepareStatement(sql)) {
             ptm.setInt(1, status);
             ptm.setInt(2, userId);
             return ptm.executeUpdate();
@@ -199,9 +200,9 @@ public class DAOUsers extends DBConnect {
 
     public User getUserById(int userId) {
         String sql = "SELECT * FROM users WHERE user_id = ?";
-        try (PreparedStatement pre = conn.prepareStatement(sql)) {
+        try ( PreparedStatement pre = conn.prepareStatement(sql)) {
             pre.setInt(1, userId);
-            try (ResultSet rs = pre.executeQuery()) {
+            try ( ResultSet rs = pre.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSetToUser(rs);
                 } else {
@@ -295,7 +296,7 @@ public class DAOUsers extends DBConnect {
 
     public boolean deleteUser(int userId) {
         String query = "DELETE FROM users WHERE user_id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, userId);
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -308,7 +309,7 @@ public class DAOUsers extends DBConnect {
     public void softDeleteUser(int userId) {
         String sql = "UPDATE users SET deleted = 'yes' WHERE user_id = ?";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        try ( PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setInt(1, userId);
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -353,7 +354,7 @@ public class DAOUsers extends DBConnect {
 
         String sql = "SELECT * FROM Users WHERE fullname LIKE ? LIMIT ?, ?";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + name + "%");
 
             ResultSet rs = ps.executeQuery();
@@ -371,7 +372,7 @@ public class DAOUsers extends DBConnect {
         int start = (currentPage - 1) * usersPerPage;
         String sql = "SELECT * FROM Users LIMIT ?, ?";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, start);
             ps.setInt(2, usersPerPage);
             ResultSet rs = ps.executeQuery();
@@ -387,7 +388,7 @@ public class DAOUsers extends DBConnect {
 
     public int countUsersByName(String name) {
         String sql = "SELECT COUNT(*) FROM Users WHERE fullname LIKE ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -401,7 +402,7 @@ public class DAOUsers extends DBConnect {
 
     public int countAllUsers() {
         String sql = "SELECT COUNT(*) FROM Users";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -416,7 +417,7 @@ public class DAOUsers extends DBConnect {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE deleted = 'no'";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int userId = rs.getInt("user_id");
                 String fullname = rs.getString("fullname");
@@ -441,9 +442,9 @@ public class DAOUsers extends DBConnect {
     public List<UserHistory> getUserHistory(int userId) {
         List<UserHistory> historyList = new ArrayList<>();
         String query = "SELECT * FROM UserHistory WHERE userId = ?";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
+            try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     historyList.add(new UserHistory(
                             rs.getInt("historyId"),
@@ -466,7 +467,7 @@ public class DAOUsers extends DBConnect {
     public int updateUserDetail(User user) {
         String query = "UPDATE Users SET fullname = ?, gender = ?, email = ?, phone = ?, address = ? WHERE userId = ?";
         int rowsAffected = 0;
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, user.getFullname());
             ps.setString(2, user.getGender());
             ps.setString(3, user.getEmail());
@@ -478,7 +479,7 @@ public class DAOUsers extends DBConnect {
             if (rowsAffected > 0) {
                 // Save history record
                 String historyQuery = "INSERT INTO UserHistory (userId, updatedDate, updatedBy, email, fullname, gender, address) VALUES (?, NOW(), ?, ?, ?, ?, ?)";
-                try (PreparedStatement historyPs = conn.prepareStatement(historyQuery)) {
+                try ( PreparedStatement historyPs = conn.prepareStatement(historyQuery)) {
                     historyPs.setInt(1, user.getUserId());
                     historyPs.setString(2, "Admin"); // Assuming 'Admin' is making the change, replace with actual user if needed
                     historyPs.setString(3, user.getEmail());
@@ -523,7 +524,7 @@ public class DAOUsers extends DBConnect {
         List<UserChangeHistory> historyList = new ArrayList<>();
         String query = "SELECT * FROM UserChangeHistory WHERE user_id = ? ORDER BY updated_date DESC";
 
-        try (PreparedStatement statement = conn.prepareStatement(query)) {
+        try ( PreparedStatement statement = conn.prepareStatement(query)) {
 
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -549,7 +550,7 @@ public class DAOUsers extends DBConnect {
                 + (sortField != null ? sortField : "fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, pageSize);
             ps.setInt(2, (pageIndex - 1) * pageSize);
             ResultSet rs = ps.executeQuery();
@@ -567,7 +568,7 @@ public class DAOUsers extends DBConnect {
                 + (sortField != null ? sortField : "fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
             ps.setInt(2, pageSize);
             ps.setInt(3, (pageIndex - 1) * pageSize);
@@ -583,7 +584,7 @@ public class DAOUsers extends DBConnect {
 
     public int getCustomerCount() {
         String query = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '4'";
-        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+        try ( PreparedStatement ps = conn.prepareStatement(query);  ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -593,9 +594,26 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
+public int getCustomerCountByMonth(int month) {
+    String sql = "SELECT COUNT(*) FROM users WHERE deleted = 'no' AND role_id = '4' AND MONTH(create_at) = ?";
+    try (
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, month); // Set the month parameter
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) { // Use if since you're expecting one result
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return 0;
+}
+
+    
     public int getCustomerCountWithSearch(String searchQuery) {
         String query = "SELECT COUNT(*) FROM users WHERE fullname LIKE ? AND deleted = 'no' AND role_id = '4'";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -636,14 +654,14 @@ public class DAOUsers extends DBConnect {
 
     public List<User> getUsersWithPagination(int pageIndex, int pageSize, String sortField, String sortOrder, String gender, String role, String status) {
         String query = "SELECT u.*, r.role_name FROM users u JOIN roles r ON u.role_id = r.role_id "
-                + "WHERE u.deleted = 'no' "
+                + "WHERE u.deleted = 'no' AND u.role_id != 1 "
                 + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
                 + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
                 + (status != null && !status.isEmpty() ? "AND u.status = ? " : "")
                 + "ORDER BY " + (sortField != null ? sortField : "u.fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             int paramIndex = 1;
             if (gender != null && !gender.isEmpty()) {
                 ps.setString(paramIndex++, gender);
@@ -668,14 +686,14 @@ public class DAOUsers extends DBConnect {
 
     public List<User> searchUsersWithPagination(String searchQuery, int pageIndex, int pageSize, String sortField, String sortOrder, String gender, String role, String status) {
         String query = "SELECT u.*, r.role_name FROM users u JOIN roles r ON u.role_id = r.role_id "
-                + "WHERE u.fullname LIKE ? AND u.deleted = 'no' "
+                + "WHERE u.fullname LIKE ? AND u.deleted = 'no' AND u.role_id != 1 "
                 + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
                 + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
                 + (status != null && !status.isEmpty() ? "AND u.status = ? " : "")
                 + "ORDER BY " + (sortField != null ? sortField : "u.fullname") + " "
                 + (sortOrder != null ? sortOrder : "asc") + " LIMIT ? OFFSET ?";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
             int paramIndex = 2;
             if (gender != null && !gender.isEmpty()) {
@@ -700,11 +718,11 @@ public class DAOUsers extends DBConnect {
     }
 
     public int getUserCount(String gender, String role, String status) {
-        String query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.deleted = 'no' "
+        String query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.deleted = 'no' AND u.role_id != 1"
                 + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
                 + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
                 + (status != null && !status.isEmpty() ? "AND u.status = ? " : "");
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             int paramIndex = 1;
             if (gender != null && !gender.isEmpty()) {
                 ps.setString(paramIndex++, gender);
@@ -726,11 +744,11 @@ public class DAOUsers extends DBConnect {
     }
 
     public int getUserCountWithSearch(String searchQuery, String gender, String role, String status) {
-        String query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.fullname LIKE ? AND u.deleted = 'no' "
+        String query = "SELECT COUNT(*) FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.fullname LIKE ? AND u.deleted = 'no' AND u.role_id != 1 "
                 + (gender != null && !gender.isEmpty() ? "AND u.gender = ? " : "")
                 + (role != null && !role.isEmpty() ? "AND r.role_name = ? " : "")
                 + (status != null && !status.isEmpty() ? "AND u.status = ? " : "");
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + searchQuery + "%");
             int paramIndex = 2;
             if (gender != null && !gender.isEmpty()) {
@@ -752,16 +770,137 @@ public class DAOUsers extends DBConnect {
         return 0;
     }
 
+    public boolean updateUsers(User user) {
+        // Truy vấn để lấy role_id từ role_name
+        String getRoleIdQuery = "SELECT role_id FROM roles WHERE role_name = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(getRoleIdQuery)) {
+            ps.setString(1, user.getRoleName());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user.setRoleId(rs.getInt("role_id"));
+            } else {
+                // Nếu không tìm thấy role_name trong bảng roles, trả về false
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+        // Truy vấn để cập nhật user trong bảng users
+        String query = "UPDATE users SET fullname = ?, gender = ?, email = ?, phone = ?,  role_id = ?,status = ?, updated_at = ? WHERE user_id = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, user.getFullname());
+            ps.setString(2, user.getGender());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setInt(5, user.getRoleId());
+            ps.setString(6, user.getStatus());
+            ps.setTimestamp(7, user.getUpdatedAt());
+            ps.setInt(8, user.getUserId());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addUsers(User user) {
+        // Query to find the role_id based on the role_name
+        String getRoleIdQuery = "SELECT role_id FROM roles WHERE role_name = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(getRoleIdQuery)) {
+            ps.setString(1, user.getRoleName());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user.setRoleId(rs.getInt("role_id"));
+            } else {
+                // If role_name not found, return false
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+        // Query to insert a new user into the users table
+        String query = "INSERT INTO users (fullname, gender, email, phone, password, status, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, user.getFullname());
+            ps.setString(2, user.getGender());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getPassword());
+            ps.setString(6, user.getStatus());
+            ps.setInt(7, user.getRoleId());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<UserRole> getAllRoles() {
+        List<UserRole> roles = new ArrayList<>();
+        String sql = "SELECT * FROM roles";
+        try ( Statement stmt = conn.createStatement();  ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                UserRole role = new UserRole();
+                role.setRole_id(rs.getInt("role_id"));
+                role.setRole_name(rs.getString("role_name"));
+                role.setStatus_id(rs.getInt("status_id"));
+                role.setCreate_at(rs.getTimestamp("create_at"));
+                role.setUpdated_at(rs.getTimestamp("updated_at"));
+                roles.add(role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
+
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
-        User user = dao.getAll("SELECT * FROM users where email = 'thanhtung2733@gmail.com';").get(0);
-        System.out.println(user);
-        user.setPassword("12345678Tung!");
-        if (dao.update(user) > 0) {
-            System.out.println("ok");
+        // User user = dao.getAll("SELECT * FROM users where email = 'thanhtung2733@gmail.com';").get(0);
+        //System.out.println(user);
+        //user.setPassword("12345678Tung!");
+        //if (dao.update(user) > 0) {
+        //  System.out.println("ok");
+        //} else {
+        //  System.out.println("not ok");
+        //}
+
+        // User u = new User("Nguyễn Văn Nam", "Nữ", "nguyen.van.nam@gmail.com", "123456781", "password1", "Active");
+        //u.setRoleId(4);
+        // System.out.println(u);
+        //dao.addUser(u);
+        //User u = new User("Tom", "Nữ", "tom@gmail.com", "123456781", "password1", "Active");
+        // Kiểm tra phương thức searchUsersWithPagination
+      // Test data
+        int userId = 130; // Example user ID
+        String fullname = "Duy";
+        String gender = "Nữ";
+        String email = "duy@gmail.com";
+        String phone = "1234567891";
+        String status = "active";
+        String roleName = "Customer";
+
+        // Construct the user object with updated information
+        User user = new User(fullname,  gender,userId, email, phone, roleName, status);
+        user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+
+        // Try to update the user
+        boolean isUpdated = dao.updateUsers(user);
+
+        // Output the result
+        if (isUpdated) {
+            System.out.println("User updated successfully.");
         } else {
-            System.out.println("not ok");
+            System.out.println("Failed to update user.");
         }
+        
+
         // Test getUsersWithPagination method
         //List<User> usersPage1 = dao.getUsersWithPagination(1, 10);
         //System.out.println("Users (Page 1):");
@@ -821,5 +960,5 @@ public class DAOUsers extends DBConnect {
         }
         return digest;
     }
-    
+
 }
