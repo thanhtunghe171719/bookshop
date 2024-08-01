@@ -89,8 +89,7 @@
                                 <div class="card text-center card-product">
                                     <div class="card-product__img">
                                         <img class="img-fluid" src="${category.image}" alt="" style="width: 300px;height: 300px">
-                                        <a href="#"><ul class="card-product__imgOverlay">
-                                            </ul></a>
+                                        <a href="#"><ul class="card-product__imgOverlay"></ul></a>
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-product__title"><a href="products?categoryid=${category.categoryId}">${category.categoryName}</a></h4>
