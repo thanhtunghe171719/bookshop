@@ -131,8 +131,13 @@
                                         <button class="reduced items-count" type="button" onclick="updateQuantity(${book.stock}, 'decrease')"style="    left: -100px;
                                                 bottom: 1px;"><i class="lnr lnr-chevron-down"></i></button>
                                             <c:set var="userId" value="${user.userId}"></c:set>
-                                        <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}',${book.getBook_id()})" >Thêm vào giỏ hàng</div>
-                                    </c:when>
+
+                                            <c:set var="roleId" value="${user.roleId}"></c:set>
+                                            
+                                        <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}', '${roleId}', ${book.getBook_id()})" >Thêm vào giỏ hàng</div>
+                                            
+                                            </c:when>
+
                                     <c:otherwise>
                                         <p class="out-of-stock">Sản phẩm đã hết hàng</p>
                                     </c:otherwise>
@@ -296,13 +301,16 @@
                                                 }
                                                 document.getElementById('sst').value = quantity;
                                             }
-                                            function addToCart(userId, bookId) {
+                                            function addToCart(userId, roleId, bookId) {
                                                 if (userId === "") {
                                                     alert("Vui lòng đăng nhập.");
                                                     window.location.href = 'login';
                                                     return;
                                                 }
-
+                                                if (roleId !== "4") {
+                                                    alert("Vui lòng đăng nhập tài khoản khách hàng.");
+                                                    return;
+                                                }
                                                 var stock = ${book.getStock()};
                                                 if (stock <= 0) {
                                                     alert("Sản phẩm đã hết hàng.");
