@@ -309,14 +309,14 @@
                                     </div>
                                 </div>
                             </div>  
-
+<!--
                             <div class="col-md-12 form-group mb-0">
                                 <div class="creat_account">
                                     <h3>Lưu ý cho bên giao hàng</h3>
                                 </div>
                                 <textarea class="form-control" name="message" id="message" rows="1" placeholder="message"></textarea>
                             </div>
-                            <!--</form>-->
+                            </form>-->
 
                         </div>
                         <div class="col-lg-4">
@@ -363,6 +363,7 @@
                                     
                                     <!-- Hidden input for address -->
                                     <input type="hidden" id="hiddenAddressInput" name="address" value="${user.address}" />
+                                    <input type="hidden" id="hiddenPhoneInput" name="phone" value="${user.phone}" />
 
                                     <h3>Chọn Phương Thức Thanh Toán</h3>
                                     <div class="payment_item active">

@@ -73,14 +73,14 @@
                                     <td>: ${user.fullname}</td>
                                 </tr>
                                 <tr>
-                                    <td>Số điện thoại</td>
-                                    <td>: ${user.phone}</td>
-                                </tr>
-                                <tr>
                                     <td>Email</td>
                                     <td>: ${user.email}</td>
                                 </tr>
                                 <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <td>Số điện thoại</td>
+                                        <td>: ${order.getPhone()}</td>
+                                    </tr>
                                     <tr>
                                         <td>Địa chỉ</td>
                                         <td>: ${order.getAddress()}</td>
@@ -176,12 +176,12 @@
         <script src="vendors/mail-script.js"></script>
         <script src="js/main.js"></script>
         <script type="text/javascript">
-                            function toggle() {
-                                var blur = document.getElementById("blur");
-                                blur.classList.toggle("active");
-                                var popup = document.getElementById("popup");
-                                popup.classList.toggle("active");
-                            }
+                                    function toggle() {
+                                        var blur = document.getElementById("blur");
+                                        blur.classList.toggle("active");
+                                        var popup = document.getElementById("popup");
+                                        popup.classList.toggle("active");
+                                    }
         </script>
     </body>
 </html>

@@ -50,6 +50,7 @@ public class CartCompletion extends HttpServlet {
         String amount = request.getParameter("subTotal");
         String paymentMethod = request.getParameter("paymentMethod"); // Lấy giá trị của phương thức thanh toán
         String address = request.getParameter("address"); // Get the address value from the form
+        String phone = request.getParameter("phone"); // Get the address value from the form
 
         User user = (User) session.getAttribute("user");
         session.setAttribute("user", user);
@@ -72,7 +73,7 @@ public class CartCompletion extends HttpServlet {
             }
 
             // Tạo đơn hàng mới và lấy order_id
-            int newOrderID = cartCompletion.newOrder(cartId, Double.parseDouble(amount), 1, address);
+            int newOrderID = cartCompletion.newOrder(cartId, Double.parseDouble(amount), 1, address, phone);
             if (newOrderID != -1) {
                 cartCompletion.addOrderItems(newOrderID); // Gọi phương thức với order_id cụ thể
                 cartCompletion.removeOrderedBooks(newOrderID); // Gọi phương thức với order_id cụ thể
