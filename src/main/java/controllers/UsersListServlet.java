@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import dal.DAOCart;
 import dal.DAOUsers;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Logger;
+import models.Cart;
 import models.User;
 
 public class UsersListServlet extends HttpServlet {
@@ -136,6 +138,11 @@ public class UsersListServlet extends HttpServlet {
 
                 User user = new User(fullname, gender, email, encryptOld, phone, status, roleName);
                 if (daoUsers.addUsers(user)) {
+                    DAOCart dao = new DAOCart();
+                    Cart cart = new Cart();
+                    User usernew = daoUsers.getUserByUsername(email);
+                    cart.setUserId(usernew.getUserId());
+                    dao.insert(cart);
                     out.print("{\"status\":\"success\"}");
                 } else {
                     out.print("{\"status\":\"error\",\"message\":\"Failed to add user\"}");
