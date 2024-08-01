@@ -1,5 +1,7 @@
 <%@page import="models.Post"%>
 <%@page import="java.util.List"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,7 +78,7 @@
                         <div class="col-lg-4">
                             <div class="blog_right_sidebar">
                                 <aside class="single_sidebar_widget post_category_widget">
-                                    <h4 class="widget_title">Post Types</h4>
+                                    <h4 class="widget_title">Thể Lọa</h4>
                                     <ul class="list cat-list">
                                         <li>
                                             <a href="blog?type=<%= post.getPostType()%>" class="d-flex justify-content-between">

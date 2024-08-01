@@ -100,14 +100,14 @@ public class CustomerServlet extends HttpServlet {
                     out.print("{\"status\":\"error\",\"message\":\"Invalid password format.\"}");
                     return;
                 }
-
+                String encryptOld = daoUsers.Sha256(password);
                 // Kiểm tra điều kiện số điện thoại
                 if (!isValidPhoneNumber(phone)) {
                     out.print("{\"status\":\"error\",\"message\":\"Phone number must be 10 digits.\"}");
                     return;
                 }
-                User user = new User(fullname, gender, email, password, phone, "Active");
-                user.setRoleId(2);
+                User user = new User(fullname, gender, email, encryptOld, phone, "Active");
+                user.setRoleId(4);
                 daoUsers.addUser(user);
                 out.print("{\"status\":\"success\"}");
             } else if ("edit".equals(action)) {
