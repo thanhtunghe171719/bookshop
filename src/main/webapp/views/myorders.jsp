@@ -60,7 +60,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Mã đơn hàng</th>
+                                    <th scope="col">Mã đơn</th>
                                     <th scope="col">Ngày mua</th>
                                     <th scope="col">Sản phẩm</th>                                  
                                     <th scope="col">Tổng tiền</th>
