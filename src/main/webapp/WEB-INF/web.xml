@@ -6,12 +6,28 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
-        <url-pattern>/marketing-product</url-pattern>
-        <url-pattern>/admin-category</url-pattern>
-        <url-pattern>/managerpost</url-pattern>
         <url-pattern>/admin_dashboard</url-pattern>
-        <url-pattern>/sale_dashboard</url-pattern>
+        <url-pattern>/userList</url-pattern>
+        <url-pattern>/settingadmin</url-pattern>
         <url-pattern>/marketing_dashboard</url-pattern>
+        <url-pattern>/marketing-product</url-pattern>
+        <url-pattern>/createrpost</url-pattern>
+        <url-pattern>/managerpost</url-pattern>
+        <url-pattern>/marketingslider</url-pattern>
+        <url-pattern>/customers</url-pattern>
+        <url-pattern>/manage-feedback</url-pattern>
+        <url-pattern>/manage-order-sale</url-pattern>
+        <url-pattern>/cartdetails</url-pattern>
+        <url-pattern>/cartcontact</url-pattern>
+        <url-pattern>/myorders</url-pattern>
+        <url-pattern>/orderinformation</url-pattern>
+        <url-pattern>/thankyou</url-pattern>
+        <url-pattern>/sale_dashboard</url-pattern>
+        <url-pattern>/manage-sale</url-pattern>    
+        <url-pattern>/login</url-pattern>  
+        <url-pattern>/register</url-pattern>  
+        <url-pattern>/manage-shipper</url-pattern>
+        
     </filter-mapping>
     <servlet>
         <servlet-name>DetailServlet</servlet-name>

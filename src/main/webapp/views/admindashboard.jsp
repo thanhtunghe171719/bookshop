@@ -79,7 +79,7 @@
 
             <div class="container-fluid">
                 <div class="db-breadcrumb">
-                    <h4 class="breadcrumb-title">Dashboard</h4>           
+                    <h4 class="breadcrumb-title">Admin Dashboard</h4>           
                 </div>	
                 <!-- Card -->
                 <form action="admin_dashboard" method="post">
@@ -100,7 +100,7 @@
                                         <span class="counter">
                                             <fmt:formatNumber value="${totalProfit}" type="number" groupingUsed="true" minFractionDigits="3" maxFractionDigits="3" />
                                         </span>
-                                        VND 
+                                        VND
                                     </span>		      
                                     <span class="wc-progress-bx">
 
@@ -129,7 +129,7 @@
                             <div class="widget-card widget-bg3">					 
                                 <div class="wc-item">
                                     <h4 class="wc-title">
-                                        New Orders
+                                        Orders
                                     </h4>
                                     <span class="wc-des">
                                         Fresh Order Amount 
@@ -137,7 +137,6 @@
                                     <span class="wc-stats counter">
                                         ${totalOrders} 
                                     </span>		
-
                                 </div>				      
                             </div>
                         </div>
@@ -145,7 +144,7 @@
                             <div class="widget-card widget-bg4">					 
                                 <div class="wc-item">
                                     <h4 class="wc-title">
-                                        New Customers 
+                                        Customers 
                                     </h4>
                                     <span class="wc-des">
                                         Joined New User
@@ -160,28 +159,114 @@
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-lg-6 m-b30">
+                    <div class="col-lg-12 m-b30">
                         <div class="widget-box">
                             <div class="wc-title">
                                 <h4>Total Profit</h4>
                             </div>
                             <div class="widget-inner">
                                 <canvas id="chart1" width="100" height="45"></canvas>
+                                <script>
+                                    Chart.defaults.global.defaultFontFamily = "rubik";
+                                    Chart.defaults.global.defaultFontColor = '#999';
+                                    Chart.defaults.global.defaultFontSize = '12';
+
+                                    var ctx = document.getElementById('chart1').getContext('2d');
+
+                                    var chart = new Chart(ctx, {
+                                        type: 'line',
+
+                                        // The data for our dataset
+                                        data: {
+                                            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                                            // Information about the dataset
+                                            datasets: [{
+                                                    label: "Total",
+                                                    backgroundColor: 'rgba(0,0,0,0.05)',
+                                                    borderColor: '#4c1864',
+                                                    borderWidth: "3",
+                                                    data: [${requestScope.month1}, ${requestScope.month2}, ${requestScope.month3}, ${requestScope.month4}, ${requestScope.month5}, ${requestScope.month6},${requestScope.month7},${requestScope.month8},${requestScope.month9},${requestScope.month10},${requestScope.month11},${requestScope.month12}],
+                                                    pointRadius: 4,
+                                                    pointHoverRadius: 4,
+                                                    pointHitRadius: 10,
+                                                    pointBackgroundColor: "#fff",
+                                                    pointHoverBackgroundColor: "#fff",
+                                                    pointBorderWidth: "3",
+                                                }]
+                                        },
+
+                                        // Configuration options
+                                        options: {
+
+                                            layout: {
+                                                padding: 0,
+                                            },
+
+                                            legend: {display: false},
+                                            title: {display: false},
+
+                                            scales: {
+                                                yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true, // Đảm bảo trục y bắt đầu từ 0
+                                                            callback: function (value, index, values) {
+                                                                return value.toLocaleString();  // Định dạng số
+                                                            }
+                                                        },
+                                                        scaleLabel: {
+                                                            display: true,
+                                                            labelString: 'VND',
+                                                            fontColor: '#999',
+                                                            fontSize: 14,
+                                                            fontStyle: 'bold'
+                                                        },
+                                                        gridLines: {
+                                                            borderDash: [6, 6],
+                                                            color: "#ebebeb",
+                                                            lineWidth: 1,
+                                                        },
+                                                    }],
+                                                xAxes: [{
+                                                        scaleLabel: {
+                                                            display: true,
+                                                            labelString: 'Month',
+                                                            fontColor: '#999',
+                                                            fontSize: 14,
+                                                            fontStyle: 'bold'
+                                                        },
+                                                        gridLines: {display: false},
+                                                    }],
+                                            },
+
+                                            tooltips: {
+                                                backgroundColor: '#333',
+                                                titleFontSize: 12,
+                                                titleFontColor: '#fff',
+                                                bodyFontColor: '#fff',
+                                                bodyFontSize: 12,
+                                                displayColors: false,
+                                                xPadding: 10,
+                                                yPadding: 10,
+                                                intersect: false
+                                            }
+                                        },
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 m-b30">
-                        <div class="widget-box">
-                            <div class="wc-title">
-                                <h4>Total Profit By Categories</h4>
-                            </div>
-                            <div class="widget-inner">
-                                <canvas id="chart2" width="100" height="45"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    
-                           
+                    <!--                    <div class="col-lg-6 m-b30">
+                                            <div class="widget-box">
+                                                <div class="wc-title">
+                                                    <h4>Total Profit By Categories</h4>
+                                                </div>
+                                                <div class="widget-inner">
+                                                    <canvas id="chart2" width="100" height="45"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>-->
+
+
                 </div>
             </div>
         </main>
@@ -206,7 +291,7 @@
         <script src="assets/js/admin.js"></script>
         <script src='assets/vendors/calendar/moment.min.js'></script>
         <script src='assets/vendors/calendar/fullcalendar.js'></script>
-        
-        
+
+
     </body>
 </html>

@@ -34,7 +34,7 @@
                                    aria-expanded="false">Quản lý</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="userList">Người dùng</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="settingadmin">Cài đặt</a></li>
+<!--                                    <li class="nav-item"><a class="nav-link" href="settingadmin">Cài đặt</a></li>-->
                                 </ul>
                             </li>
                         </c:if>
@@ -69,6 +69,15 @@
                                 </ul>
                             </li>
                         </c:if>
+                            <c:if test="${sessionScope.user.roleId ==6}">
+                            <li class="nav-item submenu dropdown">
+                                <a href="products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Quản lý</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="manage-shipper">Đơn hàng</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
                     </ul> 
                     </ul>
 
@@ -76,7 +85,7 @@
                         <div>
                             <form action="search" method="post">
                                 <div class="input-group filter-bar-search">
-                                    <input value="${search}" name="search" type="text" placeholder="Search product">
+                                    <input value="${search}" name="search" type="text" placeholder="Tìm kiếm sản phẩm">
                                     <div class="input-group-append">
                                         <button type="submit"><i class="ti-search"></i></button>
                                     </div>
@@ -84,7 +93,7 @@
                             </form>
                         </div>
                     </ul>
-
+                                    
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                         <li class="nav-item  submenu dropdown">
                             <a href="cartdetails" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
@@ -148,8 +157,12 @@
                                 <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
                             </ul>
                                </c:if>
+                               <c:if test="${sessionScope.user.roleId == 6}">
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" href="logout">Đăng xuất</a></li>
+                            </ul>
+                               </c:if>
                         </li>
-                        
                         <%}%>
                     </ul>
                 </div>

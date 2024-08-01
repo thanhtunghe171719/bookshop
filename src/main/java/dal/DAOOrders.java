@@ -389,6 +389,37 @@ public class DAOOrders extends DBConnect {
         return updatedCount; // Return the number of successfully updated items
     }
 
+    public double getTotalProfitByMonth(int month) {
+        double totalProfit = 0.0;
+        String sql = "SELECT SUM(total) as total FROM orders WHERE order_status_id = 4 and month(order_date)=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, month);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalProfit;
+    }
+    public int getOrderSuccessfulCountByMonth(int month) {
+    String sql = "SELECT COUNT(*) as total_successful_orders FROM orders WHERE order_status_id = 4 AND MONTH(order_date) = ?";
+    try (
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, month); // Set the month parameter
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) { // Use if since you're expecting one result
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return 0;
+}
+
 // public List<Order> selectNewOrders() {
 //        List<Order> orders = new ArrayList<>();
 //        String sql = "SELECT * FROM orders where create_at = ?";
@@ -407,6 +438,7 @@ public class DAOOrders extends DBConnect {
 //        }
 //        return orders;
 //    }
+
     public static void main(String[] args) {
         DAOOrders order = new DAOOrders();
 //        ArrayList<Items> re = order.getOrderItemsForOrder(1);
