@@ -217,12 +217,13 @@
                 }
 
                 // Nếu hành động là giảm quantity và quantity hiện tại lớn hơn 1
-                else if (action === 'decrease' && quantity > 1) {
+                if (action === 'decrease') {
                     quantity--;
-                } else if (action === 'decrease' && quantity < 1) {
-                    alert("Số lượng không thể nhỏ hơn 1");
+                    if (quantity < 1) {
+                        alert("Số lượng không thể nhỏ hơn 1");
+                        quantity = 1;
+                    }
                 }
-
                 // Cập nhật giá trị mới của quantity trên giao diện
                 document.getElementById('qty-' + cartItemId).value = quantity;
                 // Update the total price based on the new quantity
@@ -248,25 +249,26 @@
 
             function updateTotalPrice(cartItemId, bookPrice, discount, stock) {
                 var quantity = document.getElementById('qty-' + cartItemId).value.trim();
-                if(quantity ===""){
+                if (quantity === "") {
                     quantity = 1;
                     alert("Không được để trống.");
-                }else{
-                    // Parse quantity to integer
-                    quantity = parseInt(quantity);
+                } else {
+                    if (!/^\d+$/.test(quantity)) {
+                        quantity = 1;
+                        alert("Vui lòng nhập ký tự số hợp lệ.");
+                    } else {
+                        // Parse quantity to integer
+                        quantity = parseInt(quantity);
 
-                    // Validate quantity
-                    if (quantity < 1) {
-                        quantity = 1; // Set quantity to 1 if it's less than 1
-                        alert("Số lượng không thể nhỏ hơn 1.");
-                    }
-                    if (quantity > stock) {
-                        quantity = stock; // Set quantity to stock if it's more than stock
-                        alert("Không thể vượt quá số lượng trong kho là : " + stock);
-                    }
-                    if (isNaN(quantity)) {
-                        quantity = 1; // Set quantity to 1 if it's NaN
-                        alert("Vui lòng nhập số hợp lệ.");
+                        // Validate quantity
+                        if (quantity < 1) {
+                            quantity = 1; // Set quantity to 1 if it's less than 1
+                            alert("Số lượng không thể nhỏ hơn 1.");
+                        }
+                        if (quantity > stock) {
+                            quantity = stock; // Set quantity to stock if it's more than stock
+                            alert("Không thể vượt quá số lượng trong kho là : " + stock);
+                        }
                     }
                 }
                 // Update the input value to display the corrected quantity

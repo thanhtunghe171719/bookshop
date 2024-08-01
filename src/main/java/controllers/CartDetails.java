@@ -117,12 +117,15 @@ public class CartDetails extends HttpServlet {
                     ArrayList<CartItems> listItems = daoCartDetails.getAll("SELECT * FROM cart_items WHERE cart_id = " + cartId);
                     if (listItems != null) {
                         for (CartItems listItem : listItems) {
-
-                            ArrayList<Book> bookItem = daoBook.getAll("SELECT * FROM books WHERE book_id = " + listItem.getBookId());
-                            if (bookItem != null && !bookItem.isEmpty()) {
-                                if (bookItem.get(0).getStock() > 0) {
-                                    cartItemBookMap.put(listItem, bookItem.get(0));
+                            if(listItem.getQuantity()>0){
+                                ArrayList<Book> bookItem = daoBook.getAll("SELECT * FROM books WHERE book_id = " + listItem.getBookId());
+                                if (bookItem != null && !bookItem.isEmpty()) {
+                                    if (bookItem.get(0).getStock() > 0) {
+                                        cartItemBookMap.put(listItem, bookItem.get(0));
+                                    }
                                 }
+                            }else{
+                                daoCartDetails.delete(listItem.getCartItemId());
                             }
                         }
                     }
@@ -182,6 +185,10 @@ public class CartDetails extends HttpServlet {
                         daoCartDetails.updateQuantity(cartItems.getCartItemId(), cartItems.getQuantity());
                         book.setStock(bookCheck.getStock());
                         check = false;
+                    }
+                    if(cartItems.getQuantity()==0){
+                        cartItemBookMap.remove(cartItems);
+                        daoCartDetails.delete(cartItems.getCartItemId());
                     }
                 }
                 session.setAttribute("cartItemBookMap", cartItemBookMap);
