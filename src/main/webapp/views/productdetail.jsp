@@ -135,8 +135,9 @@
 <!--                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if (!isNaN(sst) & amp; & amp; sst > 0) result.value--; return false;"
                                                 class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>-->
                                             <c:set var="userId" value="${user.userId}"></c:set>
+                                            <c:set var="roleId" value="${user.roleId}"></c:set>
                                             
-                                        <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}',${book.getBook_id()})" >Thêm vào giỏ hàng</div>
+                                        <div class="button primary-btn" id="addToCartBtn" onclick="addToCart('${userId}', '${roleId}', ${book.getBook_id()})" >Thêm vào giỏ hàng</div>
                                             
                                             </c:when>
                                     <c:otherwise>
@@ -273,13 +274,16 @@
                                                     result.value = 99; // Nếu nhập lớn hơn 99 thì đặt lại thành 99
                                                 }
                                             }
-                                            function addToCart(userId, bookId) {
+                                            function addToCart(userId, roleId, bookId) {
                                                 if (userId === "") {
                                                     alert("Vui lòng đăng nhập.");
                                                     window.location.href = 'login';
                                                     return;
                                                 }
-
+                                                if (roleId !== "4") {
+                                                    alert("Vui lòng đăng nhập tài khoản khách hàng.");
+                                                    return;
+                                                }
                                                 var stock = ${book.getStock()};
                                                 if (stock <= 0) {
                                                     alert("Sản phẩm đã hết hàng.");
