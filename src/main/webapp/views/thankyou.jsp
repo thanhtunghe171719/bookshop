@@ -58,7 +58,7 @@
         <section class="order_details section-margin--small">
             <div class="container">
                 <p class="text-center billing-alert">
-                    Thank you. Your order has been received.
+                    Đơn hàng của bạn đã được ghi lại. Cảm ơn vì đã đặt hàng
                 </p>
 
                 <div class="text-center">
