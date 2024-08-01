@@ -355,13 +355,18 @@
             xhr.send(formData);
         }
 
-        function updateImagePreview(input, sliderId) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+        function updateImagePreview(input, index) {
+            const file = input.files[0];
+            if (file && ['image/png', 'image/jpeg'].includes(file.type)) {
+                const reader = new FileReader();
                 reader.onload = function (e) {
-                    document.getElementById('imagePreview_' + sliderId).src = e.target.result;
+                    document.getElementById('imagePreview_' + index).src = e.target.result;
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
+            } else {
+                alert("Vui lòng chọn tệp PNG hoặc JPG.");
+                input.value = ""; // Reset the input
+                document.getElementById('imagePreview_' + index).src = ""; // Clear the image preview
             }
         }
 
