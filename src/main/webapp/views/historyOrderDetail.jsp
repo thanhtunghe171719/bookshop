@@ -37,7 +37,7 @@
     <body>
         <jsp:include page="header.jsp"/>
         <div class="container mt-5">
-            <h2 class="mb-4">Order List</h2>
+            
             <c:if test="${param.error != null}">
                 <div class="alert alert-danger" role="alert">
                     ${param.error}
@@ -57,7 +57,7 @@
                         <td>${order.orderId}</td>
                     </tr>
                     <tr>
-                        <th style="width: 200px;">Fullname</th>
+                        <th style="width: 200px;">Tên</th>
                         <td>${order.user.fullname}</td>
                     </tr>
                     <tr>
@@ -69,23 +69,23 @@
                         <td>${order.user.phone}</td>
                     </tr>
                     <tr>
-                        <th style="width: 200px;">Address</th>
+                        <th style="width: 200px;">Địa chỉ</th>
                         <td>${order.user.address}</td>
                     </tr>
                     <tr>
                         <th>Total</th>
-                        <td>${order.total}</td>
+                        <td><fmt:formatNumber value="${order.total}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd</td>
                     </tr>
                     <tr>
-                        <th>Order Status</th>
+                        <th>Trạng thái</th>
                         <td>${order.orderStatus}</td>
                     </tr>
                     <tr>
-                        <th>Order Date</th>
+                        <th>Ngày đặt</th>
                         <td>${order.orderDate}</td>
                     </tr>
                     <tr>
-                        <th>Updated At</th>
+                        <th>Ngày cập nhật</th>
                         <td>${order.updatedAt}</td>
                     </tr>
                 </table>
@@ -95,11 +95,11 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Order Item ID</th>
-                            <th>Book Title</th>
-                            <th>Book Author</th>
-                            <th>Book Image</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
+                            <th>Tên sách</th>
+                            <th>Tác giả</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -111,7 +111,7 @@
                                 <td>${orderItem.book.author}</td>
                                 <td><img src="${orderItem.book.image}" alt="Book Image" style="max-width: 100px;"></td>
                                 <td>${orderItem.quantity}</td>
-                                <td>${orderItem.book.price}</td>
+                                <td><fmt:formatNumber value="${orderItem.book.price}" type="number" minFractionDigits="3" maxFractionDigits="3" /> vnd</td>
                                 <td>
                                     <c:if test="${order.orderStatus == 'Delivered'}">
                                         <a href="feedback?orderItemId=${orderItem.orderItemId}" class="btn btn-success">Feedback now</a>
@@ -122,7 +122,7 @@
                     </tbody>
                 </table>
 
-                <a href="javascript:history.back()" class="btn btn-primary">Back to Order List</a>
+                <a href="javascript:history.back()" class="btn btn-primary">Trở về Order List</a>
             </div>
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>

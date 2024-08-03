@@ -126,10 +126,10 @@
                                     <c:when test="${book.getStock() > 0}">
                                         <label for="qty">Số lượng:</label>
                                         <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty" onchange="updateTotalPrice(${book.stock})">
-                                        <button class="increase items-count" type="button" onclick="updateQuantity(${book.stock}, 'increase')" style="    left: -100px;
-                                                bottom: 15px;"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button class="reduced items-count" type="button" onclick="updateQuantity(${book.stock}, 'decrease')"style="    left: -100px;
-                                                bottom: 1px;"><i class="lnr lnr-chevron-down"></i></button>
+                                        <button class="increase items-count" type="button" onclick="updateQuantity(${book.stock}, 'increase')" style="    left: 125px;
+                                                bottom: 15px; width: 20px;"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button class="reduced items-count" type="button" onclick="updateQuantity(${book.stock}, 'decrease')"style="    left: 125px;
+                                                bottom: 1px; width: 20px;"><i class="lnr lnr-chevron-down"></i></button>
                                             <c:set var="userId" value="${user.userId}"></c:set>
 
                                             <c:set var="roleId" value="${user.roleId}"></c:set>
